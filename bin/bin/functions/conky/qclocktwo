@@ -70,24 +70,24 @@ else
 fi
 
 Q='{color}'             # conky color bright
-_='{color1}'            # conky color dim
+q='{color1}'            # conky color dim
 
 # debug output to terminal
 if [ -e $DEBUG ] ;then
-  Q=$__YELLOW; [ $setx ] && _=$NOCOLOR || _=$__BLACK
+  Q=$__YELLOW; [ $setx ] && q=$NOCOLOR || q=$__BLACK
   unset offset; unset voffset
   DELAY=$(cat $DEBUG); DELAY=${DELAY:-2}
 fi
 
 ch()      { cat /dev/urandom | tr -dc 'A-Z' | head -c $1 | sed 's/./& /g'; }
-xs()      { echo "${_}$(ch 1)${Q}"; }                              # word pair fill char
-nx()      { for j in $(seq 1 $1) ;do echo "\n${_}$(ch 1)" ;done }  # random fill char column
+xs()      { echo "${q}$(ch 1)${Q}"; }                              # word pair fill char
+nx()      { for j in $(seq 1 $1) ;do echo "\n${q}$(ch 1)" ;done }  # random fill char column
 shuffle() { shuf=$(echo "$@" | shuf | tr -d '\n'); ditto $f "$shuf" >>$LOG; echo -n "$shuf"; }  # word salad
 draw()    { [ "$qclock" ] && echo "$voffset$offset$qclock" | sed "s/ $//; s/[{]/$&/g" | $glyph >$QCLOCK:$1; }  # escape conky expression
 
-ITIS()    { echo "${Q}I T $(xs)I S ${_}$(ch 6)"; }
-_ITIS_()  { echo -n "${_}$(ch 1)"; shuffle "${Q}I T $(xs)I S $(nx 4)"; echo -n "${_}$(ch 1)"; }
-_ITIS()   { echo "${_}$(ch 6)${Q}I T $(xs)I S"; }
+ITIS()    { echo "${Q}I T $(xs)I S ${q}$(ch 6)"; }
+_ITIS_()  { echo -n "${q}$(ch 1)"; shuffle "${Q}I T $(xs)I S $(nx 4)"; echo -n "${q}$(ch 1)"; }
+_ITIS()   { echo "${q}$(ch 6)${Q}I T $(xs)I S"; }
 
 qclock0() {
   f=qclock0
@@ -99,7 +99,7 @@ qclock0() {
 }
 
 AQUARTER() { shuffle "${Q}A $(xs)Q U A R T E R $(nx 2)"; }
-quarter()  { shuffle "${_}Q U A R T E R $(nx 4)"; }
+quarter()  { shuffle "${q}Q U A R T E R $(nx 4)"; }
 
 qclock1() {
   f=qclock1
@@ -110,10 +110,10 @@ qclock1() {
   esac
 }
 
-twentyFIVE() { shuffle "${_}T W E N T Y \n${Q}F I V E $(nx)"; }
-TWENTYfive() { shuffle "${Q}T W E N T Y \n${_}F I V E $(nx)"; }
+twentyFIVE() { shuffle "${q}T W E N T Y \n${Q}F I V E $(nx)"; }
+TWENTYfive() { shuffle "${Q}T W E N T Y \n${q}F I V E $(nx)"; }
 TWENTYFIVE() { shuffle "${Q}T W E N T Y F I V E $(nx)"; }
-twentyfive() { shuffle "${_}T W E N T Y \n${_}F I V E $(nx)"; }
+twentyfive() { shuffle "${q}T W E N T Y \n${q}F I V E $(nx)"; }
 
 qclock2() {
   f=qclock2
@@ -128,11 +128,11 @@ qclock2() {
   esac
 }
 
-HALFtento() { shuffle "${Q}H A L F \n${_}T E N \n${_}T O $(nx 2)"; }
-halfTENto() { shuffle "${_}H A L F \n${Q}T E N \n${_}T O $(nx 2)"; }
-halfTENTO() { shuffle "${_}H A L F \n${Q}T E N $(xs)T O $(nx)"; }
-halftenTO() { shuffle "${_}H A L F \n${_}T E N \n${Q}T O $(nx 2)"; }
-halftento() { shuffle "${_}H A L F \n${_}T E N \n${_}T O $(nx 2)"; }
+HALFtento() { shuffle "${Q}H A L F \n${q}T E N \n${q}T O $(nx 2)"; }
+halfTENto() { shuffle "${q}H A L F \n${Q}T E N \n${q}T O $(nx 2)"; }
+halfTENTO() { shuffle "${q}H A L F \n${Q}T E N $(xs)T O $(nx)"; }
+halftenTO() { shuffle "${q}H A L F \n${q}T E N \n${Q}T O $(nx 2)"; }
+halftento() { shuffle "${q}H A L F \n${q}T E N \n${q}T O $(nx 2)"; }
 
 qclock3() {
   f=qclock3
@@ -146,15 +146,15 @@ qclock3() {
   esac
 }
 
-pastQ4()    { shuffle "${_}P A S T $(xs)$W43$(nx 2)"; }
+pastQ4()    { shuffle "${q}P A S T $(xs)$W43$(nx 2)"; }
 PASTQ4()    { shuffle "${Q}P A S T $(xs)$W43$(nx 2)"; }
-PAST_4()    { shuffle "${Q}P A S T \n${_}$W43$(nx 3)"; }
-past_4()    { shuffle "${_}P A S T \n${_}$W43$(nx 3)"; }
+PAST_4()    { shuffle "${Q}P A S T \n${q}$W43$(nx 3)"; }
+past_4()    { shuffle "${q}P A S T \n${q}$W43$(nx 3)"; }
 
 PASTQ4_ed() { 
   # [ -e $DEBUG ] && sed "s/${_#??}p a s t /${Q#??}P A S T /" $QCLOCK:4 ||  # drop "\e[" of ansi sequences
-  [ -e $DEBUG ] && sed "s/$(escape ${_})p a s t /$(escape ${Q})P A S T /" $QCLOCK:4 ||
-                   cut -d'$' -f4- $QCLOCK:4 | sed "s/[$]//g; s/${_}P A S T ${_}. ${Q}/${Q}P A S T $(xs)/"
+  [ -e $DEBUG ] && sed "s/$(escape ${q})p a s t /$(escape ${Q})P A S T /" $QCLOCK:4 ||
+                   cut -d'$' -f4- $QCLOCK:4 | sed "s/[$]//g; s/${q}P A S T ${q}. ${Q}/${Q}P A S T $(xs)/i"
 }
 
 past_hour() { [ $M -ge 5 ] && [ $M -lt 35 ]; }
@@ -178,10 +178,10 @@ qclock4() {
   fi
 }
 
-Q3_5_3() { shuffle "${Q}$W31\n${_}$W51\n${_}$W33"; }
-_3Q5_3() { shuffle "${_}$W31\n${Q}$W51\n${_}$W33"; }
-_3_5Q3() { shuffle "${_}$W31\n${_}$W51\n${Q}$W33"; }
-_3_5_3() { shuffle "${_}$W31\n${_}$W51\n${_}$W33"; }
+Q3_5_3() { shuffle "${Q}$W31\n${q}$W51\n${q}$W33"; }
+_3Q5_3() { shuffle "${q}$W31\n${Q}$W51\n${q}$W33"; }
+_3_5Q3() { shuffle "${q}$W31\n${q}$W51\n${Q}$W33"; }
+_3_5_3() { shuffle "${q}$W31\n${q}$W51\n${q}$W33"; }
 
 refresh_hour() { 
     unset vars
@@ -205,10 +205,10 @@ qclock5() {
   fi
 }
 
-Q3_4_4() { shuffle "${Q}$W32\n${_}$W41\n${_}$W42"; }
-_3Q4_4() { shuffle "${_}$W32\n${Q}$W41\n${_}$W42"; }
-_3_4Q4() { shuffle "${_}$W32\n${_}$W41\n${Q}$W42"; }
-_3_4_4() { shuffle "${_}$W32\n${_}$W41\n${_}$W42"; }
+Q3_4_4() { shuffle "${Q}$W32\n${q}$W41\n${q}$W42"; }
+_3Q4_4() { shuffle "${q}$W32\n${Q}$W41\n${q}$W42"; }
+_3_4Q4() { shuffle "${q}$W32\n${q}$W41\n${Q}$W42"; }
+_3_4_4() { shuffle "${q}$W32\n${q}$W41\n${q}$W42"; }
 
 qclock6() {
   f=qclock6
@@ -222,9 +222,9 @@ qclock6() {
   fi
 }
 
-Q5_6() { shuffle "${Q}$W53\n${_}$W61"; }
-_5Q6() { shuffle "${_}$W53\n${Q}$W61"; }
-_5_6() { shuffle "${_}$W53\n${_}$W61"; }
+Q5_6() { shuffle "${Q}$W53\n${q}$W61"; }
+_5Q6() { shuffle "${q}$W53\n${Q}$W61"; }
+_5_6() { shuffle "${q}$W53\n${q}$W61"; }
 
 qclock7() {
   f=qclock7
@@ -237,9 +237,9 @@ qclock7() {
   fi
 }
 
-Q6_5() { shuffle "${Q}$W62\n${_}$W52"; }
-_6Q5() { shuffle "${_}$W62\n${Q}$W52"; }
-_6_5() { shuffle "${_}$W62\n${_}$W52"; }
+Q6_5() { shuffle "${Q}$W62\n${q}$W52"; }
+_6Q5() { shuffle "${q}$W62\n${Q}$W52"; }
+_6_5() { shuffle "${q}$W62\n${q}$W52"; }
 
 qclock8() {
   f=qclock8
@@ -254,9 +254,9 @@ qclock8() {
 
 # Q3OCLOCK() { qclock9="${Q}$W34$(xs)O ' C L O C K "; ditto 'qclock9=' "$qclock9" >>$LOG; echo $qclock9; }
 Q3OCLOCK() { echo "${Q}$W34$(xs)O ' C L O C K "; }
-Q3clock()  { echo "${Q}$W34$(shuffle "${_}C L O C K $(nx 3)")"; }
-_3OCLOCK() { echo "$(shuffle "${_}$W34$(nx)")${Q}O ' C L O C K "; }
-_3clock()  { shuffle "${_}$W34\n${_}C L O C K $(nx 3)"; }
+Q3clock()  { echo "${Q}$W34$(shuffle "${q}C L O C K $(nx 3)")"; }
+_3OCLOCK() { echo "$(shuffle "${q}$W34$(nx)")${Q}O ' C L O C K "; }
+_3clock()  { shuffle "${q}$W34\n${q}C L O C K $(nx 3)"; }
 
 qclock9() {
   f=qclock9
