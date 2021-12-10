@@ -49,6 +49,7 @@ hc keybind $Mod-d                   spawn dmenu root
 hc keybind $Mod-Shift-d             spawn dmenu root save
 hc keybind $Mod-Control-d           spawn draw root blank   # random background color
 hc keybind $Mod-Control-Shift-d     spawn draw root invert  # toggle panel theme
+hc keybind $Mod-Control-Shift-p     spawn draw root invert  # toggle panel theme
 
 # focus monitor
 hc keybind $Mod-apostrophe          cycle_monitor

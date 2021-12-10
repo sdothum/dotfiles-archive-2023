@@ -152,7 +152,7 @@ unblur() {
 case $1 in
 blank    ) blank $2 $3 ;;  # $3, see dmenu root
 restore  ) select_blank ;;
-invert   ) grep -q dark $THEME && echo light >$THEME || echo dark >$THEME ;;
+invert   ) grep -q dark $THEME && echo light >$THEME || echo dark >$THEME; cp $THEME $(query theme) ;;
 wallpaper) wallpaper ;;
 
 select   ) rm -f $SHUFFLE
