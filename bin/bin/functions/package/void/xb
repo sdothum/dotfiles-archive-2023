@@ -109,9 +109,10 @@ history() {
   ifno 'full history' || xilog | tac | less
 }
 
-latest() { package=$(echo $1 | sed 's/-[0-9].*//'); xbps-query -Rs "$package-" | grep "$package-[0-9]" | cut -d' ' -f2 | sed 's/^[a-zA-Z-]*//'; }
-cached() { package=$(echo $1 | sed 's/-[0-9].*//'); xb h "$package-" | grep "$package-[0-9]" | tail -1 | sed 's|^.*/||; s/^[a-zA-Z-]*//; s/.x.*//'; }
-status() { current=$(echo $1 | sed 's/^[a-zA-Z-]*//'); lastest=$(latest $1); cached=$(cached $1); [ "$current" = "$cached" ] && { [ "$cached" != "$latest" ] || echo -n "$NOCOLOR[$cached] "; }; echo "$__RED$lastest"; }
+version() { sed 's|^.*/||; s/^[a-zA-Z-]*//; s/.x.*//'; }  # trim path*, package name and extension*
+latest()  { package=$(echo $1 | sed 's/-[0-9].*//'); xbps-query -Rs "$package-" | grep "$package-[0-9]" | cut -d' ' -f2 | version; }
+cached()  { package=$(echo $1 | sed 's/-[0-9].*//'); xb h "$package-" | grep "$package-[0-9]" | tail -1 | version; }
+status()  { current=$(echo $1 | version); lastest=$(latest $1); cached=$(cached $1); [ "$current" = "$cached" ] && { [ "$cached" != "$latest" ] || echo -n "$NOCOLOR[$cached] "; }; echo "$__RED$lastest"; }
 
 case $action in
 backup    ) rsync $CACHE $BACKUP ;;
