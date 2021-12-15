@@ -109,7 +109,9 @@ history() {
   ifno 'full history' || xilog | tac | less
 }
 
-version() { package=$(echo $1 | sed 's/-[0-9].*//'); xbps-query -Rs "$package-" | grep "$package-[0-9]" | cut -d' ' -f2 | sed 's/^[a-zA-Z-]*//'; }
+latest() { package=$(echo $1 | sed 's/-[0-9].*//'); xbps-query -Rs "$package-" | grep "$package-[0-9]" | cut -d' ' -f2 | sed 's/^[a-zA-Z-]*//'; }
+cached() { package=$(echo $1 | sed 's/-[0-9].*//'); xb h "$package-" | grep "$package-[0-9]" | tail -1 | sed 's|^.*/||; s/^[a-zA-Z-]*//; s/.x.*//'; }
+status() { current=$(echo $1 | sed 's/^[a-zA-Z-]*//'); lastest=$(latest $1); cached=$(cached $1); [ "$current" = "$cached" ] && { [ "$cached" != "$latest" ] || echo -n "$NOCOLOR[$cached] "; }; echo "$__RED$lastest"; }
 
 case $action in
 backup    ) rsync $CACHE $BACKUP ;;
@@ -118,7 +120,7 @@ dependency) xbps-query -x $package ;;
 downgrade ) sudo xdowngrade $@ ;;  # downgrade must include package dependencies
 file      ) xlocate $package ;;
 force     ) sudo xbps-install -f $yes $options $package ;;
-held      ) for i in $(xbps-query --list-hold-pkgs) ;do ditto held "$i $__RED[$(version $i)]" ;done ;;
+held      ) for i in $(xbps-query --list-hold-pkgs) ;do ditto held "$i $(status $i)" ;done ;;
 history   ) [ $package ] && ls -lt $CACHE/$package* | tac || history ;;
 hold      ) [ $pkgver ] && { sudo xbps-pkgdb -m hold $options $package; ditto hold "$pkgver"; } ;;
 installed ) xbps-query -l $options | cut -d' ' -f2- | sed -r "s/^([^ ]*)/${YELLOW}\1${NOCOLOR}/" | grep "$@" && ditto installed "$@" ;;
