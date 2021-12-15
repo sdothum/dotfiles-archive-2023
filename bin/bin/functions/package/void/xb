@@ -109,6 +109,8 @@ history() {
   ifno 'full history' || xilog | tac | less
 }
 
+version() { package=$(echo $1 | sed 's/-[0-9].*//'); xbps-query -Rs "$package-" | grep "$package-[0-9]" | cut -d' ' -f2 | sed 's/^[a-zA-Z-]*//'; }
+
 case $action in
 backup    ) rsync $CACHE $BACKUP ;;
 count     ) ditto installed "$(xbps-query -l $options | wc -l) packages" ;;
@@ -116,7 +118,7 @@ dependency) xbps-query -x $package ;;
 downgrade ) sudo xdowngrade $@ ;;  # downgrade must include package dependencies
 file      ) xlocate $package ;;
 force     ) sudo xbps-install -f $yes $options $package ;;
-held      ) for i in $(xbps-query --list-hold-pkgs) ;do ditto held "$i" ;done ;;
+held      ) for i in $(xbps-query --list-hold-pkgs) ;do ditto held "$i $__RED[$(version $i)]" ;done ;;
 history   ) [ $package ] && ls -lt $CACHE/$package* | tac || history ;;
 hold      ) [ $pkgver ] && { sudo xbps-pkgdb -m hold $options $package; ditto hold "$pkgver"; } ;;
 installed ) xbps-query -l $options | cut -d' ' -f2- | sed -r "s/^([^ ]*)/${YELLOW}\1${NOCOLOR}/" | grep "$@" && ditto installed "$@" ;;
@@ -126,7 +128,7 @@ requiredby) xbps-query -X $package ;;
 search    ) xbps-query -Rs $options $package | a $package ;;
 sync      ) sudo xbps-install $yes $options $package ;;
 update    ) sudo xbps-install $yes $options -u $package ;;
-upgrade   ) sudo xbps-install -y -u xbps | grep -q 'is up to date' || exec xb U; sudo xbps-install $options -u; upgrade_actions ;;
+upgrade   ) sudo xbps-install -y -u xbps | grep -q 'is up to date' || exec xb U; sudo xbps-install $options -u; upgrade_actions; xb H ;;
 unhold    ) [ $pkgver ] && { sudo xbps-pkgdb -m unhold $options $package; ditto unhold "$pkgver"; } ;;
 esac
 
