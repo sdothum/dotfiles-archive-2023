@@ -28,7 +28,7 @@ function fish_right_prompt --description 'Write out the right prompt'
     end
 
     if not set -q __fish_git_prompt_color_branch
-      set -g __fish_git_prompt_color_branch magenta --bold:::
+      set -g __fish_git_prompt_color_branch magenta --bold
     end
     if not set -q __fish_git_prompt_showupstream
       set -g __fish_git_prompt_showupstream 'informative'
