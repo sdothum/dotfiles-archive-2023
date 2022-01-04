@@ -56,6 +56,8 @@ command! -range=% -nargs=1 Inject silent! execute '<line1>,<line2>call edit#Inje
 inoremap <silent><C-f> <Esc>lmZV:Inject {jv}kJvgq`Z:delmarks Z<CR>i
 " reformat at cursor position
 nnoremap <silent><C-f> mZV:Inject {jv}kJvgq`Z:delmarks Z<CR>
+" reformat current paragraph with list indenting disabled *after* insert mode
+nnoremap <silent><C-S-f> :set formatoptions-=n<CR>mZV:Inject {jv}kJvgq`Z:delmarks Z<CR>:set formatoptions+=n<CR>
 
 " ................................................................. Convert tabs
 command! -range=% Space2Tab silent! execute '<line1>,<line2>s#^\( \{'.&ts.'\}\)\+#\=repeat("\t", len(submatch(0))/' . &ts . ')'
