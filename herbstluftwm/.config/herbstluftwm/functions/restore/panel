@@ -8,9 +8,11 @@
 
 # create a panel on the current monitor, noting monocle mode
 which lemonbar >/dev/null 2>&1 || exit
+
 if is primary ;then
   [ -e $CONKY   ] && conky=:conky
   [ -e $MONOCLE ] && monocle=:monocle
+  [ -z "$conky$monocle" ] && killall lemonbar  # resync panels
 fi
 
 fifo="$(herbstclient attr monitors.focus.index)$conky$monocle"
