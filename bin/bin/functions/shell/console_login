@@ -15,7 +15,7 @@ if [ $USER != root ] ;then
   if console && [ ! -e /tmp/login:console ] ;then
     for i in $(find /tmp -mtime +1 2>/dev/null | grep -v '/tmp/adblock') ;do sudo rm -rf $i 2>/dev/null ;done  # clear out stale entries
     tty >/tmp/login:console
-    sudo find /var/log/journal -name '*~' -exec rm {} \;
+    [ -e /var/log/journal ] && sudo rm /var/log/journal  # systemd
     # SERVER=$(grep 10.1.0.10 /etc/hosts | awk '{ print $2 }')
 
     # assign deadline scheduler to SSD boot drive

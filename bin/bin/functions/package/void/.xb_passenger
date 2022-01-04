@@ -3,6 +3,10 @@
 
 gem list
 ditto version "$(ruby --version)"
-ifno 'upgrade gems' || { cd $HOME/build/void/bundle; bundle_install 220-framework; }
+ifno 'update gems' && return
+
+# pull gem list from framework bundle install
+gems=$(cat $HOME/build/void/bundle/220-framework | grep -v '^ *#' | grep ' g ' | sed -r 's/.* g ([^ ]*) *.*/\1/')
+for i in $gems ;do gem_update $i ;done 
 
 # vim: set ft=sh: #

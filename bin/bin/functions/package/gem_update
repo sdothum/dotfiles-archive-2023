@@ -1,0 +1,20 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .......................................................... Distribution update
+
+# Usage: gem_update <gem>
+
+# be careful of partial gem list regex matches!
+gem=$1
+heading : $gem
+time=$(chrono)
+ditto update "$gem"
+void && sudo gem update $gem || gem update $gem
+post_install $gem
+chrono $time
+
+# vim: set ft=sh: #

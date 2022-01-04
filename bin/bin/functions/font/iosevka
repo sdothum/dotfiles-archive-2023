@@ -16,12 +16,12 @@
 #
 #     e-ink fonts..
 #     iosevka ebook english [q-curly]
-#     iosevka ebook english I-serifless [q-curly]
+#     iosevka ebook english I-serifless [p-serifed] [q-curly]
 #     iosevka ebook english atkinson
 #     iosevka ebook english quasi-proportional [q-curly]
 #     iosevka ebook english quasi-proportional I-serifless [q-curly]
 #     iosevka dyslexic english [q-curly]
-#     iosevka dyslexic english I-serifless [q-curly]
+#     iosevka dyslexic english I-serifless [p-serifed] [q-curly]
 #     iosevka dyslexic english quasi-proportional [q-curly]
 #     iosevka dyslexic english quasi-proportional I-serifless [q-curly]
 #
@@ -34,9 +34,9 @@
 usage() {
   echo "usage: iosevka [normal (default) | extended | expanded | ebook | dyslexic | heading]
                [english | ligature <name>] [double] [quasi-proportional] [space <decimal>] [ emdash <decimal> ]
-               [grotesque (default) | atkinson | geometric | jost] | [G-toothless] | [I-serifless] | [Q-crossed] | [q-curly] | [q-tailed]
+               [grotesque (default) | atkinson | geometric | jost] | [G-toothless] | [I-serifless] | [p-serifed] | [Q-crossed] | [q-curly] | [q-tailed]
                [proof | menu | leading <decimal>]
-               [family <name>]
+               [family <name> | <prefix>Monolexic]
                [cap [-+]<decimal>]
                [noround | sb <decimal>]
                [shape <emu>]
@@ -80,6 +80,7 @@ grotesque() {
   j=flat-hook-serifless
   k=straight-serifless
   l=flat-tailed
+  p=eared
   q=tailed
   t=flat-hook-short-neck2
   u=toothless-rounded
@@ -106,6 +107,7 @@ geometric() {
   j=straight-line
   k=symmetric-touching-serifless
   l=serifless
+  p=eared
   q=straight
   t=cross-short-neck2
   u=toothed
@@ -125,10 +127,11 @@ variant() {
     b          ) b=toothed ;;
     d          ) d=toothed-serifless ;;
     G          ) capital_g=toothless-corner-serifless-hooked ;;
-    I          ) capital_i=serifless; [ $ebook ] && family=$(echo $family | sed 's/^e/i/') ;;
+    I          ) capital_i=serifless ;;
     I+         ) capital_i=serifed ;;
     j          ) j=serifless ;;
     Q          ) capital_q=crossing ;;
+    p          ) p=motion-serifed ;;
     q          ) q=diagonal-tailed ;;
     u          ) u=toothed ;;
     ampersand  ) ampersand=closed ;;
@@ -177,12 +180,13 @@ weight() {
 # english() { exclude_chars='ranges = [[592, 687], [1024, 8191], [8304, 8351], [8400, 8447], [8528, 8703], [8960, 9631], [9728, 130041]]'; }  # prune unnecessary unicode sets
 english()  { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 566], [568, 586], [588, 709], [712, 712], [714, 727], [734, 768], [770, 805], [807, 915], [917, 936], [938, 955], [957, 959], [961, 7807], [7814, 7921], [7924, 8210], [8213, 8215], [8219, 8219], [8223, 8223], [8227, 8229], [8231, 8239], [8241, 8248], [8251, 8259], [8261, 8363], [8365, 8452], [8454, 8466], [8468, 8469], [8471, 8481], [8483, 8485], [8487, 8493], [8495, 8530], [8533, 8538], [8543, 8705], [8707, 8709], [8711, 8718], [8720, 8720], [8723, 8724], [8726, 8728], [8731, 8733], [8735, 8746], [8748, 8775], [8777, 8799], [8801, 8803], [8806, 9412], [9414, 9673], [9675, 64255], [64261, 130041]]'; }  # [8826, 8827, 8880, 8881] not excluded (?)
 
-family()   { [ $1 ] || return 1; family=$1; }
-space()    { space=$(real $1); }
-emdash()   { emdash=$(real $1); }
-ebook()    { variant asterisk; no_litigation=true; m_weight=--M; family e$(echo $1 | sed 's/.*/\u&/'); ebook=true; }
+family()    { [ $1 ] || return 1; family=$1; }
+space()     { space=$(real $1); }
+emdash()    { emdash=$(real $1); }
+ebook()     { variant asterisk; no_litigation=true; m_weight=--M; family e$(echo $1 | sed 's/.*/\u&/'); ebook=true; }
 
-ligature() { [ $1 ] || return 1; [ $1 = default ] && ligature=default-calt || ligature=$1; inherits="inherits = '$ligature'"; }
+monolexic() { [ $ebook ] && family=$(echo $family | sed -r "s/^(.*)([A-Z][^ ]*)/$1\2/"); }
+ligature()  { [ $1 ] || return 1; [ $1 = default ] && ligature=default-calt || ligature=$1; inherits="inherits = '$ligature'"; }
 
 grotesque    # default typeface
 leading $leading
@@ -209,8 +213,9 @@ while [ $1 ] ;do
   dyslexic   ) shape $expanded; sb 0.6500; leading 1.4185; space 2; emdash 2; width=135; ebook monolexic ;;
   # font
   G-toothless) variant G ;;
-  I-serifless) variant G I ;;  # combined minimal stroke glyphs
+  I-serifless) variant G I; monolexic i ;;        # combined minimal stroke glyphs
   Q-crossed  ) variant Q ;;
+  p-serifed  ) variant d p ;;                     # alternate d p dyslexic glyphs
   q-curly    ) curlyq=true ;;
   q-tailed   ) unset curlyq ;;
   grotesque  ) grotesque ;;
@@ -218,7 +223,8 @@ while [ $1 ] ;do
   geometric  ) geometric; cap 1.225; build=-jost ;;
   jost       ) geometric; cap 1.225; build=-jost; variant a j Q ampersand at dollar number_sign percent question ;;
   family     ) family $2    || usage; shift ;;
-  # custom
+  *Monolexic ) monolexic ${1%Monolexic} ;;
+  # font tweaks
   cap        ) cap $2       || usage; shift ;;    # H height (affects descender as well)
   leading    ) leading $2   || usage; shift ;;    # line spacing > 1.0
   noround    ) unset sb ;;
@@ -282,6 +288,7 @@ i = '$i'
 j = '$j'
 k = '$k'
 l = '$l'
+p = '$p'
 q = '$q'
 r = 'compact'
 t = '$t'

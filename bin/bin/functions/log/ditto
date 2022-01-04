@@ -20,7 +20,9 @@ usage() {
 argv="$@"
 [ $leader ] || leader=.  # initial leader
 
+ATTCOLOR=${BLUE}
 MSGCOLOR=${__YELLOW}
+
 while [ "$1" ] ;do
   case $1 in
   ERR*) MSGCOLOR=${__RED}    ;;
@@ -44,7 +46,7 @@ justify() {
     # indent=$(echo "$(tput cols) - $(echo $line | wc -L) - 3" | bc)
     indent=$(( $(tput cols) - $(echo $line | wc -L) - 3 ))
     [ $indent -gt 0 ] && leader=$(head -c $indent </dev/zero | tr '\0' "$leader")
-    log "${GREEN}@ $leader ${MSGCOLOR}$line${NOCOLOR}"
+    log "${ATTCOLOR}@ $leader ${MSGCOLOR}$line${NOCOLOR}"
     leader=' '
   done
 }
@@ -52,7 +54,7 @@ justify() {
 annotate() {
   [ $separator ] && drawline $leader
   while read line ;do
-    log "${GREEN}@${desc} ${MSGCOLOR}$line${NOCOLOR}"
+    log "${ATTCOLOR}@${desc} ${MSGCOLOR}$line${NOCOLOR}"
   done
 }
 
