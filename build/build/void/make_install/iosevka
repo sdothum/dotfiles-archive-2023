@@ -15,6 +15,7 @@ while [ $1 ] ;do
   case $1 in
   ''         ) ;;
   I-serifless) flavour=I-serifless ;;  # source code variant
+  p-serifed  ) p=p-serifed ;;          # ebook variant
   q-curly    ) q=q-curly ;;            # ebook variant
   q-tailed   ) q=q-tailed ;;           # ebook variant (default)
   *          ) . $HOME/bin/functions/font/iosevka $@; rm -f $MAKE_INSTALL; exit ;;
@@ -24,20 +25,26 @@ done
 
 # build font suite
 ifno 'build iosevka font suite' && { rm -f $MAKE_INSTALL; exit; }
-iosevka expanded $flavour
-iosevka expanded proof $flavour
-iosevka expanded menu $flavour
-iosevka heading english $flavour
 
+# desktop fonts
+iosevka expanded $flavour $p
+iosevka expanded proof $flavour $p
+iosevka expanded menu $flavour $p
+
+# www fonts
+iosevka heading english
+iosevka heading english I-serifless $p
+
+# e-reader fonts
 iosevka ebook english $q
-iosevka ebook english I-serifless $q
+iosevka ebook english I-serifless $p $q
 iosevka ebook english atkinson $q
 iosevka ebook english quasi-proportional $q
-iosevka ebook english quasi-proportional I-serifless $q
+iosevka ebook english quasi-proportional I-serifless $p $q
 iosevka dyslexic english $q
-iosevka dyslexic english I-serifless $q
+iosevka dyslexic english I-serifless $p $q
 iosevka dyslexic english quasi-proportional $q
-iosevka dyslexic english quasi-proportional I-serifless $q
+iosevka dyslexic english quasi-proportional I-serifless $p $q
 rm -f $MAKE_INSTALL
 
 # vim: set ft=sh: #

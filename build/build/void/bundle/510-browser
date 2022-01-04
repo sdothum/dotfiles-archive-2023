@@ -17,7 +17,7 @@
 
 = browser addon
 = ═════════════
-  chromium-widevine  # required for netflix (qutebrowser and chromium)
+# chromium-widevine  # required for netflix (qutebrowser and chromium)
   youtube-dl
 
 
