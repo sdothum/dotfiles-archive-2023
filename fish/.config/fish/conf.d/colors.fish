@@ -32,5 +32,7 @@ set -x __RED     (printf "\e[1;91m")
 set -x YELLOW    (printf "\e[0;33m")
 set -x __YELLOW  (printf "\e[1;93m")
 
-# 256 color palette
-set -x __ORANGE  (printf "\e[38;5;209m")  # see ditto
+# 256 color palette, see ditto
+set -x AQUA      (printf "\e[38;5;039m")
+set -x ORANGE  (printf "\e[38;5;166m")
+set -x __ORANGE  (printf "\e[38;5;208m")
