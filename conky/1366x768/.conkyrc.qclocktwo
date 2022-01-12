@@ -7,7 +7,7 @@ conky.config = {
 	draw_shades = true,
 	-- font = 'Noto Sans Mono:size=18', conky.text = [[ ${voffset 179}
 	-- font = 'Major Mono Display:size=15',
-	font = 'eMonolexic:size=12',
+	font = 'iMonolexic:size=12',
 	gap_x = 0,
 	gap_y = 0,
   maximum_width = 1366,
