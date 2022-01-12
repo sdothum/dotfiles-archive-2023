@@ -15,6 +15,7 @@ IRC=$SESSION/irc
 JABBER=$SESSION/jabber
 MAIL=$SESSION/mail
 PING=$SESSION/ping
+PLOVER=$SESSION/plover
 PULSE=$SESSION/pulse
 REMINDER=$SESSION/reminder
 TERM=$SESSION/term
@@ -40,9 +41,11 @@ server && ipfilter &
 xrdb -merge $HOME/.Xresources &
 
 if xinput list --name-only | egrep -q 'Georgi|Splitography' ;then
-  switch tag $ADMIN
-  plover &
-  sleep $instantiate
+  if [ -e $PLOVER ] ;then
+    switch tag $ADMIN
+    plover &
+    sleep $instantiate
+  fi
 fi
 
 # force hdmi audio functionality
