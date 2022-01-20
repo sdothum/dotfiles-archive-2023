@@ -34,7 +34,7 @@
 usage() {
   echo "usage: iosevka [normal (default) | extended | expanded | ebook | dyslexic | heading]
                [english | ligature <name>] [double] [quasi-proportional] [space <decimal>] [ emdash <decimal> ]
-               [grotesque (default) | atkinson | geometric | jost] | [G-toothless] | [I-serifless] | [p-serifed] | [Q-crossed] | [q-curly] | [q-tailed]
+               [grotesque (default) | atkinson | geometric | jost] | [G-toothless] | [I-serifless] | [p-serifed] | [Q-crossed] | [q-curly] | [q-tailed] | [paren]
                [proof | menu | leading <decimal>]
                [family <name> | <prefix>Monolexic]
                [cap [-+]<decimal>]
@@ -140,7 +140,7 @@ variant() {
     at         ) at=fourfold ;;
     dollar     ) dollar=open ;;
     number_sign) number_sign=slanted ;;
-    paren      ) paren=large-contour ;;
+    paren      ) paren=flat-arc ;;
     percent    ) percent=rings-continuous-slash ;;
     question   ) question=corner ;;
     esac
@@ -186,7 +186,7 @@ english()  { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 
 family()    { [ $1 ] || return 1; family=$1; }
 space()     { space=$(real $1); }
 emdash()    { emdash=$(real $1); }
-ebook()     { variant asterisk paren; no_litigation=true; m_weight=--M; family e$(echo $1 | sed 's/.*/\u&/'); ebook=true; }
+ebook()     { variant asterisk; no_litigation=true; m_weight=--M; family e$(echo $1 | sed 's/.*/\u&/'); ebook=true; }
 
 monolexic() { [ $ebook ] && family=$(echo $family | sed -r "s/^(.*)([A-Z][^ ]*)/$1\2/"); }
 ligature()  { [ $1 ] || return 1; [ $1 = default ] && ligature=default-calt || ligature=$1; inherits="inherits = '$ligature'"; }
