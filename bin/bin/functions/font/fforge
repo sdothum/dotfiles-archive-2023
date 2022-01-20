@@ -17,7 +17,7 @@ percent() { echo "$1 * 100" | bc | cut -d. -f1; }
 # substitute curly tail q
 curlyq() {
   # copy char 0u024b and paste to char 0u0071
-  confirm 'atkinson curly tail q'
+  # confirm 'atkinson curly tail q'  # see iosevka
   echo "
 Open(\$1);
 Select(0u024b);

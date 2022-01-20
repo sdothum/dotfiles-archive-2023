@@ -12,16 +12,17 @@ KINDLE=/run/media/$USER/Kindle
 KINDLE=$KINDLE/documents/
 
 # enhanced em-legible spacing!
-# em_indent=2       # conventional paragraph indent
-# em_linespace=0,1  # conventional indent,noindent spacing
-em_indent=1.95      # tuned to 3x space monolexic font for kindle's rendering engine
-em_linespace=0.33,1.25
+# em_indent=2,2      # conventional paragraph indent
+# em_linespace=0,1   # conventional indent,noindent spacing
+# em_linespace=0.33,1.25
+em_indent=1.80,1.95  # adjust indent to 3x space per rendering engine (kobo, kindle)
+em_linespace=0,1.25
 
 # override device/cloud transfer and create kindle/kobo file
 case $1 in
-azw3    ) option=${option:-default}; format=azw3; library=true; shift ;;      # library update
-epub    ) option=${option:-default}; format=epub; library=true; shift ;;      # epub output hack
-reformat) option=${option:-default}; format=reformat; library=true; shift ;;  # epub output hack
+azw3    ) format=$1; option=${option:-default}; em_indent=${em_indent#*,}; library=true; shift ;;  # library update
+epub    ) format=$1; option=${option:-default}; em_indent=${em_indent%,*}; library=true; shift ;;  # epub output hack
+reformat) format=$1; option=${option:-default}; em_indent=${em_indent%,*}; library=true; shift ;;  # epub output hack
 esac
 
 # override left justification
@@ -93,12 +94,12 @@ find /tmp -maxdepth 1 -name "*$format" -exec rm {} \;
 output="/tmp/${file##*/}"
 [ $option ] || option=$(echo -n "default (ragged-right)\nnoindent\njustify\nall" | rmenu 'export options' -no-custom) || break
 justify=left
-linespace=${em_linespace%,*}
+em_linespace=${em_linespace%,*}
 case $option in
 default ) ;;
-noindent) em_indent=0; linespace=${em_linespace#*,} ;;
+noindent) em_indent=0; em_linespace=${em_linespace#*,} ;;
 justify ) justify=justify ;;
-all     ) unset indent; linespace=${em_linespace#*,}; justify=justify ;;
+all     ) unset indent; em_linespace=${em_linespace#*,}; justify=justify ;;
 esac
 
 notify low "$title" "Converting to $format..\n--change-justification="$justify" $indent"
@@ -107,12 +108,12 @@ ditto $format "$file"
 # ebook-convert "$file" "${output%.*}.epub"  # test image
 # convert even .azw3 to inject folder title and author
 eval ebook-convert \"$file\" \"${output%.*}.$format\"                                           \
-                   $([ $reformat ] && echo || echo "--title=\"$title\" --authors=\"$author\"")      \
+                   $([ $reformat ] && echo || echo "--title=\"$title\" --authors=\"$author\"")  \
                    --change-justification=\"$justify\"                                          \
                    --remove-paragraph-spacing --remove-paragraph-spacing-indent-size=$em_indent \
-                   --insert-blank-line --insert-blank-line-size=$linespace                      \
+                   --insert-blank-line --insert-blank-line-size=$em_linespace                   \
                    --filter-css=\'font-family\'                                                 \
-                   >/tmp/ebook-convert.log || exit
+                   >/tmp/ebook-convert.log 2>/dev/null || exit  # suppress plugin initialization warnings
 
 # ........................................................................ Write
 

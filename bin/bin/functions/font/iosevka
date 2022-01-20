@@ -62,6 +62,7 @@ symbols() {
   at=short
   dollar=through
   number_sign=upright
+  paren=normal
   percent=dots
   question=smooth
 }
@@ -139,9 +140,11 @@ variant() {
     at         ) at=fourfold ;;
     dollar     ) dollar=open ;;
     number_sign) number_sign=slanted ;;
+    paren      ) paren=large-contour ;;
     percent    ) percent=rings-continuous-slash ;;
     question   ) question=corner ;;
     esac
+    variant="$variant $o"
   done
 }
 
@@ -183,7 +186,7 @@ english()  { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 
 family()    { [ $1 ] || return 1; family=$1; }
 space()     { space=$(real $1); }
 emdash()    { emdash=$(real $1); }
-ebook()     { variant asterisk; no_litigation=true; m_weight=--M; family e$(echo $1 | sed 's/.*/\u&/'); ebook=true; }
+ebook()     { variant asterisk paren; no_litigation=true; m_weight=--M; family e$(echo $1 | sed 's/.*/\u&/'); ebook=true; }
 
 monolexic() { [ $ebook ] && family=$(echo $family | sed -r "s/^(.*)([A-Z][^ ]*)/$1\2/"); }
 ligature()  { [ $1 ] || return 1; [ $1 = default ] && ligature=default-calt || ligature=$1; inherits="inherits = '$ligature'"; }
@@ -216,7 +219,7 @@ while [ $1 ] ;do
   I-serifless) variant G I; monolexic i ;;        # combined minimal stroke glyphs
   Q-crossed  ) variant Q ;;
   p-serifed  ) variant d p ;;                     # alternate d p dyslexic glyphs
-  q-curly    ) curlyq=true ;;
+  q-curly    ) variant $1; curlyq=true ;;
   q-tailed   ) unset curlyq ;;
   grotesque  ) grotesque ;;
   atkinson   ) grotesque; ebook hyperlegible; variant b d G Q q u ampersand at number_sign percent ;;
@@ -248,6 +251,7 @@ ditto override "$shape"
 ditto override "$sb"
 [ $space ] && ditto override "space ${space}x"
 [ $emdash ] && ditto override "emdash ${emdash}x"
+[ "$variant" ] && ditto variants "$variant"
 
 # additional font weight
 [ $weight ] && weight="
@@ -315,6 +319,7 @@ lower-iota = 'flat-tailed'            # ι
 lower-lambda = 'straight-turn'        # λ
 number-sign = '$number_sign'          # #
 paragraph-sign = 'low'                # ¶
+paren = '$paren'                      # ()
 percent = '$percent'                  # %
 question = '$question'                # ?
 "
