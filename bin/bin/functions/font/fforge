@@ -151,8 +151,8 @@ bookweight() {
     ttx $file
   done
 
-  [ $contrast ] || return
-  # optically adjust M W w (to weight 400 to narrow stroke width and better match contrast)
+  [ $largefont ] && return
+  # optically adjust M W w (to regular weight to narrow stroke width for better small font contrast match)
   echo "
 $(regularweight 0u004d)
 $(regularweight 0u0057)
@@ -161,7 +161,7 @@ $(regularweight 0u0077)
 
   echo
   for i in *book*\#1.ttf ;do
-    ditto contrast $i
+    ditto tweak_MWw $i
     case $i in
     *italic*) file=*-italic.ttf ;;
     *       ) file=*regular.ttf ;;
@@ -193,7 +193,7 @@ case $1 in
 curlyq     ) ;;
 ligature   ) [ $4 ] && { width=$2; shift 2; } || { shape=$2; shift; } ;;  # see iosevka for tricky bits
 punctuation) [ $2 ] && { emdash=$2; shift; } || emdash=2 ;;
-bookweight ) [ "$2" = 'contrast' ] && { contrast=true; shift; } ;;
+bookweight ) [ "$2" = 'largefont' ] && { largefont=true; shift; } ;;
 dyslexic   ) [ $2 ] && { space=$2; shift; } || space=2 ;;
 *          ) usage ;;
 esac

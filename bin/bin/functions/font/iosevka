@@ -35,7 +35,7 @@ usage() {
   echo "usage: iosevka [normal (default) | extended | expanded | ebook | dyslexic | heading]
                [english | ligature <name>] [double] [quasi-proportional] [space <decimal>] [ emdash <decimal> ]
                [grotesque (default) | atkinson | geometric | jost] | [d-tailed] | [G-toothed] | [I-serifless] | [Q-crossed] | [q-curly] | [q-tailed] | [paren]
-               [proof | menu | leading <decimal>]
+               [proof | menu | large-font | leading <decimal>]
                [family <name> | <prefix>Monolexic]
                [cap [-+]<decimal>]
                [noround | sb <decimal>]
@@ -188,7 +188,7 @@ english()  { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 
 family()    { [ $1 ] || return 1; family=$1; }
 space()     { space=$(real $1); }
 emdash()    { emdash=$(real $1); }
-ebook()     { variant asterisk; no_litigation=true; contrast=contrast; family e$(echo $1 | sed 's/.*/\u&/'); ebook=true; }
+ebook()     { variant asterisk; no_litigation=true; largefont=largefont; family e$(echo $1 | sed 's/.*/\u&/'); ebook=true; }
 
 monolexic() { [ $ebook ] && family=$(echo $family | sed -r "s/^(.*)([A-Z][^ ]*)/$1\2/"); }
 ligature()  { [ $1 ] || return 1; [ $1 = default ] && ligature=default-calt || ligature=$1; inherits="inherits = '$ligature'"; }
@@ -214,7 +214,7 @@ while [ $1 ] ;do
   english    ) english ;;
   ligature   ) ligature $2  || usage; shift ;;
   double     ) unset mono ;;
-  quasi*     ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi${family#*Mono}; variant I+; unset contrast ;;
+  quasi*     ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi${family#*Mono}; variant I+; unset largefont ;;
   dyslexic   ) shape $expanded; sb 0.6500; leading 1.4185; space 2; emdash 2; width=135; ebook monolexic ;;
   # font
   d-tailed   ) variant d p ;;                     # alternate d p dyslexic glyphs
@@ -516,6 +516,6 @@ fi
 
 [ $space ] && fforge dyslexic $space $family              # lengthen space character cell width
 
-[ $ebook ] && fforge bookweight $contrast $family         # book weight for kindle (as regular)
+[ $ebook ] && fforge bookweight $largefont $family        # book weight for kindle (as regular)
 
 # vim: set ft=sh: #

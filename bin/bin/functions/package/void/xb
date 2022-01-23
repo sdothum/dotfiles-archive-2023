@@ -123,7 +123,7 @@ downgrade ) sudo xdowngrade $@ ;;  # downgrade must include package dependencies
 file      ) xlocate $package ;;
 force     ) sudo xbps-install -f $yes $options $package ;;
 held      ) for i in $(xbps-query --list-hold-pkgs) ;do ditto held "$i $(status $i)" ;done ;;
-history   ) [ $package ] && ls -l $CACHE/$package* || history ;;
+history   ) [ $package ] && { ls -l $CACHE/$package* 2>/dev/null; true; } || history ;;
 hold      ) [ $pkgver ] && { sudo xbps-pkgdb -m hold $options $package; ditto hold "$pkgver"; } ;;
 installed ) xbps-query -l $options | cut -d' ' -f2- | sed -r "s/^([^ ]*)/${YELLOW}\1${NOCOLOR}/" | grep "$@" && ditto installed "$@" ;;
 query     ) [ $options ] && xbps-query -R $options $package || xbps-query -Rs $options "$package" | a $package ;;
