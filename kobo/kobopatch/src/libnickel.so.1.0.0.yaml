@@ -38,7 +38,7 @@ My 10 line spacing values:
   - ReplaceFloat: {Offset: 0x48,  Find: 2.8,  Replace: 1.1}
 
 My 24 line spacing values:
-  - Enabled: yes
+  - Enabled: no
   - PatchGroup: Line spacing values alternatives
   - Description: |
       This patch changes the values on the line spacing adjustment slider,
@@ -158,7 +158,7 @@ Custom left & right margins:
   - ReplaceInt: {Offset: 0x20, Find: 16, Replace: 8}
 
 Custom font sizes:
-  - Enabled: yes
+  - Enabled: no
   - Description: |
       Changes the range of sizes on the font size slider so that there are more of
       the small sizes and fewer of the large sizes.
@@ -212,7 +212,7 @@ Custom font sizes:
 ePub fixed top/bottom margins:
   - Enabled: no
   - PatchGroup: ePub padding-bottom alternatives
-  - Description: |
+  - Description:
       This patch sets the @page margin sizes in epubs to fixed custom values,
       overriding any @page margin set in the book's CSS stylesheet. (But beware
       that some books also set page margins in an XPGT stylesheet which are added
@@ -327,7 +327,7 @@ Set KePub hyphenation:
 # - ReplaceBytes: {Base: "KepubBookReader::pageStyleCss(bool)", Offset: 1432, FindInstBLX: {SymPLT: "QString::operator==(QLatin1String) const"}, ReplaceH: 00 20 00 20} # Alternative 2: Never turn KePub hyphenation on
 
 Force user line spacing in KePubs:
-  - Enabled: yes
+  - Enabled: no
   - Description: |
       This patch will allow the line spacing set by the slider to take effect
       in some problem KePub books with fixed linespacing (including ones where the
@@ -348,7 +348,7 @@ Force user line spacing in KePubs:
 # - ReplaceString: {Find: "body, p { line-height: %", Replace: "body,div,p{line-height:%"}
 
 Force user line spacing in ePubs (part 1 of 2):
-  - Enabled: yes
+  - Enabled: no
   - Description: |
       This is part 1 of 2. Also enable part 2 in librmsdk.so.1.0.0.patch
       This patch prevents any line-height style set in the book's stylesheet from
@@ -369,7 +369,7 @@ Un-force font-family override p tags (std epubs):
   - ReplaceString: {Find: "body, p", Replace: "body  \x20", MustMatchLength: yes}
 
 Force user font-family in ePubs (Part 1 of 2):
-  - Enabled: yes
+  - Enabled: no
   - PatchGroup: ePub force font alternatives
   - Description: |
       This is part 1 of 2. Also enable part 2 in librmsdk.so.1.0.0.yaml.
@@ -388,7 +388,7 @@ Force user font-family in ePubs (Part 1 of 2):
   - ReplaceString: {Find: "f", Replace: "_"}
 
 ePub constant font sharpness:
-  - Enabled: yes
+  - Enabled: no
   - Description: |
       With this patch the ePub reader will use a constant sharpness value of 0.2,
       instead of the value set by the advanced font sharpness/weight slider. The
@@ -398,7 +398,7 @@ ePub constant font sharpness:
   - ReplaceString: {Offset: 3, Find: "-kobo-font-sharpness: %1", Replace: "-kobo-font-sharpness:0.2", MustMatchLength: yes}
 
 KePub constant font sharpness:
-  - Enabled: yes
+  - Enabled: no
   - Description: |
       With this patch the KePub reader will use a constant sharpness value of 0.2,
       instead of the value set by the advanced font sharpness/weight slider. The
@@ -484,10 +484,6 @@ Ignore .otf fonts:
       (Currently the only pre-installed .otf font is OpenDyslexic.)
       Embedded .otf fonts should continue to work as normal.
   - FindReplaceString: {Find: "*.otf", Replace: "_.otf"}
-
-# MISSING: Set font scale factor (this will need a complete rewrite for 18220+
-# since the logic has been completely reworked; also note that it may not be
-# necessary on certain devices anymore)
 
 # The following patch(es) were made by jackie_w
 
@@ -576,7 +572,7 @@ Dictionary text font-family/font-size/line-height:
   #- ReplaceString: {Offset: 34, Find: "1.40em", Replace: "1.30em", MustMatchLength: yes}
 
 Custom navigation menu page number text:
-  - Enabled: yes
+  - Enabled: no
   - Description: Changes the page number text format in the reading navigation menu
   - FindReplaceString: {Find: "Page %1 of %2", Replace: "%1 / %2"}
 
@@ -613,10 +609,32 @@ KePub stylesheet additions - optimizeSpeed:
   #
   - FindReplaceString: {Find: "/*********************************/", Replace: "body{text-rendering:optimizeSpeed }", MustMatchLength: yes}
 
+KePub stylesheet additions - optimizeLegibility:
+  - Enabled: no
+  - PatchGroup: KePub stylesheet additions alternatives
+  - Description: |
+        Enables ligatures/kerning in KePubs, but may cause some additional
+        rendering problems for fully justified text.
+        N.B. May have unexpected side effects when highlighting text in languages
+             which display vertical text, e.g. Chinese/Japanese
+  - FindBaseAddressString: ".KBSearchResult, .KBAnnotation, .KBHighlighting {"
+  # *** Don't change anything in the 4 ReplaceString lines below ***
+  # Create some room to add the extra CSS
+  - ReplaceString: {Find: ".KBSearchResult, .KBAnnotation, .KBHighlighting { font-size: 100% !important; -webkit-text-combine: inherit !important; }\n", Replace: ".KBSearchResult,.KBAnnotation,.KBHighlighting{font-size:100%!important;-webkit-text-combine:inherit!important}.KBAnnotatio", MustMatchLength: yes}
+  - ReplaceString: {Offset: 122, Find: ".KBAnnotation[writingMode=\"horizontal-tb\"] { border-bottom: 2px solid black !important; }\n", Replace: "n[writingMode=\"horizontal-tb\"]{border-bottom:2px solid #000!important}.KBAnnotation[writin", MustMatchLength: yes}
+  - ReplaceString: {Offset: 212, Find: ".KBAnnotation[writingMode=\"vertical-rl\"] { border-right: 2px solid black !important; }\n", Replace: "gMode=\"vertical-rl\"]{border-right:2px solid #000!important}.KBAnnotation[writingMode=\"v", MustMatchLength: yes}
+  - ReplaceString: {Offset: 299, Find: ".KBAnnotation[writingMode=\"vertical-lr\"] { border-left: 2px solid black !important; }", Replace: "ertical-lr\"]{border-left:2px solid #000}/*******************************************/", MustMatchLength: yes}
+  # *** Don't change anything in the 4 ReplaceString lines above ***
+  #
+  - FindReplaceString:
+        Find:    "/*******************************************/"
+        Replace: "body{text-rendering:optimizeLegibility      }"
+        MustMatchLength: yes
+
 # The following patch(es) are ported from jcn363's patches
 
 Shorten dictionary entry not found message:
-  - Enabled: yes
+  - Enabled: no
   - Description: |
       Idea by pakoe
       cf. https://www.mobileread.com/forums/showpost.php?p=3043631&postcount=111
@@ -703,7 +721,7 @@ Greek Keyboard (GloHD/ClaraHD/AuraOne/H2O2):
   - Enabled: no
   - PatchGroup: Keyboard alternatives
   - Description: |
-      Replaces keys on the Extended Latin keypad with Cyrillic alternatives.
+      Replaces keys on the Extended Latin keypad with Greek alternatives.
 
       Note that after the device boots, the keypad might just show blank squares
       until after the first book has been opened.
@@ -829,7 +847,7 @@ Don't grab exclusive access to event0:
 # The following patch(es) are by pgaskin (geek1011)
 
 Both page turn buttons go next:
-  - Enabled: yes
+  - Enabled: no
   - Description: Make both page turn buttons on the Forma go next in the reader.
   - ReplaceBytes:
       Base:          "ReadingView::keyPressEvent(QKeyEvent*)"
@@ -841,7 +859,7 @@ Both page turn sides go next:
   - Enabled: no
   - Description: Make both page turn sides go next in the reader.
   # In ReadingView::processTap(TapGesture*) where the page direction is checked:
-  - BaseAddress:  {Sym: "ReadingView::processTap(TapGesture*)", Rel: 652}
+  - BaseAddress:  {Sym: "ReadingView::processTap(TapGesture*)", Rel: 560}
   - ReplaceBytes: {Offset:  0, FindInstBLX: {SymPLT: "ReadingView::leftToRightPageProgressDirection() const"}, CheckOnly: true}
   # nop the branch for checking if left-to-right (so it always runs the swap of back/forward)
   - ReplaceBytes: {Offset:  4, FindH: 18 B9, ReplaceInstNOP: true}
@@ -869,7 +887,7 @@ Replace adobe page numbers toggle with invert screen:
       See https://github.com/pgaskin/NickelMenu/issues/111 for more information.
   # Settings page
   - BaseAddress:  "N3SettingsReadingView::N3SettingsReadingView(QWidget*)"
-  - ReplaceBytes: {Offset: 914, FindInstBLX: {SymPLT: "ReadingSettings::getShowAdobePageNumbers()"},     ReplaceInstBLX: {SymPLT: "FeatureSettings::invertScreen()"}}
+  - ReplaceBytes: {Offset: 900, FindInstBLX: {SymPLT: "ReadingSettings::getShowAdobePageNumbers()"},     ReplaceInstBLX: {SymPLT: "FeatureSettings::invertScreen()"}}
   # Settings page controller
   - BaseAddress:  {Sym: "N3SettingsReadingController::showAdobePageNumbersToggled()"}
   - ReplaceBytes: {Offset:  74, FindInstBLX: {SymPLT: "ReadingSettings::getShowAdobePageNumbers()"},     ReplaceInstBLX: {SymPLT: "FeatureSettings::invertScreen()"}}
@@ -878,7 +896,7 @@ Replace adobe page numbers toggle with invert screen:
   - FindReplaceString: {Find: "Show Adobe EPUB page numbers", Replace: "Invert screen"}
 
 Always show confirmation dialog before upgrading:
-  - Enabled: yes
+  - Enabled: no
   - PatchGroup: Firmware upgrade options
   - Description: This patch makes the confirmation dialog always show before upgrading.
   - BaseAddress:  "UpgradeManager::requestUpgradeConfirmation(UpgradeType, QString const&)"
@@ -886,7 +904,7 @@ Always show confirmation dialog before upgrading:
   - ReplaceBytes: {Offset: 42, FindInstBLX: {SymPLT: "UpgradeManager::isSilent()"}, ReplaceH: 4F F0 00 00} # make the call to UpgradeManager::isSilent always false (MOV r0, #0)
 
 Allow USB storage even when device locked:
-  - Enabled: yes
+  - Enabled: no
   - Description: |
       Always allows USB storage even when the device is locked. When combined
       with an enabled lock screen, this patch allows recovery from almost any
@@ -918,7 +936,7 @@ Hide browser from beta features:
       ReplaceH:    4F F0 01 00
 
 Remove beta features not supported text:
-  - Enabled: yes
+  - Enabled: no
   - Description: Does what it says to clear up the clutter.
   - ReplaceBytes:
       Base:           "Ui_N3SettingsExtrasView::retranslateUi(QWidget*)"
@@ -927,7 +945,7 @@ Remove beta features not supported text:
       ReplaceInstBLX: {SymPLT: "QWidget::hide()"}
 
 Disable all tutorial dialogs:
-  - Enabled: yes
+  - Enabled: no
   - Description: |
       Removes the annoying tutorials (and recurring dialogs). Note - I may
       have missed a few of them. If I have, just open an issue on GitHub or
@@ -960,7 +978,7 @@ Disable all tutorial dialogs:
   - ReplaceBytes: {Base: "ApplicationSettings::libraryCuratedListsDialogShown()", Offset: 54, FindInstBLX: {SymPLT: "QVariant::toBool() const"}, ReplaceH: 4F F0 01 00}
 
 Remove recommendations (row1col2) from home screen:
-  - Enabled: yes
+  - Enabled: no
   - Description: |
       By default, when there are less than 2 books open, a recommendations
       column shows in the top right of the home screen. This patch hides it.
@@ -1272,7 +1290,7 @@ Custom header/footer page number text:
   - FindReplaceString: {Find: "%1 OF %2", Replace: "%1 / %2"}
 
 Don't uppercase header/footer text and change page number text:
-  - Enabled: yes
+  - Enabled: no
   - Description: Combines the previous two patches.
   - PatchGroup: Header/footer page number text
   - ReplaceBytes:
@@ -1340,7 +1358,7 @@ Swap reading header/footer:
       ReplaceH: DE F8 10 40 # LDR.W r4, [lr, #0x10]
 
 Enable advanced settings for all fonts:
-  - Enabled: yes
+  - Enabled: no
   - Description: |
       This patch allows the advanced font options (weight/sharpness adjustments)
       to work with sideloaded fonts too. (KEPUB - OTF and TTF. EPUB - TTF only.)
@@ -1354,10 +1372,6 @@ Enable advanced settings for all fonts:
       Offset:         112
       FindInstBLX:    {SymPLT: "N3FontTypeUtil::isMonotypeFont(QString const&)"}
       ReplaceH:       4F F0 01 00
-
-# MISSING: ePub uniform font scale (this will need a complete rewrite for 18220+
-# since the logic has been completely reworked; also note that it may not be
-# necessary on certain devices anymore)
 
 Customize ComfortLight settings:
   - Enabled: no
@@ -1374,7 +1388,7 @@ Customize ComfortLight settings:
   # In an unnamed subroutine two layers into FrontLightPopupController::loadView
   # (find it by going back from QTime::addSecs), the times for the dropdown are
   # generated into a QVector<QPair<QString, QTime>> with a simple loop.
-  - BaseAddress: 0xC104A0 # find the base of the unnamed subroutine with the x-ref to _ZN5QTimeC1Eiiii
+  - BaseAddress: 0xCB22A4 # find the base of the unnamed subroutine with the x-ref to _ZN5QTimeC1Eiiii
   #
   # Change the initial hour / first bedtime dropdown item passed to the QTime
   # constructor (mov r1, #21):
@@ -1403,21 +1417,21 @@ Customize ComfortLight settings:
   # Change the sunset time (the transition to a warmer temperature starts here
   # and transitions until the bedtime chosen) (this should be 1-3 hours before
   # the minimum bedtime from the first replacement above) (mov r1, #18):
-  - ReplaceInt: {Offset: 158, Find: 18, Replace: 16} # 18:00 (9PM-3=6PM) -> 16:00 (5PM-1=4PM)
+  - ReplaceInt: {Offset: 228, Find: 18, Replace: 16} # 18:00 (9PM-3=6PM) -> 16:00 (5PM-1=4PM)
   #
   # Change the time for the sunset timer to fire at (this is passed to a QTime
   # constructor which is passed to PowerTime::fireAt) (mov r1, #18):
-  - ReplaceInt: {Offset: 438, Find: 18, Replace: 16} # should match the sunset time above
+  - ReplaceInt: {Offset: 508, Find: 18, Replace: 16} # should match the sunset time above
   #
   # Optional: Change the sunrise start time (the transition back to a cooler
   # temperature starts here) (this should be sometime after the last bedtime,
   # but before the sunset time) (mov r1, #5):
-  - ReplaceInt: {Offset: 192, Find: 5, Replace: 5} # 5AM
+  - ReplaceInt: {Offset: 262, Find: 5, Replace: 5} # 5AM
   #
   # Optional: Change the sunrise end time (the transition back to a cooler
   # temperature ends here) (this should be 1-3 hours after the sunrise start but
   # before the sunset time or bad things will happen with negative values) (mov r1, #7):
-  - ReplaceInt: {Offset: 138, Find: 7, Replace: 7} # 5AM+2=7AM
+  - ReplaceInt: {Offset: 208, Find: 7, Replace: 7} # 5AM+2=7AM
 
 # The following patches allow you to enable a config file option with a patch.
 
@@ -1469,7 +1483,9 @@ Unify font sizes:
     # 25.0. It seems RMSDK must be handling DPI elsewhere however, because the
     # DPI multiplication here seems to have a detrimental effect, and behaves
     # differently on different devices. This patch changes the 'scale_factor' to
-    # 1.0, and replaces the call to get DPI with a constant multiplier (6.5).
+    # 2.5, and replaces the call to get DPI with a constant multiplier (16).
+    # The results of using these values are equivalent to  
+    # ( font_size / 15.0 ) * 96 which is what I suspect the kepub formula is.
     # Note, that the replacement values are limited to 0.25 - 31.0 in 0.25
     # increments.
     #
@@ -1479,14 +1495,14 @@ Unify font sizes:
   - BaseAddress:
       Sym: "AdobeStyling::update(QString const&)"
       Rel: 5800 # at ReadingSettings::getReadingFontSizeScaleFactor(float, float)
-  # Negate the scale factor by setting it to 1.0
+  # Set the scale factor to 2.5
   - ReplaceBytes:
       Offset:   -20
       FindH:    F3 EE 09 0A # vmov.f32 s1, #25.0
-      ReplaceH: F7 EE 00 0A # vmov.f32 s1, #1.0
-  # Replace QScreen::logicalDotsPerInchX() with our own multiplier
+      ReplaceH: F0 EE 04 0A # vmov.f32 s1, #2.5
+  # Replace QScreen::logicalDotsPerInchX() with our own multiplier of 16.0
   - ReplaceBytes:
       Offset:      26
       FindInstBLX: {SymPLT: "QScreen::logicalDotsPerInchX() const"}
-      ReplaceH:    B1 EE 0A 0B # vmov.f64 d0, #6.5
+      ReplaceH:    B3 EE 00 0B # vmov.f64 d0, #16.0
 
