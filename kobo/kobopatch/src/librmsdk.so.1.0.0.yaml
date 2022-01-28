@@ -1,7 +1,7 @@
 # The following patch(es) are ported from GeoffR's patch zips
 
 Disable orphans/widows avoidance:
-  - Enabled: yes
+  - Enabled: no
   - Description: Enable this patch to avoid blank lines at the bottom of pages in ePub books.
     # The default values of orphans:2; widows:2; cause extra blank lines to be added
     # to some pages to avoid leaving isolated lines of a paragraph at the top or
@@ -45,7 +45,7 @@ Default ePub symbol font (Symbol):
   - FindReplaceString: {Find: "/SymbolStd.otf", Replace: "/normal/Symbol"}
 
 Force user line spacing in ePubs (Part 2 of 2):
-  - Enabled: yes
+  - Enabled: no
   - Description: |
       This is part 2 of 2. Also enable part 1 in libnickel.so.1.0.0.patch
       This patch prevents any line-height style set in the book's stylesheet from
@@ -64,7 +64,7 @@ Force user line spacing in ePubs (Part 2 of 2):
 # - FindBaseAddressString: "\0font\0"
 
 Force user font-family in ePubs (Part 2 of 2):
-  - Enabled: yes
+  - Enabled: no
   - Description: |
       This is part 2 of 2. Also enable part 1 in libnickel.so.1.0.0.patch
       This patch prevents any font-family style set in the book's stylesheet from
