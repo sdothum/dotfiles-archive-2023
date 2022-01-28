@@ -188,7 +188,7 @@ english()  { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 
 family()    { [ $1 ] || return 1; family=$1; }
 space()     { space=$(real $1); }
 emdash()    { emdash=$(real $1); }
-ebook()     { variant asterisk; no_litigation=true; largefont=largefont; family e$(echo $1 | sed 's/.*/\u&/'); ebook=true; }
+ebook()     { variant asterisk; no_litigation=true; family e$(echo $1 | sed 's/.*/\u&/'); ebook=true; }
 
 monolexic() { [ $ebook ] && family=$(echo $family | sed -r "s/^(.*)([A-Z][^ ]*)/$1\2/"); }
 ligature()  { [ $1 ] || return 1; [ $1 = default ] && ligature=default-calt || ligature=$1; inherits="inherits = '$ligature'"; }
@@ -214,7 +214,7 @@ while [ $1 ] ;do
   english    ) english ;;
   ligature   ) ligature $2  || usage; shift ;;
   double     ) unset mono ;;
-  quasi*     ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi${family#*Mono}; variant I+; unset largefont ;;
+  quasi*     ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi${family#*Mono}; variant I+; largefont=largefont ;;
   dyslexic   ) shape $expanded; sb 0.6500; leading 1.4185; space 2; emdash 2; width=135; ebook monolexic ;;
   # font
   d-tailed   ) variant d p ;;                     # alternate d p dyslexic glyphs
@@ -231,6 +231,7 @@ while [ $1 ] ;do
   *Monolexic ) monolexic ${1%Monolexic} ;;
   # font tweaks
   cap        ) cap $2       || usage; shift ;;    # H height (affects descender as well)
+  large-font ) largefont=largefont ;;             # see fforge bookweight
   leading    ) leading $2   || usage; shift ;;    # line spacing > 1.0
   noround    ) unset sb ;;
   sb         ) sb $2        || usage; shift ;;    # side bearing (spacing)
