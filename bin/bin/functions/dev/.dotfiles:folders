@@ -12,6 +12,7 @@
   georgi/qmk_firmware/keyboards/georgi
   herbstluftwm
   kindle
+  kobo/kobopatch/kobopatch.yaml
   kobo/kobopatch/src/*yaml
   kobo/fonts
   kobo/calibre_sync_columns.mkd
