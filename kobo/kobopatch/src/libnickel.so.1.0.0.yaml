@@ -562,7 +562,7 @@ Dictionary text font-family/font-size/line-height:
 
   #- ReplaceString: {Offset: 54, Find: "Georgia   ", Replace: "sans-serif", MustMatchLength: yes}
   #- ReplaceString: {Offset: 54, Find: "Georgia    ", Replace: "'Gill Sans'", MustMatchLength: yes}
-  #- ReplaceString: {Offset: 54, Find: "Georgia      ", Replace: "'Kobo Nickel'", MustMatchLength: yes}
+  - ReplaceString: {Offset: 54, Find: "Georgia      ", Replace: "'Kobo Nickel'", MustMatchLength: yes}
   #- ReplaceString: {Offset: 54, Find: "Georgia ", Replace: "Bookerly", MustMatchLength: yes}
 
   # Un-comment and edit next line to change font-size
