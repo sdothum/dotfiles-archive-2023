@@ -76,6 +76,7 @@ nmap     <silent><F3>   :nohlsearch<CR>
 " fuzzy search
 let g:search_expand = 1  " /space (0) <Space> (1) .*
 nmap     <silent><C-F9> :let g:search_expand = !g:search_expand<CR>
+nmap     <silent><C-.>  :let g:search_expand = !g:search_expand<CR>
 
 cnoremap <expr><space>  '/?' =~ getcmdtype() && g:search_expand ? '.*' : '<Space>'
 
