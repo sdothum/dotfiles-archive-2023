@@ -51,7 +51,7 @@ overrides:
     Un-Force user font-family in KePubs: no
     Un-force link decoration in KePubs: no
     Ignore .otf fonts: no
-    Dictionary text font-family/font-size/line-height: no
+    Dictionary text font-family/font-size/line-height: yes
     Custom navigation menu page number text: yes
     KePub stylesheet additions - text justify: no
     KePub stylesheet additions - optimizeSpeed: no
@@ -120,7 +120,7 @@ overrides:
     Increase library cover size: yes
     Custom collection/author header title font: no
     Reduce new header/footer height: no
-    Custom header/footer captions: no
+    Custom header/footer captions: yes
     Custom page navigation scrubber: no
     Customise Header back button: no
     Series list increase cover thumbnails: yes
