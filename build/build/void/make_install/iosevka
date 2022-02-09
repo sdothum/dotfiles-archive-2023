@@ -5,7 +5,7 @@
 
 # ...................................................................... iosevka
 
-# Usage: make_install iosevka [I-serifless | d-tailed | q-curly] | <opions>*
+# Usage: make_install iosevka [kindle | kobo | I-serifless | d-tailed | q-curly] | <opions>*
 
 MAKE_INSTALL=/tmp/iosevka:make_install
 touch $MAKE_INSTALL
@@ -17,6 +17,8 @@ while [ $1 ] ;do
   I-serifless) flavour=I-serifless ;;  # source code variant
   d-tailed   ) d=d-tailed ;;           # ebook variant
   q-curly    ) q=q-curly ;;            # ebook variant
+  kindle     ) ereader=$1 ;;
+  kobo       ) ereader=$1; q=q-curly ;;
   *          ) . $HOME/bin/functions/font/iosevka $@; rm -f $MAKE_INSTALL; exit ;;
   esac
   shift
@@ -25,25 +27,46 @@ done
 # build font suite
 ifno 'build iosevka font suite' && { rm -f $MAKE_INSTALL; exit; }
 
-# desktop fonts
-iosevka expanded $flavour $d
-iosevka expanded proof $flavour $d
-iosevka expanded menu $flavour $d
+update() {
+  fonts='*-book *-bookitalic *-bold *-bolditalic'
+  cd $HOME/.fonts/$2
 
-# www fonts
-iosevka heading english d-tailed
-iosevka heading english I-serifless
+  for i in $fonts ;do
+    file=$i.ttf
+    cp -v $file $STOW/$ereader/fonts/$1/
+  done
+}
 
-# e-reader fonts
-iosevka ebook english d-tailed $q
-iosevka ebook english I-serifless $q
-iosevka ebook english atkinson $q
-iosevka ebook english quasi-proportional d-tailed $q
-iosevka ebook english quasi-proportional I-serifless $q
-iosevka dyslexic english d-tailed $q
-iosevka dyslexic english I-serifless $q
-iosevka dyslexic english quasi-proportional d-tailed $q
-iosevka dyslexic english quasi-proportional I-serifless $q
+if [ $ereader ] ;then
+  iosevka dyslexic $ereader english $q
+  update p-serifed eMonolexic
+  iosevka dyslexic $ereader english d-tailed $q
+  update d-tailed eMonolexic
+  iosevka dyslexic $ereader english I-serifless d-tailed $q
+  update d-tailed iMonolexic
+  iosevka dyslexic $ereader english I-serifless $q
+  update p-serifed iMonolexic
+else
+  # desktop fonts
+  iosevka expanded $flavour $d
+  iosevka expanded proof $flavour $d
+  iosevka expanded menu $flavour $d
+
+  # www fonts
+  iosevka heading english d-tailed
+  iosevka heading english I-serifless
+
+  # e-reader fonts
+  iosevka ebook english d-tailed $q
+  iosevka ebook english I-serifless $q
+  iosevka ebook english atkinson $q
+  iosevka ebook english quasi-proportional d-tailed $q
+  iosevka ebook english quasi-proportional I-serifless $q
+  iosevka dyslexic english d-tailed $q
+  iosevka dyslexic english I-serifless $q
+  iosevka dyslexic english quasi-proportional d-tailed $q
+  iosevka dyslexic english quasi-proportional I-serifless $q
+fi
 rm -f $MAKE_INSTALL
 
 # vim: set ft=sh: #
