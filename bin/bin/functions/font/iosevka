@@ -217,7 +217,7 @@ while [ $1 ] ;do
   ligature   ) ligature $2  || usage; shift ;;
   double     ) unset mono ;;
   quasi*     ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi${family#*Mono}; variant I+; largefont=largefont ;;
-  dyslexic   ) shape $expanded; sb 0.7000; leading 1.5000; space 2; emdash 2; width=135; ebook monolexic ;;
+  dyslexic   ) shape $expanded; sb 0.7150; leading 1.5000; space 2; emdash 2; width=135; ebook monolexic ;;
   # font
   b-serifed  ) variant b+ p+ ;;                   # alternate b p dyslexic glyphs
   d-tailed   ) variant d p ;;                     # alternate d p dyslexic glyphs
@@ -234,8 +234,8 @@ while [ $1 ] ;do
   *Monolexic ) monolexic ${1%Monolexic} ;;
   # font tweaks
   cap        ) cap $2       || usage; shift ;;    # H height (affects descender as well)
-  kindle     ) leading 1.4185 ;;                  # maximum line height with menu typeface
-  kobo       ) leading 1.0000 ;;                  # more line height granularity available on the kobo
+  kindle     ) leading 1.4185 ;;                  # because only 3 space settings (this is maximum value with proper menu typeface)
+  kobo       ) leading 1.4185 ;;                  # any value >= 1 (more line height granularity available)
   large-font ) largefont=largefont ;;             # see fforge bookweight
   leading    ) leading $2   || usage; shift ;;    # line spacing > 1.0
   noround    ) unset sb ;;
