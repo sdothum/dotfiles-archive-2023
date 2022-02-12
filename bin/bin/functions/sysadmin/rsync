@@ -6,7 +6,7 @@
 
 # ................................................................ Rsync wrapper
 
-usage() { echo "usage: $(basename $0) [--list-only] [<option>] arm | backup | depot | dotfiles | home | pi | server | stow | ttrss | usb [hostname] | vps | wiki | [--delete] <command>"; exit 1; }
+usage() { echo "usage: $(basename $0) [--list-only] [<option>] arm | backup | depot | dotfiles | home | pi | server | stow | ttrss | usb [hostname] | vps | wiki | xbps | [--delete] <command>"; exit 1; }
 
 EXCLUDE=$(dirname $0)/.rsync_exclude
 PLEX=/opt/plexmediaserver/Library/Application\ Support
@@ -173,6 +173,7 @@ stow    ) stow ;;
 ttrss   ) rsync -r --delete /srv/http/tt-rss/themes/my*.css $target:/srv/http/tt-rss/themes/ ;;
 usb     ) usb; sync ;;
 vps     ) vps ;;
+xbps    ) exec xb C ;;  # backup xbps cache
 
 wiki    ) ifno 'recover thedarnedestthing.com:/vimwiki' && exit
           trace "thedarnedestthing.com:/vimwiki => $(hostname)"

@@ -53,7 +53,7 @@ I*) sudo rm -f /var/lib/btrfs/*.* ;;
 s*) [ $3 ] && { interval=$(( $2 * 60 )); shift; }; show $(volume $2) ;;
 
 * ) nohup sudo btrfs scrub start -Bd $(volume $@) >/dev/null 2>&1 &
-    pstat Xorg && (term "$@" "scrub s $@" &) || scrub s $@ ;;
+    which xorg >/dev/null 2>&1 && (term "$@" "scrub s $@" &) || scrub s $@ ;;
 esac
 
 # vim: set ft=sh: #

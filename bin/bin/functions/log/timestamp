@@ -8,13 +8,9 @@
 
 # ......................................................................... Date
 
+day() { [ $(date '+%p') = AM ] && cat || tr '[:lower:]' '[:upper:]'; }  # (AM) Day (PM) DAY
+
 # common date string for consistent script logging
-# date '+%a %m.%d %I:%M %S%P'
-# date "+${__YELLOW}  ${GREEN}%a %-I:%M %S%P${NOCOLOR}"
-# ditto @ "$(date '+%a %-I:%M %S%P')"
-# ditto $(date "+%a %H°%M'%S\"")
-# ditto $(date "+%u>") "$(date "+%-H°%M'%S\"")"
-# ditto $(date "+%a" | tr '[:upper:]' '[:lower:]') "${__GREEN}$(date "+%-H %M'%S\"")"
-ditto $(date "+%a" | cut -c -2 | tr '[:lower:]' '[:upper:]') "${__GREEN}$(date "+%-H %M'%S\"")"
+ditto $(date "+%a" | day) "${__GREEN}$(date "+%-I %M'%S\"")"
 
 # vim: set ft=sh: #
