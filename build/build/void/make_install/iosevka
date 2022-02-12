@@ -50,11 +50,11 @@ else
   # desktop fonts
   iosevka expanded $flavour $d
   iosevka expanded proof $flavour $d
-  iosevka expanded menu $flavour $d
+  iosevka expanded menu $flavour q-curly $d
 
   # www fonts
-  iosevka heading english d-tailed
-  iosevka heading english I-serifless
+  iosevka heading english d-tailed q-curly
+  iosevka heading english I-serifless q-curly
 
   # e-reader fonts
   iosevka ebook english d-tailed $q
