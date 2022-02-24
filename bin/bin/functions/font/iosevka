@@ -40,7 +40,7 @@ usage() {
                [cap [-+]<decimal>]
                [noround | sb <decimal>]
                [shape <emu>]
-               [weight <integer> <name>]
+               [weight <integer> <name> | webfont]
                [xheight [-+]<decimal>]"
   exit 1
 }
@@ -55,6 +55,7 @@ MAKE_INSTALL=/tmp/iosevka:make_install
 leading=1.25  # default coding line spacing
 extended=576  # extended regular shape (slightly tighter than Iosevka defaults)
 expanded=600  # maximum terminal source code and proof legibility
+book=450      # weight
 
 symbols() {
   ampersand=upper-open
@@ -176,6 +177,7 @@ leading() { leading="leading = 'default_leading * $(real $1)'"; }
 sb()      { sb="sb = 'default_sb * $(real $1)'"; }
 cap()     { cap="cap = 'default_cap * $(real $1)'" && ditto override "$cap"; }
 xheight() { xheight="xheight = 'default_xheight * $(real $1)'" && ditto override "$xheight"; }
+# book()    { book=$(integer $1) || return 1; }
 
 weight() {
   weight=$(integer $1) || return 1
@@ -185,7 +187,7 @@ weight() {
 
 # e-reading only fontset
 # english() { exclude_chars='ranges = [[592, 687], [1024, 8191], [8304, 8351], [8400, 8447], [8528, 8703], [8960, 9631], [9728, 130041]]'; }  # prune unnecessary unicode sets
-english()  { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 566], [568, 586], [588, 709], [712, 712], [714, 727], [734, 768], [770, 805], [807, 915], [917, 936], [938, 955], [957, 959], [961, 7807], [7814, 7921], [7924, 8210], [8213, 8215], [8219, 8219], [8223, 8223], [8227, 8229], [8231, 8239], [8241, 8248], [8251, 8259], [8261, 8363], [8365, 8452], [8454, 8466], [8468, 8469], [8471, 8481], [8483, 8485], [8487, 8493], [8495, 8530], [8533, 8538], [8543, 8705], [8707, 8709], [8711, 8718], [8720, 8720], [8723, 8724], [8726, 8728], [8731, 8733], [8735, 8746], [8748, 8775], [8777, 8799], [8801, 8803], [8806, 9412], [9414, 9673], [9675, 64255], [64261, 130041]]'; }  # [8826, 8827, 8880, 8881] not excluded (?)
+english()  { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 566], [568, 586], [588, 709], [712, 712], [714, 727], [734, 768], [770, 805], [807, 915], [917, 936], [938, 955], [957, 959], [961, 7807], [7814, 7921], [7924, 8210], [8213, 8215], [8219, 8219], [8223, 8223], [8228, 8229], [8231, 8239], [8241, 8248], [8251, 8259], [8261, 8363], [8365, 8452], [8454, 8466], [8468, 8469], [8471, 8481], [8483, 8485], [8487, 8493], [8495, 8530], [8533, 8538], [8543, 8705], [8707, 8709], [8711, 8718], [8720, 8720], [8723, 8724], [8726, 8728], [8731, 8733], [8735, 8746], [8748, 8775], [8777, 8799], [8801, 8803], [8806, 9412], [9414, 9673], [9675, 64255], [64261, 130041]]'; }  # [8826, 8827, 8880, 8881] not excluded (?)
 
 family()    { [ $1 ] || return 1; family=$1; }
 space()     { space=$(real $1); }
@@ -233,9 +235,10 @@ while [ $1 ] ;do
   family     ) family $2    || usage; shift ;;
   *Monolexic ) monolexic ${1%Monolexic} ;;
   # font tweaks
+  webfont    ) book=500; monolexic w; largefont=largefont ;;  # heavier bookweight for web usage
   cap        ) cap $2       || usage; shift ;;    # H height (affects descender as well)
   kindle     ) leading 1.4185 ;;                  # because only 3 space settings (this is maximum value with proper menu typeface)
-  kobo       ) leading 1.4185 ;;                  # any value >= 1 (more line height granularity available)
+  kobo       ) leading 1.4185 ;;                  # any value >= 1 (but have retained setting for interested kindle users)
   large-font ) largefont=largefont ;;             # see fforge bookweight
   leading    ) leading $2   || usage; shift ;;    # line spacing > 1.0
   noround    ) unset sb ;;
@@ -260,6 +263,7 @@ ditto override "$sb"
 [ $space ] && ditto override "space ${space}x"
 [ $emdash ] && ditto override "emdash ${emdash}x"
 [ "$variant" ] && ditto variants "$variant"
+[ $book = 450 ] || ditto override "weights.book = $book"
 
 # additional font weight
 [ $weight ] && weight="
@@ -389,9 +393,9 @@ menu  = 400  # Weight for the font's names.
 css   = 400  # Weight for webfont CSS.
 
 [buildPlans.$family.weights.book]
-shape = 450
-menu  = 450  # Use 450 here to name the font's weight 'Book'
-css   = 450
+shape = $book
+menu  = $book  # Use 450 here to name the font's weight 'Book'
+css   = $book
 
 [buildPlans.$family.weights.bold]
 shape = 700
@@ -522,6 +526,6 @@ fi
 
 [ $space ] && fforge dyslexic $space $family              # lengthen space character cell width
 
-[ $ebook ] && fforge bookweight $largefont $family        # book weight for kindle (as regular)
+[ $ebook ] && fforge bookweight $largefont $family        # book weight for e-reader (as regular)
 
 # vim: set ft=sh: #

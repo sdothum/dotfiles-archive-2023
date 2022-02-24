@@ -15,10 +15,11 @@ usage() {
   exit 1
 }
 
-interval=300  # default 5 minute interval reporting
+interval=300     # default 5 minute interval reporting
+CRON=/tmp/scrub  # see crontab -l
 
 # import user path
-. $HOME/bin/functions/shell/user_path
+[ -e $CRON ] && . $HOME/bin/functions/shell/user_path
 
 # butterfs maintenance
 volume() {
@@ -43,6 +44,7 @@ show() {
     sleep $interval
   done
   [ $in_progress ] || press_enter
+  rm -f $CRON
 }
 
 case $1 in
@@ -53,7 +55,7 @@ I*) sudo rm -f /var/lib/btrfs/*.* ;;
 s*) [ $3 ] && { interval=$(( $2 * 60 )); shift; }; show $(volume $2) ;;
 
 * ) nohup sudo btrfs scrub start -Bd $(volume $@) >/dev/null 2>&1 &
-    which xorg >/dev/null 2>&1 && (term "$@" "scrub s $@" &) || scrub s $@ ;;
+    [ ! -e $CRON ] && which xorg >/dev/null 2>&1 && (term "$@" "scrub s $@" &) || scrub s $@ ;;
 esac
 
 # vim: set ft=sh: #

@@ -53,7 +53,7 @@ wiki() {
     error=": ${file##*/} ∉ ${file%/*}"
     sed -i "\|${file##*/}.$SEP ${file%/*}$|d" $HISTORY/wiki
     file=${file##*/}
-    continue
+    return 1
   fi
 }
 
@@ -64,7 +64,7 @@ while : ;do
   case $file in
   "$DIARY") exec dmenu wiki diary ;;
   "$EDIT" ) add ;;
-  *       ) wiki ;;
+  *       ) wiki || continue ;;
   esac
   break
 done
