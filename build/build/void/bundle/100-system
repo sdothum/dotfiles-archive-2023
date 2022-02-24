@@ -18,8 +18,9 @@
 = hardware
 = ════════
 # dmidecode
-# intel-ucode
-# lm_sensors
+  intel-ucode
+  iucode-tools
+  lm_sensors
 
 
 = power
