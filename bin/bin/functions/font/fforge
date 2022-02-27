@@ -117,13 +117,13 @@ Generate(\$1);
 "
 }
 
-bookweight() {
-  confirm 'set book weights as regular'
+weight() {
+  confirm "set $regular weights as regular"
   rm -f *\#1.ttf
   rm -f *.ttx
 
   # bold **must** be converted too
-  fonts='*-book *-bookitalic *-bold *-bolditalic'
+  fonts="*-$regular *-${regular}italic *-bold *-bolditalic"
 
   # dump to ttx
   for i in $fonts ;do
@@ -134,15 +134,15 @@ bookweight() {
 
   # assign book weights as regular (normal)
   family=${FONT##*/}
-  sed -i -e "s/$family Book Version/$family Regular Version/"       \
-      -e "s/$family[ -]Book/$family/"                               \
-      -e 's/Book/Regular/'                                          \
-      *-book.ttx 
+  sed -i -e "s/$family ${regular} Version/$family Regular Version/i"       \
+      -e "s/$family[ -]${regular}/$family/i"                               \
+      -e "s/${regular}/Regular/i"                                          \
+      *-${regular}.ttx 
 
-  sed -i -e "s/$family Book Italic Version/$family Italic Version/" \
-      -e "s/$family[ -]Book/$family/"                               \
-      -e 's/Book Italic/Italic/'                                    \
-      *-bookitalic.ttx 
+  sed -i -e "s/$family ${regular} Italic Version/$family Italic Version/i" \
+      -e "s/$family[ -]${regular}/$family/i"                               \
+      -e "s/${regular} Italic/Italic/i"                                    \
+      *-${regular}italic.ttx 
 
   # generate new ttf
   for i in $fonts ;do
@@ -160,7 +160,7 @@ $(regularweight 0u0077)
 " >/tmp/fontforge.script
 
   echo
-  for i in *book*\#1.ttf ;do
+  for i in *${regular}*\#1.ttf ;do
     ditto tweak_MWw $i
     case $i in
     *italic*) file=*-italic.ttf ;;
@@ -193,7 +193,7 @@ case $1 in
 curlyq     ) ;;
 ligature   ) [ $4 ] && { width=$2; shift 2; } || { shape=$2; shift; } ;;  # see iosevka for tricky bits
 punctuation) [ $2 ] && { emdash=$2; shift; } || emdash=2 ;;
-bookweight ) [ "$2" = 'largefont' ] && { largefont=true; shift; } ;;
+*weight    ) regular=${1%weight}; fforge=weight; [ "$2" = 'largefont' ] && { largefont=true; shift; } ;;
 dyslexic   ) [ $2 ] && { space=$2; shift; } || space=2 ;;
 *          ) usage ;;
 esac
