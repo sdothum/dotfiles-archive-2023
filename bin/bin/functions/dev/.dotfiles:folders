@@ -13,6 +13,7 @@
   herbstluftwm
   kindle
   kobo/*/*yaml
+  kobo/*/src/*yaml
   kobo/fonts
   kobo/calibre_sync_columns.mkd
   kustom
