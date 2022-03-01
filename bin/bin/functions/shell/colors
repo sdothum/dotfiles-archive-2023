@@ -1,0 +1,45 @@
+#!/usr/bin/dash
+# sdothum - 2016 $(c) wtfpl
+
+# Shell
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................... cron ANSI terminal colours
+
+# NOTE: cron process must be bash shell (dash does not show ansi colors)
+# see user_path
+# see colors.fish
+
+# for posix shell scripts
+# blink|noblink|nocolor|normal|underline
+export BLINK=$(printf "\e[5m")
+export NOBLINK=$(printf "\e[25m")
+export NOCOLOR=$(printf "\e[0;0m")
+export UNDERLINE=$(printf "\e[4m")
+
+# NORMAL
+# __BRIGHT
+# black|BLACK|white|WHITE|blue|BLUE|cyan|CYAN|green|GREEN|magenta|MAGENTA|red|RED|yellow|YELLOW
+export BLACK=$(printf "\e[0;30m")
+export __BLACK=$(printf "\e[1;90m")
+export WHITE=$(printf "\e[0;37m")
+export __WHITE=$(printf "\e[1;97m")
+export BLUE=$(printf "\e[0;34m")
+export __BLUE=$(printf "\e[1;94m")
+export CYAN=$(printf "\e[0;36m")
+export __CYAN=$(printf "\e[1;96m")
+export GREEN=$(printf "\e[0;32m")
+export __GREEN=$(printf "\e[1;92m")
+export MAGENTA=$(printf "\e[0;35m")
+export __MAGENTA=$(printf "\e[1;95m")
+export RED=$(printf "\e[0;31m")
+export __RED=$(printf "\e[1;91m")
+export YELLOW=$(printf "\e[0;33m")
+export __YELLOW=$(printf "\e[1;93m")
+
+# 256 color palette, see ditto
+export TURQUOISE=$(printf "\e[38;5;039m")
+export ORANGE=$(printf "\e[38;5;166m")
+export __ORANGE=$(printf "\e[38;5;208m")
+
+# vim: set ft=sh: #
