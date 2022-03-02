@@ -10,8 +10,8 @@
 # crontab: 0 1 1 * * <path>/scrub share >>/tmp/scrub.log 2>&1
 
 usage() { 
-  echo "usage: $(basename $0) a'll | boot | net | share | backup"
-  echo "       $(basename $0) c'ancel | s'tatus [<minutes>] | I'nitialize  [boot | net | share | backup]"
+  echo "usage: $(basename $0) a'll | boot | root | net | share | backup"
+  echo "       $(basename $0) c'ancel | s'tatus [<minutes>] | I'nitialize  [boot | root | net | share | backup]"
   exit 1
 }
 
@@ -24,10 +24,12 @@ CRON=/tmp/scrub  # see crontab -l
 # butterfs maintenance
 volume() {
   case $@ in
-  boot | root) echo /boot ;;
-  net | share) echo /net ;;
-  backup     ) echo /backup ;;
-  *          ) echo $@ ;;
+  boot  ) echo /boot ;;
+  root  ) echo /boot ;;
+  net   ) echo /net ;;
+  share ) echo /net ;;
+  backup) echo /backup ;;
+  *     ) echo $@ ;;
   esac
 }
 
@@ -44,6 +46,7 @@ show() {
     sleep $interval
   done
   [ $in_progress ] || press_enter
+  notify critical "btrfs scrub $V" "$(sudo btrfs scrub status $V | grep summary | sed -r 's/.*: *//g; s/^(.)/\u\1/')"
   rm -f $CRON
 }
 

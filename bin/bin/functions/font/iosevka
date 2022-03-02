@@ -27,7 +27,7 @@
 #
 #     variants, full atkinson looks best in larger font sizes..
 #     iosevka ebook atkinson english         (strict hyperlegible variants)
-#     iosevka extended geometric jost proof  (extended width jost prose font)
+#     iosevka expanded geometric jost proof  (expanded width jost prose font)
 
 # type -t usage | grep -q 'shell function' ||  # see make_install
 
@@ -69,8 +69,9 @@ symbols() {
 
 # atkinson hyperlegible typeface
 grotesque() {
-  capital_g=toothless-corner-serifless-hooked
+  capital_g=toothless-rounded-serifless-hooked
   capital_i=short-serifed
+  capital_j=descending-flat-hook-serifless
   capital_k=straight-serifless
   capital_q=detached-tailed
   a=double-storey-serifless
@@ -98,6 +99,7 @@ geometric() {
   unset curlyq
   capital_g=toothless-rounded-serifless-hooked
   capital_i=serifless
+  capital_j=descending-serifless
   capital_k=symmetric-touching-serifless
   capital_q=detached-tailed
   a=single-storey-serifless
@@ -133,10 +135,11 @@ variant() {
     G          ) glyph capital_g=toothed-serifless-hooked ;;
     I          ) glyph capital_i=serifless ;;
     I+         ) glyph capital_i=serifed ;;
+    J          ) glyph capital_j=serifless ;;
     j          ) glyph j=serifless ;;
-    Q          ) glyph capital_q=crossing ;;
     p          ) glyph p=eared ;;
     p+         ) glyph p=earless-corner ;;
+    Q          ) glyph capital_q=crossing ;;
     q          ) glyph q=diagonal-tailed ;;
     u          ) glyph u=toothed ;;
     ampersand  ) glyph ampersand=closed ;;
@@ -227,9 +230,9 @@ while [ $1 ] ;do
   q-curly    ) variant $1; curlyq=true ;;
   q-tailed   ) unset curlyq ;;
   grotesque  ) grotesque ;;
-  atkinson   ) grotesque; ebook hyperlegible; variant b G p Q q u ampersand at number_sign percent ;;
+  atkinson   ) grotesque; ebook hyperlegible; variant b G J p Q q u ampersand at number_sign percent ;;
   geometric  ) geometric; cap 1.225; build=-jost ;;
-  jost       ) geometric; cap 1.225; build=-jost; variant a j Q ampersand at dollar number_sign percent question ;;
+  jost       ) geometric; cap 1.225; build=-jost; variant a j Q u ampersand at dollar number_sign percent question ;;
   family     ) family $2    || usage; shift ;;
   *Monolexic ) monolexic ${1%Monolexic} ;;
   # font tweaks
@@ -287,7 +290,7 @@ variants="
 capital-d = 'more-rounded-serifless'  # D
 capital-g = '$capital_g'              # G
 capital-i = '$capital_i'              # I
-capital-j = 'serifless'               # J
+capital-j = '$capital_j'              # J
 capital-k = '$capital_k'              # K
 capital-m = 'flat-bottom'             # M
 capital-q = '$capital_q'              # Q

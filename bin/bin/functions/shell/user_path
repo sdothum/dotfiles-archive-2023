@@ -13,6 +13,6 @@ export SHELL=dash
 . /etc/profile
 
 # export colors for log messages
-[ $1 = colors ] && . $HOME/bin/functions/shell/colors
+[ $1 ] && . $HOME/bin/functions/shell/colors
 
 # vim: set ft=sh: #
