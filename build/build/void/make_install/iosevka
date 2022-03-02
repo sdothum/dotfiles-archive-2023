@@ -8,7 +8,6 @@
 # Usage: make_install iosevka [kindle | kobo | I-serifless | d-tailed | q-curly] | <opions>*
 
 MAKE_INSTALL=/tmp/iosevka:make_install
-ereader=kobo
 touch $MAKE_INSTALL
 shift
 
@@ -54,18 +53,14 @@ else
   iosevka expanded menu $flavour $d q-curly
 
   # www fonts
-  iosevka heading english d-tailed q-curly
   iosevka heading english I-serifless q-curly
+  iosevka dyslexic english I-serifless q-curly kobo webfont
 
   # e-reader fonts
   iosevka ebook english d-tailed $q
   iosevka ebook english I-serifless $q
-  iosevka ebook english atkinson $q
   iosevka ebook english quasi-proportional d-tailed $q
   iosevka ebook english quasi-proportional I-serifless $q
-  iosevka dyslexic english d-tailed $q $ereader
-  iosevka dyslexic english I-serifless $q $ereader
-  iosevka dyslexic english I-serifless $q $ereader webfont
   iosevka dyslexic english quasi-proportional d-tailed $q
   iosevka dyslexic english quasi-proportional I-serifless $q
 fi
