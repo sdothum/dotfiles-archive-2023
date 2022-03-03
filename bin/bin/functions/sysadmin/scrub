@@ -46,7 +46,7 @@ show() {
     sleep $interval
   done
   [ $in_progress ] || press_enter
-  notify critical "btrfs scrub $V" "$(sudo btrfs scrub status $V | grep summary | sed -r 's/.*: *//g; s/^(.)/\u\1/')"
+  notify X critical "btrfs scrub $V" "$(sudo btrfs scrub status $V | grep summary | sed -r 's/.*: *//g; s/^(.)/\u\1/')"
   rm -f $CRON
 }
 
