@@ -6,7 +6,7 @@
 
 # ...................................................................... iosevka
 
-# for git iosevka 10.x
+# for git iosevka 15.x
 
 # eg. source code and desktop fonts..
 #     iosevka expanded        (grotesque width coding font, reduce display fontsize by 1)
@@ -59,7 +59,7 @@ expanded=600  # maximum terminal source code and proof legibility
 symbols() {
   ampersand=upper-open
   asterisk=penta-high
-  at=short
+  at=fourfold-solid-inner-tall
   dollar=through
   number_sign=upright
   paren=normal
@@ -294,19 +294,21 @@ capital-j = '$capital_j'              # J
 capital-k = '$capital_k'              # K
 capital-m = 'flat-bottom'             # M
 capital-q = '$capital_q'              # Q
+capital-u = 'toothless-rounded'       # U
 capital-w = 'straight-flat-top'       # W
 a = '$a'
 b = '$b'
 d = '$d'
 e = 'flat-crossbar'
 f = '$f'
+g = 'single-storey-serifless'
 i = '$i'
 j = '$j'
 k = '$k'
 l = '$l'
 p = '$p'
 q = '$q'
-r = 'compact'
+r = 'hookless'
 t = '$t'
 u = '$u'
 w = 'straight-flat-top'
@@ -322,15 +324,20 @@ brace = 'straight'                    # {}
 ampersand = '$ampersand'              # &
 asterisk = '$asterisk'                # *
 at = '$at'                            # @
+cyrl-ef = 'serifless'                 # ф 
 cyrl-capital-ka = '$cyrl_ka'          # К
 cyrl-ka = '$cyrl_ka'                  # к
+cyrl-yeri = 'corner'                  # ь
+cyrl-yery = 'corner'                  # Ы
 dollar = '$dollar'                    # $
 eszet = 'sulzbacher'                  # ß
 long-s = 'flat-hook'                  # ſ
 lower-iota = 'flat-tailed'            # ι
 lower-lambda = 'straight-turn'        # λ
+lower-mu = 'tailless'                 # µ
+lower-xi = 'rounded'                  # ξ 
 number-sign = '$number_sign'          # #
-paragraph-sign = 'low'                # ¶
+pilcrow = 'low'                       # ¶
 paren = '$paren'                      # ()
 percent = '$percent'                  # %
 question = '$question'                # ?
@@ -344,6 +351,7 @@ spacing = '$spacing'  # Optional; Values: 'normal', 'term', 'fontconfig-mono', o
 serifs = 'sans'       # Optional; Values: 'sans' or 'slab'
 no-cv-ss = true
 no-litigation = $no_litigation
+webfont-formats = ['ttf', 'woff2']
 
 ###################################################################################################
 # Configure variants
