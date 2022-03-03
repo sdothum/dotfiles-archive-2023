@@ -33,7 +33,9 @@ update() {
 
   for i in $fonts ;do
     file=$i.ttf
-    cp -v $file $STOW/$ereader/fonts/$1/
+    folder=$STOW/$ereader/fonts/$1
+    mkdir -p $folder
+    cp -v $file $folder/
   done
 }
 
