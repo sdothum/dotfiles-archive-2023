@@ -1,0 +1,541 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Font
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... iosevka
+
+# for git iosevka 15.x
+
+# eg. source code and desktop fonts..
+#     iosevka expanded        (grotesque width coding font, reduce display fontsize by 1)
+#     iosevka expanded proof  (grotesque width prose font) **
+#     iosevka expanded menu [q-curly]
+#     iosevka heading english [q-curly]
+#
+#     e-ink fonts..
+#     iosevka ebook english [d-tailed] [q-curly]
+#     iosevka ebook english I-serifless [q-curly]
+#     iosevka ebook english atkinson
+#     iosevka ebook english quasi-proportional [q-curly]
+#     iosevka ebook english quasi-proportional I-serifless [q-curly]
+#     iosevka dyslexic english [d-tailed] [q-curly]
+#     iosevka dyslexic english I-serifless [q-curly]
+#     iosevka dyslexic english quasi-proportional [q-curly]
+#     iosevka dyslexic english quasi-proportional I-serifless [q-curly]
+#
+#     variants, full atkinson looks best in larger font sizes..
+#     iosevka ebook atkinson english         (strict hyperlegible variants)
+#     iosevka expanded geometric jost proof  (expanded width jost prose font)
+
+# type -t usage | grep -q 'shell function' ||  # see make_install
+
+usage() {
+  echo "usage: iosevka [normal (default) | extended | expanded | ebook | dyslexic | heading]
+               [english | ligature <name>] [double] [quasi-proportional] [space <decimal>] [ emdash <decimal> ]
+               [grotesque (default) | atkinson | geometric | jost] | [b-serifed] | [d-tailed] | [G-toothed] | [I-serifless] | [Q-crossed] | [q-curly] | [q-tailed] | [paren]
+               [proof | menu | large-font | kindle | kobo | leading <decimal>]
+               [family <name> | <prefix>Monolexic]
+               [cap [-+]<decimal>]
+               [noround | sb <decimal>]
+               [shape <emu>]
+               [weight <integer> <name> | webfont]
+               [xheight [-+]<decimal>]"
+  exit 1
+}
+
+# exhibit..
+# A B C D E F G H I J K L M N O P Q R S T U V W X Y Z  0 1 2 3 4 5 6 7 8 9
+# a b c d e f g h i j k l m n o p q r s t u v w x y z      @   $ %   &      { }
+
+REPO=/net/depot/Iosevka
+MAKE_INSTALL=/tmp/iosevka:make_install
+
+default_leading=1250  # set to pre-15.x value
+
+leading=1.25          # default coding line spacing
+extended=576          # extended regular shape (slightly tighter than Iosevka defaults)
+expanded=600          # maximum terminal source code and proof legibility
+
+symbols() {
+  ampersand=upper-open
+  asterisk=penta-high
+  at=short
+  dollar=through
+  number_sign=upright
+  paren=normal
+  percent=dots
+  question=smooth
+}
+
+# atkinson hyperlegible typeface
+grotesque() {
+  capital_g=toothless-rounded-serifless-hooked
+  capital_i=short-serifed
+  capital_j=descending-flat-hook-serifless
+  capital_k=straight-serifless
+  capital_q=detached-tailed
+  a=double-storey-serifless
+  b=toothless-corner
+  d=toothed-serifless
+  f=flat-hook-crossbar-at-x-height
+  i=hooky
+  j=flat-hook-serifless
+  k=straight-serifless
+  l=flat-tailed
+  p=motion-serifed
+  q=tailed
+  t=flat-hook-short-neck2
+  u=toothless-rounded
+  y=straight-turn
+  zero=reverse-slashed
+  one=no-base-flat-top-serif
+  six=closed-contour
+  symbols
+  cyrl_ka=symmetric-touching-serifless
+}
+
+# jost* typeface
+geometric() {
+  unset curlyq
+  capital_g=toothless-rounded-serifless-hooked
+  capital_i=serifless
+  capital_j=descending-serifless
+  capital_k=symmetric-touching-serifless
+  capital_q=detached-tailed
+  a=single-storey-serifless
+  b=toothed
+  d=toothed-serifless
+  f=serifless-crossbar-at-x-height
+  i=serifless
+  j=straight-line
+  k=symmetric-touching-serifless
+  l=serifless
+  p=eared
+  q=straight
+  t=cross-short-neck2
+  u=toothed
+  y=straight
+  zero=unslashed-oval
+  one=no-base
+  six=straight-bar
+  symbols
+  cyrl_ka=symmetric-connected-serifless
+}
+
+# for stricter typeface matching
+glyph() { eval $1; variant="$variant $1"; }
+ 
+variant() {
+  for o in $@ ;do  # "o"nly non-variant character ($i in use for variant :)
+    case $o in
+    a          ) glyph a=single-storey-serifless ;;
+    b          ) glyph b=toothed ;;
+    b+         ) glyph b=toothless-corner-motion-serifed ;;
+    d          ) glyph d=tailed-serifless ;;
+    G          ) glyph capital_g=toothed-serifless-hooked ;;
+    I          ) glyph capital_i=serifless ;;
+    I+         ) glyph capital_i=serifed ;;
+    J          ) glyph capital_j=serifless ;;
+    j          ) glyph j=serifless ;;
+    p          ) glyph p=eared ;;
+    p+         ) glyph p=earless-corner ;;
+    Q          ) glyph capital_q=crossing ;;
+    q          ) glyph q=diagonal-tailed ;;
+    u          ) glyph u=toothed ;;
+    ampersand  ) glyph ampersand=closed ;;
+    asterisk   ) glyph asterisk=penta-low ;;  # paragraph separator (ebook) glyph
+    at         ) glyph at=fourfold ;;
+    dollar     ) glyph dollar=open ;;
+    number_sign) glyph number_sign=slanted ;;
+    paren      ) glyph paren=flat-arc ;;
+    percent    ) glyph percent=rings-continuous-slash ;;
+    question   ) glyph question=corner ;;
+    *          ) variant="$variant $o" ;;
+    esac
+  done
+}
+
+integer() {
+  [ $1 ]                    || return 1
+  [ $1 -eq $1 2>/dev/null ] || return 1
+  echo $1
+}
+
+real() {
+  integer ${1#*.} >/dev/null || return 1
+  integer ${1%.*} >/dev/null || return 1
+  echo $1
+}
+
+adjust() {
+   integer $2 >/dev/null || return 1
+   echo $(( $1 + $2 ))
+}
+
+shape()   { shape="shape = $(integer $1)"; }
+
+# metric overrides
+leading() { leading="leading = '$default_leading * $(real $1)'"; }
+sb()      { sb="sb = 'default_sb * $(real $1)'"; }
+cap()     { cap="cap = 'default_cap * $(real $1)'" && ditto override "$cap"; }
+xheight() { xheight="xheight = 'default_xheight * $(real $1)'" && ditto override "$xheight"; }
+
+weight() {
+  weight=$(integer $1) || return 1
+  [ $2 ] && name=$2    || return 1
+  ditto override "$name weight = $weight"
+}
+
+# e-reading only fontset
+# english() { exclude_chars='ranges = [[592, 687], [1024, 8191], [8304, 8351], [8400, 8447], [8528, 8703], [8960, 9631], [9728, 130041]]'; }  # prune unnecessary unicode sets
+english()  { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 566], [568, 586], [588, 709], [712, 712], [714, 727], [734, 768], [770, 805], [807, 915], [917, 936], [938, 955], [957, 959], [961, 7807], [7814, 7921], [7924, 8210], [8213, 8215], [8219, 8219], [8223, 8223], [8228, 8229], [8231, 8239], [8241, 8248], [8251, 8259], [8261, 8363], [8365, 8452], [8454, 8466], [8468, 8469], [8471, 8481], [8483, 8485], [8487, 8493], [8495, 8530], [8533, 8538], [8543, 8705], [8707, 8709], [8711, 8718], [8720, 8720], [8723, 8724], [8726, 8728], [8731, 8733], [8735, 8746], [8748, 8775], [8777, 8799], [8801, 8803], [8806, 9412], [9414, 9673], [9675, 64255], [64261, 130041]]'; }  # [8826, 8827, 8880, 8881] not excluded (?)
+
+family()    { [ $1 ] || return 1; family=$1; }
+space()     { space=$(real $1); }
+emdash()    { emdash=$(real $1); }
+ebook()     { variant asterisk; no_litigation=true; family e$(echo $1 | sed 's/.*/\u&/'); regular=book; ebook=true; }
+
+monolexic() { [ $ebook ] && family=$(echo $family | sed -r "s/^(.*)([A-Z][^ ]*)/$1\2/"); }
+ligature()  { [ $1 ] || return 1; [ $1 = default ] && ligature=default-calt || ligature=$1; inherits="inherits = '$ligature'"; }
+
+grotesque    # default typeface
+leading $leading
+no_litigation=false
+mono=--mono  # nerdfont (pango no longer supports double width display)
+shape 500
+sb 0.7000
+spacing=term
+
+while [ $1 ] ;do
+  case "$1" in
+  # style
+  normal     ) shape 500; sb 0.7000 ;;                                                   # normal width
+  ebook      ) shape $extended; sb 0.7000; leading 1.4185; space 2; emdash 2; width=140; ebook monolegible ;;
+  expanded   ) shape $expanded; sb 0.8500 ;;                                             # expanded width (for source code and proof)
+  extended   ) shape $extended; sb 0.7000 ;;                                             # extended width (tighter than expanded)
+  heading    ) shape 650; sb 0.8000; leading 1.2500; weight 300 light; ebook heading ;;  # web heading
+  menu       ) leading 1.5000; sb 0.9000; build=-menu ;;                                 # rofi menu
+  proof      ) leading 2.0000; sb 0.8000; build=${build}-proof ;;                        # for pure writing :)
+  english    ) english ;;
+  ligature   ) ligature $2  || usage; shift ;;
+  double     ) unset mono ;;
+  quasi*     ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi${family#*Mono}; variant I+; largefont=largefont ;;
+  dyslexic   ) shape $expanded; sb 0.7150; leading 1.5000; space 2; emdash 2; width=135; ebook monolexic ;;
+  # font
+  b-serifed  ) variant b+ p+ ;;                   # alternate b p dyslexic glyphs
+  d-tailed   ) variant d p ;;                     # alternate d p dyslexic glyphs
+  G-toothed  ) variant G ;;
+  I-serifless) variant I; monolexic i ;;          # combined minimal stroke glyphs
+  Q-crossed  ) variant Q ;;
+  q-curly    ) variant $1; curlyq=true ;;
+  q-tailed   ) unset curlyq ;;
+  grotesque  ) grotesque ;;
+  atkinson   ) grotesque; ebook hyperlegible; variant b G J p Q q u ampersand at number_sign percent ;;
+  geometric  ) geometric; cap 1.225; build=-jost ;;
+  jost       ) geometric; cap 1.225; build=-jost; variant a j Q u ampersand at dollar number_sign percent question ;;
+  family     ) family $2    || usage; shift ;;
+  *Monolexic ) monolexic ${1%Monolexic} ;;
+  # font tweaks
+  cap        ) cap $2       || usage; shift ;;    # H height (affects descender as well)
+  kindle     ) leading 1.4185 ;;                  # because only 3 space settings (this is maximum value with proper menu typeface)
+  kobo       ) leading 1.4185 ;;                  # any value >= 1 (but have retained setting for interested kindle users)
+  large-font ) largefont=largefont ;;             # see fforge bookweight
+  leading    ) leading $2   || usage; shift ;;    # line spacing > 1.0
+  noround    ) unset sb ;;
+  sb         ) sb $2        || usage; shift ;;    # side bearing (spacing)
+  shape      ) shape $2     || usage; shift ;;    # cell width
+  space      ) space $2     || usage; shift ;;    # space width
+  emdash     ) emdash $2    || usage; shift ;;    # emdash width
+  weight     ) weight $2 $3 || usage; shift 2 ;;  # custom font weight
+  webfont    ) weight 500 medium; monolexic w; largefont=largefont; regular=medium ;;  # heavier font for web usage
+  xheight    ) xheight $2   || usage; shift ;;    # height of x (experimental for larger fontsizes)
+  *          ) usage ;;
+  esac
+  shift
+done
+
+[ "$shape" ] || usage
+[ $family ]  || family=Iosevka$build
+[ $mono ]    || family=${family}-double
+
+ditto override "$leading"
+ditto override "$shape" 
+ditto override "$sb"
+[ $space ] && ditto override "space ${space}x"
+[ $emdash ] && ditto override "emdash ${emdash}x"
+[ "$variant" ] && ditto variants "$variant"
+
+# additional font weight
+[ $weight ] && weight="
+[buildPlans.$family.weights.$name]
+shape = $weight
+menu  = $weight
+css   = $weight
+"
+
+[ -e $MAKE_INSTALL ] &&  ditto make_install "build $family"|| { ifyes "build $family" || usage; }
+# install iosevka repo
+if [ -d $REPO ] ;then
+  cd $REPO
+  [ -e $MAKE_INSTALL ] || { ifno 'sync iosevka repo' || git pull; }
+else
+  cd ${REPO%/*}
+  git clone --depth 1 https://github.com/be5invis/Iosevka.git
+  cd Iosevka
+fi
+# rm -rf build dist 2>/dev/null
+
+# a tweaked :-) atkinson hyperlegible font character emulation
+variants="
+capital-d = 'more-rounded-serifless'  # D
+capital-g = '$capital_g'              # G
+capital-i = '$capital_i'              # I
+capital-j = '$capital_j'              # J
+capital-k = '$capital_k'              # K
+capital-m = 'flat-bottom'             # M
+capital-q = '$capital_q'              # Q
+capital-u = 'toothless-rounded'       # U
+capital-w = 'straight-flat-top'       # W
+a = '$a'
+b = '$b'
+d = '$d'
+e = 'flat-crossbar'
+f = '$f'
+g = 'single-storey-serifless'
+i = '$i'
+j = '$j'
+k = '$k'
+l = '$l'
+p = '$p'
+q = '$q'
+r = 'hookless'
+t = '$t'
+u = '$u'
+w = 'straight-flat-top'
+y = '$y'
+zero = '$zero'                        # 0
+one = '$one'                          # 1
+two = 'straight-neck'                 # 2
+four = 'closed'                       # 4
+five = 'oblique-upper-left-bar'       # 5
+six = '$six'                          # 6
+eight = 'two-circles'                 # 8
+brace = 'straight'                    # {}
+ampersand = '$ampersand'              # &
+asterisk = '$asterisk'                # *
+at = '$at'                            # @
+cyrl-ef = 'serifless'                 # ф 
+cyrl-capital-ka = '$cyrl_ka'          # К
+cyrl-ka = '$cyrl_ka'                  # к
+cyrl-yeri = 'corner'                  # ь
+cyrl-yery = 'corner'                  # Ы
+dollar = '$dollar'                    # $
+eszet = 'sulzbacher'                  # ß
+long-s = 'flat-hook'                  # ſ
+lower-iota = 'flat-tailed'            # ι
+lower-lambda = 'straight-turn'        # λ
+lower-mu = 'tailless'                 # µ
+lower-xi = 'rounded'                  # ξ 
+number-sign = '$number_sign'          # #
+pilcrow = 'low'                       # ¶
+paren = '$paren'                      # ()
+percent = '$percent'                  # %
+question = '$question'                # ?
+"
+
+# based on sample.toml (with quote and backtick conversion to single quotes)
+echo "
+[buildPlans.$family]  # <iosevka-custom> is your plan name
+family = '$family'    # Font menu family name
+spacing = '$spacing'  # Optional; Values: 'normal', 'term', 'fontconfig-mono', or 'fixed'
+serifs = 'sans'       # Optional; Values: 'sans' or 'slab'
+no-cv-ss = true
+no-litigation = $no_litigation
+webfont-formats = ['ttf', 'woff2']
+
+###################################################################################################
+# Configure variants
+
+# Optional; Whether to inherit a 'ss##' variant
+[buildPlans.$family.variants]
+# inherits = 'ss01'                   # use defaults instead (of inheriting)
+
+# Optional; Configure single character's variant
+[buildPlans.$family.variants.design]
+$variants
+
+# Optional; Configure single character's variant for Upright and Oblique; Overrides [design]
+[buildPlans.$family.variants.upright]
+$variants
+
+# Optional; Configure single character's variant for Italic only; Overrides [design]
+[buildPlans.$family.variants.italic]
+$variants
+
+# End variant section
+###################################################################################################
+
+###################################################################################################
+# Configure ligations
+
+[buildPlans.$family.ligations]
+$inherits      # Optional; inherits an existing ligation set
+disables = []  # Optional; disable specific ligation groups, overrides inherited ligation set
+enables  = []  # Optional; enable specific ligation groups, overrides inherited ligation set
+
+# End ligation section
+###################################################################################################
+
+
+###################################################################################################
+# Override default building weights
+# When buildPlans.<plan name>.weights is absent, all weights would built and mapped to
+# default values.
+# IMPORTANT : Currently 'menu' and 'css' property only support numbers between 0 and 1000.
+#             and 'shape' properly only supports number between 100 and 900 (inclusive).
+#             If you decide to use custom weights you have to define all the weights you
+#             plan to use otherwise they will not be built.
+[buildPlans.$family.weights.regular]
+shape = 400  # Weight for glyph shapes.
+menu  = 400  # Weight for the font's names.
+css   = 400  # Weight for webfont CSS.
+
+[buildPlans.$family.weights.book]
+shape = 450
+menu  = 450  # Use 450 here to name the font's weight 'Book'
+css   = 450
+
+[buildPlans.$family.weights.bold]
+shape = 700
+menu  = 700
+css   = 700
+
+$weight
+
+# End weight section
+###################################################################################################
+
+###################################################################################################
+# Override default building slope sets
+# When this section is absent, all slopes would be built.
+
+[buildPlans.$family.slopes.upright]
+angle = 0             # Angle in degrees. Valid range [0, 15]
+shape = 'upright'     # Slope grade used for shape selection.  'upright' | 'oblique' | 'italic'
+menu  = 'upright'     # Slope grade used for naming.           'upright' | 'oblique' | 'italic'
+css   = 'normal'      # Slope grade used for webfont CSS.      'normal'  | 'oblique' | 'italic'
+
+[buildPlans.$family.slopes.oblique]
+angle = 9.4
+shape = 'oblique'
+menu  = 'oblique'
+css   = 'oblique'
+
+[buildPlans.$family.slopes.italic]
+angle = 9.4
+shape = 'italic'
+menu  = 'italic'
+css   = 'italic'
+# End slope section
+###################################################################################################
+
+###################################################################################################
+# Override default building widths
+# When buildPlans.<plan name>.widths is absent, all widths would built and mapped to
+# default values.
+# IMPORTANT : Currently 'shape' property only supports numbers between 434 and 664 (inclusive),
+#             while 'menu' only supports integers between 1 and 9 (inclusive).
+#             The 'shape' parameter specifies the unit width, measured in 1/1000 em. The glyphs'
+#             width are equal to, or a simple multiple of the unit width.
+#             If you decide to use custom widths you have to define all the widths you plan to use,
+#             otherwise they will not be built.
+
+[buildPlans.$family.widths.normal]
+$shape            # Unit Width, measured in 1/1000 em.
+menu  = 5         # Width grade for the font's names.
+css   = 'normal'  # 'font-stretch' property of webfont CSS.
+
+[buildPlans.$family.widths.extended]
+shape = 600
+menu  = 7
+css   = 'expanded'
+
+# End width section
+###################################################################################################
+
+###################################################################################################
+# Character Exclusion
+# Specify character ranges in the section below to exclude certain characters from the font being
+# built. Remove this section when this feature is not needed.
+
+[buildPlans.$family.exclude-chars]
+$exclude_chars
+
+# End character exclusion
+###################################################################################################
+
+###################################################################################################
+# Compatibility Ligatures
+# Certain applications like Emacs does not support proper programming liagtures provided by
+# OpenType, but can support ligatures provided by PUA codepoints. Therefore you can edit the
+# following section to build PUA characters that are generated from the OpenType ligatures.
+# Remove this section when compatibility ligatures are not needed.
+
+# [[buildPlans.$family.compatibility-ligatures]]
+# unicode = 57600 # 0xE100
+# featureTag = 'calt'
+# sequence = '<*>'
+
+# End compatibility ligatures section
+###################################################################################################
+
+###################################################################################################
+# Metric overrides
+# Certain metrics like line height (leading) could be overridden in your build plan file.
+# Edit the values to change the metrics. Remove this section when overriding is not needed.
+
+[buildPlans.$family.metric-override]
+# leading = 1250
+winMetricAscenderPad = 0
+winMetricDescenderPad = 0
+powerlineScaleY = 1
+powerlineScaleX = 1
+powerlineShiftY = 0
+powerlineShiftX = 0
+
+# metric-override adjustments
+$leading
+$sb
+$cap
+$xheight
+
+# End metric override section
+###################################################################################################
+" >$REPO/private-build-plans.toml
+
+# ensure node.js is uptodate
+npm install  # ignore npm funding and audit messages
+# npm update
+
+npm run build -- ttf::$family  # post Verda commits
+
+if [ $ebook ] ;then
+  mkdir -p $HOME/.fonts/$family
+  cp -v dist/$family/ttf/* $HOME/.fonts/$family
+else
+  nerdfont $mono $family                                  # insert glyphs
+fi
+
+[ $curlyq ] && fforge curlyq $family                      # hyperlegible font mod for better q
+
+[ $ebook ] && [ $spacing = term ] && { fforge punctuation $emdash $family; unset width; }  # wide cell emdash and double width ellipsis
+
+[ $ebook ] && fforge ligature $width ${shape#*=} $family  # ae width character adjustment
+
+[ $space ] && fforge dyslexic $space $family              # lengthen space character cell width
+
+[ $ebook ] && fforge ${regular}weight $largefont $family  # rename weight for e-reader (as regular)
+
+# vim: set ft=sh: #
