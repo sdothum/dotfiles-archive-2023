@@ -48,6 +48,8 @@ if [ $ereader ] ;then
   update d-tailed iMonolexic
   iosevka dyslexic $ereader english I-serifless $q
   update p-serifed iMonolexic
+  iosevka dyslexic $ereader english I-serifless $q family Monolexic  # my monolexic default settings
+  update '' Monolexic
 else
   # desktop fonts
   iosevka expanded $flavour $d $q
