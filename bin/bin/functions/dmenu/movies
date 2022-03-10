@@ -12,11 +12,12 @@
 #        ../movies
 #               ../title.YEAR.*  (movie)
 
-  LAST='[ last watched ]'
-  NAME='[ sort by name ]'
-  DATE='[ sort by date ]'
-  EDIT='[ manage       ]'
-SEARCH='[ search       ]'
+     LAST='[ last watched ]'
+     NAME='[ sort by name ]'
+     DATE='[ sort by date ]'
+   SEARCH='[ search       ]'
+     FILE='[ file manager ]'
+CATALOGUE='[ catalogue    ]'
 
 # preload cache option
 [ "$1" = cache ] && { shift; cache=true; }
@@ -53,6 +54,14 @@ cache() {
   unset movie
 }
 
+# move downloads to media folder
+catalogue() {
+  for i in $(find $nzb -maxdepth 2 -regex '.*\(mkv\|mp4\)') ;do
+    mv ${i%/*} $library
+  done
+  unset movie
+}
+
 # any new media added?
 if [ -s $catlg ] ;then
   stest -dqr -n $catlg "$library" && cache
@@ -62,7 +71,7 @@ fi
 [ $cache ] && exit
 
 options() {
-  [ $(find $nzb -maxdepth 1 -type d | wc -l) -gt 1 ] && edit="\\\\\\n$EDIT" || unset edit
+  [ $(find $nzb -maxdepth 1 -type d | wc -l) -gt 1 ] && edit="\\\\\\n$FILE\\\\\\n$CATALOGUE" || unset edit
   grep -q '[^ ]' "$playlist" && echo "$LAST\\\n$SEARCH\\\n[ $(sortlist $T) ]$edit" || echo "[ $(sortlist $T) ]$edit"
 }
 
@@ -103,11 +112,12 @@ while : ;do
 
   [ "$movie" = "$LAST" ] && movie=$(grep '[^ ]' $playlist | head -1)
   case $movie in
-  "$NAME"  ) unset T; cache ;;
-  "$DATE"  ) T=t; cache ;;
-  "$SEARCH") surf $usenet; pwait "surf $usenet"; unset movie ;;
-  "$EDIT"  ) killall 'ROX-Filer'; rox $nzb; rox "$library"; pwait "ROX-Filer"; cache ;;
-  *        ) movie=$(echo "$movie" | sed "s/^$SEP //"); playback ;;
+  "$NAME"     ) unset T; cache ;;
+  "$DATE"     ) T=t; cache ;;
+  "$SEARCH"   ) surf $usenet; pwait "surf $usenet"; unset movie ;;
+  "$FILE"     ) killall 'ROX-Filer'; rox $nzb; rox "$library"; pwait "ROX-Filer"; cache ;;
+  "$CATALOGUE") catalogue; cache; continue ;;
+  *           ) movie=$(echo "$movie" | sed "s/^$SEP //"); playback ;;
   esac
 done
 
