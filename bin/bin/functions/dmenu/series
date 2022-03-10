@@ -13,10 +13,11 @@
 #               ../show
 #                    ../*S01E01*  (episode)
 
-  NAME='[ sort by name ]'
-  DATE='[ sort by date ]'
-  EDIT='[ manage       ]'
-SONARR='[ sonarr       ]'
+     NAME='[ sort by name ]'
+     DATE='[ sort by date ]'
+     FILE='[ file manager ]'
+   SONARR='[ sonarr       ]'
+CATALOGUE='[ catalogue    ]'
 
 # preload cache option
 [ "$1" = cache ] && { shift; cache=true; }
@@ -44,10 +45,8 @@ permissions() {
 permissions &
 
 # list latest television series additions first
-T=t
 episodes=/tmp/dmenu:episodes
 gui && monitor=$(herbstclient attr monitors.focus.index)
-
 shows() {
   # clean up episodes
   ls -1 "$series" | sed -r 's/.*\.((S[0-9][0-9]E[0-9][0-9])([E.][0-9][0-9])?)(\..*)*/\U\1/I' | sort >$episodes
@@ -55,12 +54,24 @@ shows() {
 }
 
 # list latest movie additions first
+T=t
 cache() {
-  stest -qr -n $catlg $(find "$library" -maxdepth 2 -type d) || return
+  # stest -qr -n $catlg $(find "$library" -maxdepth 2 -type d) || return
   notify low 'Series' 'Caching library..'
   [ -e $preprocess ] && . $preprocess  # special title format clean up
   retitle "$library" >>$retitle
   ls -1$T "$library" | grep -v ' ' | sed 's/\./ /g' >$catlg
+}
+
+# move episodes to series folders
+catalogue() {
+  cd $library
+  for i in $(find -maxdepth 1 -regex '.*S[0-9][0-9]E[0-9][0-9].*') ;do
+    series=$(echo $i | sed 's/\.S[0-9][0-9]E[0-9][0-9].*//; s/\.[0-9][0-9][0-9][0-9]$//')
+    [ -d $series ] || mkdir $series
+    mv $i $series
+  done
+  unset show
 }
 
 # any new media added?
@@ -73,14 +84,14 @@ while : ;do
   # rebuilding catalogue?
   [ ! -s $catlg ] && { sleep 0.1; continue; }
 
-  show=$(cat "$catlg" | sed "1i$SONARR\n$EDIT" | sed "1i[ $(sortlist $T) ]" | rmenu 'Series' "$show" -no-custom) || break
-
+  show=$(cat "$catlg" | sed "1i$SONARR\n$FILE\n$CATALOGUE" | sed "1i[ $(sortlist $T) ]" | rmenu 'Series' "$show" -no-custom) || break
   # force dmenu focus (continue within do loop doesn't guarantee focus)
-  case $show in
-  "$NAME"  ) unset T; continue ;;
-  "$DATE"  ) T=t;     continue ;;
-  "$SONARR") sonarr;  continue ;;
-  "$EDIT"  ) killall 'ROX-Filer'; rox "$library"; pwait "ROX-Filer"; cache; continue ;;
+  case "$show" in
+  "$NAME"     ) unset T; cache; continue ;;
+  "$DATE"     ) T=t; cache; continue ;;
+  "$SONARR"   ) sonarr; unset show; continue ;;
+  "$FILE"     ) killall 'ROX-Filer'; rox "$library"; pwait "ROX-Filer"; cache; continue ;;
+  "$CATALOGUE") catalogue; cache; continue ;;
 
   *        ) series=""$library"/$(echo $show | sed 's/ /./g')"
              playlist="$series/.playlist"

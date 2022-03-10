@@ -44,13 +44,13 @@ find "$library" -name '*sample*' -exec rm {} \; &
 # list latest movie additions first
 T=t
 cache() {
-  [ $1 ] || stest -qr -n $catlg $(find "$library" -maxdepth 1 -type d) || return
   notify low 'Movies' 'Caching library..'
   retitle "$library" >>$retitle
   [ -e "$playlist" ] || echo >"$playlist"
   cat /dev/null >$catlg
   ls -1$T "$library" | sed -r 's/\./ /g; s/(.*) ([12][0-9][0-9][0-9])( .*)*/\1  (\2)/' >/tmp/dmenu:$category
   playlist /tmp/dmenu:$category "$playlist" >$catlg &
+  unset movie
 }
 
 # any new media added?
@@ -103,9 +103,9 @@ while : ;do
 
   [ "$movie" = "$LAST" ] && movie=$(grep '[^ ]' $playlist | head -1)
   case $movie in
-  "$NAME"  ) unset T; continue ;;
-  "$DATE"  ) T=t;     continue ;;
-  "$SEARCH") surf $usenet; pwait "surf $usenet"; continue ;;
+  "$NAME"  ) unset T; cache ;;
+  "$DATE"  ) T=t; cache ;;
+  "$SEARCH") surf $usenet; pwait "surf $usenet"; unset movie ;;
   "$EDIT"  ) killall 'ROX-Filer'; rox $nzb; rox "$library"; pwait "ROX-Filer"; cache ;;
   *        ) movie=$(echo "$movie" | sed "s/^$SEP //"); playback ;;
   esac
