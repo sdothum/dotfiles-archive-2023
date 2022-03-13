@@ -45,7 +45,7 @@ hfg='#20bbfcFF'
 # leader left or right (prompt case Right, RIGHT, right)
 lead=right
 leader='───────'
-indent='      '
+indent='       '  # for fzf
 outdent='   '
 
 # .......................................................................... GUI
@@ -165,23 +165,24 @@ rofi_stub() {
             $@
 }
 
+items() { sed "s/^/$indent/; s/$outdent$(X)/$(X)/"; }  # outdent X() menu options
+
 if [ $display ] ;then
   if [ -e $NCURSES ] ;then
     stdin=$(mktemp)
     stdout=$(mktemp)
     trap "rm -f $stdin $stdout" EXIT
-    sed "s/^/$indent/" >$stdin
+    items >$stdin
     # escape movie title (year) parentheses and quotes for terminal wrappers (see alacritty and urxvt wrappers in ~/bin)
     term "$(escape $title)" WAIT $window SHELL "cat $stdin | fZf $print --prompt=\\\"$(escape $prompt)  \\\" --query=\\\"$query\\\" >$stdout"
     input=$(tail -1 $stdout)
     [ -n "$input" ]
   else
-    indent="          "
-    input=$(sed "s/^/$indent/; s/$outdent$(X)/$(X)/" | rofi_stub $@)
+    indent='          '
+    input=$(items | rofi_stub $@)
   fi
 else
-  # input=$(sed "s/^/$indent/" | fZf $print --prompt="\"$prompt\"" | tail -1)
-  input=$(sed "s/^/$indent/; s/$outdent$(X)/$(X)/" | fZf $print --prompt="\"$prompt\"" | tail -1)
+  input=$(items | fZf $print --prompt="\"$prompt\"" | tail -1)
   [ -n "$input" ]
 fi
 
