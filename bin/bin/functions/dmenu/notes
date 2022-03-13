@@ -7,9 +7,9 @@
 
 # Usage: dmenu notes [<extension>] [<path>]
 
-  NEW='[ new    ]'
- EDIT='[ manage ]'
-PURGE='[ purge  ]'
+NEW='new'
+EDIT='file manager'
+PURGE='purge'
 
 TOPMENU='view\nedit'
 
@@ -38,13 +38,13 @@ catlg=$FOLDER/.${ext}s
 mkdir -p $FOLDER || exit 1
 
 if [ $ext = draft ] ;then
-  purge=$PURGE
-  PROMPT="$NEW\n$EDIT\n$PURGE"
+  purge=$(X $PURGE)
+  PROMPT="$(X $NEW)\n$(X $EDIT)\n$(X $PURGE)"
   offset=2
 else
   # must set purge to avoid case statement match, see below
-  purge='[ nop ]'
-  PROMPT="$NEW\n$EDIT"
+  purge=$(X 'nop')
+  PROMPT="$(X $NEW)\n$(X $EDIT)"
   offset=1
 fi
 
@@ -88,7 +88,7 @@ notes() { cat $NOTES | cut -d^ -f2- | column -s^ -t | sed "1i$PROMPT"; }
 #   //     to clear filter
 search=''
 while note=$(notes | rmenu "$(echo $ext | sed -r 's/./\u&/') [/search]" $(highlight)) || exit ;do
-  case $note in
+  case ${note#$(X)} in
   /*      ) search="${note#*/}"; continue ;;
   "$EDIT" ) term $FOLDER MAX STACK WAIT ranger $FOLDER ;;
   "$NEW"  ) file=$(mktemp -p $FOLDER --suffix=.$ext); update=true; action=edit ;;

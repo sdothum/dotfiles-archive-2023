@@ -7,7 +7,7 @@
 
 # Usage: dmenu configs [cache]
 
-REFRESH='[ refresh ]'  # catalogue, see ffcache
+REFRESH='refresh cache'  # catalogue, see ffcache
 
 # system conf files
 INCLUDE='.*(cfg|conf(ig)*|ini|[^.][^s]rc)$'
@@ -20,9 +20,9 @@ files() { ffcache $refresh configs $sources | sed -r "s,^$HOME,~,; s,(.*)/([^/]*
 # .................................................................. Edit config
 
 while : ;do
-  file=$(files | mhistory configs | sed "1i$REFRESH" | column -s^ -t | rmenu 'Edit Config' -no-custom) || exit
+  file=$(files | mhistory configs | sed "1i$(X $REFRESH)" | column -s^ -t | rmenu 'Edit Config' -no-custom) || exit
 
-  [ "${file%]*}]" = "$REFRESH" ] && { refresh=-; unset file; continue; }
+  [ "${file#$(X)}" = "$REFRESH" ] && { refresh=-; unset file; continue; }
   mhistory configs "$(echo $file | sed "s/ *$SEP/^$SEP/")"
   # why do people put spaces in filenames, especially config files!
   file=$(echo $file | sed -r "s,^(.*)  *${SEP}  *(.*),\2/\1,; s/ /\\\\\\\\ /; s,^~,$HOME,")

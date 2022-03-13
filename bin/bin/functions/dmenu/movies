@@ -12,12 +12,12 @@
 #        ../movies
 #               ../title.YEAR.*  (movie)
 
-     LAST='[ last watched ]'
-     NAME='[ sort by name ]'
-     DATE='[ sort by date ]'
-   SEARCH='[ search       ]'
-     FILE='[ file manager ]'
-CATALOGUE='[ catalogue    ]'
+LAST='last watched'
+NAME='sort by name'
+DATE='sort by date'
+SEARCH='search'
+FILE='file manager'
+CATALOGUE='catalogue new movies'
 
 # preload cache option
 [ "$1" = cache ] && { shift; cache=true; }
@@ -71,8 +71,8 @@ fi
 [ $cache ] && exit
 
 options() {
-  [ $(find $nzb -maxdepth 1 -type d | wc -l) -gt 1 ] && edit="\\\\\\n$FILE\\\\\\n$CATALOGUE" || unset edit
-  grep -q '[^ ]' "$playlist" && echo "$LAST\\\n$SEARCH\\\n[ $(sortlist $T) ]$edit" || echo "[ $(sortlist $T) ]$edit"
+  [ $(find $nzb -maxdepth 1 -type d | wc -l) -gt 1 ] && edit="\\\\\\n$(X $FILE)\\\\\\n$(X $CATALOGUE)" || unset edit
+  grep -q '[^ ]' "$playlist" && echo "$(X $LAST)\\\n$(X $SEARCH)\\\n$(X $(sortlist $T))$edit" || echo "$(X $(sortlist $T))$edit"
 }
 
 playback() {
@@ -111,7 +111,7 @@ while : ;do
   movie=$(cat "$catlg" | sed "1i$(options)" | rmenu 'Movie' "$movie" -no-custom) || break
 
   [ "$movie" = "$LAST" ] && movie=$(grep '[^ ]' $playlist | head -1)
-  case $movie in
+  case ${movie#$(X)} in
   "$NAME"     ) unset T; cache ;;
   "$DATE"     ) T=t; cache ;;
   "$SEARCH"   ) surf $usenet; pwait "surf $usenet"; unset movie ;;

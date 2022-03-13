@@ -8,11 +8,11 @@
 # unset redundant for short album menus
 # redundant=true
 
- PLAYER='[ player  ]'
- ALBUMS='[ albums  ]'
- ARTIST='[ artist  ]'
-LIBRARY='[ library ]'
-    ALL='[ all     ]'
+PLAYER='player'
+ALBUMS='albums'
+ARTIST='artist'
+LIBRARY='select library'
+ALL='all'
 
 # ...................................................................... Library
 
@@ -21,27 +21,27 @@ catlg() { mpc list $1 | sort -n; }
 
 artists() {
   if [ $(mpc playlist | wc -l) -gt 0 ] ;then
-    catlg artist | sed "1i$PLAYER\n$ALBUMS\n$LIBRARY"
+    catlg artist | sed "1i$(X $PLAYER)\n$(X $ALBUMS)\n$(X $LIBRARY)"
   else
-    catlg artist | sed "1i$ALBUMS\n$LIBRARY"
+    catlg artist | sed "1i$(X $ALBUMS)\n$(X $LIBRARY)"
   fi
 }
 
 albums() {
-  if [ "$artist" = "$ALBUMS" ] ;then
+  if [ "${artist#$(X)}" = "$ALBUMS" ] ;then
     # redundant menu return to artist listings
     if [ $redundant ] ;then
       if [ $(mpc playlist | wc -l) -gt 0 ] ;then
-        catlg album | sed "1i$PLAYER\n$ARTIST\n$LIBRARY"
+        catlg album | sed "1i$(X $PLAYER)\n$(X $ARTIST)\n$(X $LIBRARY)"
       else
-        catlg album | sed "1i$ARTIST\n$LIBRARY"
+        catlg album | sed "1i$(X $ARTIST)\n$(X $LIBRARY)"
       fi
     else
       # escape return to artist listings
       if [ $(mpc playlist | wc -l) -gt 0 ] ;then
-        catlg album | sed "1i$PLAYER\n$LIBRARY"
+        catlg album | sed "1i$(X $PLAYER)\n$(X $LIBRARY)"
       else
-        catlg album | sed "1i$LIBRARY"
+        catlg album | sed "1i$(X $LIBRARY)"
       fi
     fi
   else
@@ -69,8 +69,8 @@ mpc list artist >/dev/null 2>&1 || exit
 # player controls on entry
 [ "$(current)" != '' ] && artist="$PLAYER"  # cannot compare to null string
 while : ;do
-  [ "$artist" = "$PLAYER" ] || artist=$(artists | rmenu 'Artist' "$artist" -no-custom) || exit
-  if [ "$artist" = "$PLAYER" ] ;then
+  [ "${artist#$(X)}" = "$PLAYER" ] || artist=$(artists | rmenu 'Artist' "$artist" -no-custom) || exit
+  if [ "${artist#$(X)}" = "$PLAYER" ] ;then
     unset artist
     while cmd=$(controls | rmenu "$(info)" "${cmd%% *}" -no-custom) || break ;do
       case $cmd in
@@ -99,25 +99,25 @@ while : ;do
   more=true
   while [ $more ] ;do
     if [ $(albums | wc -l) -gt 1 ] ;then
-      case $artist in
+      case ${artist#$(X)} in
       "$ALBUMS") album=$(albums | rmenu 'Album' "$album" -no-custom) || break ;;
-      *        ) album=$(albums | sort -n | sed "1i$ALL\n$LIBRARY" | rmenu 'Album' "$album" -no-custom) || break ;;
+      *        ) album=$(albums | sort -n | sed "1i$(X $ALL)\n$(X $LIBRARY)" | rmenu 'Album' "$album" -no-custom) || break ;;
       esac
     else
-      case $artist in
+      case ${artist#$(X)} in
       "$LIBRARY") album=$artist ;;
       *         ) album=$(albums | sort -n | rmenu 'Album' "$album" -no-custom) || break; unset more ;;
       esac
     fi
 
     # player, library or playlist selection
-    case $album in
+    case ${album#$(X)} in
     "$PLAYER" ) artist="$PLAYER"; break ;;
     "$ARTIST" ) break ;;
     "$LIBRARY") ncmpcpp ;;
     "$ALL"    ) playlist=$(mpc find artist "$artist"); music="All songs by $artist"; unset more ;;
 
-    *         ) case $artist in
+    *         ) case ${artist#$(X)} in
                 "$ALBUMS") playlist=$(mpc find album "$album"); music=$album ;;
                 *        ) playlist=$(mpc find artist "$artist" album "$album"); music="$album by $artist" ;;
                 esac ;;

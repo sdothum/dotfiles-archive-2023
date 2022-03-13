@@ -7,7 +7,7 @@
 
 # Usage: dmenu browser uri [<bookmarks>]
 
-EDIT='[ edit ]'
+EDIT='edit'
 
 # default=$BROWSER
 default=chromium
@@ -34,11 +34,11 @@ browsers="
   xombrero
 "
 
-[ $2 ] && edit="1i$EDIT"
+[ $2 ] && edit="1i$(X $EDIT)"
 
 browser=$default
 while browser=$(apps "$browsers" | sed "$edit" | rmenu 'Browser' $browser -no-custom) || exit ;do
-  case ${browser} in
+  case ${browser#$(X)} in
   "$EDIT"      ) gvim -f -c "/$(echo $1 | sed 's,/,.,g').*" $2; dmenu bookmarks ;;
 
   brave          |\

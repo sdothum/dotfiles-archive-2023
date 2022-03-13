@@ -7,18 +7,18 @@
 
 # Note: mpv --no-cache --quiet, are unique options used on this system for radio
 
-TOGGLE='[ toggle ]'
- CLEAR='[ clear  ]'
-  EDIT='[ edit   ]'
+TOGGLE='toggle'
+CLEAR='clear'
+EDIT='edit'
 
 stations=$CONFIG/.radiorc  # access list csv format: <station>, <url>
 connect=0.5                # connection lag time
 
 playlist() {
   if [ -e $RADIO ] ;then
-    cat $stations | sed "1i$TOGGLE\n$CLEAR\n$EDIT"
+    cat $stations | sed "1i$(X $TOGGLE)\n$(X $CLEAR)\n$(X $EDIT)"
   else
-    cat $stations | sed '1i[ edit ]'
+    cat $stations | sed '1i$(X $EDIT)'
   fi | sed 's/,.*//'
 }
 
@@ -28,7 +28,7 @@ station() { [ -e $RADIO ] && cat $RADIO || echo 'Radio'; }
 url()     { grep "$@" $stations | sed 's/.*, *//'; }
 
 while station=$(playlist | rmenu "$(station)" -no-custom) || exit ;do
-  case $station in
+  case ${station#$(X)} in
   "$TOGGLE") pstat 'mpv --no-cache --quiet' && stop || mpv --no-cache --quiet $(url $(cat $RADIO)) &; exit ;;
   "$CLEAR" ) stop; rm -f $RADIO; exit ;;
   "$EDIT"  ) gvim -f $stations ;;

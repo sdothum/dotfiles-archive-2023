@@ -11,7 +11,7 @@
 #       in the manpage history with the apostrophe being removed (useful when
 #       the name is part of several descriptions)
 
-REBUILD='[ rebuild cache ]'
+REBUILD='rebuild cache'
 
 while : ;do
   if [ "$selection" ] ;then
@@ -26,10 +26,10 @@ while : ;do
     [ -z $man ] && exec notify 3 critical "$selection" "No manual entry found"
   else
     # initial lookup
-    man=$(apropos . | cut -d' ' -f1 | sort -d | uniq | mhistory man | sed "1i$REBUILD" | 
+    man=$(apropos . | cut -d' ' -f1 | sort -d | uniq | mhistory man | sed "1i$(X $REBUILD)" | 
         rmenu 'Manpage' | cut -d':' -f3-)
 
-    if [ "$man" = "$REBUILD" ] ;then
+    if [ "${man#$(X)}" = "$REBUILD" ] ;then
       notify low 'Updating manpage index cache' 'Please be patient..'
       sudo mandb 2>/dev/null
       continue

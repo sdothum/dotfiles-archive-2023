@@ -18,6 +18,8 @@
 
 usage() { echo "usage: $(basename $0) '<prompt>' [['<select>' | <row>]] [<option>]*"; exit 1; }
 
+. $HOME/bin/dmenu  # to outdent X() menu options
+
 # version 1.6.x
 # unset fzf query highlight to list all
 # hilite=true
@@ -43,7 +45,8 @@ hfg='#20bbfcFF'
 # leader left or right (prompt case Right, RIGHT, right)
 lead=right
 leader='───────'
-indent='       '
+indent='      '
+outdent='   '
 
 # .......................................................................... GUI
 
@@ -173,15 +176,17 @@ if [ $display ] ;then
     input=$(tail -1 $stdout)
     [ -n "$input" ]
   else
-    input=$(sed "s/^/$indent/" | rofi_stub $@)
+    indent="          "
+    input=$(sed "s/^/$indent/; s/$outdent$(X)/$(X)/" | rofi_stub $@)
   fi
 else
-  input=$(sed "s/^/$indent/" | fZf $print --prompt="\"$prompt\"" | tail -1)
+  # input=$(sed "s/^/$indent/" | fZf $print --prompt="\"$prompt\"" | tail -1)
+  input=$(sed "s/^/$indent/; s/$outdent$(X)/$(X)/" | fZf $print --prompt="\"$prompt\"" | tail -1)
   [ -n "$input" ]
 fi
 
 [ $? -ne 0 ] && exit 1
 # strip indent from input!
-echo "$input" | sed "s/^$indent//"
+echo "$input" | sed "s/^ *//"
 
 # vim: set ft=sh: #

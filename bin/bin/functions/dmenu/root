@@ -7,11 +7,11 @@
 
 # Usage: dmenu root [cache] [save]
 
-VIEWER='[ viewer ]'
-UPDATE='[ update ]'
-  PICK='[ pick   ]'
-  SAVE='[ save as ]'
-INVERT='[ panel   ]'
+VIEWER='viewer'
+UPDATE='update'
+PICK='pick'
+SAVE='save as'
+INVERT='invert panel'
 
 delay=3  # invert panel pause
 
@@ -20,6 +20,7 @@ root()   { find $PALETTE -name '*png' | egrep '(dark|light)/' | sed -r "s,.*/(.*
 themes() { find $PALETTE -type d | cut -d/ -f7 | sort -u | grep '[^ ]'; }
 hex()    { echo $1 | egrep -q '^[0-9A-Fa-f]{6}$'; }
 theme()  { [ $1 = dark ] && echo light >$THEME || echo dark >$THEME; }
+menu()   { menu="$(X $SAVE)\n$(X $INVERT)"; }
 
 save() {
   [ $hue ] && hue="$hue\n"
@@ -48,19 +49,19 @@ setroot() {
   bg=$color
   # overlay conky panel over rmenu screen!
   draw conky
-  menu="$SAVE\n$INVERT"
+  menu
 }
 
-colors() { [ "$menu" ] && echo | mhistory root | sed "1i$menu" || echo | mhistory root | sed "1i$VIEWER\n$PICK\n$UPDATE"; }
+colors() { [ "$menu" ] && echo | mhistory root | sed "1i$menu" || echo | mhistory root | sed "1i$(X $VIEWER)\n$(X $PICK)\n$(X $UPDATE)"; }
 
 while color=$(colors | column -s^ -t | rmenu 'Setroot') || exit ;do
-  case $color in
+  case ${color#$(X)} in
   ''        ) break ;;
   "$PICK"*  ) color=$(grabc 2>/dev/null | cut -d'#' -f2); setroot ;;
   "$VIEWER"*) exec draw root restore ;;
   "$UPDATE"*) root ;;
   "$SAVE"*  ) save; break ;;
-  "$INVERT"*) draw root invert; sleep $delay; menu="$SAVE\n$INVERT" ;;
+  "$INVERT"*) draw root invert; sleep $delay; menu ;;
 
   *\ dark*    |\
   *\ light* ) bg=$(echo $color | cut -d' ' -f1)

@@ -5,7 +5,7 @@
 
 # ........................................................ Configurable launcher
 
-EDIT='[ edit menu ]'
+EDIT='edit menu'
 
 # run list format: <command> [# <comment>]
 #             e.g. term 'title' program
@@ -24,8 +24,8 @@ apps() {
 }
 
 pgm=$(previous apps)
-while pgm=$(apps | sed  "1i$EDIT" | rmenu 'open' $pgm -no-custom) || exit ;do
-  case $pgm in
+while pgm=$(apps | sed  "1i$(X $EDIT)" | rmenu 'open' $pgm -no-custom) || exit ;do
+  case ${pgm#$(X)} in
   "$EDIT") gvim -f $pgms ;;
   *      ) mhistory apps "$pgm"; eval exec $(grep "$pgm" $pgms | cut -d'#' -f1) ;;
   esac

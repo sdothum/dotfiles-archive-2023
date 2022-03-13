@@ -7,7 +7,7 @@
 
 # shell scripts excluding .man (see dmenu man)
 
-REFRESH='[ refresh ]'  # catalogue, see ffcache
+REFRESH='refresh cache'  # catalogue, see ffcache
 
 # search these project library folders..
 sources=$(cat $CONFIG/.scriptsrc | sed "s|\$HOME|$HOME|g")  # manual eval of $HOME
@@ -20,8 +20,8 @@ files() { ffcache $refresh scripts $sources | sed "$trim"; unset refresh; }
 # recover full pathname
 expand() {
   for i in $sources ;do
-    echo $i | grep -q "^$HOME" && prefix=${i%/*} || unset prefix
-    [ -e $prefix/$1 ] && { echo $prefix/$1; return 0; }
+    echo $i | grep -q "^$HOME" && path=${i%/*} || unset path
+    [ -e $path/$1 ] && { echo $path/$1; return 0; }
   done
   return 1
 }
@@ -30,9 +30,9 @@ expand() {
 script_history() { mhistory scripts "${file##*/}^$SEP $(echo ${file%/*} | sed "s,^stow/[^/]*/,,")"; }
 
 while : ;do
-  file=$(files | sed -r "s,(.*)/([^/]*)$,\2^$SEP \1," | sort | mhistory scripts | sed "1i$REFRESH" | column -s^ -t | 
+  file=$(files | sed -r "s,(.*)/([^/]*)$,\2^$SEP \1," | sort | mhistory scripts | sed "1i$(X $REFRESH)" | column -s^ -t | 
       rmenu "Edit Script$error" $file) || exit
-  if [ "${file%]*}]" = "$REFRESH" ] ;then  # $file may contain column spacing
+  if [ "${file#$(X)}" = "$REFRESH" ] ;then  # $file may contain column spacing
     refresh=-
     unset file
     continue

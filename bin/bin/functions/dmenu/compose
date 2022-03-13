@@ -5,9 +5,9 @@
 
 # ....................................................................... E-mail
 
- SEND='[ send         ]'
- EDIT='[ edit drafts  ]'
-PURGE='[ purge drafts ]'
+SEND='send'
+EDIT='edit drafts'
+PURGE='purge drafts'
 
 # list of potential writing tools, verified by dmenu apps
 editors="
@@ -65,11 +65,11 @@ compose_vim() {
   mhistory compose $editor
 }
 
-editors() { apps "$editors" | sed "1i$SEND\n$EDIT\n$PURGE"; }
+editors() { apps "$editors" | sed "1i$(X $SEND)\n$(X $EDIT)\n$(X $PURGE)"; }
 
 editor=$(previous compose)
 while editor=$(editors | rmenu 'Compose' $editor -no-custom) || exit ;do
-  case $editor in
+  case ${editor#$(X)} in
   "$SEND"    ) ;;
   "$EDIT"    ) dmenu notes draft;                 continue ;;
   "$PURGE"   ) mv $HOME/drafts/alot.*.draft /tmp; continue ;;

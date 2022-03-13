@@ -5,9 +5,9 @@
 
 # ............................................................. Systemd services
 
-  DAEMON='[ daemon-reload   ]'
-SERVICES='[ list services   ]'
-   FILES='[ list-unit-files ]'
+DAEMON='daemon-reload'
+SERVICES='list services'
+FILES='list-unit-files'
 
 lib=/usr/lib/systemd/system/
 
@@ -26,10 +26,10 @@ status() {
 cd $lib
 while : ;do
   service=$(systemctl list-unit-files -t service --no-legend | sed -r "s/  */^$SEP /" | column -s^ -t | 
-      sed "1i$DAEMON\n$SERVICES\n$FILES" | rmenu 'Systemd' -no-custom) || exit
+      sed "1i$(X $DAEMON)\n$(X $SERVICES)\n$(X $FILES)" | rmenu 'Systemd' -no-custom) || exit
 
   service=${service%% *$SEP*}
-  case $service in
+  case ${service#$(X)} in
   "$DAEMON"  ) sv daemon-reload; notify low 'Systemd daemon-reload' ;;
   "$SERVICES") term 'services' WAIT systemctl --type service --all ;;
   "$FILES"   ) term 'unit-files' WAIT systemctl list-unit-files ;;

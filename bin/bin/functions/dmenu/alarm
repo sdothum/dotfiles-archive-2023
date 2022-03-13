@@ -11,14 +11,14 @@
 #
 # Note:  duration defaults to minutes (not seconds)
 
-EDIT='[ edit ]'
+EDIT='edit'
 
 # non-numeric character escapes undesired dmenu match
 duration() { echo $1 | sed -r 's/^[^0-9]//; s/([0-9])$/\1m/'; }
 
 timers() {
-  while delay=$(echo | mhistory alarm | sed "1i$EDIT" | column -s^ -t | rmenu 'Duration [m]/s') || exit ;do
-    [ "$delay" = "$EDIT" ] && { gvim -f $HISTORY/alarm; continue; }
+  while delay=$(echo | mhistory alarm | sed "1i$(X $EDIT)" | column -s^ -t | rmenu 'Duration [m]/s') || exit ;do
+    [ "${delay#$(X)}" = "$EDIT" ] && { gvim -f $HISTORY/alarm; continue; }
 
     delay=$(unquote $delay)
     if echo $delay | grep -q "$SEP" ;then

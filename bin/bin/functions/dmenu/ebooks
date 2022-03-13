@@ -7,8 +7,8 @@
 
 # Usage: dmenu ebooks [<author> | [<catlg>]]
 
-  EDIT='[ manage  ]'
-SWITCH='[ library ]'
+EDIT='file manager'
+SWITCH='switch library'
 
 LIBRARY=${LIBRARY:-/net/media/ebooks/library}
 CATLGS=$(ls -1 $LIBRARY | grep 'kindle:' | sed -r 's/(.*)/\1\\\\n/')
@@ -56,9 +56,9 @@ edit() {
 # .................................................................. Select book
 
 while : ;do
-  book=$(catlg | mhistory ebooks | column -s^ -t | sed "1i$EDIT\n$SWITCH" | rmenu "E-book" -filter \"$author\" -no-custom)
+  book=$(catlg | mhistory ebooks | column -s^ -t | sed "1i$(X $EDIT)\n$(X $SWITCH)" | rmenu "E-book" -filter \"$author\" -no-custom)
 
-  case $book in
+  case ${book#$(X)} in
   "$EDIT"  ) killall 'ROX-Filer'; rox "$CATLG"; pwait "ROX-Filer"; catlg; continue ;;
 
   "$SWITCH") library=$(ls -1 $LIBRARY | grep 'kindle:' | rmenu "Catalogue" -no-custom)

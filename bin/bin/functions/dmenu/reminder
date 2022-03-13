@@ -7,12 +7,12 @@
 
 REMINDERS=${REMINDERS:-$HOME/.reminders}
 
- ADD='[ add  ]'
-EDIT='[ edit ]'
+ADD='add'
+EDIT='edit'
 
-while appmt=$(reminder 52 | sed  "1i$ADD\n$EDIT" | rmenu 'Appointment' -no-custom) || exit ;do
+while appmt=$(reminder 52 | sed  "1i$(X $ADD)\n$(X $EDIT)" | rmenu 'Appointment' -no-custom) || exit ;do
   unset error
-  case "$appmt" in
+  case "${appmt#$(X)}" in
   "$ADD" ) while date=$(echo | rmenu "On date$error") || break ;do
              [ -z "$date" ] && break
              date --date "$date" >/dev/null 2>&1 || { error=": $date ?"; continue; }

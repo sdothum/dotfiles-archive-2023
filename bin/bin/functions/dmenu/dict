@@ -12,6 +12,9 @@
 #       in the dictionary history with the apostrophe being removed
 
 # lookup selection (unless it is a non-word), else present history tape
+
+THESAURUS='thesaurus'
+
 selection=$(xsel -o | head -1)
 xsel -c
 if [ "$selection" ] ;then
@@ -20,9 +23,9 @@ if [ "$selection" ] ;then
 fi
 
 if [ "$selection" ] ;then word=$selection
-else                      word=$(echo | mhistory dictionary | sed '1i[ thesaurus ]' | rmenu 'Dictionary') || exit
+else                      word=$(echo | mhistory dictionary | sed "1i$(X $THESAURUS)" | rmenu 'Dictionary') || exit
 fi
-[ "$word" = '[ thesaurus ]' ] && exec dmenu thesaurus
+[ "${word#$(X)}" = "$THESAURUS" ] && exec dmenu thesaurus
 word=$(unquote $word)
 
 # swap stderr with stdout to capture dict word not found hints

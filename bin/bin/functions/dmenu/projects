@@ -10,16 +10,16 @@
 #                      filename - posix filename expression
 #                      eval     - posix shell expression that evaluates to a list of *non-blank* filenames
 
-EDIT='[ edit tags ]'
+EDIT='edit tags'
 
 # tag file containing project specs
 PROJECTS=$CONFIG/.projectsrc
 history=$HISTORY/projects
 
-projects() { sed "s/  *::  */^$SEP /" $PROJECTS | mhistory projects | column -s^ -t | sed "1i$EDIT"; }
+projects() { sed "s/  *::  */^$SEP /" $PROJECTS | mhistory projects | column -s^ -t | sed "1i$(X $EDIT)"; }
 
 while files=$(projects | rmenu 'Edit Project' -no-custom) || exit ;do
-  case $files in
+  case ${files#$(X)} in
   "$EDIT") gvim -f $PROJECTS $history ;;
 
   *      ) mhistory projects "$(echo $files | sed "s/ *$SEP/^$SEP/")"

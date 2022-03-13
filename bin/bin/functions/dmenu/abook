@@ -7,11 +7,11 @@
 
 # Usage: dmenu abook [cache]
 
-    PASTE='[ paste        ]'
-CLIPBOARD='[ clipboard    ]'
-      ADD='[ add contacts ]'
-  REBUILD='[ rebuild database ]'
-     EDIT='[ edit contacts    ]'
+PASTE='paste'
+CLIPBOARD='clipboard'
+ADD='add contacts'
+REBUILD='rebuild address book'
+EDIT='edit contacts'
 
 # select email contact addresses for insert into sup query
 maildir=${MAILDIR:-$HOME/Maildir}
@@ -28,7 +28,7 @@ contacts=$maildir/contacts
 # - exclude major lists correspondence
 # - exclude news and announcement items
 # - exclude malformed addresses, unexpected characters
-# - addresses must include "user name" prefix
+# - addresses must include "display name"" (preceding <address>)
 # - proper case "user name"
 abook() {
   notify low 'Updating dmenu addressbook cache' 'Please be patient..'
@@ -80,9 +80,9 @@ contacts() { sed "s/  *::  */^$SEP /" $contacts | column -s^ -t; cat $patricia $
 
 addresslist() {
   if [ "$addresses" ] ;then
-    contacts | sed "/^ *$/d; 1i$PASTE\n$CLIPBOARD\n$ADD"
+    contacts | sed "/^ *$/d; 1i$(X $PASTE)\n$(X $CLIPBOARD)\n$(X $ADD)"
   else
-    contacts | sed "/^ *$/d; 1i$REBUILD\n$EDIT"
+    contacts | sed "/^ *$/d; 1i$(X $REBUILD)\n$(X $EDIT)"
   fi
 }
 
@@ -92,7 +92,7 @@ while : ;do
   address=$(addresslist | rmenu "$(ribbon)" -no-custom) || exit
   address=${address#*$SEP }
 
-  case $address in
+  case ${address#$(X)} in
   "$PASTE"    ) clipboard "$addresses"
                 cpu arm && sleep 2  # allow application to regain focus
                 xdotool type --delay 0 "$addresses"

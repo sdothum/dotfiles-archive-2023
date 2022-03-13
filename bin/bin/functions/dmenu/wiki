@@ -7,11 +7,11 @@
 
 # Usage: dmenu wiki [diary]
 
- EDIT='[ new   ]'
-DIARY='[ diary ]'
+EDIT='new'
+DIARY='diary'
 
 wikis="$HOME/vimwiki"
-[ $1 ] && prompt=Diary || { option=-v; prompt=Wiki; menu="\n$DIARY"; }
+[ $1 ] && prompt=Diary || { option=-v; prompt=Wiki; menu="\n$(X $DIARY)"; }
 
 files() { fcache f $wikis | grep $option '/diary/' | grep '\.wiki$' | sed 's/\.wiki$//' | egrep -v '/(diary|index)$'; }
 dirs()  { find -L $wikis -maxdepth 2 -type d | exclude 'mail|templates|xref' | grep $option '/diary' | sed "s,$wikis/,,; 1d"; }
@@ -59,9 +59,9 @@ wiki() {
 
 while : ;do
   file=$(files | sed "s,$wikis/,," | sed -r "s,(.*)/([^/]*)$,\2^$SEP \1," | sort | mhistory wiki$1 | column -s^ -t |
-      sed  "1i$EDIT$menu" | rmenu "Edit $prompt$error" -no-custom) || exit
+      sed  "1i$(X $EDIT)$menu" | rmenu "Edit $prompt$error" -no-custom) || exit
 
-  case $file in
+  case ${file#$(X)} in
   "$DIARY") exec dmenu wiki diary ;;
   "$EDIT" ) add ;;
   *       ) wiki || continue ;;

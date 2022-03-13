@@ -5,8 +5,8 @@
 
 # ........................................................................ Media
 
-CLEAR='[ clear ]'
-MENU="$CLEAR\nblackboard\npulse\nebooks\nreferences\nanimation\nanime\nmovies\nseries\nsonarr\nprime\nnetflix\nkodi\nnzbgeek\nusenet-crawler\nnzbget\ntorrent\npatricia\nthought of you"
+CLEAR='clear'
+MENU="$(X $CLEAR)\nblackboard\npulse\nebooks\nreferences\nanimation\nanime\nmovies\nseries\nsonarr\nprime\nnetflix\nkodi\nnzbgeek\nusenet-crawler\nnzbget\ntorrent\npatricia\nthought of you"
 
 video='play kodi vstream'
 NZBGEEK=https://nzbgeek.info/geekseek.php?c=2040
@@ -19,9 +19,9 @@ root=true
 media=$(previous media)
 while : ;do
   media=$(echo "$MENU" | rmenu 'Media' $media -no-custom) || break
-  [ "$media" = "$CLEAR" ] || mhistory media $media
+  [ "${media#$(X)}" = "$CLEAR" ] || mhistory media $media
 
-  case $media in
+  case ${media#$(X)} in
   "$CLEAR"      ) pkill mpv; pkill -f 'dmenu (series|movies)'; media=$(previous media); ;;
   animation     ) dmenu movies animation ;;
   anime         ) dmenu series anime ;;
