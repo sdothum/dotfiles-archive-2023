@@ -20,7 +20,7 @@ if [ "$1" = purge ] ;then
 fi
 
 # import user path
-. $HOME/bin/functions/shell/user_path colors
+. $HOME/bin/functions/shell/user_path colors  # bash shell required for cron colors
 
 slock $(basename $0) $$ || exit 1
 # trace 'Starting mailqueue..'
