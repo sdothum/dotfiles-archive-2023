@@ -42,14 +42,14 @@ update() {
 if [ $ereader ] ;then
   iosevka dyslexic $ereader english $q
   update p-serifed eMonolexic
-  iosevka dyslexic $ereader english d-tailed $q
-  update d-tailed eMonolexic
-  iosevka dyslexic $ereader english I-serifless d-tailed $q
-  update d-tailed iMonolexic
+  iosevka dyslexic $ereader english d-tailed $q family e_Monolexic
+  update d-tailed e_Monolexic
+  iosevka dyslexic $ereader english I-serifless d-tailed $q family i_Monolexic
+  update d-tailed i_Monolexic
   iosevka dyslexic $ereader english I-serifless $q
   update p-serifed iMonolexic
   iosevka dyslexic $ereader english I-serifless $q family Monolexic  # my monolexic default settings
-  update '' Monolexic
+  update p-serifed Monolexic
 else
   # desktop fonts
   iosevka expanded $flavour $d $q
