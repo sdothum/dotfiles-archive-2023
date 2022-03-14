@@ -6,8 +6,11 @@
 
 # .......................................................... Btrfs scrub wrapper
 
-# 1am monthly /net scrub
-# crontab: 0 1 1 * * <path>/scrub share >>/tmp/scrub.log 2>&1
+# crontab examples..
+# 12am 1st of month <fs> scrub
+# crontab: 0 0 1 * * touch /tmp/scrub; sudo -u <user> <path>/scrub <fs> >/tmp/scrub:<fs>.log 2>&1
+# 12am file directed scrub with "echo <fs> >/tmp/scrub" (nop otherwise)
+# crontab: 0 0 * * * touch /tmp/scrub; sudo -u <user> <path>/scrub $(cat /tmp/scrub) >/tmp/scrub:$(cat /tmp/scrub).log 2>&1
 
 usage() { 
   echo "usage: $(basename $0) a'll | boot | root | net | share | backup"
@@ -51,7 +54,7 @@ show() {
 }
 
 case $1 in
-'') usage ;;
+'') [ -e $CRON ] && { rm -f $CRON $CRON:.log; } || usage ;;  # assumes scrub:<fs>.log crontab file naming
 a*) scrub boot; scrub share; scrub backup ;;
 c*) sudo btrfs scrub cancel $(volume $2) ;;
 I*) sudo rm -f /var/lib/btrfs/*.* ;;

@@ -79,10 +79,10 @@ cache
 [ $cache ] && exit
 
 # initial row is most current show vs last viewed
-show=4
 while : ;do
   # rebuilding catalogue?
   [ ! -s $catlg ] && { sleep 0.1; continue; }
+  [ $show ] || show=4
 
   show=$(cat "$catlg" | sed "1i$(X $SONARR)\n$(X $FILE)\n$(X $CATALOGUE)" | sed "1i$(X $(sortlist $T))" | rmenu 'Series' "$show" -no-custom) || break
   # force dmenu focus (continue within do loop doesn't guarantee focus)

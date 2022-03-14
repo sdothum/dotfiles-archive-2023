@@ -11,8 +11,8 @@
 # eg. source code and desktop fonts..
 #     iosevka expanded        (grotesque width coding font, reduce display fontsize by 1)
 #     iosevka expanded proof  (grotesque width prose font) **
-#     iosevka expanded menu [q-curly]
-#     iosevka heading english [q-curly]
+#     iosevka expanded menu double [q-curly]
+#     iosevka heading english      [q-curly]
 #
 #     e-ink fonts..
 #     iosevka ebook english [d-tailed] [q-curly]
@@ -218,7 +218,7 @@ while [ $1 ] ;do
   proof      ) leading 2.0000; sb 0.8000; build=${build}-proof ;;                        # for pure writing :)
   english    ) english ;;
   ligature   ) ligature $2  || usage; shift ;;
-  double     ) unset mono ;;
+  double     ) unset mono; family=${family}-double ;;
   quasi*     ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi${family#*Mono}; variant I+; largefont=largefont ;;
   dyslexic   ) shape $expanded; sb 0.7150; leading 1.5000; space 2; emdash 2; width=135; ebook monolexic ;;
   # font
@@ -256,7 +256,6 @@ done
 
 [ "$shape" ] || usage
 [ $family ]  || family=Iosevka$build
-[ $mono ]    || family=${family}-double
 
 ditto override "$leading"
 ditto override "$shape" 

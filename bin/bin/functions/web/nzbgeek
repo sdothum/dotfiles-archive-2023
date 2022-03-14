@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Web
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... nzbgeek
+
+BROWSER=chromium
+NZBGEEK=https://nzbgeek.info/geekseek.php?c=2040
+NAME='Geek.*Chromium'
+
+$BROWSER $NZBGEEK &
+xwait "$NAME"
+
+# vim: set ft=sh: 
