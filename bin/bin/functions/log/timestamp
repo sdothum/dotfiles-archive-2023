@@ -11,6 +11,6 @@
 day() { [ $(date '+%p') = AM ] && cat || tr '[:lower:]' '[:upper:]'; }  # (AM) Day (PM) DAY
 
 # common date string for consistent script logging
-ditto $(date "+%a" | day) "${__GREEN}$(date "+%-I %M'%S\"")"
+ditto $(date "+%a" | day) "${__TURQUOISE}$(date "+%-I %M'%S\"")"
 
 # vim: set ft=sh: #

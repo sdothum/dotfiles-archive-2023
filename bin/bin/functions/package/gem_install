@@ -17,7 +17,7 @@ else
   heading : $gem
   time=$(chrono)
   ditto install "$gem $version"
-  void && sudo gem install $gem $version || gem install $gem $version
+  void && sudo gem install $gem --no-document $version || gem install $gem --no-document $version
   post_install $gem
   chrono $time
 fi

@@ -9,7 +9,6 @@ CLEAR='clear'
 MENU="$(X $CLEAR)\nblackboard\npulse\nebooks\nreferences\nanimation\nanime\nmovies\nseries\nsonarr\nprime\nnetflix\nkodi\nnzbgeek\nusenet-crawler\nnzbget\ntorrent\npatricia\nthought of you"
 
 video='play kodi vstream'
-NZBGEEK=https://nzbgeek.info/geekseek.php?c=2040
 USENET_CRAWLER=https://www.usenet-crawler.com/movies?t=2040
 NZBGET=http:///$SERVER:6789/nzbget:nzbget/
 BROWSER=surf
@@ -31,7 +30,7 @@ while : ;do
   movies        ) dmenu movies ;;
   netflix       ) vstream netflix ;;
   nzb           ) exists nzbget && { toggle term 'nzb' nzbget --connect; unset root; } || notify "$media" 'not installed'; break ;;
-  nzbgeek       ) $BROWSER $NZBGEEK; pwait "$BROWSER.*$NZBGEEK"; unset root ;;
+  nzbgeek       ) nzbgeek; unset root ;;
   nzbget        ) $BROWSER $NZBGET; pwait "$BROWSER.*$NZBGET"; unset root ;;
   patricia      ) play -q /net/media/patricia/Patricia/Patricia.mp4 ;;
   prime         ) vstream prime ;;

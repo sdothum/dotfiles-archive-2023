@@ -6,27 +6,37 @@
 
 # ......................................................... Distribution install
 
-usage() { echo "usage: $(basename $0) <path/file> [<hostname>]"; exit 1; }
+usage() { echo "usage: $(basename $0) <[path/]file> [<hostname>]"; exit 1; }
 
 ROOT=$HOME/build/cfg      # update master
 
 [ $1 ] || usage
 [ $# -eq 2 ] && host=.$2  # host dependent config
+FILE=${1##*/}
+DIR=${1%/*}
+[ $DIR = $FILE ] && DIR=$PWD/
 
 if [ -d $1 ] ;then
   mkdir -p $ROOT$1$host || exit 1
   rm -rf $ROOT$1$host/* 2>/dev/null
   ditto copy "$(cp -rvf --preserve=mode --no-preserve=ownership $1/* $ROOT$1$host)"
 else
-  mkdir -p $ROOT${1%/*} || exit 1
-  ditto copy "$(cp -vf --preserve=mode --no-preserve=ownership $1 $ROOT$1$host)"
+  mkdir -p $ROOT$DIR || exit 1
+  ditto copy "$(cp -vf --preserve=mode --no-preserve=ownership $1 $ROOT$DIR$FILE$host)"
 fi
 
 # avoid unnecessary dotfile updates
 void || exit
-if [ $(find $ROOT$1$host -type l -name 'supervise' | wc -l) -gt 0 ] ;then
-  ditto rm 'runit supervise links..'
-  find $ROOT$1$host -type l -name 'supervise' -exec rm -v {} \;
+if [ -d $1 ] ;then
+  if [ $(find $ROOT$1$host -type l -name 'supervise' | wc -l) -gt 0 ] ;then
+    ditto rm 'runit supervise links..'
+    find $ROOT$1$host -type l -name 'supervise' -exec rm -v {} \;
+  fi
+else
+  if [ $(find $ROOT$DIR$host -type l -name 'supervise' | wc -l) -gt 0 ] ;then
+    ditto rm 'runit supervise links..'
+    find $ROOT$DIR$host -type l -name 'supervise' -exec rm -v {} \;
+  fi
 fi
 
 # vim: set ft=sh: #

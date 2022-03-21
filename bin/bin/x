@@ -10,7 +10,9 @@
 
 usage() { echo "usage: $(basename $0) 'start | 2bwm | awesome | bspwm | budgie | cinnamon | dwm | gnome | goomwwm | guile | herbstluftwm | i3 | kde | lxde | lxqt | notion | openbox | ratpoison | razor-qt | spectrwm | stumpwm | subtle | shell | windowchef | wmii | wmutils | wtftw | xfce4 | xmonad"; exit 1; }
 
-# sh -c 'cd /usr/share/figlet; for i in *tlf ;do toilet -F gay -f $i $(cat $HOME/.windowmanager); echo $i; read prompt ;done'
+WM=$HOME/.windowmanager
+
+# sh -c 'cd /usr/share/figlet; for i in *tlf ;do toilet -F gay -f $i $(cat $WM); echo $i; read prompt ;done'
 font=pagga
 font=future
 font=emboss
@@ -18,41 +20,42 @@ font=emboss
 # see .xinitrc
 case $1 in
 ''  ) ;;
-2b* ) echo 2bwm >$HOME/.windowmanager ;;
-aw* ) echo awesome >$HOME/.windowmanager ;;
-bs* ) echo bspwm >$HOME/.windowmanager ;;
-bu* ) echo budgie >$HOME/.windowmanager ;;
-ci* ) echo cinnamon >$HOME/.windowmanager ;;
-dw* ) echo dwm >$HOME/.windowmanager ;;
-gn* ) echo gnome >$HOME/.windowmanager ;;
-go* ) echo goomwwm >$HOME/.windowmanager ;;
-gu* ) echo guile >$HOME/.windowmanager ;;
-he* ) echo herbstluftwm >$HOME/.windowmanager ;;
-i3  ) echo i3 >$HOME/.windowmanager ;;
-kde ) echo kde >$HOME/.windowmanager ;;
-lxd*) echo lxde >$HOME/.windowmanager ;;
-lxq*) echo lxqt >$HOME/.windowmanager ;;
-ma* ) echo mate >$HOME/.windowmanager ;;
-no* ) echo notion >$HOME/.windowmanager ;;
-op* ) echo openbox >$HOME/.windowmanager ;;
-rat*) echo ratpoison >$HOME/.windowmanager ;;
-raz*) echo razor-qt >$HOME/.windowmanager ;;
-sp* ) echo spectrwm >$HOME/.windowmanager ;;
-st* ) echo stumpwm >$HOME/.windowmanager ;;
-su* ) echo subtle >$HOME/.windowmanager ;;
-sh* ) echo shell >$HOME/.windowmanager ;;
-wi* ) echo windowchef >$HOME/.windowmanager ;;
-wmi*) echo wmii >$HOME/.windowmanager ;;
-wmu*) echo wmutils >$HOME/.windowmanager ;;
-wt* ) echo wtftw >$HOME/.windowmanager ;;
-xf* ) echo xfce4 >$HOME/.windowmanager ;;
-xm* ) echo xmonad >$HOME/.windowmanager ;;
+2b* ) echo 2bwm >$WM ;;
+aw* ) echo awesome >$WM ;;
+bs* ) echo bspwm >$WM ;;
+bu* ) echo budgie >$WM ;;
+ci* ) echo cinnamon >$WM ;;
+dw* ) echo dwm >$WM ;;
+gn* ) echo gnome >$WM ;;
+go* ) echo goomwwm >$WM ;;
+gu* ) echo guile >$WM ;;
+he* ) echo herbstluftwm >$WM ;;
+i3  ) echo i3 >$WM ;;
+kde ) echo kde >$WM ;;
+le* ) echo leftwm >$WM ;;
+lxd*) echo lxde >$WM ;;
+lxq*) echo lxqt >$WM ;;
+ma* ) echo mate >$WM ;;
+no* ) echo notion >$WM ;;
+op* ) echo openbox >$WM ;;
+rat*) echo ratpoison >$WM ;;
+raz*) echo razor-qt >$WM ;;
+sp* ) echo spectrwm >$WM ;;
+st* ) echo stumpwm >$WM ;;
+su* ) echo subtle >$WM ;;
+sh* ) echo shell >$WM ;;
+wi* ) echo windowchef >$WM ;;
+wmi*) echo wmii >$WM ;;
+wmu*) echo wmutils >$WM ;;
+wt* ) echo wtftw >$WM ;;
+xf* ) echo xfce4 >$WM ;;
+xm* ) echo xmonad >$WM ;;
 *   ) usage ;;
 esac
 
 # start X11 from init console
 if console ;then
-  wm=$(cat $HOME/.windowmanager)
+  wm=$(cat $WM)
   [ ${#wm} -le 12 ] && extra=' '  # emboss spacing
   [ $font = emboss ] && seat=$(echo $wm | sed -r "s/(.)/\1 $extra/g; s/ *$//") || seat=$wm
   # echo "${__GREEN}$(figlet -t -f lean $seat)${NOCOLOR}"
@@ -127,7 +130,7 @@ if console ;then
   cpu arm && { pstat syncthing || { tmout ifno 'sync with syncthing' || wsync -s; } }
 else
   # already in X11 session
-  ditto 'window manager' "$(cat $HOME/.windowmanager) (next X session)"
+  ditto 'window manager' "$(cat $WM) (next X session)"
 fi
 
 # vim: set ft=sh: #

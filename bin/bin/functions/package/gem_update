@@ -13,7 +13,7 @@ gem=$1
 heading : $gem
 time=$(chrono)
 ditto update "$gem"
-void && sudo gem update $gem || gem update $gem
+void && sudo gem update $gem --no-document || gem update $gem --no-document
 post_install $gem
 chrono $time
 
