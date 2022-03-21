@@ -7,7 +7,7 @@
 = connectivity
 = ════════════
   connman
-# cmst
+  cmst  # qt gui for connman
 # gnome-bluetooth
 
 

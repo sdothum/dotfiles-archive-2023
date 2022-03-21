@@ -23,6 +23,7 @@
   digikam       [server]
   dispcalGUI    [server]
   gimp          [server]
+  gmic-gimp     [server]
   resynthesizer [server]
   rawtherapee   [server]
 

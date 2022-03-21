@@ -15,6 +15,7 @@ while [ $1 ] ;do
   case $1 in
   ''         ) ;;
   I-serifless) flavour=I-serifless ;;  # source code variant
+  Q-bend     ) Q=Q-bend ;;
   d-tailed   ) d=d-tailed ;;           # ebook variant
   q-curly    ) q=q-curly ;;            # ebook variant
   kindle     ) ereader=$1 ;;
@@ -40,33 +41,34 @@ update() {
 }
 
 if [ $ereader ] ;then
-  iosevka dyslexic $ereader english $q
+  iosevka dyslexic $ereader english $Q $q
   update p-serifed eMonolexic
-  iosevka dyslexic $ereader english d-tailed $q family e_Monolexic
+  iosevka dyslexic $ereader english d-tailed $Q $q family e_Monolexic
   update d-tailed e_Monolexic
-  iosevka dyslexic $ereader english I-serifless d-tailed $q family i_Monolexic
+  iosevka dyslexic $ereader english I-serifless d-tailed $Q $q family i_Monolexic
   update d-tailed i_Monolexic
-  iosevka dyslexic $ereader english I-serifless $q
+  iosevka dyslexic $ereader english I-serifless $Q $q
   update p-serifed iMonolexic
-  iosevka dyslexic $ereader english I-serifless $q family Monolexic  # my monolexic default settings
+  iosevka dyslexic $ereader english I-serifless $Q $q family Monolexic  # my monolexic default settings
   update p-serifed Monolexic
 else
   # desktop fonts
-  iosevka expanded $flavour $d $q
-  iosevka expanded proof $flavour $d $q
-  iosevka expanded menu $flavour $d q-curly
+  iosevka expanded $flavour $d $Q $q
+  iosevka expanded proof $flavour $d $Q $q
+  iosevka expanded menu $flavour $d $Q q-curly
 
   # www fonts
-  iosevka heading english I-serifless q-curly
-  iosevka dyslexic english I-serifless q-curly kobo webfont
+  iosevka heading english I-serifless $Q q-curly
+  iosevka dyslexic english I-serifless $Q q-curly kobo webfont
+  iosevka dyslexic english quasi-proportional space 1.25 I-serifless $Q q-curly kobo webfont
 
   # e-reader fonts
-  iosevka ebook english d-tailed $q
-  iosevka ebook english I-serifless $q
-  iosevka ebook english quasi-proportional d-tailed $q
-  iosevka ebook english quasi-proportional I-serifless $q
-  iosevka dyslexic english quasi-proportional d-tailed $q
-  iosevka dyslexic english quasi-proportional I-serifless $q
+  iosevka ebook english d-tailed $Q $q
+  iosevka ebook english I-serifless $Q $q
+  iosevka ebook english quasi-proportional d-tailed $Q $q
+  iosevka ebook english quasi-proportional I-serifless $Q $q
+  iosevka dyslexic english quasi-proportional d-tailed $Q $q
+  iosevka dyslexic english quasi-proportional I-serifless $Q $q
 fi
 rm -f $MAKE_INSTALL
 
