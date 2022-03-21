@@ -1,0 +1,17 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="draw/fsplit $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .......................................................... dynamic frame split
+
+# Usage: draw fsplit [x | y] <proportion>
+
+# move window to split
+case $1 in
+x) herbstclient chain . split right $2 . shift_edge right ;;
+y) herbstclient chain . split bottom $2 . shift_edge down ;;
+esac
+
+# vim: set ft=sh: #

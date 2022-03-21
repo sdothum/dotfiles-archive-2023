@@ -19,7 +19,6 @@
 #        draw root wallpaper, draw background
 
 # cpu arm && exit
-
 SETBLUR=$HLWM:setblur
 SHUFFLE=$HLWM:shuffle
 
@@ -118,7 +117,7 @@ select_blank() {
 
 wallpaper() {
   # initialize default link
-  [ -L $WALLPAPER ] && exists $WALLPAPER || ln -sf $(ls -1 ${WALLPAPER%/default}/$WALL/*.png | head -1) $WALLPAPER
+  [ -e $WALLPAPER ] || ln -sf $(find ${WALLPAPER%/default} -iname '*.png' | head -1) $WALLPAPER
   ln -sf $WALLPAPER $BACKGROUND
   rm -f $COLOR
   rm -f $THEME
@@ -184,7 +183,7 @@ if [ ! -e $COLOR ] && [ -z $blackboard ]  ;then
   # [ -e $THEME ] && exit
   background=$(query theme)
   # load theme or generate a theme from the border colour
-  if [ -e $background ] ;then
+  if [ -e "$background" ] ;then
     cp $background $THEME
     [ -e $HOME/.conkyrc ] && is display +1920 && draw conky
   else

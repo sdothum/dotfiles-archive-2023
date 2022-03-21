@@ -66,7 +66,7 @@ hc keybind $Mod-$DOWN               focus down
 hc keybind $Mod-$UP                 focus up
 hc keybind $Mod-$RIGHT              focus right
 
-# move clientCorne BEAKL Hi
+# move window
 hc keybind $Mod-Shift-Left          shift_edge left
 hc keybind $Mod-Shift-Down          shift_edge down
 hc keybind $Mod-Shift-Up            shift_edge up
@@ -92,12 +92,12 @@ hc keybind $Mod-Shift-1             jumpto urgent
 # split frames
 # create an empty frame at the specified direction
 hc keybind $Mod-q                   remove
-hc keybind $Mod-y                   split bottom 0.5
-hc keybind $Mod-Shift-y             split bottom 0.666666
-hc keybind $Mod-Control-y           split bottom 0.333333
-hc keybind $Mod-x                   split right  0.5
-hc keybind $Mod-Shift-x             split right  0.666666
-hc keybind $Mod-Control-x           split right  0.333333
+hc keybind $Mod-y                   spawn draw fsplit y 0.5
+hc keybind $Mod-Shift-y             spawn draw fsplit y 0.666666
+hc keybind $Mod-Control-y           spawn draw fsplit y 0.333333
+hc keybind $Mod-x                   spawn draw fsplit x 0.5
+hc keybind $Mod-Shift-x             spawn draw fsplit x 0.666666
+hc keybind $Mod-Control-x           spawn draw fsplit x 0.333333
 # let the current frame explode into subframes
 hc keybind $Mod-Control-Shift-space spawn restore frames
 

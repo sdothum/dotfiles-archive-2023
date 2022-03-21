@@ -46,7 +46,6 @@ export PMARGIN=$HLWM:margin
 export PULSAR=$HLWM:pulsar
 export THEME=$HLWM:theme
 
-export WALL=${WALL:-.}  # select wallpaper subdirectory
 export PANEL_FIFO=${PANEL_FIFO:-${PANEL}-fifo}
 echo $PANEL_FIFO:$(herbstclient attr monitors.focus.index) >$PANEL_FIFO  # sat by draw panel but needed beforehand
 
