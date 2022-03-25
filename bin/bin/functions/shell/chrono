@@ -4,7 +4,7 @@
 # Shell
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ....................................................................... H${H}M'S"
+# ....................................................................... H°M'S"
 
 usage() { echo "usage: $(basename $0) [-time] [<utcstart> [<utcstop>]]"; exit 1; }
 
@@ -15,7 +15,7 @@ usage() { echo "usage: $(basename $0) [-time] [<utcstart> [<utcstop>]]"; exit 1;
 # [ "$2" ] && utc=$(echo $2 | bc) || utc=$(date +%s)
 [ "$2" ] && utc=$(( $2 )) || utc=$(date +%s)
 
-H=' '  # hours symbol
+H='°'  # hours symbol
 
 elapsed() {
   bc <<EOF
