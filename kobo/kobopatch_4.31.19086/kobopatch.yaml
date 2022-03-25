@@ -32,13 +32,13 @@ overrides:
 
   src/libnickel.so.1.0.0.yaml:
     My 10 line spacing values: no
-    My 24 line spacing values: yes
-    Custom left & right margins: yes
+    My 24 line spacing values: no
+    Custom left & right margins: no
     Custom font sizes: yes
     ePub fixed top/bottom margins: no
     ePub disable built-in body padding-bottom: no
     Custom kepub default margins: no
-    Block WiFi firmware upgrade: no
+    Block WiFi firmware upgrade: yes
     Custom Sleep/Power-off timeouts: no
     Set KePub hyphenation: no
     Force user line spacing in KePubs: yes
@@ -66,7 +66,7 @@ overrides:
     Both page turn sides go next: no
     Increase page navigation history: no
     Replace adobe page numbers toggle with invert screen: no
-    Always show confirmation dialog before upgrading: yes
+    Always show confirmation dialog before upgrading: no
     Allow USB storage even when device locked: yes
     Hide browser from beta features: no
     Remove beta features not supported text: yes
