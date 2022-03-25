@@ -14,7 +14,6 @@ touch $FOCUS
 cpu arm && delay=2 || delay=1
 (sleep $delay && rm -f $FOCUS) &
 
-
 # fill empty grid locations once
 # fill=true
 unset fill
@@ -52,10 +51,13 @@ for i in $(seq 1 $frames) ;do
           break
         fi
       done
+      # when upgrade to version > 0.9.2, can search content_geometry for largest frame/window to split on overlay
     fi
   fi
 done
 
+# single window frame?
+[ -e $OVERLAY ] || { [ $(herbstclient attr tags.focus.curframe_wcount) -gt 0 ] && draw fsplit Y 0.5; }
 unlock
 
 # vim: set ft=sh: #

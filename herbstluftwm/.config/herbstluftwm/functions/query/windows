@@ -5,7 +5,7 @@
 # ══════════════════════════════════════════════════════════════════════════════
 
 # .............................................................. List of windows
-for i in $(herbstclient foreach C clients. echo C) ;do
+for i in $(query winids) ;do
   herbstclient attr $i | egrep 'class =|title ='
 done
 

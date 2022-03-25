@@ -6,12 +6,14 @@
 
 # .......................................................... dynamic frame split
 
-# Usage: draw fsplit [x | y] <proportion>
+# Usage: draw fsplit [x | y | X | Y] <proportion>
 
 # move window to split
 case $1 in
-x) herbstclient chain . split right $2 . shift_edge right ;;
-y) herbstclient chain . split bottom $2 . shift_edge down ;;
+x) herbstclient chain . split right $2 . shift_edge right >/dev/null ;;
+y) herbstclient chain . split top $2 . shift_edge up >/dev/null ;;
+X) herbstclient chain . split right $2 . spawn focus frame ;;
+Y) herbstclient chain . split top $2 . spawn focus frame ;;
 esac
 
 # vim: set ft=sh: #

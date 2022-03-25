@@ -21,7 +21,14 @@ export CONKYRC=$HOME/.conkyrc
 
 echo $DISPLAY >$SESSION/display  # for cron notifications, see notify
 
-# .................................................................... WM states
+# ................................................................. WM behaviour
+
+export DYNAMIC=$HLWM:dynamic
+export FOCUS=$HLWM:focus
+export LOCK=$HLWM:lock
+export OVERLAY=$HLWM:overlay
+
+# ................................................................ WM attributes
 
 export PALETTE=$HOME/images/colors
 export WALLCOLOR=$PALETTE/default
@@ -32,20 +39,21 @@ export BACKGROUND=$HOME/images/default  # ln to WALLPAPER or WALLCOLOR, see draw
 export BLACKBOARD=$HLWM:blackboard
 # export BLANK=$HLWM:blank
 export BORDER=$HLWM:border
-export PICOM=$HLWM:picom
-export CONKY=$HLWM:conky
-export DYNAMIC=$HLWM:dynamic
-export FORTUNE=$HLWM:fortune
-export FOCUS=$HLWM:focus
-export FULLSCREEN=$HLWM:fullscreen
-export LAYOUT=$HLWM:layout
-export LOCK=$HLWM:lock
-export MONOCLE=$HLWM:monocle
-export PANEL=$HLWM:panel
-export PMARGIN=$HLWM:margin
 export PULSAR=$HLWM:pulsar
 export THEME=$HLWM:theme
 
+# .................................................................... WM states
+
+export PICOM=$HLWM:picom
+export CONKY=$HLWM:conky
+export FORTUNE=$HLWM:fortune
+
+export FULLSCREEN=$HLWM:fullscreen
+export LAYOUT=$HLWM:layout
+export MONOCLE=$HLWM:monocle
+
+export PANEL=$HLWM:panel
+export PMARGIN=$HLWM:margin
 export PANEL_FIFO=${PANEL_FIFO:-${PANEL}-fifo}
 echo $PANEL_FIFO:$(herbstclient attr monitors.focus.index) >$PANEL_FIFO  # sat by draw panel but needed beforehand
 

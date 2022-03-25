@@ -31,6 +31,7 @@ hc keybind $Mod-Return              spawn toggle scratchpad
 hc keybind $Mod-Shift-Return        spawn tmux_session
 hc keybind $Mod-Control-Return      spawn term 'term'
 hc keybind $Mod-equal               spawn toggle focus
+hc keybind $Mod-Shift-equal         spawn toggle focus overlay
 # number layer thumb swap
 hc keybind $Mod-0                   spawn toggle focus
 
@@ -91,7 +92,7 @@ hc keybind $Mod-Shift-1             jumpto urgent
 
 # split frames
 # create an empty frame at the specified direction
-hc keybind $Mod-q                   remove
+hc keybind $Mod-q                   chain . remove . set_layout max
 hc keybind $Mod-y                   spawn draw fsplit y 0.5
 hc keybind $Mod-Shift-y             spawn draw fsplit y 0.666666
 hc keybind $Mod-Control-y           spawn draw fsplit y 0.333333

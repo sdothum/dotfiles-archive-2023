@@ -6,14 +6,15 @@
 
 # ......................................................... Toggle dynamic focus
 
-# see emit_hook and focus functions
-if [ -e $DYNAMIC ] ;then
-  rm -f $DYNAMIC
-  notify low 'Dynamic Focus' Off
-else
-  touch $DYNAMIC
-  notify low 'Dynamic Focus' On
-  focus window
-fi
+# Usage: toggle focus [overlay | status]
+
+status() { [ -e $1 ] && notify low "Dynamic $2" On || notify low "Dynamic $2" Off; }
+toggle() { [ -e $1 ] && rm -f $1 || touch $1; status $1 $2; }
+
+case $1 in
+''     ) toggle $DYNAMIC Focus; [ -e $DYNAMIC ] && focus window ;;  # see emit_hook and focus functions
+overlay) toggle $OVERLAY Overlay ;;
+status ) status $DYNAMIC Focus; status $OVERLAY Overlay ;;
+esac
 
 # vim: set ft=sh: #

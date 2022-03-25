@@ -131,4 +131,6 @@ is multihead || draw panel  # normally the responsibilty of draw root but requir
 conky clock auto
 rm -f $NCURSES
 
+sleep 4 && toggle focus status  # what dynamic window handling?
+
 # vim: set ft=sh: #
