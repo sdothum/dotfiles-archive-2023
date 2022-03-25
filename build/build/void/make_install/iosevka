@@ -15,7 +15,7 @@ while [ $1 ] ;do
   case $1 in
   ''         ) ;;
   I-serifless) flavour=I-serifless ;;  # source code variant
-  Q-bend     ) Q=Q-bend ;;
+  Q-tailed   ) Q=Q-tailed ;;
   d-tailed   ) d=d-tailed ;;           # ebook variant
   q-curly    ) q=q-curly ;;            # ebook variant
   kindle     ) ereader=$1 ;;
