@@ -51,15 +51,13 @@ for i in $(seq 1 $frames) ;do
           break
         fi
       done
-      # when upgrade to version > 0.9.2, can search content_geometry for largest frame/window to split on overlay
     fi
   fi
 done
 
-# find biggest frame (window) to split -- works best if all frames are max layout (as grids will thwart window sort)
+# find biggest frame (window) to split -- works best if all frames are max layout (as grids will act to filter window sort)
 if [ -e $FSPLIT ] ;then
   >$FSPLIT
-  tag=$(query tag)
   for i in $(herbstclient list_clients); do 
     set -- $(herbstclient attr clients.$i.content_geometry | sed 's/[-+].*//; s/x/ /')
     [ $1 -gt $2 ] && xy=X || xy=Y  # split along long edge
