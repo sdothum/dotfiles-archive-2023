@@ -8,6 +8,7 @@
 # shell scripts excluding .man (see dmenu man)
 
 REFRESH='refresh cache'  # catalogue, see ffcache
+EXCLUDE='(AppImage|.service|-module|.mp3|-multilib)$'
 
 # search these project library folders..
 sources=$(cat $CONFIG/.scriptsrc | sed "s|\$HOME|$HOME|g")  # manual eval of $HOME
@@ -15,7 +16,7 @@ sources=$(cat $CONFIG/.scriptsrc | sed "s|\$HOME|$HOME|g")  # manual eval of $HO
 # shorten path references for menu
 for i in $sources ;do echo $i | grep -q "^$HOME" && trim="$trim s,$i/,${i##*/}/,;" ;done
 
-files() { ffcache $refresh scripts $sources | sed "$trim"; unset refresh; }
+files() { ffcache $refresh scripts $sources | egrep -v "$EXCLUDE" | sed "$trim"; unset refresh; }
 
 # recover full pathname
 expand() {
