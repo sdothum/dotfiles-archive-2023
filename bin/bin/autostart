@@ -16,7 +16,7 @@ JABBER=$SESSION/jabber
 MAIL=$SESSION/mail
 PING=$SESSION/ping
 PLOVER=$SESSION/plover
-PULSE=$SESSION/pulse
+PULSEAUDIO=$SESSION/pulseaudio
 REMINDER=$SESSION/reminder
 TERM=$SESSION/term
 THEDARNEDESTTHING=$SESSION/thedarnedestthing
@@ -49,7 +49,7 @@ if xinput list --name-only | egrep -q 'Georgi|Splitography' ;then
 fi
 
 # force hdmi audio functionality
-if [ -e $PULSE ] ;then
+if [ -e $PULSEAUDIO ] ;then
   pavucontrol 2>/dev/null &               # suppress gtk warnings
   pulseaudio-equalizer enable
   pulseaudio-equalizer-gtk 2>/dev/null &  # suppress config file access errors
