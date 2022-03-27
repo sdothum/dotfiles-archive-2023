@@ -8,13 +8,13 @@
 
 # Usage: toggle focus [overlay | status]
 
-status() { [ -e $1 ] && notify low "Dynamic $2" On || notify low "Dynamic $2" Off; }
+status() { [ -e $1 ] && notify "Dynamic $2" On || notify low "Dynamic $2" Off; }
 toggle() { [ -e $1 ] && rm -f $1 || touch $1; status $1 $2; }
 
 case $1 in
-''     ) toggle $DYNAMIC Focus; [ -e $DYNAMIC ] && focus window ;;  # see emit_hook and focus functions
-overlay) toggle $OVERLAY Overlay ;;
-status ) status $DYNAMIC Focus; status $OVERLAY Overlay ;;
+''    ) toggle $DYNAMIC Focus; [ -e $DYNAMIC ] && focus window ;;  # see emit_hook and focus functions
+fsplit) toggle $FSPLIT Frames ;;
+status) status $DYNAMIC Focus; status $FSPLIT Frames ;;
 esac
 
 # vim: set ft=sh: #

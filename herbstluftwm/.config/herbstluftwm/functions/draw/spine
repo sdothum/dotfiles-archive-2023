@@ -8,15 +8,16 @@
 
 [ -e $SPINE ] || return
 
-close=0.10  # close completion delay window
+singleton() { herbstclient attr theme.active.color '#00000000'; exit; }  # one or no frames in use
 
 # dynamic spine decoration for multiple populated frames
-sleep $close
-if herbstclient compare tags.focus.curframe_wcount = $(herbstclient attr tags.focus.client_count) ;then
-  herbstclient set frame_bg_transparent 1  # one or no frames in use
-else
-  herbstclient set frame_bg_transparent 0  # two or more frames in use
+windows=$(herbstclient attr tags.focus.client_count)
+if [ $windows = 1 ] ;then  # may be a layout type with just one window
+  singleton
+elif [ $(query layout) = max ] && herbstclient compare tags.focus.curframe_wcount = $windows ;then
+  singleton
 fi
 
+herbstclient attr theme.active.color $CSPINE      # two or more frames in use
 
 # vim: set ft=sh: #

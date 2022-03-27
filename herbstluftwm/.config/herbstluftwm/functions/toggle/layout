@@ -35,7 +35,7 @@ if is fullscreen ;then
     toggle fullscreen
   fi
 else
-  layout=$(herbstclient dump '' '@' | sed -r 's/[^ ]* ([^:]*).*/\1/')
+  layout=$(query layout)
   tag=$HLWM:tag:$(herbstclient attr monitors.focus.tag)
   if [ $layout != $1 ] ;then
     echo $layout >$tag

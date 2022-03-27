@@ -121,7 +121,6 @@ wallpaper() {
   ln -sf $WALLPAPER $BACKGROUND
   rm -f $COLOR
   rm -f $THEME
-  herbstclient attr theme.normal.color $NORMAL
 }
 
 # set background wallpaper

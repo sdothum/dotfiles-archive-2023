@@ -26,7 +26,7 @@ echo $DISPLAY >$SESSION/display  # for cron notifications, see notify
 export DYNAMIC=$HLWM:dynamic
 export FOCUS=$HLWM:focus
 export LOCK=$HLWM:lock
-export OVERLAY=$HLWM:overlay
+export FSPLIT=$HLWM:fsplit
 
 # ................................................................ WM attributes
 
@@ -101,7 +101,7 @@ export INVISIBLE='□'
 # focus aid, see focus border
 export FOCUS_WIDTH=5
 export BORDER_WIDTH=2
-export NORMAL='#808080'
+export CSPINE=red
 
 # ........................................................... Margin adjustments
 

@@ -7,6 +7,6 @@
 # ................................................................. Query layout
 
 # return layout of focused frame
-herbstclient layout | grep '\[FOCUS\]' | awk '{ print $2 }' | cut -d: -f1
+herbstclient dump '' '@' | sed -r 's/[^ ]* ([^:]*).*/\1/'
 
 # vim: set ft=sh: #

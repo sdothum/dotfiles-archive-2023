@@ -15,7 +15,7 @@ start=$(date '+%s')
 instantiate=0.01  # instantiation window
 
 while : ;do
-  for i in $(herbstclient foreach C clients. echo C) ;do
+  for i in $(query winids) ;do
     herbstclient compare ${i%.}.instance = $1 && exit 0
   done
   sleep $instantiate

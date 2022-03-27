@@ -56,8 +56,21 @@ for i in $(seq 1 $frames) ;do
   fi
 done
 
-# single window frame?
-[ -e $OVERLAY ] || { [ $(herbstclient attr tags.focus.curframe_wcount) -gt 0 ] && draw fsplit Y 0.5; }
+# find biggest frame (window) to split -- works best if all frames are max layout (as grids will thwart window sort)
+if [ -e $FSPLIT ] ;then
+  >$FSPLIT
+  tag=$(query tag)
+  for i in $(herbstclient list_clients); do 
+    set -- $(herbstclient attr clients.$i.content_geometry | sed 's/[-+].*//; s/x/ /')
+    [ $1 -gt $2 ] && xy=X || xy=Y  # split along long edge
+    echo $(( $1 * $2 )) $i $xy >>$FSPLIT
+    shift 2
+  done
+  set -- $(sort -n $FSPLIT | tail -1)
+  [ $(herbstclient attr tags.focus.curframe_wcount) -gt 0 ] && { herbstclient jumpto $2; draw fsplit $3 0.5; }
+  shift 3
+fi
+
 unlock
 
 # vim: set ft=sh: #

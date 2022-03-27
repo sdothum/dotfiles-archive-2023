@@ -9,11 +9,11 @@
 # current workflow is to hide cursor with mouse off (that's why we prefer keyboards!)
 if pstat unclutter ;then
   killall -KILL unclutter 2>/dev/null
-  herbstclient set focus_follows_mouse 1
+  herbstclient set focus_follows_mouse true
   rm -f $UNCLUTTER
 else
   # hc set action must precede unclutter initialization to avoid X_GetProperty error
-  herbstclient set focus_follows_mouse 0
+  herbstclient set focus_follows_mouse false
   # unclutter (original) doesn't play nice with X, so give it some initialization time
   # (sleep 1 && unclutter -idle 1 -jitter 2 -root) &
   # unclutter-xfixes
