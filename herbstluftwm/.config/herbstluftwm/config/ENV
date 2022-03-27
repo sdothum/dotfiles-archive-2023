@@ -29,25 +29,6 @@ export FOCUS=$HLWM:focus
 export LOCK=$HLWM:lock
 export FSPLIT=$DESKTOP:fsplit
 
-# ................................................................ WM attributes
-
-export PALETTE=$HOME/images/colors
-export WALLCOLOR=$PALETTE/default
-export COLOR=$WALLCOLOR:color
-export WALLPAPER=$HOME/images/backgrounds/default
-export BACKGROUND=$HOME/images/default  # ln to WALLPAPER or WALLCOLOR, see draw root
-
-export BLACKBOARD=$HLWM:blackboard
-# export BLANK=$HLWM:blank
-export BORDER=$HLWM:border
-export PULSAR=$HLWM:pulsar
-export THEME=$HLWM:theme
-export CSPINE=$SESSION/spine:active
-export NSPINE=$SESSION/spine:inactive
-
-[ -e $CSPINE ] || echo '#ff0000' >$CSPINE
-[ -e $NSPINE ] || echo '#707070' >$NSPINE
-
 # .................................................................... WM states
 
 export PICOM=$HLWM:picom
@@ -91,6 +72,25 @@ export PROOF=$SESSION/proof
 export SPICOM=$SESSION/picom
 export UNCLUTTER=$SESSION/unclutter
 export WSYNC=$SESSION/wsync
+
+# ................................................................ WM attributes
+
+export PALETTE=$HOME/images/colors
+export WALLCOLOR=$PALETTE/default
+export COLOR=$WALLCOLOR:color
+export WALLPAPER=$HOME/images/backgrounds/default
+export BACKGROUND=$HOME/images/default  # ln to WALLPAPER or WALLCOLOR, see draw root
+
+export BLACKBOARD=$HLWM:blackboard
+# export BLANK=$HLWM:blank
+export BORDER=$HLWM:border
+export THEME=$HLWM:theme
+export CSPINE=$SSPINE:active
+export NSPINE=$SSPINE:inactive
+export PULSAR=$SSPINE:pulsar
+
+[ -e $CSPINE ] || echo '#ff0000' >$CSPINE
+[ -e $NSPINE ] || echo '#707070' >$NSPINE
 
 # ..................................................................... Desktops
 

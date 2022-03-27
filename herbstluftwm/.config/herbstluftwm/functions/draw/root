@@ -62,18 +62,6 @@ setblur() {
   echo "${primary}:${secondary}"
 }
 
-# ....................................................... Generate border colors
-
-# create pulsar border color gradient, see draw border
-# set_border() {
-#   # rice palette $1 'Monochromatic' >$PULSAR
-#   rice palette red 'Tint' >$PULSAR
-#   # set border to midtone
-#   cut -d' ' -f1 $PULSAR >$BORDER
-#   # refresh border of active window
-#   herbstclient attr theme.active.color "#$(cat $BORDER)"
-# }
-
 # ............................................................... Set background
 
 blank() {

@@ -10,14 +10,14 @@
 usage() { 
   echo "toggle: list c'olors | d'ynamic | frame spl'it | p'anel | s'pine"
   echo "tuples: f'rame_gap | m'argin | panel h'eight | panel i'ndent | s'pine | w'indow_gap | font siz'e  <value>"
-  echo "        a'ctive color | in'active color | panel c'olor <value>"
+  echo "        a'ctive color | in'active color | pulsar c'olor <value>"
   echo "          indent: '' -> default"
   echo "          spine:  0 -> off"
   echo "          color:  <name> or #<hex>"
 }
 
 # ricing parameters
-layout="$CSPINE $NSPINE $FRAME_GAP $MARGIN $PANEL_HEIGHT $PANEL_INDENT $SPINE $WINDOW_GAP $FONTSIZE"
+layout="$CSPINE $NSPINE $PULSAR $FRAME_GAP $MARGIN $PANEL_HEIGHT $PANEL_INDENT $SPINE $WINDOW_GAP $FONTSIZE"
 
 usage
 [ -e $SSPINE ] && { [ -s $SPINE ] && spine=$(cat $SPINE) || spine=3; } || spine=0
@@ -86,14 +86,14 @@ while : ;do
   case $attr in
     a) ;;
     n) ;;
-    p) ;;
+    c) ;;
     *) echo $value | grep -q '[^0-9]' && { usage; continue; }
   esac
 
   case $attr in
   a) color >$CSPINE ;;
   n) color >$NSPINE ;;
-  c) color >$PANEL_COLOR ;;
+  c) color >$PULSAR ;;
   f) echo $value >$FRAME_GAP ;;
   m) echo $value >$MARGIN ;;
   h) echo $value >$PANEL_HEIGHT ;;
