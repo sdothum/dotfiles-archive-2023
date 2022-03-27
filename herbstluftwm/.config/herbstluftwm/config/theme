@@ -6,8 +6,6 @@
 
 # ..................................................................... Settings
 
-BG='#808080'                    # inactive spine colour
-
 [ -e $SSPINE ] && { [ -s $SPINE ] && spine=$(cat $SPINE) || spine=3; } || spine=0
 
 hc set tree_style "'╾│ ├└╼─┐'"  # tree_style string must be quote enclosed "'string'" for hc parsing
@@ -58,13 +56,11 @@ fi
 
 # ...................................................................... Colours
 
-hc attr theme.active.color            $CSPINE
-hc attr theme.normal.color            $BG
+hc attr theme.active.color            $(cat $CSPINE)
+hc attr theme.normal.color            $(cat $NSPINE)
 hc attr theme.urgent.color            orange
 
 hc set frame_active_opacity           0
-# hc set frame_bg_active_color          $CSPINE
-# hc set frame_bg_normal_color          $BG
 hc set frame_normal_opacity           0
 
 # vim: set ft=sh: #

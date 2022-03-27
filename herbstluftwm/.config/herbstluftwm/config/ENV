@@ -15,8 +15,9 @@ export XDG_CONFIG_HOME=$HOME/.config
 export ROOT=${ROOT:-/tmp}
 export HLWM=$ROOT/herbstluftwm
 export SESSION=$HOME/.session
-export UI=$HOME/.session/herbstluftwm
-export PICOMCONF=$HOME/.picom.conf
+export DESKTOP=$SESSION/desktop
+export UI=$SESSION/herbstluftwm
+export PICOMCONF=$XDG_CONFIG_HOME/picom/picom.conf
 export CONKYRC=$HOME/.conkyrc
 
 echo $DISPLAY >$SESSION/display  # for cron notifications, see notify
@@ -26,7 +27,7 @@ echo $DISPLAY >$SESSION/display  # for cron notifications, see notify
 export DYNAMIC=$HLWM:dynamic
 export FOCUS=$HLWM:focus
 export LOCK=$HLWM:lock
-export FSPLIT=$HLWM:fsplit
+export FSPLIT=$DESKTOP:fsplit
 
 # ................................................................ WM attributes
 
@@ -41,6 +42,11 @@ export BLACKBOARD=$HLWM:blackboard
 export BORDER=$HLWM:border
 export PULSAR=$HLWM:pulsar
 export THEME=$HLWM:theme
+export CSPINE=$SESSION/spine:active
+export NSPINE=$SESSION/spine:inactive
+
+[ -e $CSPINE ] || echo '#ff0000' >$CSPINE
+[ -e $NSPINE ] || echo '#707070' >$NSPINE
 
 # .................................................................... WM states
 
@@ -62,8 +68,8 @@ echo $PANEL_FIFO:$(herbstclient attr monitors.focus.index) >$PANEL_FIFO  # sat b
 # wm states, see gaps
 export FRAME_GAP=$UI:frame_gap
 export MARGIN=$UI:margin
-export NOBLUR=$SESSION/noblur
-export SETROOT=$SESSION/setroot
+export NOBLUR=$DESKTOP:noblur
+export SETROOT=$DESKTOP:setroot
 export SPINE=$UI:spine        # frame left decoration -> window_gap = 0
 export SSPINE=$SESSION/spine  # toggle state
 export WINDOW_GAP=$UI:window_gap
@@ -101,7 +107,6 @@ export INVISIBLE='□'
 # focus aid, see focus border
 export FOCUS_WIDTH=5
 export BORDER_WIDTH=2
-export CSPINE=red
 
 # ........................................................... Margin adjustments
 
@@ -123,7 +128,7 @@ export CONKY_WIDTH=$(conkyrc 'maximum_width')
 if [ ! -e $PICOMCONF ] ;then
   # export SHADOW=0
   export SHADOW=18
-elif grep -q '^shadow-opacity = 0.0' $PICOMCONF ;then
+elif egrep -q '^(shadow = false|shadow-opacity = 0.0)' $PICOMCONF ;then
   export SHADOW=0
 else
   # assumes shadow-offset = -(shadow-radius)

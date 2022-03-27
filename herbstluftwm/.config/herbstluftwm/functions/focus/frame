@@ -30,7 +30,7 @@ for i in $(seq 1 $frames) ;do
   herbstclient cycle_frame 1
   # right fill the desktop to to avoid visual frame gaps
   if herbstclient compare tags.by-name.$TAG.curframe_wcount = 0 ;then
-    herbstclient chain . focus_edge right >/dev/null
+    herbstclient chain . focus_edge right >/dev/null 2>&1
     break
   fi
 done

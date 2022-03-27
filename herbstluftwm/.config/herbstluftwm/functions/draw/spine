@@ -18,6 +18,7 @@ elif [ $(query layout) = max ] && herbstclient compare tags.focus.curframe_wcoun
   singleton
 fi
 
-herbstclient attr theme.active.color $CSPINE      # two or more frames in use
+herbstclient attr theme.active.color $(cat $CSPINE)  # two or more frames in use
+herbstclient attr theme.normal.color $(cat $NSPINE)
 
 # vim: set ft=sh: #

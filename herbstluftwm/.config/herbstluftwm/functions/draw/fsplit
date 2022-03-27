@@ -10,9 +10,9 @@
 
 # move window to split
 case $1 in
-x) herbstclient chain . split right $2 . shift_edge right >/dev/null ;;
+x) herbstclient chain . split left $2 . shift_edge left >/dev/null ;;
 y) herbstclient chain . split top $2 . shift_edge up >/dev/null ;;
-X) herbstclient chain . split right $2 . spawn focus frame ;;
+X) herbstclient chain . split left $2 . spawn focus frame ;;
 Y) herbstclient chain . split top $2 . spawn focus frame ;;
 esac
 

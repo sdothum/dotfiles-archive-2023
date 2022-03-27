@@ -8,15 +8,16 @@
 # ................................................................. Tweak layout
 
 usage() { 
-  echo "toggle: c'olors | p'anel | s'pine"
-  echo "tuples: f'rame_gap | m'argin | panel c'olor | panel h'eight | panel i'ndent | s'pine | w'indow_gap | font siz'e  <value>"
-  echo "          panel color:  <name> or #<hex>"
-  echo "          panel indent: '' -> default"
-  echo "          spine:        0 -> off"
+  echo "toggle: list c'olors | d'ynamic | frame spl'it | p'anel | s'pine"
+  echo "tuples: f'rame_gap | m'argin | panel h'eight | panel i'ndent | s'pine | w'indow_gap | font siz'e  <value>"
+  echo "        a'ctive color | in'active color | panel c'olor <value>"
+  echo "          indent: '' -> default"
+  echo "          spine:  0 -> off"
+  echo "          color:  <name> or #<hex>"
 }
 
 # ricing parameters
-layout="$FRAME_GAP $MARGIN $PANEL_HEIGHT $PANEL_INDENT $SPINE $WINDOW_GAP $FONTSIZE"
+layout="$CSPINE $NSPINE $FRAME_GAP $MARGIN $PANEL_HEIGHT $PANEL_INDENT $SPINE $WINDOW_GAP $FONTSIZE"
 
 usage
 [ -e $SSPINE ] && { [ -s $SPINE ] && spine=$(cat $SPINE) || spine=3; } || spine=0
@@ -30,6 +31,8 @@ settings() {
   done
   [ -e $SSPINE ] && ditto window_gap 'off [spine]' || ditto spine 'off'
   [ -e $SPANEL ] || ditto panel 'off'
+  [ -e $DYNAMIC ] || ditto dynamic 'off'
+  [ -e $FSPLIT ] && ditto frame 'split on'
   echo
 }
 
@@ -55,10 +58,9 @@ config() {
   herbstclient attr theme.padding_left        $(edge $spine 0)
   herbstclient attr theme.active.padding_left $(edge $spine 0)
   herbstclient set  window_gap                $(edge 0 $window_gap)
-  herbstclient set  frame_bg_transparent      $(edge 0 1)
-  # herbstclient set  frame_active_opacity    $(edge 1 0)
-  # herbstclient set  frame_normal_opacity    $(edge 1 0)
 }
+
+color() { pastel format hex $value; }
 
 while : ;do
   settings
@@ -70,7 +72,9 @@ while : ;do
   if [ "$attr" = "$value" ] ;then
     case $attr in
     c) pastel list | less; continue ;;
+    p) [ -e $DYNAMIC ] && rm $DYNAMIC || touch $DYNAMIC ;;
     i) [ -e $PANEL_INDENT ] && rm $PANEL_INDENT || usage ;;
+    l) [ -e $FSPLIT ] && rm $FSPLIT || touch $FSPLIT ;;
     p) [ -e $SPANEL ] && rm $SPANEL || touch $SPANEL ;;
     s) [ -e $SSPINE ] && rm $SSPINE || touch $SSPINE ;;
     *) usage ;;
@@ -78,10 +82,18 @@ while : ;do
     config
     continue
   fi
-  echo $value | grep -q '[^0-9]' && { usage; continue; }
 
   case $attr in
-  c) pastel gradient --colorspace=HSL --number 5 $value ffffff >$PANEL_COLOR ;;
+    a) ;;
+    n) ;;
+    p) ;;
+    *) echo $value | grep -q '[^0-9]' && { usage; continue; }
+  esac
+
+  case $attr in
+  a) color >$CSPINE ;;
+  n) color >$NSPINE ;;
+  c) color >$PANEL_COLOR ;;
   f) echo $value >$FRAME_GAP ;;
   m) echo $value >$MARGIN ;;
   h) echo $value >$PANEL_HEIGHT ;;
