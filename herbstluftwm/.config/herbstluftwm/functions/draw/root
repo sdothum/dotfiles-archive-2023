@@ -1,5 +1,4 @@
 # sdothum - 2016 (c) wtfpl
-
 [ $TRACE ] && CHILD="draw/root $@" . $PARENT
 
 # herbstluftwm
@@ -86,7 +85,7 @@ blank() {
   # fi
   [ $2 ] || { luminance -$color && echo light >$THEME || echo dark >$THEME; }  # luminance set by dmenu root
   # make inactive border invisible!
-  herbstclient attr theme.normal.color "#$color"
+  herbstclient attr theme.normal.color "#00000000"
 }
 
 select_blank() {

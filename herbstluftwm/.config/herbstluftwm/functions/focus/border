@@ -12,28 +12,21 @@ pstat + 'focus border' && exit
 herbstclient compare clients.focus.instance = '' 2>/dev/null && exit
 
 width=$(herbstclient attr theme.border_width)
-active=$(herbstclient attr theme.active.color)
+left=$(herbstclient attr theme.padding_left)
 normal=$(herbstclient attr theme.normal.color)
-# with solid background colour, make inactive border invisible!
-[ -e $COLOR ] && bg="#$(cat $COLOR)" || bg=$normal
-if [ -e $COLOR ] ;then luminance +${bg#?} && hilight='#ff0000' || hilight='#00ff00'
-else                   hilight="#$(cat $BORDER)"
-fi
 
 # border attention!
-border=$(( $width + $FOCUS_WIDTH ))
-herbstclient chain . lock . attr theme.active.color $hilight \
-                   . attr theme.normal.color $bg \
-                   . attr theme.border_width $border \
-                   . attr theme.floating.border_width $border . unlock
+border=$(( $(cat $SPINE) + ${1:-3} ))
+herbstclient chain . lock . attr theme.normal.color "#00000000" \
+                   . attr theme.border_width $border            \
+                   . attr theme.padding_left 0 . unlock
 
-sleep ${1:-2}
+sleep 1.5
 
 # restore borders
-herbstclient chain . lock . attr theme.active.color $active \
-                   . attr theme.normal.color $normal \
-                   . attr theme.border_width $width \
-                   . attr theme.floating.border_width $width . unlock
+herbstclient chain . lock . attr theme.normal.color $normal     \
+                   . attr theme.border_width $width             \
+                   . attr theme.padding_left $left . unlock
 
 
 # vim: set ft=sh: #

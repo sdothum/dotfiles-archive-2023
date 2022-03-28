@@ -13,9 +13,8 @@
 frequency=0.2
 
 [ -e $PULSAR ] && colors=$(cat $PULSAR) || colors=$(herbstclient attr theme.active.color)
-colors=$(pastel gradient --number 16 $colors white | pastel format hex)
+colors=$(pastel gradient --number 16 $colors white | pastel format hex | head -8)  # trim lights
 colors="$colors $(echo $colors | reverse)"
-[ -e $BORDER ] && BORDER=$(cat $BORDER) || BORDER=000000
 
 pulsar() {
   while : ;do
@@ -50,7 +49,7 @@ is fullscreen && exit
 if herbstclient compare tags.by-name.$TAG.curframe_wcount gt 1 ;then
   is layout max && exec draw border pulsar
 else
-  herbstclient attr theme.active.color "#$BORDER"
+  herbstclient attr theme.active.color $(cat $CSPINE)
 fi
 
 # vim: set ft=sh: #

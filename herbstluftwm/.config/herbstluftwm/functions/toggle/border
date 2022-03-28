@@ -6,24 +6,19 @@
 
 # ........................................................ Toggle window borders
 
-NORMAL=$HLWM:normal
-
 # no borders focusing aid
 pstat + 'focus border' && exit
-[ -e $NORMAL ] || herbstclient attr theme.normal.color >$NORMAL
 
 # no borders
 if herbstclient compare theme.border_width gt 0 ;then
-  herbstclient chain . lock . attr theme.normal.color "$(cat $NORMAL)" \
-                     . attr theme.border_width 0 \
-                     . attr theme.floating.border_width 0 . unlock
+  herbstclient chain . lock . attr theme.normal.color $(cat $NSPINE) \
+                     . attr theme.border_width 0                     \
+                     . attr theme.padding_left $(cat $SPINE) . unlock
 else
-  herbstclient attr theme.normal.color >$NORMAL
   # with solid background colour, make inactive border invisible!
-  [ -e $COLOR ] && bg="#$(cat $COLOR)" || bg=$(cat $NORMAL)
-  herbstclient chain . lock . attr theme.normal.color $bg \
-                     . attr theme.border_width $BORDER_WIDTH \
-                     . attr theme.floating.border_width $BORDER_WIDTH . unlock
+  herbstclient chain . lock . attr theme.normal.color "#00000000"    \
+                     . attr theme.border_width $(cat $SPINE)         \
+                     . attr theme.padding_left 0 . unlock
 fi
 
 # vim: set ft=sh: #

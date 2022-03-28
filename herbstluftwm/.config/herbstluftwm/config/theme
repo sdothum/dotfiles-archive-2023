@@ -36,12 +36,9 @@ hc set smart_window_surroundings      0
 # ....................................................................... Layout
 
 hc attr theme.border_width            0
-hc attr theme.inner_width             0
-hc attr theme.outer_width             0
 hc attr theme.padding_left            $(edge $spine 0)
 
 hc set frame_border_width             0
-hc set frame_border_inner_width       0
 hc set frame_padding                  0
 hc set frame_transparent_width        0
 

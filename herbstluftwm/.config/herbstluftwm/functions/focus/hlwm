@@ -8,6 +8,10 @@
 
 # Usage: focus hlwm focus [focus | raise | close]
 
+# window states
+VISIBLE='■'
+HIDDEN='□'
+
 action() {
   case $1 in
   focus) mode='Focus ' ;;
@@ -25,7 +29,7 @@ action $1
 
 tag() {
   # tags represented as box tag, empty box as hidden tick'tag
-  echo $TAG | grep -q "'" && echo "$INVISIBLE ${TAG#\'}" || echo "$VISIBLE $TAG"
+  echo $TAG | grep -q "'" && echo "$HIDDEN ${TAG#\'}" || echo "$VISIBLE $TAG"
 }
 
 for i in $(query winids) ;do
@@ -33,14 +37,14 @@ for i in $(query winids) ;do
   window="$TAG$DLM$(query wtitle $i) ^$(tag)$DLM$i"
   [ "$windows" ] && windows="$windows\n$window" || windows="$window"
 done
-echo $windows | grep $INVISIBLE && hidden="  ⇣$INVISIBLE"
+echo $windows | grep $HIDDEN && hidden="  ⇣$HIDDEN"
 
 # ........................................................................ Dmenu
 
 if window=$(echo $windows | sort | cut -d$DLM -f2 | column -s\^ -t |
       rmenu "${mode}Window$title$hidden" -no-custom) || exit ;then
   # restore ^$SEP, see query wtitle
-  window=$(echo $window | sed -r "s/ *([$VISIBLE$INVISIBLE])/ ^\1/; s/ *($SEP)/^\1/")
+  window=$(echo $window | sed -r "s/ *([$VISIBLE$HIDDEN])/ ^\1/; s/ *($SEP)/^\1/")
   window=$(echo $windows | grep "$window")
   TAG=$(echo $window | cut -d$DLM -f1)
   if [ -z $mode ] ;then
@@ -72,7 +76,7 @@ if window=$(echo $windows | sort | cut -d$DLM -f2 | column -s\^ -t |
           unlock set swap_monitors_to_get_tag $swap_monitors
           restore panel ;;
   esac
-  echo $window | grep " $INVISIBLE [0-9]${DLM}0x" && query ttag $TAG
+  echo $window | grep " $HIDDEN [0-9]${DLM}0x" && query ttag $TAG
 fi
 
 # vim: set ft=sh: #

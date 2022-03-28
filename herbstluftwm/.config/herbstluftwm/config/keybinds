@@ -36,7 +36,7 @@ hc keybind $Mod-Shift-equal         spawn toggle focus fsplit
 hc keybind $Mod-0                   spawn toggle focus
 
 # UI appearance
-hc keybind $Mod-b                   spawn focus border 3
+hc keybind $Mod-b                   spawn focus border $(cat $SPINE)
 hc keybind $Mod-Shift-b             spawn toggle border
 hc keybind $Mod-h                   spawn term 'gaps' rlwrap gaps
 hc keybind $Mod-i                   spawn toggle unclutter
