@@ -117,7 +117,7 @@ fi
 
 # add window management extensions
 emithook &
-toggle focus
+[ -e $DYNAMIC ] || toggle focus
 
 # ................................................................ Final touches
 

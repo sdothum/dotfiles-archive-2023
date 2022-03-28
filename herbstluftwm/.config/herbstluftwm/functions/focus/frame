@@ -6,6 +6,8 @@
 
 # ................................ Find empty subframe to open (spawn) window in
 
+# Usage: focus frame [empty], see draw fsplit
+
 [ -e $DYNAMIC ] || exit
 
 # prevent premature focus window request from conky polling, see query wname
@@ -55,13 +57,18 @@ for i in $(seq 1 $frames) ;do
   fi
 done
 
+# window count of client frame
+fcount() { herbstclient attr tags.$(( $(herbstclient attr clients.$i.tag) - 1 )).curframe_wcount; }
+
 # find biggest frame (window) to split -- works best if all frames are max layout (as grids will act to filter window sort)
-if [ -e $FSPLIT ] ;then
+if [ -z $1 ] && [ -e $FSPLIT ] ;then
   >$FSPLIT
   for i in $(herbstclient list_clients); do 
     set -- $(herbstclient attr clients.$i.content_geometry | sed 's/[-+].*//; s/x/ /')
     [ $1 -gt $2 ] && xy=X || xy=Y  # split along long edge
-    echo $(( $1 * $2 )) $i $xy >>$FSPLIT
+    count=$(fcount)
+    [ $count -lt 1 ] && count=1
+    echo $(( $1 * $2 / $count )) $i $xy >>$FSPLIT  # apply multi-window weighting (max layout assumed)
     shift 2
   done
   set -- $(sort -n $FSPLIT | tail -1)
