@@ -13,7 +13,7 @@ herbstclient compare clients.focus.instance = '' 2>/dev/null && exit
 
 width=$(herbstclient attr theme.border_width)
 left=$(herbstclient attr theme.padding_left)
-normal=$(herbstclient attr theme.normal.color)
+[ $width -gt 0 ] && normal=$(cat $NSPINE) || normal="#00000000"
 
 # border attention!
 border=$(( $(cat $SPINE) + ${1:-3} ))
