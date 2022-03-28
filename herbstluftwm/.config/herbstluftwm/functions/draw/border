@@ -10,10 +10,10 @@
 
 # below 0.045 can cause (hw dependent) resource hogging
 # frequency=0.066
-frequency=0.2
+frequency=0.15
 
-[ -e $PULSAR ] && colors=$(cat $PULSAR) || colors=$(herbstclient attr theme.active.color)
-colors=$(pastel gradient --number 16 $colors white | pastel format hex | head -8)  # trim lights
+colors=$(cat $CSPINE)
+colors=$(pastel gradient --number 16 $colors $(pastel complement $colors) | pastel format hex)
 colors="$colors $(echo $colors | reverse)"
 
 pulsar() {
