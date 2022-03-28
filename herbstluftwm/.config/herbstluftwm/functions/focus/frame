@@ -71,9 +71,12 @@ if [ -z $1 ] && [ -e $FSPLIT ] ;then
     echo $(( $1 * $2 / $count )) $i $xy >>$FSPLIT  # apply multi-window weighting (max layout assumed)
     shift 2
   done
-  set -- $(sort -n $FSPLIT | tail -1)
-  [ $(herbstclient attr tags.focus.curframe_wcount) -gt 0 ] && { herbstclient jumpto $2; draw fsplit $3 0.5; }
-  shift 3
+  
+  if [ -s $FSPLIT ] ;then
+    set -- $(sort -n $FSPLIT | tail -1)
+    [ $(herbstclient attr tags.focus.curframe_wcount) -gt 0 ] && { herbstclient jumpto $2; draw fsplit $3 0.5; }
+    shift 3
+  fi
 fi
 
 unlock
