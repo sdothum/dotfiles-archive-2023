@@ -13,7 +13,12 @@
 frequency=0.15
 
 colors=$(cat $CSPINE)
-colors=$(pastel gradient --number 16 $colors $(pastel complement $colors) | pastel format hex)
+# colors=$(pastel gradient --number 12 $colors $(pastel complement $colors) | pastel format hex)
+if luminance -${colors#?} ;then
+  colors=$(pastel gradient --number 12 $(pastel darken 0.1 $colors) $(pastel lighten 0.2 $colors) | pastel format hex)
+else
+  colors=$(pastel gradient --number 12 $(pastel darken 0.2 $colors) $(pastel lighten 0.1 $colors) | pastel format hex)
+fi
 colors="$colors $(echo $colors | reverse)"
 
 pulsar() {
@@ -41,7 +46,8 @@ fi
 
 # kill any previous instance of border highlighting
 pkill -KILL -f 'draw border pulsar'
-herbstclient compare theme.border_width = 0 && exit
+herbstclient compare theme.border_width = 0 && herbstclient compare theme.padding_left = 0 && exit
+
 # fullscreen does not alter layout so :max test below is ineffective
 is fullscreen && exit
 
