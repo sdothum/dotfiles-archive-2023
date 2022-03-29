@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................. Trap command
+
+# Usage: trap <cemmand>, useful for running non-interactive commands in a term
+
+$@
+press_enter
+
+
+# vim: set ft=sh: #
