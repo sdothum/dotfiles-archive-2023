@@ -38,7 +38,7 @@ hc keybind $Mod-0                   spawn toggle focus
 # UI appearance
 hc keybind $Mod-b                   spawn focus border $(cat $SPINE)
 hc keybind $Mod-Shift-b             spawn toggle border
-hc keybind $Mod-h                   spawn term 'gaps' rlwrap gaps
+hc keybind $Mod-h                   chain . spawn term 'gaps' rlwrap gaps . spawn draw panel  # disappears on closing gaps
 hc keybind $Mod-i                   spawn toggle unclutter
 hc keybind $Mod-Shift-i             spawn toggle picom
 
@@ -92,7 +92,7 @@ hc keybind $Mod-Shift-1             jumpto urgent
 
 # split frames
 # create an empty frame at the specified direction
-hc keybind $Mod-q                   chain . remove . set_layout max . spawn draw spine
+hc keybind $Mod-q                   chain . remove . set_layout max . spawn draw border
 hc keybind $Mod-y                   spawn draw fsplit y 0.5
 hc keybind $Mod-Shift-y             spawn draw fsplit y 0.666666
 hc keybind $Mod-Control-y           spawn draw fsplit y 0.333333

@@ -10,8 +10,8 @@
 
 [ -e $SPANEL ] || exit  # no panel
 which lemonbar >/dev/null 2>&1 || exit
-fifo=${1#:}
-[ $fifo ] || fifo=$(herbstclient attr monitors.focus.index)
+
+[ $1 ] && fifo=${1#:} || fifo=$(herbstclient attr monitors.focus.index)
 pstat "^lemonbar -d -n lemonbar:$fifo " && exit
 
 # .................................................................. Panel theme
@@ -344,7 +344,7 @@ esac
 if [ $GLIBC ] ;then
   herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
   xtitle -sf 'X%s\n' >$PANEL_FIFO:$fifo 2>/dev/null &  # see emit_hook
-  draw spine &  # non-panel related redundancy check for latent frame handling, see emit_hook
+  # draw border &  # non-panel related redundancy check for latent frame handling, see emit_hook
 fi
 
 # cpu usage, cpu temperature, memory usage stats

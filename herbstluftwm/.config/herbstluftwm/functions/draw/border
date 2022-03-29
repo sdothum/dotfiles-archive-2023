@@ -12,16 +12,16 @@
 # frequency=0.066
 frequency=0.15
 
-colors=$(cat $CSPINE)
-# colors=$(pastel gradient --number 12 $colors $(pastel complement $colors) | pastel format hex)
-if luminance -${colors#?} ;then
-  colors=$(pastel gradient --number 12 $(pastel darken 0.1 $colors) $(pastel lighten 0.2 $colors) | pastel format hex)
-else
-  colors=$(pastel gradient --number 12 $(pastel darken 0.2 $colors) $(pastel lighten 0.1 $colors) | pastel format hex)
-fi
-colors="$colors $(echo $colors | reverse)"
-
 pulsar() {
+  colors=$(cat $PULSAR)
+  # colors=$(pastel gradient --number 12 $colors $(pastel complement $colors) | pastel format hex)
+  if luminance -${colors#?} ;then
+    colors=$(pastel gradient --number 12 $(pastel darken 0.1 $colors) $(pastel lighten 0.2 $colors) | pastel format hex)
+  else
+    colors=$(pastel gradient --number 12 $(pastel darken 0.2 $colors) $(pastel lighten 0.1 $colors) | pastel format hex)
+  fi
+  colors="$colors $(echo $colors | reverse)"
+
   while : ;do
     for i in $colors ;do
       # don't let processes queue up on a slower system..
@@ -42,20 +42,37 @@ if [ "$1" = pulsar ] ;then
   exit
 fi
 
-# left edge border (to be implemented)
+[ -e $SPINE ] || return
+pkill -KILL -f 'draw border pulsar'
+
+# dynamic spine decoration for multiple populated frames
+singleton() { herbstclient attr theme.active.color '#00000000'; exit; }  # one or no frames in use
+
+windows=$(herbstclient attr tags.focus.client_count)
+if [ $windows = 1 ] ;then  # may be a layout type with just one window
+  singleton
+# elif [ $(query layout) = max ] && herbstclient compare tags.focus.curframe_wcount = $windows ;then
+#   singleton
+fi
 
 # kill any previous instance of border highlighting
-pkill -KILL -f 'draw border pulsar'
 herbstclient compare theme.border_width = 0 && herbstclient compare theme.padding_left = 0 && exit
 
 # fullscreen does not alter layout so :max test below is ineffective
 is fullscreen && exit
 
 # visually highlight border for stacked windows
-if herbstclient compare tags.by-name.$TAG.curframe_wcount gt 1 ;then
+if herbstclient compare tags.focus.curframe_wcount gt 1 ;then
   is layout max && exec draw border pulsar
+fi
+
+if herbstclient compare tags.focus.frame_count = 1 ;then
+  herbstclient attr theme.active.color "#00000000"  # for singleton max media window
 else
   herbstclient attr theme.active.color $(cat $CSPINE)
+  if herbstclient compare theme.border_width = 0 ;then
+    herbstclient attr theme.normal.color $(cat $NSPINE)
+  fi
 fi
 
 # vim: set ft=sh: #

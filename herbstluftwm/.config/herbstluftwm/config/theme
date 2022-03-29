@@ -25,7 +25,7 @@ hc attr theme.floating.reset          1
 hc attr theme.tiling.reset            1
 
 hc set always_show_frame              false
-hc set frame_bg_transparent           true  # transparency on for autostart (avoid opaque frames), see emit_hook and draw spine
+hc set frame_bg_transparent           true  # transparency on for autostart (avoid opaque frames), see emit_hook and draw border
 hc set focus_follows_mouse            true
 hc set gapless_grid                   1
 hc set hide_covered_windows           1
@@ -55,7 +55,7 @@ fi
 
 hc attr theme.active.color            $(cat $CSPINE)
 hc attr theme.normal.color            $(cat $NSPINE)
-hc attr theme.urgent.color            orange
+hc attr theme.urgent.color            $(cat $USPINE)
 
 hc set frame_active_opacity           0
 hc set frame_normal_opacity           0

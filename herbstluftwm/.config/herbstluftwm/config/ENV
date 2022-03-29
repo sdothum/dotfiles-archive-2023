@@ -86,10 +86,13 @@ export BORDER=$HLWM:border
 export THEME=$HLWM:theme
 export CSPINE=$SSPINE:active
 export NSPINE=$SSPINE:inactive
+export USPINE=$SSPINE:urgent
 export PULSAR=$SSPINE:pulsar
 
 [ -e $CSPINE ] || echo '#ff0000' >$CSPINE
 [ -e $NSPINE ] || echo '#707070' >$NSPINE
+[ -e UNSPINE ] || echo '#ffff00' >$USPINE
+[ -e PULSAR ]  || echo '#ff0000' >$PULSAR
 
 # ..................................................................... Desktops
 

@@ -121,9 +121,9 @@ emithook &
 
 # ................................................................ Final touches
 
-# emit hook stalled otherwise until a new window action..
-focus frame
-focus window
+# emit hook stalled otherwise until a new window action.. in pre 0.9.4 releases (old patch)
+# focus frame
+# focus window
 is multihead || draw panel  # normally the responsibilty of draw root but requires draw monitor to complete
 
 # pseudo screen saver
