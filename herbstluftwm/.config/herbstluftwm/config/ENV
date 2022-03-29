@@ -92,7 +92,7 @@ export PULSAR=$SSPINE:pulsar
 [ -e $CSPINE ] || echo '#ff0000' >$CSPINE
 [ -e $NSPINE ] || echo '#707070' >$NSPINE
 [ -e UNSPINE ] || echo '#ffff00' >$USPINE
-[ -e PULSAR ]  || echo '#ff0000' >$PULSAR
+[ -e PULSAR ]  || cp $CSPINE $PULSAR
 
 # ..................................................................... Desktops
 

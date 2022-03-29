@@ -17,34 +17,23 @@
 #        draw root blur, toggle background blur mode
 #        draw root wallpaper, draw background
 
+[ -e $BLACKBOARD ] && exit
 # cpu arm && exit
 SETBLUR=$HLWM:setblur
 SHUFFLE=$HLWM:shuffle
-
-[ -e $BLACKBOARD ] && exit
-# toggle picom on
-
-# blur radius, brightness (to slightly darken and enhance transparency)
-blur=50
+blur=50   # blur radius, brightness (to slightly darken and enhance transparency)
 brighten=-0.025
-# modulo of random number for random desktop wallpaper
-modulo=3
+modulo=3  # modulo of random number for random desktop wallpaper
 
-[ -e $SETBLUR ] || echo '0: :0: ' >$SETBLUR
-
-# linked file reference
-exists() {
-  if lname $1 >/dev/null ;then [ -e $(lname $1) ]
-  else                         return 1
-  fi
-}
+# set background image
+pick_image() { /usr/bin/feh -B black --scale-down -r --start-at $(lname $WALLPAPER) -A "ln -sf %f $WALLPAPER && xdotool type 'q'" $1 2>/dev/null; }  # ignore .theme file warnings
 
 # ............................................................. Per monitor blur
 
+[ -e $SETBLUR ] || echo '0: :0: ' >$SETBLUR
 [ "$1" = blur ] && { [ -e $NOBLUR ] && rm -f $NOBLUR || touch $NOBLUR; }
-# occupied or empty desktop, setroot record structure:
-# 1: occupied (blurred image)
-# 0: empty (raw image)
+
+# occupied or empty desktop, setroot record structure: 1: occupied (blurred image) 0: empty (raw image)
 root() {
   if [ ! -e $NOBLUR ] && is nonempty $(herbstclient attr monitors.$1.tag) ;then
     echo "1: --on $1 --blur $blur --brighten $brighten --zoom $WALLPAPER"
@@ -66,50 +55,38 @@ setblur() {
 blank() {
   if [ $1 ] ;then
     color=$1
-    # blackboard reserved for media playback background to allow desktop restoration
-    [ $color = 000000 ] && blackboard=true || echo blank >$SETROOT
+    [ $color = 000000 ] && blackboard=true || echo blank >$SETROOT  # blackboard reserved for media
   else
     color=$(rice randomc -#)
     rm -f $SETROOT
   fi
   setroot --blank-color "#$color" 2>/dev/null
-  # blackboard reserved for media playback background
-  [ $blackboard ] || echo $color >$COLOR
+  [ $blackboard ] || echo $color >$COLOR                                       # blackboard reserved for media playback background
   [ $2 ] || { luminance -$color && echo light >$THEME || echo dark >$THEME; }  # luminance set by dmenu root
-  # make inactive border invisible!
-  herbstclient attr theme.normal.color "#00000000"
+  herbstclient attr theme.normal.color "#00000000"                             # make inactive border invisible!
 }
 
 select_blank() {
   notify time=5 low 'Root Background' '<Space>  Show next\n<Enter>  Select color'
-  # initialize default link
-  [ -L $WALLCOLOR ] && exists $WALLCOLOR || ln -sf $(find $PALETTE -name '*.png' | head -1) $WALLCOLOR
+  lname $WALLCOLOR >/dev/null || ln -sf $(find $PALETTE -name '*.png' | head -1) $WALLCOLOR
   ln -sf $WALLCOLOR $BACKGROUND
-  # to use office/feh and focus, the quoted --action must be escaped and pwait invoked..
-  /usr/bin/feh -B black --scale-down -r \
-               -A "ln -sf %f $WALLCOLOR && xdotool type 'q'" \
-               --start-at $(lname $WALLCOLOR) $(find $PALETTE -name '*.png')
+  pick_image $(find $PALETTE -name '*.png')
   blank $(basename $(ls -l $WALLCOLOR | cut -d'>' -f2) .png)
 }
 
 # ................................................................ Set wallpaper
 
 wallpaper() {
-  # initialize default link
   [ -e $WALLPAPER ] || ln -sf $(find ${WALLPAPER%/default} -iname '*.png' | head -1) $WALLPAPER
   ln -sf $WALLPAPER $BACKGROUND
   rm -f $COLOR
   rm -f $THEME
 }
 
-# set background wallpaper
 select_wallpaper() {
   notify time=5 low 'Desktop Wallpaper' '<Space>  Show next\n<Enter>  Select image'
   wallpaper
-  # to use office/feh and focus, the quoted --action must be escaped and pwait invoked.. see ENV
-  /usr/bin/feh -B black --scale-down -r --start-at $(lname $WALLPAPER) \
-               -A "ln -sf %f $WALLPAPER && xdotool type 'q'" \
-               ${WALLPAPER%/default}/${WALL#.} 2>/dev/null  # ignore .theme file warnings
+  pick_image ${WALLPAPER%/default}/${WALL#.} 2>/dev/null  # ignore .theme file warnings
 }
 
 shuffle() {
@@ -158,19 +135,14 @@ setblur >$SETBLUR
 
 # apply rice conky to .conkyrc, $THEME unset above if new background
 if [ ! -e $COLOR ] && [ -z $blackboard ]  ;then
-  # [ -e $THEME ] && exit
   background=$(query theme)
   # load theme or generate a theme from the border colour
   if [ -e "$background" ] ;then
     cp $background $THEME
     [ -e $HOME/.conkyrc ] && is display +1920 && draw conky
   else
-  #   term 'Theme' STACK SHELL 'rice cooker'
-  #   pwait 'rice cooker'
     echo light >$THEME
   fi
-  # set_border $(rice palette $(grep 'default_color=' $THEME | cut -d= -f2) 'Triadic' | cut -d' ' -f2)
-  # set_border
 fi
 
 # overlay panel with new theme to avuid panel flicker
