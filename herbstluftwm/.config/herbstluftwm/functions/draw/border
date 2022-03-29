@@ -16,9 +16,9 @@ pulsar() {
   colors=$(cat $PULSAR)
   # colors=$(pastel gradient --number 12 $colors $(pastel complement $colors) | pastel format hex)
   if luminance -${colors#?} ;then
-    colors=$(pastel gradient --number 12 $(pastel darken 0.1 $colors) $(pastel lighten 0.2 $colors) | pastel format hex)
+    colors=$(pastel gradient --number 15 $(pastel darken 0.125 $colors) $(pastel lighten 0.25 $colors) | pastel format hex)
   else
-    colors=$(pastel gradient --number 12 $(pastel darken 0.2 $colors) $(pastel lighten 0.1 $colors) | pastel format hex)
+    colors=$(pastel gradient --number 15 $(pastel darken 0.25 $colors) $(pastel lighten 0.125 $colors) | pastel format hex)
   fi
   colors="$colors $(echo $colors | reverse)"
 
@@ -66,13 +66,9 @@ if herbstclient compare tags.focus.curframe_wcount gt 1 ;then
   is layout max && exec draw border pulsar
 fi
 
-if herbstclient compare tags.focus.frame_count = 1 ;then
-  herbstclient attr theme.active.color "#00000000"  # for singleton max media window
-else
-  herbstclient attr theme.active.color $(cat $CSPINE)
-  if herbstclient compare theme.border_width = 0 ;then
-    herbstclient attr theme.normal.color $(cat $NSPINE)
-  fi
+herbstclient attr theme.active.color $(cat $CSPINE)
+if herbstclient compare theme.border_width = 0 ;then
+  herbstclient attr theme.normal.color $(cat $NSPINE)
 fi
 
 # vim: set ft=sh: #
