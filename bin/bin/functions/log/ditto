@@ -20,15 +20,14 @@ usage() {
 argv="$@"
 [ $leader ] || leader=.  # initial leader
 
-# ATTCOLOR=${BLUE}
 ATTCOLOR=${__ORANGE}
 MSGCOLOR=${__YELLOW}
 
 while [ "$1" ] ;do
   case $1 in
-  ERR*) MSGCOLOR=${__RED}    ;;
-  WAR*) MSGCOLOR=${__ORANGE} ;;
-  INF*) MSGCOLOR=${__WHITE}  ;;
+  ERR*) MSGCOLOR=${__RED}   ;;
+  WAR*) MSGCOLOR=${__BLACK} ;;
+  INF*) MSGCOLOR=${__WHITE} ;;
   @   ) [ "$2" ] || usage; desc=$2; message=' ';     shift ;;
   @*  ) [ "$2" ] && usage; desc=${1#@}; message=' '        ;;
   -t  ) timestamp="$(date "+%-H %M'%S\" ")"                ;;
