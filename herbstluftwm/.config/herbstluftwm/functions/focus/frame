@@ -32,7 +32,7 @@ for i in $(seq 1 $frames) ;do
   herbstclient cycle_frame 1
   # right fill the desktop to to avoid visual frame gaps
   if herbstclient compare tags.by-name.$TAG.curframe_wcount = 0 ;then
-    herbstclient chain . focus_edge right >/dev/null 2>&1
+    herbstclient focus_edge right >/dev/null 2>&1
     break
   fi
 done
@@ -74,7 +74,7 @@ if [ -z $1 ] && [ -e $FSPLIT ] ;then
   
   if [ -s $FSPLIT ] ;then
     set -- $(sort -n $FSPLIT | tail -1)
-    [ $(herbstclient attr tags.focus.curframe_wcount) -gt 0 ] && { herbstclient jumpto $2; draw fsplit $3 0.5; }
+    herbstclient compare tags.focus.curframe_wcount gt 0 && { herbstclient jumpto $2; draw fsplit $3 0.5; }
     shift 3
   fi
 fi

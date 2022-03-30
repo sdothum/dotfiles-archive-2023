@@ -7,7 +7,6 @@
 # .............................................. Focus non-empty subframe window
 
 [ -e $DYNAMIC ] || exit
-# [ "$(herbstclient attr clients.focus.instance 2>/dev/null)" != '' ] && exit
 herbstclient compare clients.focus.instance != '' 2>/dev/null && exit
 
 frames=$(query fcount $TAG)

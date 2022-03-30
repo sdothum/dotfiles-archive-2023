@@ -8,7 +8,6 @@
 
 # no borders focusing aid
 pstat + 'focus border' && exit
-# [ "$(herbstclient attr clients.focus.instance 2>/dev/null)" = '' ] && exit
 herbstclient compare clients.focus.instance = '' 2>/dev/null && exit
 
 width=$(herbstclient attr theme.border_width)
