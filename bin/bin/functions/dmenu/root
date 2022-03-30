@@ -12,6 +12,7 @@ UPDATE='update'
 PICK='pick'
 SAVE='save as'
 INVERT='invert panel'
+COLORS='palette'
 
 delay=3  # invert panel pause
 
@@ -52,13 +53,14 @@ setroot() {
   menu
 }
 
-colors() { [ "$menu" ] && echo | mhistory root | sed "1i$menu" || echo | mhistory root | sed "1i$(X $VIEWER)\n$(X $PICK)\n$(X $UPDATE)"; }
+colors() { [ "$menu" ] && echo | mhistory root | sed "1i$menu" || echo | mhistory root | sed "1i$(X $VIEWER)\n$(X $COLORS)\n$(X $PICK)\n$(X $UPDATE)"; }
 
 while color=$(colors | column -s^ -t | rmenu 'Setroot') || exit ;do
   case ${color#$(X)} in
   ''        ) break ;;
   "$PICK"*  ) color=$(grabc 2>/dev/null | cut -d'#' -f2); setroot ;;
   "$VIEWER"*) exec draw root restore ;;
+  "$COLORS"*) term "colors" trap pastel list; pwait 'trap pastel list' ;;
   "$UPDATE"*) root ;;
   "$SAVE"*  ) save; break ;;
   "$INVERT"*) draw root invert; sleep $delay; menu ;;
