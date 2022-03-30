@@ -13,6 +13,6 @@ usage() { echo "usage: conky $(basename $0) <#> (of color#)"; exit 1; }
 gradient() { pastel gradient --number 12 $1 $2 | pastel format hex | sed 's/#//g'; }
 
 [ $(cat $THEME) = light ] && colors=$(gradient white black) || colors=$(gradient black white)
-echo $colors | cut -d' ' -f$(( $1 + 2 ))
+echo $colors | cut -d' ' -f$(( $1 + 2 ))  # offset allows -1 as maximum light/dark
 
 # vim: set ft=sh: #
