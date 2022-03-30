@@ -70,6 +70,7 @@ while color=$(colors | column -s^ -t | rmenu 'Setroot') || exit ;do
               ln -sf $(find $PALETTE -name $bg.png | head -1) $WALLCOLOR
               ln -sf $WALLCOLOR $BACKGROUND
               mhistory root "$(echo $color | sed "s/ *$SEP */^$SEP /")"
+              draw conky
               break ;;
 
   *         ) color=${color#\'}
