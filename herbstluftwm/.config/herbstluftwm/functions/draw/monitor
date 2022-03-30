@@ -18,7 +18,6 @@
 #       2) secondary monitor is no longer part of present desktop configuration
 #          desktop real estate currently satisfied with a single "primary" ultra wide monitor  
 
-SHADOW=${SHADOW:-1}
 # load theme
 # . ${0%/draw}/config/ENV
 case $@ in
@@ -71,8 +70,6 @@ margin=$(( $desktop_margin - $window_frame ))
 [ $panel -lt $margin ] && panel=$margin
 [ -e $SPANEL ] || panel=0  # no panel
 
-# latest xorg messed alignment option, now using gap X origin offset
-# conkyX=$(( $CONKY_WIDTH + $CONKY_GAP + $CONKY_INNER + $CONKY_OUTER - $window_frame ))
 conkyX=$(( $CONKY_WIDTH + $CONKY_OUTER + $CONKY_INNER + $CONKY_OUTER - $window_frame ))
 
 # adjust margin values by frame_gap (frames touch margins)

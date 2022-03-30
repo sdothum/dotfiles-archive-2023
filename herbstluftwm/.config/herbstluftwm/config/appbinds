@@ -63,7 +63,6 @@ hc keybind Super-r                    spawn dmenu clipboard
 hc keybind Super-s                    spawn dmenu system
 hc keybind Super-Control-s            spawn dmenu systemd
 hc keybind Super-t                    spawn conky clock
-# hc keybind Super-Control-t          spawn env CONKYRC=$CONKY_Q2 conky clock
 hc keybind Super-Control-t            spawn qclocktwo
 hc keybind Super-$Mod-t               spawn dmenu alarm
 hc keybind Super-v                    spawn dmenu media

@@ -15,14 +15,11 @@ if [ -e $BLACKBOARD ] ;then
   exec restore root  # complete (see) restore root
 fi
 
-draw root blank ${1:-000000}
+draw root color ${1:-000000}
 
 herbstclient get frame_bg_normal_color >$BLACKBOARD  # must follow (see) draw root
 herbstclient set frame_bg_normal_color '#000000'
 
 [ -e $SPICOM:toggle ] && toggle picom off
-
-# present conky clock on secondary monitor (draw root refresh clears clock)
-is multihead && CONKYRC=$CONKY_Q2 conky clock on
 
 # vim: set ft=sh: #

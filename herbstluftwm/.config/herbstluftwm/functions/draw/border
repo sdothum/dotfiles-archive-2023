@@ -12,14 +12,11 @@
 # frequency=0.066
 frequency=0.15
 
+gradient() { pastel gradient --number 15 $(pastel darken $1 $color) $(pastel lighten $2 $color) | pastel format hex; }
+
 pulsar() {
-  colors=$(cat $PULSAR)
-  # colors=$(pastel gradient --number 12 $colors $(pastel complement $colors) | pastel format hex)
-  if luminance -${colors#?} ;then
-    colors=$(pastel gradient --number 15 $(pastel darken 0.125 $colors) $(pastel lighten 0.25 $colors) | pastel format hex)
-  else
-    colors=$(pastel gradient --number 15 $(pastel darken 0.25 $colors) $(pastel lighten 0.125 $colors) | pastel format hex)
-  fi
+  color=$(cat $PULSAR)
+  luminance -${color#?} && colors=$(gradient 0.125 0.25) || colors=$(gradient 0.25 0.125)
   colors="$colors $(echo $colors | reverse)"
 
   while : ;do
@@ -45,30 +42,19 @@ fi
 [ -e $SPINE ] || return
 pkill -KILL -f 'draw border pulsar'
 
-# dynamic spine decoration for multiple populated frames
-singleton() { herbstclient attr theme.active.color '#00000000'; exit; }  # one or no frames in use
-
-windows=$(herbstclient attr tags.focus.client_count)
-if [ $windows = 1 ] ;then  # may be a layout type with just one window
-  singleton
-# elif [ $(query layout) = max ] && herbstclient compare tags.focus.curframe_wcount = $windows ;then
-#   singleton
-fi
+# dynamic spine decoration
+herbstclient compare tags.focus.client_count = 1 && { herbstclient attr theme.active.color '#00000000'; exit; }
 
 # kill any previous instance of border highlighting
 herbstclient compare theme.border_width = 0 && herbstclient compare theme.padding_left = 0 && exit
 
-# fullscreen does not alter layout so :max test below is ineffective
-is fullscreen && exit
+is fullscreen && exit  # fullscreen does not alter layout
 
 # visually highlight border for stacked windows
-if herbstclient compare tags.focus.curframe_wcount gt 1 ;then
-  is layout max && exec draw border pulsar
-fi
+herbstclient compare tags.focus.curframe_wcount gt 1 && is layout max && exec draw border pulsar
 
+# restore defaults
 herbstclient attr theme.active.color $(cat $CSPINE)
-if herbstclient compare theme.border_width = 0 ;then
-  herbstclient attr theme.normal.color $(cat $NSPINE)
-fi
+herbstclient compare theme.border_width = 0 && herbstclient attr theme.normal.color $(cat $NSPINE)
 
 # vim: set ft=sh: #

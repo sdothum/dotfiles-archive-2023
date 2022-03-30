@@ -104,36 +104,27 @@ for key in $TAGS ;do export $(echo $TAG_NAMES | awk "{ print \$$key }")=$key ;do
 
 # ........................................................... Margin adjustments
 
+getparm() { [ -e $1 ] && grep "^ *$2" $1 | sed -r 's/.*= *([0-9]*).*/\1/' || echo 0; }
+
 # minimun display width for conky/panel monitor rules
 export MIN_DISPLAY=1360
 
-# left shift right monitor margin by shadow-radius*shadow_factor so conky doesn't cover shadow area
-export SHADOW_FACTOR=3
-
 # conky lua syntax filter
-conkyrc() { [ -e $CONKYRC ] && grep "^ *$1" $CONKYRC | sed -r 's/.*= *([0-9]*),.*/\1/' || echo 0; }
-
-export CONKY_GAP=$(conkyrc 'gap_x')
-export CONKY_INNER=$(conkyrc 'border_inner_margin')
-export CONKY_OUTER=$(conkyrc 'border_outer_margin')
-export CONKY_WIDTH=$(conkyrc 'maximum_width')
+export CONKY_INNER=$(getparm $CONKYRC 'border_inner_margin')
+export CONKY_OUTER=$(getparm $CONKYRC 'border_outer_margin')
+export CONKY_WIDTH=$(getparm $CONKYRC 'maximum_width')
 
 # picom shadow left shift pixel adjustment for conky panel edge (0) none
 if [ ! -e $PICOMCONF ] ;then
-  # export SHADOW=0
-  export SHADOW=18
+  export SHADOW=0
 elif egrep -q '^(shadow = false|shadow-opacity = 0.0)' $PICOMCONF ;then
   export SHADOW=0
 else
   # assumes shadow-offset = -(shadow-radius)
-  export SHADOW=$(( $(grep '^shadow-radius =' $PICOMCONF | sed -r 's/.*= *([0-9]*).*/\1/') * $SHADOW_FACTOR ))
+  export SHADOW=$(( $(getparm $PICOMCONF 'shadow-radius') * 3 ))  # shadow-radius extent
 fi
 
 # ................................................................ Miscellaneous
-
-# conky clock secondary monitor
-# export CONKY_Q2=$STOW/conky/$(query displaywidth 1)x$(query displayheight 1)/.conkyrc.qclocktwo
-export CONKY_Q2=$STOW/conky/1680x1050/.conkyrc.qclocktwo
 
 # terminal font
 export MONOFONT=Iosevka
