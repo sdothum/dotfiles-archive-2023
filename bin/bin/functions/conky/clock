@@ -26,12 +26,10 @@ stop) xset s on -dpms
 
 on  ) clock && exit
       /usr/bin/conky -c $CONKYRC 2>/dev/null &
-      # server && /usr/bin/conky -c $CONKY_Q2 2>/dev/null &
       rm -rf /tmp/qclocktwo ;;  # clear qclock buffers
 
 off ) clock || exit
       pkill -f "conky -c $CONKYRC"
-      # pkill -f "conky -c $CONKY_Q2"
       [ -e $SPANEL ] || weather ;;
 
 ''  ) clock && { conky clock off; true; } || conky clock on ;;

@@ -25,7 +25,7 @@ menu()   { menu="$(X $SAVE)\n$(X $INVERT)"; }
 save() {
   [ $hue ] && hue="$hue\n"
   hue=$(echo "$hue$(themes)" | rmenu 'Colour (name)') || exit
-  contrast=$(cat $THEME)  # see draw root blank
+  contrast=$(cat $THEME)  # see draw root color
   theme $contrast
   mhistory root "$bg^$SEP $contrast $hue"
   rice swatch $bg $hue
@@ -45,7 +45,7 @@ while [ $1 ] ;do
 done
 
 setroot() {
-  draw root blank $color
+  draw root color $color
   bg=$color
   # overlay conky panel over rmenu screen!
   draw conky
@@ -66,7 +66,7 @@ while color=$(colors | column -s^ -t | rmenu 'Setroot') || exit ;do
   *\ dark*    |\
   *\ light* ) bg=$(echo $color | cut -d' ' -f1)
               theme $(echo $color | cut -d' ' -f3)
-              draw root blank $bg $0  # $0 suppress luminance setting, see draw root
+              draw root color $bg $0  # $0 suppress luminance setting, see draw root
               ln -sf $(find $PALETTE -name $bg.png | head -1) $WALLCOLOR
               ln -sf $WALLCOLOR $BACKGROUND
               mhistory root "$(echo $color | sed "s/ *$SEP */^$SEP /")"

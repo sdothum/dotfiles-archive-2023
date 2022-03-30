@@ -6,8 +6,13 @@
 
 # ................................................................. Conky colorN
 
-usage() { echo "usage: conky $(basename $0) <colorN>"; exit 1; }
+usage() { echo "usage: conky $(basename $0) <#> (of color#)"; exit 1; }
 
-[ $1 ] && grep $1 $THEME | cut -d= -f2 || usage
+[ $1 ] || usage
+
+gradient() { pastel gradient --number 12 $1 $2 | pastel format hex | sed 's/#//g'; }
+
+[ $(cat $THEME) = light ] && colors=$(gradient white black) || colors=$(gradient black white)
+echo $colors | cut -d' ' -f$(( $1 + 2 ))
 
 # vim: set ft=sh: #
