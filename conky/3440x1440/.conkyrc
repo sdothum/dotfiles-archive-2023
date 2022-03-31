@@ -58,7 +58,7 @@ conky.config = {
   color4 = io.popen('conky color 4'):read(),
   color5 = io.popen('conky color 5'):read(),
   color6 = io.popen('conky color 6'):read(),
-  color7 = io.popen('conky color 0'):read(),
+  color7 = io.popen('conky color 1'):read(),
   color8 = io.popen('conky color 4'):read(),
   color9 = io.popen('conky color 8'):read(),
 
@@ -134,8 +134,8 @@ ${voffset 10}
 ${goto 70}${font Noto Sans:size=18:style=Bold}${color3}NET${color2}${font Noto Sans:size=7:style=Bold}${color0}wlp5s0 ${alignr}${addr wlp5s0}
 ${voffset 58}
 ${goto 90}${color2}${font Noto Sans:size=7:style=Bold}${color}${wireless_essid wlp5s0}
-${goto 90}${color7}${downspeedgraph wlp5s0 25,0}
-${voffset -38}${goto 90}${color8}${upspeedgraph wlp5s0 25,0}
+${goto 90}${color8}${downspeedgraph wlp5s0 25,0}
+${voffset -38}${goto 90}${color7}${upspeedgraph wlp5s0 25,0}
 ${voffset -5}${goto 90}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed wlp5s0}}U   ${lua_parse bandwidth ${downspeed wlp5s0}}D
 
 ${goto 90}${font Noto Sans:size=7:style=Bold}${color2}IP${alignr}${tcp_portmon 1 65535 count}  open  DPORT
