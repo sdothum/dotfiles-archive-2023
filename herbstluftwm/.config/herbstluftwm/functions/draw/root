@@ -109,7 +109,8 @@ wallpaper) wallpaper ;;
 
 select   ) rm -f $SHUFFLE
            select_wallpaper
-           echo wallpaper >$SETROOT ;;
+           echo wallpaper >$SETROOT
+           notify 5 'Panel Contrast' '&lt;Mod-Control-Shift-P&gt; to invert contrast';;
 
 shuffle  ) touch $SHUFFLE
            shuffle

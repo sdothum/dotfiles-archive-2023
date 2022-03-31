@@ -157,16 +157,18 @@ active_window() {
   fi
   if [ $count -gt 0 ] ;then
     if [ "$(query wname)" = "${line#?}" ] ;then
+      name=$(echo "${line#?}" | sed -r 's/^(.)/\u\1/')
       if [ $hiding ] ;then
-        title="${title}${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}${line#?}%{-u}%{U-}%{F-}%{B-}%{F$DEFAULT_FG}"
+        title="${title}${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}$name%{-u}%{U-}%{F-}%{B-}%{F$DEFAULT_FG}"
       else
-        title="${title}${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}${line#?}%{F-}%{B-}%{F$DEFAULT_FG}"
+        title="${title}${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}$name%{F-}%{B-}%{F$DEFAULT_FG}"
       fi
     else
+      name=$(query wname | sed -r 's/^(.)/\u\1/')
       if [ $hiding ] ;then
-        title="${title}${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}$(query wname)%{-u}%{U-}%{F$DEFAULT_FG}"
+        title="${title}${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}$name%{-u}%{U-}%{F$DEFAULT_FG}"
       else
-        title="${title}${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}$(query wname)%{F$DEFAULT_FG}"
+        title="${title}${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}$name%{F$DEFAULT_FG}"
       fi
       desc=$(asciititle ${line#?})
       [ "$desc" ] && title="${title}${LSEP}${desc}%{B-}%{F-}"
