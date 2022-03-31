@@ -32,6 +32,8 @@ case $size in
 * ) paddingX=12; paddingY=12; offsetX=0; offsetY=0 ;;
 esac
 
+echo "$@" | egrep -q '[-](t|title)' || title="--title alacritty"
+
 # quantum colour theme :)
 /usr/bin/alacritty --option font.size=$size                           \
                             window.padding.x=$paddingX                \
@@ -57,6 +59,7 @@ esac
                             colors.bright.magenta=\'#b77ee0\'         \
                             colors.bright.cyan=\'#54ced6\'            \
                             colors.bright.white=\'#ffffff\'           \
+                            $title                                    \
                             $@ &
 
 # vim: set ft=sh: #
