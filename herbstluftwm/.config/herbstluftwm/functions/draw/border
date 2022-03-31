@@ -16,7 +16,7 @@ gradient() { pastel gradient --number 15 $(pastel darken $1 $color) $(pastel lig
 
 pulsar() {
   color=$(cat $PULSAR)
-  luminance -${color#?} && colors=$(gradient 0.125 0.25) || colors=$(gradient 0.25 0.125)
+  luminance -${color#?} && colors=$(gradient 0.125 0.275) || colors=$(gradient 0.275 0.125)
   colors="$colors $(echo $colors | reverse)"
 
   while : ;do
@@ -51,7 +51,12 @@ herbstclient compare theme.border_width = 0 && herbstclient compare theme.paddin
 is fullscreen && exit  # fullscreen does not alter layout
 
 # visually highlight border for stacked windows
-herbstclient compare tags.focus.curframe_wcount gt 1 && is layout max && exec draw border pulsar
+if herbstclient compare tags.focus.curframe_wcount gt 1 && is layout max ;then
+  [ -e $OSPINE ] || exec draw border pulsar
+  [ -e $OSPINE:color ] && herbstclient attr theme.active.color $(cat $OSPINE:color) ||
+                          herbstclient attr theme.active.color $(pastel complement $(cat $CSPINE) | pastel format hex)
+  exit
+fi
 
 # restore defaults
 herbstclient attr theme.active.color $(cat $CSPINE)

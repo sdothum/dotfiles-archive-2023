@@ -38,6 +38,7 @@ hc keybind $Mod-0                   spawn toggle focus
 # UI appearance
 hc keybind $Mod-b                   spawn focus border $(cat $SPINE)
 hc keybind $Mod-Shift-b             spawn toggle border
+hc keybind $Mod-Control-Shift-b     spawn toggle border overlap
 hc keybind $Mod-h                   chain . spawn term 'gaps' rlwrap gaps . spawn draw panel  # disappears on closing gaps
 hc keybind $Mod-i                   spawn toggle unclutter
 hc keybind $Mod-Shift-i             spawn toggle picom

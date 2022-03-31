@@ -86,6 +86,7 @@ export BORDER=$HLWM:border
 export THEME=$HLWM:theme
 export CSPINE=$SSPINE:active
 export NSPINE=$SSPINE:inactive
+export OSPINE=$SSPINE:overlap  # toggle
 export USPINE=$SSPINE:urgent
 export PULSAR=$SSPINE:pulsar
 

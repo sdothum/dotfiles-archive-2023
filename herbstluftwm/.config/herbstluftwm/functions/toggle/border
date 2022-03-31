@@ -6,6 +6,14 @@
 
 # ........................................................ Toggle window borders
 
+# Usage: toggle border [overlap]
+
+# toggle overlap border, see draw border
+if [ $1 ] ;then
+  [ -e $OSPINE ] && rm $OSPINE || touch $OSPINE
+  exit
+fi
+
 # no borders focusing aid
 pstat + 'focus border' && exit
 

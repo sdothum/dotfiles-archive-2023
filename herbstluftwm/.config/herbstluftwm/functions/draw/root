@@ -129,7 +129,7 @@ esac
 
 setblur >$SETBLUR
 [ $blackboard ] || [ -e $COLOR ] || setroot ${primary#?:} ${secondary#?:} &
-set -x
+
 # apply rice conky to .conkyrc, $THEME unset above if new background
 if [ ! -e $COLOR ] && [ -z $blackboard ]  ;then
   background=$(query theme)

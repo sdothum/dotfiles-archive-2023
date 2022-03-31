@@ -10,14 +10,14 @@
 usage() { 
   echo "toggle: list c'olors | d'ynamic | frame spl'it | p'anel | s'pine"
   echo "tuples: f'rame_gap | m'argin | panel h'eight | panel i'ndent | s'pine | w'indow_gap | font siz'e  <value>"
-  echo "        a'ctive color | in'active color | u'rgent color | pulsar c'olor <value>"
+  echo "        a'ctive color | in'active color | o'verlap color | u'rgent color | pulsar c'olor <value>"
   echo "          indent: '' -> default"
   echo "          spine:  0 -> off"
   echo "          color:  <name> or #<hex>"
 }
 
 # ricing parameters
-layout="$CSPINE $NSPINE $USPINE $PULSAR $FRAME_GAP $MARGIN $PANEL_HEIGHT $PANEL_INDENT $SPINE $WINDOW_GAP $FONTSIZE"
+layout="$CSPINE $NSPINE $OSPINE:color $USPINE $PULSAR $FRAME_GAP $MARGIN $PANEL_HEIGHT $PANEL_INDENT $SPINE $WINDOW_GAP $FONTSIZE"
 
 usage
 [ -e $SSPINE ] && { [ -s $SPINE ] && spine=$(cat $SPINE) || spine=3; } || spine=0
@@ -33,6 +33,8 @@ settings() {
   [ -e $SPANEL ] || ditto panel 'off'
   [ -e $DYNAMIC ] || ditto dynamic 'off'
   [ -e $FSPLIT ] && ditto frame 'split on'
+  [ -e $OSPINE ] && ditto overlap 'on'
+  [ "$error" ] && { ditto ERROR error "$error"; unset error; }
   echo
 }
 
@@ -60,7 +62,7 @@ config() {
   herbstclient set  window_gap                $(edge 0 $window_gap)
 }
 
-color() { pastel format hex $value; }
+color() { pastel format hex $value 2>/dev/null || error="unknown color '$value'"; }
 
 while : ;do
   settings
@@ -86,6 +88,7 @@ while : ;do
   case $attr in
     a) ;;
     n) ;;
+    o) ;;
     u) ;;
     c) ;;
     *) echo $value | grep -q '[^0-9]' && { usage; continue; }
@@ -94,6 +97,7 @@ while : ;do
   case $attr in
   a) color >$CSPINE ;;
   n) color >$NSPINE ;;
+  o) color >$OSPINE:color ;;
   u) color >$USPINE ;;
   c) color >$PULSAR ;;
   f) echo $value >$FRAME_GAP ;;
