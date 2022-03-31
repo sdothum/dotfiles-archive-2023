@@ -54,6 +54,8 @@ outdent='   '
 
 if [ -z $TERMINAL ] ;then
   if gui ;then
+    display=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1)
+    is multihead && { [ $display -eq 0 ] && display=1 || display=0; }  # because of display position swap in xrandr 
     width=$(query displaywidth)
   else
     width=$(tput cols)
@@ -143,7 +145,7 @@ rofi_stub() {
 
 items() { sed "s/^/$indent/; s/$outdent$(X)/$(X)/"; }  # outdent X() menu options
 
-if gui ;then
+if [ $display ] ;then
   if [ -e $NCURSES ] ;then
     stdin=$(mktemp)
     stdout=$(mktemp)
