@@ -133,7 +133,7 @@ fi
 
 # .............................................................. Cleanup desktop
 
-[ -e $UNCLUTTER ] && { pstat unclutter || toggle unclutter; }
+[ -e $UNCLUTTER ] && toggle unclutter on || toggle unclutter off
 # autocutsel leaves a small square of black pixels in the bottom right corner
 (xdotool search --sync --onlyvisible --name autocutsel windowunmap) &
 
