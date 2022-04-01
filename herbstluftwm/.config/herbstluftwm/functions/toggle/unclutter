@@ -6,19 +6,31 @@
 
 # ............................................................. Toggle unclutter
 
-# current workflow is to hide cursor with mouse off (that's why we prefer keyboards!)
-if pstat unclutter ;then
-  killall -KILL unclutter 2>/dev/null
-  herbstclient set focus_follows_mouse true
-  rm -f $UNCLUTTER
-else
+# Usage: toggle unclutter [on | off]
+
+on() {
   # hc set action must precede unclutter initialization to avoid X_GetProperty error
   herbstclient set focus_follows_mouse false
   # unclutter (original) doesn't play nice with X, so give it some initialization time
   # (sleep 1 && unclutter -idle 1 -jitter 2 -root) &
   # unclutter-xfixes
-  unclutter --timeout 1 --jitter 2 --exclude-root --ignore-scrolling --fork
+  pstat unclutter || unclutter --timeout 1 --jitter 2 --exclude-root --ignore-scrolling --fork
   touch $UNCLUTTER
-fi
+  notify 'Unclutter On' 'Ignore mouse'
+}
+
+off() (
+  killall -KILL unclutter 2>/dev/null
+  herbstclient set focus_follows_mouse true
+  rm -f $UNCLUTTER
+  notify 'Unclutter Off' 'Follow mouse'
+)
+
+# current workflow is to hide cursor with mouse off (that's why we prefer keyboards!)
+case $1 in
+on ) on  ;;
+off) off ;;
+*  ) pstat unclutter && off || on ;;
+esac
 
 # vim: set ft=sh: #
