@@ -7,7 +7,7 @@
 # ................................................. monolegible font adjustments
 # see make_install iosevka
 
-usage() { echo "usage: $(basename $0) curlyq | punctuation [<emdash>] | ligature [quasi-proportional] | bookweight [--M] | dyslexic [<space>]  [family]"; exit 1; }
+usage() { echo "usage: $(basename $0) curlyq | punctuation [<emdash>] | ligature [quasi-proportional] | bookweight [book+regular] | dyslexic [<space>]  [family]"; exit 1; }
 
 MAKE_INSTALL=/tmp/iosevka:make_install
 
@@ -151,7 +151,7 @@ weight() {
     ttx $file
   done
 
-  [ $largefont ] && return
+  [ $adjust ] || return
   # optically adjust M W w (to regular weight to narrow stroke width for better small font contrast match)
   echo "
 $(regularweight 0u004d)
@@ -193,7 +193,7 @@ case $1 in
 curlyq     ) ;;
 ligature   ) [ $4 ] && { width=$2; shift 2; } || { shape=$2; shift; } ;;  # see iosevka for tricky bits
 punctuation) [ $2 ] && { emdash=$2; shift; } || emdash=2 ;;
-*weight    ) regular=${1%weight}; fforge=weight; [ "$2" = 'largefont' ] && { largefont=true; shift; } ;;
+*weight    ) regular=${1%weight}; fforge=weight; [ "$2" = 'book+regular' ] && { adjust=true; shift; } ;;
 dyslexic   ) [ $2 ] && { space=$2; shift; } || space=2 ;;
 *          ) usage ;;
 esac
