@@ -10,7 +10,13 @@
 
 # toggle overlap border, see draw border
 if [ $1 ] ;then
-  [ -e $OSPINE ] && rm $OSPINE || touch $OSPINE
+  if [ -e $OSPINE ] ;then
+    rm $OSPINE
+    notify Borders "Gradient colour on overlap"
+  else
+    touch $OSPINE
+    notify Borders "Static colour on overlap"
+  fi
   exit
 fi
 
