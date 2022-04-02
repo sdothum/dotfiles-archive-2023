@@ -215,7 +215,7 @@ while [ $1 ] ;do
   proof       ) leading 2.0000; sb 0.8000; build=${build}-proof ;;                        # for pure writing :)
   english     ) english ;;
   ligature    ) ligature $2  || usage; shift ;;
-  double      ) unset mono; family=${family}-double ;;
+  double      ) unset mono ;;
   quasi*      ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi${family#*Mono}; variant I+ ;;
   dyslexic    ) shape $expanded; sb 0.7150; leading 1.5000; space 2; emdash 2; width=135; ebook monolexic ;;
   # font
@@ -255,6 +255,7 @@ done
 
 [ "$shape" ] || usage
 [ $family ]  || family=Iosevka$build
+[ $mono ]    || family=${family}-double
 
 ditto override "$leading"
 ditto override "$shape" 

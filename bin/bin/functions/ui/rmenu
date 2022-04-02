@@ -43,8 +43,9 @@ hbg=$bg
 hfg='#20bbfcFF'
 
 # leader left or right (prompt case Right, RIGHT, right)
-lead=right
-leader='───────'
+lead=Right
+# leader='───────'
+leader='~~~~~~~'
 indent='       '  # for fzf
 outdent='   '
 
@@ -99,7 +100,7 @@ fi
 [ $lead = left ] && prompt="${prompt}$leader   " || case $lead in
   RIGHT) prompt="$leader   $(echo "$prompt" | uppercase)" ;;
   right) prompt="$leader   $(echo "$prompt" | lowercase)" ;;
-  *    ) prompt="$leader   $prompt" ;;
+  *    ) prompt="$leader   $(echo "$prompt" | sed -r 's/([^ ]*)/\u\1/g')" ;;
   esac
 
 
