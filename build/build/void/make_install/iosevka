@@ -6,6 +6,10 @@
 # ...................................................................... iosevka
 
 # Usage: make_install iosevka [kindle | kobo | I-serifless | d-tailed | q-curly | book+regular] | <opions>*
+#
+# Batch run examples with optional glyph variants..
+#        make_install iosevka kobo q-curly                    # kobo fonts
+#        make_install iosevka I-serifless f-extended q-curly  # source code, web and e-reader fonts
 
 MAKE_INSTALL=/tmp/iosevka:make_install
 touch $MAKE_INSTALL
@@ -17,6 +21,7 @@ while [ $1 ] ;do
   I-serifless ) flavour=I-serifless ;;              # source code variant
   Q-tailed    ) Q=Q-tailed ;;
   d-tailed    ) d=d-tailed ;;                       # ebook variant
+  f-extended  ) f=f-extended ;;                     # unolexic (homage to universal grotesk)
   q-curly     ) q=q-curly ;;                        # ebook variant
   book+regular) adjust=book+regular ;;
   kindle      ) ereader=$1; adjust=book+regular ;;  # add regular/book weight blending (for small fonts on Kindle)
@@ -42,21 +47,28 @@ update() {
 }
 
 if [ $ereader ] ;then
-  iosevka dyslexic $ereader english $Q $q $adjust
-  update p-serifed eMonolexic
+  # serifed I
   iosevka dyslexic $ereader english d-tailed $Q $q $adjust family e_Monolexic
   update d-tailed e_Monolexic
+  iosevka dyslexic $ereader english $Q $q $adjust
+  update p-serifed eMonolexic
+  # serifless I
   iosevka dyslexic $ereader english I-serifless d-tailed $Q $q $adjust family i_Monolexic
   update d-tailed i_Monolexic
   iosevka dyslexic $ereader english I-serifless $Q $q $adjust
   update p-serifed iMonolexic
   iosevka dyslexic $ereader english I-serifless $Q $q $adjust family Monolexic  # my monolexic default settings
   update p-serifed Monolexic
+  # extended f
+  iosevka dyslexic $ereader english f-extended $Q $q $adjust family eUnolexic
+  update p-serifed eUnolexic
+  iosevka dyslexic $ereader english I-serifless f-extended $Q $q $adjust family Unolexic
+  update p-serifed Unolexic
 else
   # desktop fonts
-  iosevka expanded $flavour $d $Q $q
-  iosevka expanded proof $flavour $d $Q $q
-  iosevka expanded menu $flavour $d $Q q-curly
+  iosevka expanded $flavour $d $f $Q $q
+  iosevka expanded proof $flavour $d $f $Q $q
+  iosevka expanded menu $flavour $d $f $Q q-curly
 
   # www fonts
   iosevka heading english I-serifless $Q q-curly
@@ -65,11 +77,11 @@ else
 
   # e-reader fonts
   iosevka ebook english d-tailed $Q $q $adjust
-  iosevka ebook english I-serifless $Q $q $adjust
+  iosevka ebook english I-serifless $f $Q $q $adjust
   iosevka ebook english quasi-proportional d-tailed $Q $q $adjust
-  iosevka ebook english quasi-proportional I-serifless $Q $q $adjust
+  iosevka ebook english quasi-proportional I-serifless $f $Q $q $adjust
   iosevka dyslexic english quasi-proportional d-tailed $Q $q $adjust
-  iosevka dyslexic english quasi-proportional I-serifless $Q $q $adjust
+  iosevka dyslexic english quasi-proportional I-serifless $f $Q $q $adjust
 fi
 rm -f $MAKE_INSTALL
 
