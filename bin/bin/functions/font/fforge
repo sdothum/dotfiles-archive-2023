@@ -204,7 +204,7 @@ FONT=$HOME/.fonts/${1:-Iosevka}
 cd $FONT || usage
 
 $fforge
-
-for i in $(find . -iname '*#1.ttf') ;do ditto kindle "$(mv -v $i ${i%#1.ttf}.ttf | cut -d"'" -f4 | sed 's|.*/||')" ;done
+set -x
+for i in $(find . -iname '*#1.ttf') ;do echo $i XXXXXXXXXXX; ditto kindle "$(mv -v $i ${i%#1.ttf}.ttf | cut -d"'" -f4 | sed 's|.*/||')" ;done
 
 # vim: set ft=sh: #

@@ -34,7 +34,7 @@
 usage() {
   echo "usage: iosevka [normal (default) | extended | expanded | ebook | dyslexic | heading]
                [english | ligature <name>] [double] [quasi-proportional] [space <decimal>] [ emdash <decimal> ]
-               [grotesque (default) | atkinson | geometric | jost] | [b-serifed] | [d-tailed] | [G-toothed] | [I-serifless] | [j-serifed] | [Q-tailed] | [Q-crossing] | [q-curly] | [q-tailed] | [paren]
+               [grotesque (default) | atkinson | geometric | jost] | [b-serifed] | [d-tailed] | [f-extended] | [G-toothed] | [I-serifless] | [j-serifed] | [Q-tailed] | [Q-crossing] | [q-curly] | [q-tailed] | [paren]
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
                [family <name> | <prefix>Monolexic]
                [cap [-+]<decimal>]
@@ -132,6 +132,7 @@ variant() {
     b          ) glyph b=toothed ;;
     b+         ) glyph b=toothless-corner-motion-serifed ;;
     d          ) glyph d=tailed-serifless ;;
+    f          ) glyph f=flat-hook-extended-crossbar-at-x-height ;;
     G          ) glyph capital_g=toothed-serifless-hooked ;;
     I          ) glyph capital_i=serifless ;;
     I+         ) glyph capital_i=serifed ;;
@@ -221,12 +222,13 @@ while [ $1 ] ;do
   # font
   b-serifed   ) variant b+ p+ ;;           # alternate b p dyslexic glyphs
   d-tailed    ) variant d p ;;             # alternate d p dyslexic glyphs
+  f-extended  ) variant f ;;               # unolexic (homage to universal grotesk)
   G-toothed   ) variant G ;;
   I-serifless ) variant I; monolexic i ;;  # combined minimal stroke glyphs
   j-serifed   ) variant j+ ;;
   Q-cross*    ) variant Q ;;
   Q-tailed    ) variant Q+ ;;
-  q-curly     ) variant $1; curlyq=true ;;
+  q-curly     ) variant 'q=curly-q'; curlyq=true ;;
   q-tailed    ) unset curlyq ;;
   grotesque   ) grotesque ;;
   atkinson    ) grotesque; ebook hyperlegible; variant b G J p Q q u ampersand at number_sign percent ;;
