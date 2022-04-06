@@ -151,23 +151,26 @@ weight() {
     ttx $file
   done
 
-  [ $adjust ] || return
+  if [ $adjust ] ;then
   # optically adjust M W w (to regular weight to narrow stroke width for better small font contrast match)
-  echo "
+    echo "
 $(regularweight 0u004d)
 $(regularweight 0u0057)
 $(regularweight 0u0077)
 " >/tmp/fontforge.script
 
-  echo
-  for i in *${regular}*\#1.ttf ;do
-    ditto tweak_MWw $i
-    case $i in
-    *italic*) file=*-italic.ttf ;;
-    *       ) file=*regular.ttf ;;
-    esac
-    fontforge --script /tmp/fontforge.script $i $file
-  done
+    echo
+    for i in *${regular}*\#1.ttf ;do
+      ditto tweak_MWw $i
+      case $i in
+      *italic*) file=*-italic.ttf ;;
+      *       ) file=*regular.ttf ;;
+      esac
+      fontforge --script /tmp/fontforge.script $i $file
+    done
+  fi
+
+  for i in $(find . -iname '*#1.ttf') ;do ditto weight "$(mv -v $i ${i%#1.ttf}.ttf | cut -d"'" -f4 | sed 's|.*/||')" ;done
 }
 
 # double cell width space
@@ -204,7 +207,5 @@ FONT=$HOME/.fonts/${1:-Iosevka}
 cd $FONT || usage
 
 $fforge
-set -x
-for i in $(find . -iname '*#1.ttf') ;do echo $i XXXXXXXXXXX; ditto kindle "$(mv -v $i ${i%#1.ttf}.ttf | cut -d"'" -f4 | sed 's|.*/||')" ;done
 
 # vim: set ft=sh: #
