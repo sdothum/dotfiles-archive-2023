@@ -8,7 +8,7 @@
 # ................................................................. Tweak layout
 
 usage() { 
-  echo "toggle: list c'olors | d'ynamic | frame spl'it | p'anel | s'pine"
+  echo "toggle: list c'olors | O'verlap (rm) | d'ynamic | frame spl'it | p'anel | s'pine"
   echo "tuples: f'rame_gap | m'argin | panel h'eight | panel i'ndent | s'pine | w'indow_gap | font siz'e  <value>"
   echo "        a'ctive color | in'active color | o'verlap color | u'rgent color | pulsar c'olor <value>"
   echo "          indent: '' -> default"
@@ -77,6 +77,7 @@ while : ;do
     p) [ -e $DYNAMIC ] && rm $DYNAMIC || touch $DYNAMIC ;;
     i) [ -e $PANEL_INDENT ] && rm $PANEL_INDENT || usage ;;
     l) [ -e $FSPLIT ] && rm $FSPLIT || touch $FSPLIT ;;
+    O) rm -f $OSPINE:color ;;
     p) [ -e $SPANEL ] && rm $SPANEL || touch $SPANEL ;;
     s) [ -e $SSPINE ] && rm $SSPINE || touch $SSPINE ;;
     *) usage ;;

@@ -11,12 +11,16 @@
 # below 0.045 can cause (hw dependent) resource hogging
 # frequency=0.066
 frequency=0.15
+# light/dark range to add (betwenn 0.0 - 1.0)
+darken=0.125
+lighten=0.275
 
 gradient() { pastel gradient --number 15 $(pastel darken $1 $color) $(pastel lighten $2 $color) | pastel format hex; }
+contrast() { pastel $1 $2 $color | pastel format hex; }
 
 pulsar() {
   color=$(cat $PULSAR)
-  luminance -${color#?} && colors=$(gradient 0.125 0.275) || colors=$(gradient 0.275 0.125)
+  luminance -${color#?} && colors=$(gradient $darken $lighten) || colors=$(gradient $lighten $darken)
   colors="$colors $(echo $colors | reverse)"
 
   while : ;do
@@ -53,8 +57,13 @@ is fullscreen && exit  # fullscreen does not alter layout
 # visually highlight border for stacked windows
 if herbstclient compare tags.focus.curframe_wcount gt 1 && is layout max ;then
   [ -e $OSPINE ] || exec draw border pulsar
-  [ -e $OSPINE:color ] && herbstclient attr theme.active.color $(cat $OSPINE:color) ||
-                          herbstclient attr theme.active.color $(pastel complement $(cat $CSPINE) | pastel format hex)
+  if [ -e $OSPINE:color ] ;then
+    herbstclient attr theme.active.color $(cat $OSPINE:color)
+  else
+    color=$(cat $CSPINE)
+    luminance -${color#?} && color=$(contrast lighten $lighten) || color=$(contrast darken $darken)
+    herbstclient attr theme.active.color $color
+  fi
   exit
 fi
 
