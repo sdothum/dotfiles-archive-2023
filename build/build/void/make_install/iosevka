@@ -53,10 +53,8 @@ if [ $ereader ] ;then
   iosevka dyslexic $ereader english $Q $q $adjust
   update p-serifed eMonolexic
   # serifless I
-  iosevka dyslexic $ereader english I-serifless d-tailed $Q $q $adjust family i_Monolexic
-  update d-tailed i_Monolexic
-  iosevka dyslexic $ereader english I-serifless $Q $q $adjust
-  update p-serifed iMonolexic
+  iosevka dyslexic $ereader english I-serifless d-tailed $Q $q $adjust family _Monolexic
+  update d-tailed _Monolexic
   iosevka dyslexic $ereader english I-serifless $Q $q $adjust family Monolexic  # my monolexic default settings
   update p-serifed Monolexic
   # extended f
