@@ -44,8 +44,7 @@ hfg='#20bbfcFF'
 
 # leader left or right (prompt case Right, RIGHT, right)
 lead=Right
-# leader='───────'
-leader='~~~~~~~'
+leader='⋯⋯⋯⋯⋯⋯⋯'
 indent='       '  # for fzf
 outdent='   '
 
