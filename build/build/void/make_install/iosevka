@@ -55,12 +55,12 @@ if [ $ereader ] ;then
   # serifless I
   iosevka dyslexic $ereader english I-serifless d-tailed $Q $q $adjust family _Monolexic
   update d-tailed _Monolexic
-  iosevka dyslexic $ereader english I-serifless $Q $q $adjust family Monolexic  # my monolexic default settings
+  iosevka dyslexic $ereader english I-serifless $Q $q $adjust family Monolexic            # my monolexic default settings
   update p-serifed Monolexic
   # extended f
   iosevka dyslexic $ereader english f-extended $Q $q $adjust family eUnolexic
   update p-serifed eUnolexic
-  iosevka dyslexic $ereader english I-serifless f-extended $Q $q $adjust family Unolexic
+  iosevka dyslexic $ereader english I-serifless f-extended $Q $q $adjust family Unolexic  # my unolexic default settings
   update p-serifed Unolexic
 else
   # desktop fonts
@@ -69,9 +69,9 @@ else
   iosevka expanded menu $flavour $d $f $Q q-curly
 
   # www fonts
-  iosevka heading english I-serifless $Q q-curly
-  iosevka dyslexic english I-serifless $Q q-curly kobo webfont
-  iosevka dyslexic english quasi-proportional space 1.25 I-serifless $Q q-curly kobo webfont
+  iosevka heading english I-serifless $f $Q q-curly
+  iosevka dyslexic english I-serifless $f $Q q-curly kobo webfont
+  iosevka dyslexic english quasi-proportional space 1.25 I-serifless $f $Q q-curly kobo webfont
 
   # e-reader fonts
   iosevka ebook english d-tailed $Q $q $adjust

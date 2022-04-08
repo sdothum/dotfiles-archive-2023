@@ -55,7 +55,9 @@ d s perl-HTML-Strip
 # python-pip
 # python-setuptools
   python3-devel
+  python3-Bottleneck
   python3-matplatlib  # kb-layout-evaluation dependency
+  python3-numexpr
   python3-pandas      # kb-layout-evaluation dependency
   python3-pip
   python3-wheel
