@@ -34,7 +34,7 @@
 usage() {
   echo "usage: iosevka [normal (default) | extended | expanded | ebook | dyslexic | heading]
                [english | ligature <name>] [double] [quasi-proportional] [space <decimal>] [ emdash <decimal> ]
-               [grotesque (default) | atkinson | geometric | jost] | [b-serifed] | [d-tailed] | [f-extended] | [G-toothed] | [I-serifless] | [j-serifed] | [Q-tailed] | [Q-crossing] | [q-curly] | [q-tailed] | [paren]
+               [grotesque (default) | atkinson | geometric | jost] | [b-serifed] | [d-tailed] | [f-extended] | [G-toothed] | [I-serifless] | [j-serifed] | [Q-tailed] | [Q-crossing] | [q-curly] | [q-tailed] | [at-tall] | [paren-flat]
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
                [family <name> | <prefix>Monolexic]
                [cap [-+]<decimal>]
@@ -148,6 +148,7 @@ variant() {
     ampersand  ) glyph ampersand=closed ;;
     asterisk   ) glyph asterisk=penta-low ;;  # paragraph separator (ebook) glyph
     at         ) glyph at=fourfold ;;
+    at+        ) glyph at=threefold-tall ;;
     dollar     ) glyph dollar=open ;;
     number_sign) glyph number_sign=slanted ;;
     paren      ) glyph paren=flat-arc ;;
@@ -230,6 +231,8 @@ while [ $1 ] ;do
   Q-tailed    ) variant Q+ ;;
   q-curly     ) variant 'q=curly-q'; curlyq=true ;;
   q-tailed    ) unset curlyq ;;
+  at-tall     ) variant at+ ;;
+  paren-flat  ) variant paren ;;
   grotesque   ) grotesque ;;
   atkinson    ) grotesque; ebook hyperlegible; variant b G J p Q q u ampersand at number_sign percent ;;
   geometric   ) geometric; cap 1.225; build=-jost ;;
@@ -335,7 +338,7 @@ dollar = '$dollar'                    # $
 eszet = 'sulzbacher'                  # ß
 long-s = 'bent-hook'                  # ſ
 lower-iota = 'flat-tailed'            # ι
-lower-lambda = 'straight-turn'        # λ
+# lower-lambda = 'straight-turn'      # λ
 lower-mu = 'tailless'                 # µ
 lower-xi = 'rounded'                  # ξ 
 number-sign = '$number_sign'          # #
