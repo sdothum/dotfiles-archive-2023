@@ -33,8 +33,10 @@
 
 usage() {
   echo "usage: iosevka [normal (default) | extended | expanded | ebook | dyslexic | heading]
-               [english | ligature <name>] [double] [quasi-proportional] [space <decimal>] [ emdash <decimal> ]
-               [grotesque (default) | atkinson | geometric | jost] | [b-corner] | [d-tailed] | [f-extended] | [G-toothed] | [I-serifless] | [j-serifed] | [Q-tailed] | [Q-crossing] | [q-curly] | [q-tailed] | [at-tall] | [paren-flat]
+               [english | ligature <name>]
+               [double] [quasi-proportional] [space <decimal>] [ emdash <decimal> ]
+               [grotesque (default) | atkinson | geometric | jost]
+               [b-corner | d-tailed | f-extended | G-toothed | I-serifless | j-serifed | p-eared | Q-tailed | Q-crossing | q-curly | q-tailed | at-tall | paren-flat]*
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
                [family <name> | <prefix>Monolexic]
                [cap [-+]<decimal>]
@@ -132,6 +134,7 @@ variant() {
     b          ) glyph b=toothed ;;
     b+         ) glyph b=toothless-rounded ;;
     d          ) glyph d=tailed-serifless ;;
+    d+         ) glyph d=toothless-corner-serifless ;;
     f          ) glyph f=flat-hook-extended-crossbar-at-x-height ;;
     G          ) glyph capital_g=toothed-serifless-hooked ;;
     I          ) glyph capital_i=serifless ;;
@@ -189,13 +192,13 @@ weight() {
 # english() { exclude_chars='ranges = [[592, 687], [1024, 8191], [8304, 8351], [8400, 8447], [8528, 8703], [8960, 9631], [9728, 130041]]'; }  # prune unnecessary unicode sets
 english()  { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 566], [568, 586], [588, 709], [712, 712], [714, 727], [734, 768], [770, 805], [807, 915], [917, 936], [938, 955], [957, 959], [961, 7807], [7814, 7921], [7924, 8210], [8213, 8215], [8219, 8219], [8223, 8223], [8228, 8229], [8231, 8239], [8241, 8248], [8251, 8259], [8261, 8363], [8365, 8452], [8454, 8466], [8468, 8469], [8471, 8481], [8483, 8485], [8487, 8493], [8495, 8530], [8533, 8538], [8543, 8705], [8707, 8709], [8711, 8718], [8720, 8720], [8723, 8724], [8726, 8728], [8731, 8733], [8735, 8746], [8748, 8775], [8777, 8799], [8801, 8803], [8806, 9412], [9414, 9673], [9675, 64255], [64261, 130041]]'; }  # [8826, 8827, 8880, 8881] not excluded (?)
 
-family()    { [ $1 ] || return 1; family=$1; }
-space()     { space=$(real $1); }
-emdash()    { emdash=$(real $1); }
-ebook()     { variant asterisk; no_litigation=true; family e$(echo $1 | sed 's/.*/\u&/'); regular=book; ebook=true; }
+family()   { [ $1 ] || return 1; family=$1; }
+space()    { space=$(real $1); }
+emdash()   { emdash=$(real $1); }
+ebook()    { variant asterisk; no_litigation=true; family i$(echo $1 | sed 's/.*/\u&/'); regular=book; ebook=true; }
 
-monolexic() { [ $ebook ] && family=$(echo $family | sed -r "s/^(.*)([A-Z][^ ]*)/$1\2/"); }
-ligature()  { [ $1 ] || return 1; [ $1 = default ] && ligature=default-calt || ligature=$1; inherits="inherits = '$ligature'"; }
+initial()  { [ $ebook ] && family=$(echo $family | sed -r "s/^(.*)([A-Z][^ ]*)/$1\2/"); }  # prefix family
+ligature() { [ $1 ] || return 1; [ $1 = default ] && ligature=default-calt || ligature=$1; inherits="inherits = '$ligature'"; }
 
 grotesque    # default typeface
 leading $leading
@@ -208,25 +211,26 @@ spacing=term
 while [ $1 ] ;do
   case "$1" in
   # style
-  normal      ) shape 500; sb 0.7000 ;;                                                   # normal width
+  normal      ) shape 500; sb 0.7000 ;;                                                       # normal width
   ebook       ) shape $extended; sb 0.7000; leading 1.4185; space 2; emdash 2; width=140; ebook monolegible ;;
-  expanded    ) shape $expanded; sb 0.8500 ;;                                             # expanded width (for source code and proof)
-  extended    ) shape $extended; sb 0.7000 ;;                                             # extended width (tighter than expanded)
-  heading     ) shape 650; sb 0.8000; leading 1.2500; weight 300 light; ebook heading ;;  # web heading
-  menu        ) leading 1.5000; sb 0.9000; build=-menu ;;                                 # rofi menu
-  proof       ) leading 2.0000; sb 0.8000; build=${build}-proof ;;                        # for pure writing :)
+  expanded    ) shape $expanded; sb 0.8500 ;;                                                 # expanded width (for source code and proof)
+  extended    ) shape $extended; sb 0.7000 ;;                                                 # extended width (tighter than expanded)
+  heading     ) shape 650; sb 0.8000; leading 1.2500; weight 300 light; ebook monolegible ;;  # web heading
+  menu        ) leading 1.5000; sb 0.9000; build=-menu ;;                                     # rofi menu
+  proof       ) leading 2.0000; sb 0.8000; build=${build}-proof ;;                            # for pure writing :)
   english     ) english ;;
   ligature    ) ligature $2  || usage; shift ;;
   double      ) unset mono ;;
   quasi*      ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi${family#*Mono}; variant I+ ;;
   dyslexic    ) shape $expanded; sb 0.7150; leading 1.5000; space 2; emdash 2; width=135; ebook monolexic ;;
   # font
-  b-corner    ) variant b+ p+ ;;           # alternate b p dyslexic glyphs
-  d-tailed    ) variant b+ d p ;;          # alternate b d p dyslexic glyphs
-  f-extended  ) variant f ;;               # unolexic (homage to universal grotesk)
+  b-corner    ) variant b+ p+ ;;         # alternate b p dyslexic glyphs
+  d-tailed    ) variant b+ d p ;;        # alternate b d p dyslexic glyphs
+  f-extended  ) variant f ;;             # unolexic (homage to universal grotesk)
   G-toothed   ) variant G ;;
-  I-serifless ) variant I; monolexic i ;;  # combined minimal stroke glyphs
+  I-serifless ) variant I; initial ;;  # combined minimal stroke glyphs
   j-serifed   ) variant j+ ;;
+  p-eared     ) variant d+ p ;;
   Q-cross*    ) variant Q ;;
   Q-tailed    ) variant Q+ ;;
   q-curly     ) variant 'q=curly-q'; curlyq=true ;;
@@ -238,21 +242,22 @@ while [ $1 ] ;do
   geometric   ) geometric; cap 1.225; build=-jost ;;
   jost        ) geometric; cap 1.225; build=-jost; variant a j Q u ampersand at dollar number_sign percent question ;;
   family      ) family $2    || usage; shift ;;
-  *Monolexic  ) monolexic ${1%Monolexic} ;;
+  *Monolexic  ) initial ${1%Monolexic} ;;
   # font tweaks
-  cap         ) cap $2       || usage; shift ;;                    # H height (affects descender as well)
-  kindle      ) leading 1.4185 ;;                                  # because only 3 space settings (this is maximum value with proper menu typeface)
-  kobo        ) leading 1.4185 ;;                                  # any value >= 1 (but have retained setting for interested kindle users)
-  book+regular) adjust="book+regular" ;;                           # see fforge bookweight
-  leading     ) leading $2   || usage; shift ;;                    # line spacing > 1.0
+  cap         ) cap $2       || usage; shift ;;                  # H height (affects descender as well)
+  kindle      ) leading 1.4185 ;;                                # because only 3 space settings (this is maximum value with proper menu typeface)
+  kobo        ) leading 1.4185 ;;                                # any value >= 1 (but have retained setting for interested kindle users)
+  book+regular) adjust="book+regular" ;;                         # see fforge bookweight
+  leading     ) leading $2   || usage; shift ;;                  # line spacing > 1.0
   noround     ) unset sb ;;
-  sb          ) sb $2        || usage; shift ;;                    # side bearing (spacing)
-  shape       ) shape $2     || usage; shift ;;                    # cell width
-  space       ) space $2     || usage; shift ;;                    # space width
-  emdash      ) emdash $2    || usage; shift ;;                    # emdash width
-  weight      ) weight $2 $3 || usage; shift 2 ;;                  # custom font weight
-  webfont     ) weight 500 medium; monolexic w; regular=medium ;;  # heavier font for web usage
-  xheight     ) xheight $2   || usage; shift ;;                    # height of x (experimental for larger fontsizes)
+  sb          ) sb $2        || usage; shift ;;                  # side bearing (spacing)
+  shape       ) shape $2     || usage; shift ;;                  # cell width
+  space       ) space $2     || usage; shift ;;                  # space width
+  emdash      ) emdash $2    || usage; shift ;;                  # emdash width
+  weight      ) weight $2 $3 || usage; shift 2 ;;                # custom font weight
+  # webfont   ) weight 500 medium; initial w; regular=medium ;;  # heavier font for web usage
+  webfont     ) initial w ;;
+  xheight     ) xheight $2   || usage; shift ;;                  # height of x (experimental for larger fontsizes)
   *           ) usage ;;
   esac
   shift
