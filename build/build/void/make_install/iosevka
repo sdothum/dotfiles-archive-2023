@@ -5,34 +5,39 @@
 
 # ...................................................................... iosevka
 
-usage() { echo "usage: $(basename $0) iosevka [kindle | kobo | I-serifless | b-rounded | d-tailed | q-curly | at-tall | paren-flat | book+regular | source-only]* | [-- <opions>*]"; exit 1; }
+usage() { echo "usage: $(basename $0) iosevka [kindle | kobo | I-serifless | b-rounded | d-tailed | p-eared | p-serifed | q-curly | at-tall | paren-flat | book+regular | source-only]* | [-- <opions>*]"; exit 1; }
 
-# with run examples with optional glyph variants..
-#        make_install iosevka kobo q-curly                            # kobo fonts
-#        make_install iosevka I-serifless f-extended q-curly at-long  # source code, web and e-reader fonts
+# e.g. with optional glyph variants..
+#        make_install iosevka kobo                                       # default kobo fonts
+#        make_install iosevka I-serifless f-extended q-curly at-tall     # source code, web and e-reader fonts
+#        make_install iosevka -- I-serifless family myfont               # single custom font, see font/iosevka
 
 MAKE_INSTALL=/tmp/iosevka:make_install
 SRCDIR=$HOME/bin/functions/font
 DEPOT=/net/depot
-FOLDER=p-serifed
+GLYPH=b-rounded
 
 touch $MAKE_INSTALL
 trap "rm -f $MAKE_INSTALL" EXIT
 shift
 
+glyph() { unset b d p; eval $1=$2; GLYPH=$2; }
+
 while [ $1 ] ;do
   case $1 in
-  I-serifless ) flavour=I-serifless ;;                     # source code variant
+  I-serifless ) flavour=I-serifless ;;              # source code variant
   Q-tailed    ) Q=Q-tailed ;;
-  b-rounded   ) b=b-rounded; unset d; FOLDER=b-rounded ;;  # unolexic
-  d-tailed    ) d=d-tailed;  unset b; FOLDER=p-serifed ;;  # ebook variant
-  f-extended  ) f=f-extended ;;                            # unolexic (homage to universal grotesk)
-  q-curly     ) q=q-curly ;;                               # ebook variant
-  at-tall     ) at=at-tall ;;                              # source code variant
-  paren-flat  ) paren=paren-flat ;;                        # source code variant
+  b-rounded   ) glyph b b-rounded ;;                # unolexic
+  d-tailed    ) glyph d d-tailed ;;                 # ebook variant
+  f-extended  ) f=f-extended ;;                     # unolexic (homage to universal grotesk)
+  p-eared     ) glyph p p-eared ;;
+  p-serifed   ) glyph p p-serifed ;;
+  q-curly     ) q=q-curly ;;                        # ebook variant
+  at-tall     ) at=at-tall ;;                       # source code variant
+  paren-flat  ) paren=paren-flat ;;                 # source code variant
   book+regular) adjust=book+regular ;;
   source-only ) source_only=true ;;
-  kindle      ) ereader=$1; adjust=book+regular ;;         # add regular/book weight blending (for small fonts on Kindle)
+  kindle      ) ereader=$1; adjust=book+regular ;;  # add regular/book weight blending (for small fonts on Kindle)
   kobo        ) ereader=$1; q=q-curly ;;
   --          ) shift; . $HOME/bin/functions/font/iosevka $@; exit ;;
   *           ) usage ;;
@@ -41,7 +46,7 @@ while [ $1 ] ;do
 done
 
 # build font suite
-ifno 'build iosevka font suite' && { rm -f $MAKE_INSTALL; exit; }
+ifno 'build iosevka font suite' && exit
 
 update() {
   fonts='*-book *-bookitalic *-bold *-bolditalic'
@@ -55,50 +60,54 @@ update() {
   done
 }
 
+# family [options]*
+e_ink() {
+  family=$1
+  shift
+  iosevka dyslexic $ereader english $@ $b $d $p $Q $q $adjust family $family
+  update $GLYPH $family
+}
+
+dfont() { iosevka expanded $flavour   $@ $b $d $f $p $Q q-curly $at $paren; }
+wfont() { iosevka english I-serifless $@ $b $d $f $p $Q q-curly; }
+efont() { iosevka english             $@ $b $d $f $p $Q q-curly $adjust; }
+
 version() {
   ln -s $SRCDIR/iosevka.$1 $SRCDIR/iosevka || exit
-  ln -s $DEPOT/Iosevka.$1 $DEPOT/Iosevka || exit
+  ln -s $DEPOT/Iosevka.$1  $DEPOT/Iosevka  || exit
 }
 
 [ -L $SRCDIR/iosevka ] && rm -f $SRCDIR/iosevka
 [ -L $DEPOT/Iosevka ] && rm -f $DEPOT/Iosevka
+
 if [ $ereader ] ;then
   version 10x
-  # serifed I
-  iosevka dyslexic $ereader english d-tailed $Q $q $adjust family e_Monolexic
-  update d-tailed e_Monolexic
-  iosevka dyslexic $ereader english $b $Q $q $adjust
-  update $FOLDER eMonolexic
-  # serifless I
-  iosevka dyslexic $ereader english I-serifless d-tailed $Q $q $adjust family _Monolexic
-  update d-tailed _Monolexic
-  iosevka dyslexic $ereader english I-serifless $b $Q $q $adjust family Monolexic                   # my monolexic default settings
-  update $FOLDER Monolexic
-  # extended f
-  iosevka dyslexic $ereader english b-rounded f-extended $Q $q $adjust family eUnolexic
-  update b-rounded eUnolexic
-  iosevka dyslexic $ereader english I-serifless b-rounded f-extended $Q $q $adjust family Unolexic  # my unolexic default settings
-  update b-rounded Unolexic
+  # *Monolexic
+  e_ink iMonolexic
+  e_ink Monolexic I-serifless
+  # *Unolexic
+  e_ink iUnolexic f-extended
+  e_ink Unolexic  f-extended I-serifless
 else
   version 15x
   # desktop fonts
-  iosevka expanded $flavour $b $d $f $Q $q $at $paren
-  iosevka expanded proof $flavour $b $d $f $Q $q $at $paren
-  iosevka expanded menu $flavour $b $d $f $Q q-curly $at $paren
+  dfont
+  dfont proof
+  dfont menu
   [ $source_only ] && exit
 
   # www fonts
-  iosevka heading english I-serifless $b $f $Q q-curly
-  iosevka dyslexic english I-serifless $b $f $Q q-curly kobo webfont
-  iosevka dyslexic english quasi-proportional space 1.25 I-serifless $b $f $Q q-curly kobo webfont
+  wfont heading  kobo webfont
+  wfont dyslexic kobo webfont
+  wfont dyslexic quasi-proportional space 1.25 kobo webfont
 
   # e-reader fonts
-  iosevka ebook english d-tailed $Q $q $adjust
-  iosevka ebook english I-serifless $b $f $Q $q $adjust
-  iosevka ebook english quasi-proportional d-tailed $Q $q $adjust
-  iosevka ebook english quasi-proportional I-serifless $b $f $Q $q $adjust
-  iosevka dyslexic english quasi-proportional d-tailed $Q $q $adjust
-  iosevka dyslexic english quasi-proportional I-serifless $b $f $Q $q $adjust
+  efont ebook
+  efont ebook    I-serifless
+  efont ebook    quasi-proportional
+  efont ebook    quasi-proportional I-serifless
+  efont dyslexic quasi-proportional
+  efont dyslexic quasi-proportional I-serifless
 fi
 
 # vim: set ft=sh: #
