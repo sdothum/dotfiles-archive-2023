@@ -6,7 +6,7 @@
 
 # ............................................................... Word frequency
 
-# Usage: [GT=<count>] W [[list | ls] <regex>]
+usage() { echo "usage: [GT=<count>] $(basename $0) [list | ls] [<regex>]"; exit 1; }
 
 # WORDS=${WORDS:-$HOME/.config/Amphetype/100K-word.database}
 WORDS=${WORDS:-$HOME/.config/Amphetype/google-books-common-words.txt}
@@ -18,17 +18,18 @@ digraph='in on an es re te en ti ar at le ra al or ed nt is ro de co se it to io
 trigraph='ing ion tio ent and men nde nce for the tis tha'
 double='ss ee tt ff ll mm oo rr nn pp'
 
+[ $1 ] || usage
 [ $2 ] && [ "$1" = list ] || [ "$1" = ls ] && { shift; list=true; }
 
 frequency() {
-  for i in $(grep -i $i $WORDS | cut -f2) ;do
+  for i in $(ugrep -i $i $WORDS | cut -f2) ;do
     echo $i
   done | awk '{ freq += $1 } END { print freq }'
 }
 
 # including frequency within word (cpu intensive).. does not alter overall letter frequency order
 # frequency() {
-  # grep -i $i $WORDS | while read word count ;do
+  # ugrep -i $i $WORDS | while read word count ;do
     # match=$(echo -n $word | sed "s/$i/\n/gi" | wc -l)
     # echo $(( $match * $count ))
   # done | awk '{ freq += $1 } END { print freq }'
@@ -46,7 +47,7 @@ corpus() {
   unset words
   for i in $@ ;do words="$words $(iterate $i)" ;done
   for i in $words ;do
-    [ $(grep -i $i $WORDS | wc -l) -gt $GT ] && echo $i $(grep -i $i $WORDS | wc -l) $(frequency $i)
+    [ $(ugrep -i $i $WORDS | wc -l) -gt $GT ] && echo $i $(ugrep -i $i $WORDS | wc -l) $(frequency $i)
   done | sort -nr -k3 |
       awk '{ cnt += $2; freq += $3; printf("%s %d %'"'"'d\n", $1, $2, $3); gsub(/./, "-", $1); hdg = length($1) > length(hdg) ? $1 : hdg } END { printf("%s %d %'"'"'d\n", hdg, cnt, freq) }' |
       column -s' ' -t
@@ -55,7 +56,7 @@ corpus() {
 list() {
   for i in $@ ;do
     underline
-    grep -i $i $WORDS | awk '{ print $1 }' | tr '\n' ' '
+    ugrep -i $i $WORDS | awk '{ print $1 }' | tr '\n' ' '
     echo
   done
 }
@@ -69,6 +70,7 @@ else
   corpus $trigraph
   corpus $digraph
   corpus $alphabet
+  usage
 fi
 
 # vim: set ft=sh: #

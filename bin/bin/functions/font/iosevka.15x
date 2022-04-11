@@ -134,7 +134,7 @@ variant() {
     case $o in
     a          ) glyph a=single-storey-serifless ;;
     b          ) glyph b=toothed ;;
-    b+         ) glyph b=toothless-rounded ;;
+    b+         ) glyph b=toothless-corner ;;
     d          ) glyph d=tailed-serifless ;;
     d+         ) glyph d=toothless-corner-serifless ;;
     f          ) glyph f=flat-hook-extended-crossbar-at-x-height ;;
@@ -145,7 +145,7 @@ variant() {
     j          ) glyph j=serifless ;;
     j+         ) glyph j=flat-hook-serifed ;;
     p          ) glyph p=eared ;;
-    p+         ) glyph p=earless-corner ;;
+    p+         ) glyph p=motion-serifed ;;
     Q          ) glyph capital_q=crossing ;;
     Q+         ) glyph capital_q=detached-tailed ;;
     q          ) glyph q=diagonal-tailed ;;
