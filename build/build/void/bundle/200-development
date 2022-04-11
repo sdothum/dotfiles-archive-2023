@@ -7,6 +7,10 @@
 = library
 = ═══════
   libcurl-devel          # passenger dependency
+  libX11-devel           # herbstluftwm
+  libXrandr-devel        # herbstluftwm
+  libXfixes-devel        # herbstluftwm
+  libXft-devel           # herbstluftwm
   qt                     # amphetype dependency
 # qt5-devel              # amphetype2 dependency
 # qt5-xmlpatterns-devel  # amphetype2 dependency
@@ -55,9 +59,9 @@ d s perl-HTML-Strip
 # python-pip
 # python-setuptools
   python3-devel
-  python3-Bottleneck
+  python3-Bottleneck  # optimization
   python3-matplatlib  # kb-layout-evaluation dependency
-  python3-numexpr
+  python3-numexpr     # optimization
   python3-pandas      # kb-layout-evaluation dependency
   python3-pip
   python3-wheel
