@@ -5,7 +5,7 @@
 
 # ...................................................................... iosevka
 
-usage() { echo "usage: $(basename $0) iosevka [kindle | kobo | I-serifless | b-rounded | d-tailed | p-eared | p-serifed | q-curly | at-tall | paren-flat | book+regular | source-only]* | [-- <opions>*]"; exit 1; }
+usage() { echo "usage: $(basename $0) iosevka [kindle | kobo | I-serifless | b-rounded | D-serifless | d-tailed | p-eared | p-serifed | q-curly | at-tall | paren-flat | book+regular | source-only]* | [-- <opions>*]"; exit 1; }
 
 # e.g. with optional glyph variants..
 #        make_install iosevka kobo                                       # default kobo fonts
@@ -65,11 +65,11 @@ update() {
 e_ink() {
   family=$1
   shift
-  iosevka dyslexic $ereader english $@ $b $D $d $p $Q $q $adjust family $family
+  iosevka dyslexic $ereader english $@ $b $d $p $Q $q $adjust family $family
   update $GLYPH $family
 }
 
-dfont() { iosevka expanded $flavour   $@ $b $d $f $p $Q q-curly $at $paren; }
+dfont() { iosevka expanded $flavour   $@ $b $D $d $f $p $Q q-curly $at $paren; }
 wfont() { iosevka english I-serifless $@ $b $d $f $p $Q q-curly; }
 efont() { iosevka english             $@ $b $d $f $p $Q q-curly $adjust; }
 
