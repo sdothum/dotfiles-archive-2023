@@ -130,6 +130,7 @@ abbr vd 'gvim -d --role=gvimdiff'
 abbr sd 'sdiff -b -E -W -w(tput cols)'
 abbr vdarchive 'dirdiff ./ /net/archive(pwd)'
 abbr vdbackup 'dirdiff ./ /net/backup(pwd)'
+abbr vsh "gvim $HOME/.local/share/fish/fish_history"
 
 # ........................................................................ Regex
 
