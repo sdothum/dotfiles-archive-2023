@@ -36,7 +36,7 @@ usage() {
                [english | ligature <name>]
                [double] [quasi-proportional] [space <decimal>] [ emdash <decimal> ]
                [grotesque (default) | atkinson | geometric | jost]
-               [b-corner | d-tailed | f-extended | G-toothed | I-serifless | j-serifed | p-eared | Q-tailed | Q-crossing | q-curly | q-tailed | at-tall | paren-flat]*
+               [b-corner | D-serifless | d-tailed | f-extended | G-toothed | I-serifless | j-serifed | p-eared | Q-detached | Q-crossing | q-curly | q-tailed | at-tall | paren-flat]*
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
                [family <name> | <prefix>Monolexic]
                [cap [-+]<decimal>]
@@ -73,6 +73,7 @@ symbols() {
 
 # atkinson hyperlegible typeface
 grotesque() {
+  capital_d=more-rounded-serifless
   capital_g=toothless-rounded-serifless-hooked
   capital_i=short-serifed
   capital_j=descending-flat-hook-serifless
@@ -101,6 +102,7 @@ grotesque() {
 # jost* typeface
 geometric() {
   unset curlyq
+  capital_d=more-rounded-serifless
   capital_g=toothless-rounded-serifless-hooked
   capital_i=serifless
   capital_j=descending-serifless
@@ -130,30 +132,31 @@ geometric() {
 glyph() { eval $1; variant="$variant $1"; }
  
 variant() {
-  for o in $@ ;do  # "o"nly non-variant character ($i in use for variant :)
+  for o in $@ ;do  # "o"nly non-variant character ($i in use for variant :) ..since rectified with long variant names
     case $o in
-    a          ) glyph a=single-storey-serifless ;;
-    b          ) glyph b=toothed ;;
-    b+         ) glyph b=toothless-corner ;;
-    d          ) glyph d=tailed-serifless ;;
-    d+         ) glyph d=toothless-corner-serifless ;;
-    f          ) glyph f=flat-hook-extended-crossbar-at-x-height ;;
-    G          ) glyph capital_g=toothed-serifless-hooked ;;
-    I          ) glyph capital_i=serifless ;;
-    I+         ) glyph capital_i=serifed ;;
-    J          ) glyph capital_j=serifless ;;
-    j          ) glyph j=serifless ;;
-    j+         ) glyph j=flat-hook-serifed ;;
-    p          ) glyph p=eared ;;
-    p+         ) glyph p=motion-serifed ;;
-    Q          ) glyph capital_q=crossing ;;
-    Q+         ) glyph capital_q=detached-tailed ;;
-    q          ) glyph q=diagonal-tailed ;;
-    u          ) glyph u=toothed ;;
+    a-single   ) glyph a=single-storey-serifless ;;
+    b-corner   ) glyph b=toothless-corner ;;
+    b-toothed  ) glyph b=toothed ;;
+    D-serifless) glyph capital_d=standard-serifless ;;
+    d-corner   ) glyph d=toothless-corner-serifless ;;
+    d-tailed   ) glyph d=tailed-serifless ;;
+    f-extended ) glyph f=flat-hook-extended-crossbar-at-x-height ;;
+    G-toothed  ) glyph capital_g=toothed-serifless-hooked ;;
+    I-serifed  ) glyph capital_i=serifed ;;
+    I-serifless) glyph capital_i=serifless ;;
+    J-serifless) glyph capital_j=serifless ;;
+    j-serifed  ) glyph j=flat-hook-serifed ;;
+    j-serifless) glyph j=serifless ;;
+    p-eared    ) glyph p=eared ;;
+    p-serifed  ) glyph p=motion-serifed ;;
+    Q-crossing ) glyph capital_q=crossing ;;
+    Q-detached ) glyph capital_q=detached-tailed ;;
+    q-tailed   ) glyph q=diagonal-tailed ;;
+    u-toothed  ) glyph u=toothed ;;
     ampersand  ) glyph ampersand=closed ;;
     asterisk   ) glyph asterisk=penta-low ;;  # paragraph separator (ebook) glyph
     at         ) glyph at=fourfold ;;
-    at+        ) glyph at=fourfold-solid-inner-tall ;;
+    at-tall    ) glyph at=fourfold-solid-inner-tall ;;
     dollar     ) glyph dollar=open ;;
     number_sign) glyph number_sign=slanted ;;
     paren      ) glyph paren=flat-arc ;;
@@ -223,26 +226,27 @@ while [ $1 ] ;do
   english     ) english ;;
   ligature    ) ligature $2  || usage; shift ;;
   double      ) unset mono ;;
-  quasi*      ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi${family#*Mono}; variant I+ ;;
+  quasi*      ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi${family#*Mono}; variant I-serifed ;;
   dyslexic    ) shape $expanded; sb 0.7150; leading 1.5000; space 2; emdash 2; width=135; ebook monolexic ;;
   # font
-  b-corner    ) variant b+ p+ ;;         # alternate b p dyslexic glyphs
-  d-tailed    ) variant b+ d p ;;        # alternate b d p dyslexic glyphs
-  f-extended  ) variant f ;;             # unolexic (homage to universal grotesk)
-  G-toothed   ) variant G ;;
-  I-serifless ) variant I; initial ;;  # combined minimal stroke glyphs
-  j-serifed   ) variant j+ ;;
-  p-eared     ) variant d+ p ;;
-  Q-cross*    ) variant Q ;;
-  Q-tailed    ) variant Q+ ;;
-  q-curly     ) variant 'q=curly-q'; curlyq=true ;;
+  b-corner    ) variant b-corner p-serifed ;;         # alternate b p dyslexic glyphs
+  D-serifless ) variant D-serifless ;;
+  d-tailed    ) variant b-corner d-tailed p-eared ;;        # alternate b d p dyslexic glyphs
+  f-extended  ) variant f-extended ;;             # unolexic (homage to universal grotesk)
+  G-toothed   ) variant G-toothed ;;
+  I-serifless ) variant I-serifless; initial ;;  # combined minimal stroke glyphs
+  j-serifed   ) variant j-serifed ;;
+  p-eared     ) variant d-corner p-eared ;;
+  Q-cross*    ) variant Q-crossing ;;
+  Q-detached    ) variant Q-detached ;;
+  q-curly     ) variant 'q=CURLY-q'; curlyq=true ;;
   q-tailed    ) unset curlyq ;;
-  at-tall     ) variant at+ ;;
+  at-tall     ) variant at-tall ;;
   paren-flat  ) variant paren ;;
   grotesque   ) grotesque ;;
-  atkinson    ) grotesque; ebook hyperlegible; variant b G J p Q q u ampersand at number_sign percent ;;
+  atkinson    ) grotesque; ebook hyperlegible; variant b-toothed G-toothed J-serifless p-eared Q-crossing q-tailed u-toothed ampersand at number_sign percent ;;
   geometric   ) geometric; cap 1.225; build=-jost ;;
-  jost        ) geometric; cap 1.225; build=-jost; variant a j Q u ampersand at dollar number_sign percent question ;;
+  jost        ) geometric; cap 1.225; build=-jost; variant a-single J-serifless Q-crossing u-toothed ampersand at dollar number_sign percent question ;;
   family      ) family $2    || usage; shift ;;
   *Monolexic  ) initial ${1%Monolexic} ;;
   # font tweaks

@@ -29,6 +29,7 @@ catlg=$CACHEDIR/dmenu:$category
 [ -d "$PASSPORT" ] && { library=$PASSPORT; usb=true; } || library=${LIBRARY:-/net/media/videos/$category}
 preprocess=${0%/dmenu}/functions/dmenu/.preproc/$category
 retitle="$library"/.retitle
+cd $library
 
 # exclude directory kludge of .anime links in main series folder
 permissions() {
@@ -63,10 +64,11 @@ cache() {
   ls -1$T "$library" | grep -v ' ' | sed 's/\./ /g' >$catlg
 }
 
+episodes() { find -maxdepth 1 -regex '.*S[0-9][0-9]E[0-9][0-9].*'; }
+
 # move episodes to series folders
 catalogue() {
-  cd $library
-  for i in $(find -maxdepth 1 -regex '.*S[0-9][0-9]E[0-9][0-9].*') ;do
+  for i in $(episodes) ;do
     series=$(echo $i | sed 's/\.S[0-9][0-9]E[0-9][0-9].*//; s/\.[0-9][0-9][0-9][0-9]$//')
     [ -d $series ] || mkdir $series
     mv $i $series
@@ -82,9 +84,10 @@ cache
 while : ;do
   # rebuilding catalogue?
   [ ! -s $catlg ] && { sleep 0.1; continue; }
-  [ $show ] || show=4
+  [ $(episodes | wc -l) -gt 0 ] && CATLG="\\n$(X $CATALOGUE)" || unset CATLG
+  [ $show ] || show=3
 
-  show=$(cat "$catlg" | sed "1i$(X $SONARR)\n$(X $FILE)\n$(X $CATALOGUE)" | sed "1i$(X $(sortlist $T))" | rmenu 'Series' "$show" -no-custom) || break
+  show=$(cat "$catlg" | sed "1i$(X $SONARR)\n$(X $FILE)$CATLG" | sed "1i$(X $(sortlist $T))" | rmenu 'Series' "$show" -no-custom) || break
   # force dmenu focus (continue within do loop doesn't guarantee focus)
   case "${show#$(X)}" in
   "$NAME"     ) unset T; cache; continue ;;

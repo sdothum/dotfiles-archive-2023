@@ -8,13 +8,13 @@
 
 # crontab examples..
 # 12am 1st of month <fs> scrub
-# crontab: 0 0 1 * * touch /tmp/scrub; sudo -u <user> <path>/scrub <fs> >/tmp/scrub:<fs>.log 2>&1
+# crontab: 0 0 1 * * <path>/scrub <fs>
 # 12am file directed scrub with "echo <fs> >/tmp/scrub" (nop otherwise)
-# crontab: 0 0 * * * touch /tmp/scrub; sudo -u <user> <path>/scrub $(cat /tmp/scrub) >/tmp/scrub:$(cat /tmp/scrub).log 2>&1
+# crontab: 0 0 * * * [ -s /tmp/scrub ] && <path>/scrub $(cat /tmp/scrub)
 
 usage() { 
   echo "usage: $(basename $0) a'll | boot | root | net | share | backup"
-  echo "       $(basename $0) c'ancel | s'tatus [<minutes>] | I'nitialize  [boot | root | net | share | backup]"
+  echo "       $(basename $0) c'ancel | s'tatus | I'nitialize  [boot | root | net | share | backup]"
   exit 1
 }
 
@@ -22,7 +22,7 @@ interval=300     # default 5 minute interval reporting
 CRON=/tmp/scrub  # see crontab -l
 
 # import user path
-[ -e $CRON ] && . $HOME/bin/functions/shell/user_path colors  # bash shell required for cron colors
+. $HOME/bin/functions/shell/user_path colors  # bash shell required for cron colors
 
 # butterfs maintenance
 volume() {
@@ -50,7 +50,7 @@ show() {
   done
   [ $in_progress ] || press_enter
   notify X critical "btrfs scrub $V" "$(sudo btrfs scrub status $V | grep summary | sed -r 's/.*: *//g; s/^(.)/\u\1/')"
-  rm -f $CRON
+  rm -f $CRON  # remove triggered cron scrub, see crontab -l
 }
 
 case $1 in
@@ -58,10 +58,12 @@ case $1 in
 a*) scrub boot; scrub share; scrub backup ;;
 c*) sudo btrfs scrub cancel $(volume $2) ;;
 I*) sudo rm -f /var/lib/btrfs/*.* ;;
-s*) [ $3 ] && { interval=$(( $2 * 60 )); shift; }; show $(volume $2) ;;
+s*) tail -f $CRON:$2.log ;;
 
-* ) nohup sudo btrfs scrub start -Bd $(volume $@) >/dev/null 2>&1 &
-    pstat Xorg && [ ! -e $CRON ] && (term "$@" "scrub s $@" &) || scrub s $@ ;;
+* ) nohup sudo btrfs scrub start -Bd $(volume $1) >/dev/null 2>&1 &
+    log=$CRON:$1.log
+    show $1 >$log
+    pstat Xorg && term "$1" "tail -f $log" || tail -f $log ;;
 esac
 
 # vim: set ft=sh: #
