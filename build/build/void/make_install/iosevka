@@ -25,8 +25,9 @@ glyph() { unset b d p; eval $1=$2; GLYPH=$2; }
 
 while [ $1 ] ;do
   case $1 in
+  D-serifless ) D=D-serifless ;;
   I-serifless ) flavour=I-serifless ;;              # source code variant
-  Q-tailed    ) Q=Q-tailed ;;
+  Q-detached  ) Q=Q-detached ;;
   b-rounded   ) glyph b b-rounded ;;                # unolexic
   d-tailed    ) glyph d d-tailed ;;                 # ebook variant
   f-extended  ) f=f-extended ;;                     # unolexic (homage to universal grotesk)
@@ -64,7 +65,7 @@ update() {
 e_ink() {
   family=$1
   shift
-  iosevka dyslexic $ereader english $@ $b $d $p $Q $q $adjust family $family
+  iosevka dyslexic $ereader english $@ $b $D $d $p $Q $q $adjust family $family
   update $GLYPH $family
 }
 
@@ -88,6 +89,9 @@ if [ $ereader ] ;then
   # *Unolexic
   e_ink iUnolexic f-extended
   e_ink Unolexic  f-extended I-serifless
+  # *Duolexic
+  # e_ink iDuolexic f-extended p-eared
+  # e_ink Duolexic  f-extended p-eared I-serifless
 else
   version 15x
   # desktop fonts
