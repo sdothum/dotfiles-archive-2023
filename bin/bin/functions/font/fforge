@@ -7,7 +7,7 @@
 # ................................................. monolegible font adjustments
 # see make_install iosevka
 
-usage() { echo "usage: $(basename $0) curlyq | punctuation [<emdash>] | ligature [quasi-proportional] | bookweight [book+regular] | dyslexic [<space>]  [family]"; exit 1; }
+usage() { echo "usage: $(basename $0) q_hook | punctuation [<emdash>] | ligature [quasi-proportional] | bookweight [book+regular] | dyslexic [<space>]  [family]"; exit 1; }
 
 MAKE_INSTALL=/tmp/iosevka:make_install
 
@@ -15,7 +15,7 @@ confirm() { [ -e $MAKE_INSTALL ] && ditto make_install "$1" || { ifyes "$1" || e
 percent() { echo "$1 * 100" | bc | cut -d. -f1; }
 
 # substitute curly tail q
-curlyq() {
+q_hook() {
   # copy char 0u024b and paste to char 0u0071
   # confirm 'atkinson curly tail q'  # see iosevka
   echo "
@@ -28,7 +28,7 @@ Generate(\$1);
 " >/tmp/fontforge.script
 
   for i in *ttf ;do
-    ditto curlyq $i
+    ditto q_hook $i
     fontforge --script /tmp/fontforge.script $i
   done
 }
@@ -193,7 +193,7 @@ Generate(\$1);
 # main, see iosevka
 fforge=$1
 case $1 in
-curlyq     ) ;;
+q_hook     ) ;;
 ligature   ) [ $4 ] && { width=$2; shift 2; } || { shape=$2; shift; } ;;  # see iosevka for tricky bits
 punctuation) [ $2 ] && { emdash=$2; shift; } || emdash=2 ;;
 *weight    ) regular=${1%weight}; fforge=weight; [ "$2" = 'book+regular' ] && { adjust=true; shift; } ;;

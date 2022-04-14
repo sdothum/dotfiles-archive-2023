@@ -9,21 +9,13 @@
 # for git iosevka 10.x
 
 # eg. source code and desktop fonts..
-#     iosevka expanded        (grotesque width coding font, reduce display fontsize by 1)
-#     iosevka expanded proof  (grotesque width prose font) **
-#     iosevka expanded menu double [q-curly]
-#     iosevka heading english      [q-curly]
+#     iosevka expanded I-serifless at-tall 
+#     iosevka expanded proof f-extended q-hook
+#     iosevka expanded menu double
 #
 #     e-ink fonts..
-#     iosevka ebook english [d-tailed] [q-curly]
-#     iosevka ebook english I-serifless [q-curly]
-#     iosevka ebook english atkinson
-#     iosevka ebook english quasi-proportional [q-curly]
-#     iosevka ebook english quasi-proportional I-serifless [q-curly]
-#     iosevka dyslexic english [d-tailed] [q-curly]
-#     iosevka dyslexic english I-serifless [q-curly]
-#     iosevka dyslexic english quasi-proportional [q-curly]
-#     iosevka dyslexic english quasi-proportional I-serifless [q-curly]
+#     iosevka ebook english quasi-proportional
+#     iosevka dyslexic english I-serifless q-hook
 #
 #     variants, full atkinson looks best in larger font sizes..
 #     iosevka ebook atkinson english         (strict hyperlegible variants)
@@ -36,7 +28,7 @@ usage() {
                [english | ligature <name>]
                [double] [quasi-proportional] [space <decimal>] [ emdash <decimal> ]
                [grotesque (default) | atkinson | geometric | jost]
-               [b-corner | D-serifless | d-tailed | f-extended | G-toothed | I-serifless | j-serifed | p-eared | Q-detached | Q-crossing | q-curly | q-tailed | at-tall | paren-flat]*
+               [a-single | b-corner | D-serifless | d-tailed | f-extended | G-toothed | I-serifless | j-serifed | p-eared | Q-detached | Q-crossing | q-hook | q-tailed | at-tall | paren-flat]*
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
                [family <name> | <prefix>Monolexic]
                [cap [-+]<decimal>]
@@ -99,7 +91,7 @@ grotesque() {
 
 # jost* typeface
 geometric() {
-  unset curlyq
+  unset q_hook
   capital_d=more-rounded-serifless
   capital_g=toothless-rounded-serifless-hooked
   capital_i=serifless
@@ -227,6 +219,7 @@ while [ $1 ] ;do
   quasi*      ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi${family#*Mono}; variant I-serifed ;;
   dyslexic    ) shape $expanded; sb 0.7150; leading 1.5000; space 2; emdash 2; width=135; ebook monolexic ;;
   # font
+  a-single    ) variant a-single ;;
   b-corner    ) variant b-corner p-serifed ;;         # alternate b p dyslexic glyphs
   D-serifless ) variant D-serifless ;;
   d-tailed    ) variant b-corner d-tailed p-eared ;;        # alternate b d p dyslexic glyphs
@@ -235,10 +228,10 @@ while [ $1 ] ;do
   I-serifless ) variant I-serifless; initial ;;  # combined minimal stroke glyphs
   j-serifed   ) variant j-serifed ;;
   p-eared     ) variant d-corner p-eared ;;
-  Q-cross*    ) variant Q-crossing ;;
-  Q-detached    ) variant Q-detached ;;
-  q-curly     ) variant 'q=CURLY-q'; curlyq=true ;;
-  q-tailed    ) unset curlyq ;;
+  Q-crossing  ) variant Q-crossing ;;
+  Q-detached  ) variant Q-detached ;;
+  q-hook      ) variant 'q=HOOK-TAILED'; q_hook=true ;;
+  q-tailed    ) unset q_hook ;;
   at-tall     ) variant at-tall ;;
   paren-flat  ) variant paren ;;
   grotesque   ) grotesque ;;
@@ -539,7 +532,7 @@ else
   nerdfont $mono $family                                  # insert glyphs
 fi
 
-[ $curlyq ] && fforge curlyq $family                      # hyperlegible font mod for better q
+[ $q_hook ] && fforge q_hook $family                      # hyperlegible font mod for better q
 
 [ $ebook ] && [ $spacing = term ] && { fforge punctuation $emdash $family; unset width; }  # wide cell emdash and double width ellipsis
 
