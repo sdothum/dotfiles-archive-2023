@@ -5,12 +5,18 @@
 
 # ...................................................................... iosevka
 
-usage() { echo "usage: $(basename $0) iosevka [kindle | kobo | I-serifless | b-rounded | D-serifless | d-tailed | p-eared | p-serifed | q-curly | at-tall | paren-flat | book+regular | source-only]* | [-- <opions>*]"; exit 1; }
+usage() { 
+  echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [family <name>]
+                            [D-serifless | I-serifless | Q-detached | a-single | b-rounded | d-tailed | f-extended | p-eared | p-serifed | q-hook | at-tall | paren-flat | book+regular]*
+                            [-- <opions>*]"
+  exit 1
+}
 
 # e.g. with optional glyph variants..
-#        make_install iosevka kobo                                       # default kobo fonts
-#        make_install iosevka I-serifless f-extended q-curly at-tall     # source code, web and e-reader fonts
-#        make_install iosevka -- I-serifless family myfont               # single custom font, see font/iosevka
+#        make_install iosevka kobo                                      # default kobo fonts
+#        make_install iosevka kobo a-single f-extended family Geolexic  # custom e-ink fonts
+#        make_install iosevka I-serifless f-extended at-tall            # desktop fonts
+#        make_install iosevka -- I-serifless family Coding              # single custom font, see font/iosevka
 
 MAKE_INSTALL=/tmp/iosevka:make_install
 SRCDIR=$HOME/bin/functions/font
@@ -26,20 +32,24 @@ glyph() { unset b d p; eval $1=$2; GLYPH=$2; }
 while [ $1 ] ;do
   case $1 in
   D-serifless ) D=D-serifless ;;
-  I-serifless ) flavour=I-serifless ;;              # source code variant
+  I-serifless ) I=I-serifless ;;                    # source code variant
   Q-detached  ) Q=Q-detached ;;
+  a-single    ) a=a-single ;;
   b-rounded   ) glyph b b-rounded ;;                # unolexic
   d-tailed    ) glyph d d-tailed ;;                 # ebook variant
   f-extended  ) f=f-extended ;;                     # unolexic (homage to universal grotesk)
   p-eared     ) glyph p p-eared ;;
   p-serifed   ) glyph p p-serifed ;;
-  q-curly     ) q=q-curly ;;                        # ebook variant
+  q-hook      ) q=q-hook ;;                        # ebook variant
   at-tall     ) at=at-tall ;;                       # source code variant
   paren-flat  ) paren=paren-flat ;;                 # source code variant
   book+regular) adjust=book+regular ;;
   source-only ) source_only=true ;;
   kindle      ) ereader=$1; adjust=book+regular ;;  # add regular/book weight blending (for small fonts on Kindle)
-  kobo        ) ereader=$1; q=q-curly ;;
+  kobo        ) ereader=$1; q=q-hook ;;
+  family      ) [ $ereader ] && [ $2 ] && { family=$2; shift; } || usage ;;
+  ebook       ) ebook=true ;;
+  web         ) web=true ;;
   --          ) shift; . $HOME/bin/functions/font/iosevka $@; exit ;;
   *           ) usage ;;
   esac
@@ -61,17 +71,19 @@ update() {
   done
 }
 
+options() { echo $@ $D $I $Q $a $b $d $f $p $q; }  # list
+
 # family [options]*
 e_ink() {
-  family=$1
+  name=$1
   shift
-  iosevka dyslexic $ereader english $@ $b $d $p $Q $q $adjust family $family
-  update $GLYPH $family
+  iosevka dyslexic $ereader english $(options $@) $adjust family $name
+  update $GLYPH $name
 }
 
-dfont() { iosevka expanded $flavour   $@ $b $D $d $f $p $Q q-curly $at $paren; }
-wfont() { iosevka english I-serifless $@ $b $d $f $p $Q q-curly; }
-efont() { iosevka english             $@ $b $d $f $p $Q q-curly $adjust; }
+dfont() { iosevka expanded            $(options $@) q-hook $at $paren; }
+wfont() { iosevka english I-serifless $(options $@) q-hook; }
+efont() { iosevka english             $(options $@) q-hook $adjust; }
 
 version() {
   ln -s $SRCDIR/iosevka.$1 $SRCDIR/iosevka || exit
@@ -81,30 +93,22 @@ version() {
 [ -L $SRCDIR/iosevka ] && rm -f $SRCDIR/iosevka
 [ -L $DEPOT/Iosevka ] && rm -f $DEPOT/Iosevka
 
-if [ $ereader ] ;then
+if [ $family ] ;then
   version 10x
-  # *Monolexic
+  # e-ink fonts (non-published)
+  e_ink i$family
+  e_ink $family I-serifless
+
+elif [ $ereader ] ;then
+  version 10x
+  # e-ink fonts
   e_ink iMonolexic
   e_ink Monolexic I-serifless
-  # *Unolexic
   e_ink iUnolexic f-extended
   e_ink Unolexic  f-extended I-serifless
-  # *Duolexic
-  # e_ink iDuolexic f-extended p-eared
-  # e_ink Duolexic  f-extended p-eared I-serifless
-else
-  version 15x
-  # desktop fonts
-  dfont
-  dfont proof
-  dfont menu
-  [ $source_only ] && exit
 
-  # www fonts
-  wfont heading  kobo webfont
-  wfont dyslexic kobo webfont
-  wfont dyslexic quasi-proportional space 1.25 kobo webfont
-
+elif [ $ebook ] ;then
+  version 10x
   # e-reader fonts
   efont ebook
   efont ebook    I-serifless
@@ -112,6 +116,20 @@ else
   efont ebook    quasi-proportional I-serifless
   efont dyslexic quasi-proportional
   efont dyslexic quasi-proportional I-serifless
+
+elif [ $web ] ;then
+  version 10x
+  # www fonts
+  wfont heading  kobo webfont
+  wfont dyslexic kobo webfont
+  wfont dyslexic quasi-proportional space 1.25 kobo webfont
+
+else
+  version 15x
+  # desktop fonts
+  dfont
+  dfont proof
+  dfont menu
 fi
 
 # vim: set ft=sh: #
