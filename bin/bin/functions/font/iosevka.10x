@@ -28,7 +28,7 @@ usage() {
                [english | ligature <name>]
                [double] [quasi-proportional] [space <decimal>] [ emdash <decimal> ]
                [grotesque (default) | atkinson | geometric | jost]
-               [a-single | b-corner | D-serifless | d-tailed | f-extended | G-toothed | I-serifless | j-serifed | p-eared | Q-detached | Q-crossing | q-hook | q-tailed | at-tall | paren-flat]*
+               [a-single | b-corner | D-serifless | d-tailed | f-extended | G-toothed | I-serifless | j-serifed | p-eared | Q-detached | Q-crossing | q-hook | q-tailed | at-tall | 0-split | paren-flat]*
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
                [family <name> | <prefix>Monolexic]
                [cap [-+]<decimal>]
@@ -152,6 +152,7 @@ variant() {
     paren      ) glyph paren=flat-arc ;;
     percent    ) glyph percent=rings-continuous-slash ;;
     question   ) glyph question=corner ;;
+    0-split    ) glyph zero=reverse-slashed-split ;;
     *          ) variant="$variant $o" ;;
     esac
   done
@@ -233,6 +234,7 @@ while [ $1 ] ;do
   q-hook      ) variant 'q=HOOK-TAILED'; q_hook=true ;;
   q-tailed    ) unset q_hook ;;
   at-tall     ) variant at-tall ;;
+  0-split     ) variant 0-split ;;
   paren-flat  ) variant paren ;;
   grotesque   ) grotesque ;;
   atkinson    ) grotesque; ebook hyperlegible; variant b-toothed G-toothed J-serifless p-eared Q-crossing q-tailed u-toothed ampersand at number_sign percent ;;
