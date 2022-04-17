@@ -62,6 +62,7 @@ d pass
   psmisc
   rlwrap
   runit-swap
+  udevil  # no-config automount (less involved setup than udiskie) 
   udiskie
 
 

@@ -7,16 +7,16 @@
 
 usage() { 
   echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [family <name>]
-                            [D-serifless | I-serifless | Q-detached | a-single | b-rounded | d-tailed | f-extended | p-eared | p-serifed | q-hook | at-tall | paren-flat | book+regular]*
+                            [D-serifless | I-serifless | Q-detached | a-single | b-rounded | d-tailed | f-extended | p-eared | p-serifed | q-hook | at-tall | 0-split | paren-flat | book+regular]*
                             [-- <opions>*]"
   exit 1
 }
 
 # e.g. with optional glyph variants..
-#        make_install iosevka kobo                                      # default kobo fonts
-#        make_install iosevka kobo a-single f-extended family Geolexic  # custom e-ink fonts
-#        make_install iosevka I-serifless f-extended at-tall            # desktop fonts
-#        make_install iosevka -- I-serifless family Coding              # single custom font, see font/iosevka
+#        make_install iosevka kobo                                                  # default kobo fonts
+#        make_install iosevka kobo a-single f-extended I-serifless family fablexic  # custom e-ink font
+#        make_install iosevka I-serifless f-extended at-tall                        # desktop fonts
+#        make_install iosevka -- I-serifless family Coding                          # single custom font, see font/iosevka
 
 MAKE_INSTALL=/tmp/iosevka:make_install
 SRCDIR=$HOME/bin/functions/font
@@ -40,8 +40,9 @@ while [ $1 ] ;do
   f-extended  ) f=f-extended ;;                     # unolexic (homage to universal grotesk)
   p-eared     ) glyph p p-eared ;;
   p-serifed   ) glyph p p-serifed ;;
-  q-hook      ) q=q-hook ;;                        # ebook variant
+  q-hook      ) q=q-hook ;;                         # ebook variant
   at-tall     ) at=at-tall ;;                       # source code variant
+  0-split     ) zero=0-split ;;
   paren-flat  ) paren=paren-flat ;;                 # source code variant
   book+regular) adjust=book+regular ;;
   source-only ) source_only=true ;;
@@ -71,7 +72,7 @@ update() {
   done
 }
 
-options() { echo $@ $D $I $Q $a $b $d $f $p $q; }  # list
+options() { echo $@ $D $I $Q $a $b $d $f $p $q $zero; }  # list
 
 # family [options]*
 e_ink() {
@@ -95,9 +96,8 @@ version() {
 
 if [ $family ] ;then
   version 10x
-  # e-ink fonts (non-published)
-  e_ink i$family
-  e_ink $family I-serifless
+  # custom e-ink font (non-published)
+  e_ink $family
 
 elif [ $ereader ] ;then
   version 10x
