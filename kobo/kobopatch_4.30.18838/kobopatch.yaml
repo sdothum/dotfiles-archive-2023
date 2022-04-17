@@ -32,8 +32,8 @@ overrides:
 
   src/libnickel.so.1.0.0.yaml:
     My 10 line spacing values: no
-    My 24 line spacing values: no
-    Custom left & right margins: no
+    My 24 line spacing values: yes
+    Custom left & right margins: yes
     Custom font sizes: yes
     ePub fixed top/bottom margins: no
     ePub disable built-in body padding-bottom: no
@@ -123,7 +123,7 @@ overrides:
     Custom page navigation scrubber: no
     Customise Header back button: no
     Series list increase cover thumbnails: yes
-    Increase headlines font: yes
+    Increase headlines font: no
     New home screen subtitle custom font: no
     Remove footer (row3) and increase cover size on new home screen: yes
     Remove footer (row3) on new home screen: no
