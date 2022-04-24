@@ -38,7 +38,7 @@ overrides:
     ePub fixed top/bottom margins: no
     ePub disable built-in body padding-bottom: no
     Custom kepub default margins: no
-    Block WiFi firmware upgrade: yes
+    Block WiFi firmware upgrade: no
     Custom Sleep/Power-off timeouts: no
     Set KePub hyphenation: no
     Force user line spacing in KePubs: yes
@@ -57,15 +57,15 @@ overrides:
     KePub stylesheet additions - optimizeSpeed: no
     Shorten dictionary entry not found message: yes
     Change Wikipedia search language: no
-    Cyrillic Keyboard (GloHD/ClaraHD/AuraOne/H2O2):
-    Greek Keyboard (GloHD/ClaraHD/AuraOne/H2O2):
-    Bulgarian Phonetic Keyboard (GloHD/ClaraHD/AuraOne/H2O2/Forma/Libra):
+    Cyrillic Keyboard (GloHD/ClaraHD/AuraOne/H2O2): no
+    Greek Keyboard (GloHD/ClaraHD/AuraOne/H2O2): no
+    Bulgarian Phonetic Keyboard (GloHD/ClaraHD/AuraOne/H2O2/Forma/Libra): no
     Don't grab exclusive access to event0: no
     Both page turn buttons go next: yes
     Both page turn sides go next: no
     Increase page navigation history: no
     Replace adobe page numbers toggle with invert screen: no
-    Always show confirmation dialog before upgrading: no
+    Always show confirmation dialog before upgrading: yes
     Allow USB storage even when device locked: yes
     Hide browser from beta features: no
     Remove beta features not supported text: yes
