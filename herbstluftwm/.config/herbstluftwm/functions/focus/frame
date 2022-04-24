@@ -57,25 +57,27 @@ for i in $(seq 1 $frames) ;do
   fi
 done
 
-# window count of client frame
-fcount() { herbstclient attr tags.$(( $(herbstclient attr clients.$i.tag) - 1 )).curframe_wcount; }
+# parameter: parent_frame.$1 trap: $2
+parentframe() { herbstclient attr clients.$i.parent_frame.$1 2>/dev/null || echo $2; }  # trap terminated client
 
-# find biggest frame (window) to split -- works best if all frames are max layout (as grids will act to filter window sort)
+# find biggest frame to split (uses parent_frame in 0.9.5)
 if [ -z $1 ] && [ -e $FSPLIT ] ;then
   >$FSPLIT
   for i in $(herbstclient list_clients); do 
-    set -- $(herbstclient attr clients.$i.content_geometry | sed 's/[-+].*//; s/x/ /')
-    [ $1 -gt $2 ] && xy=X || xy=Y  # split along long edge
-    count=$(fcount)
-    [ $count -lt 1 ] && count=1
-    echo $(( $1 * $2 / $count )) $i $xy >>$FSPLIT  # apply multi-window weighting (max layout assumed)
-    shift 2
+    set -- $(parentframe content_geometry | sed 's/[-+].*//; s/x/ /')
+    if [ $# -eq 2 ] ;then                             # trap terminated client
+      [ $1 -gt $2 ] && xy=X || xy=Y                   # split along long edge
+      count=$(( $(parentframe client_count 1) / 2 ))  # don't let busy frame avoid splitting
+      [ $count -lt 1 ] && count=1
+      echo $(( $1 * $2 / $count )) $i $xy >>$FSPLIT   # apply multi-window weighting (max layout assumed)
+    fi
+    shift $#
   done
   
   if [ -s $FSPLIT ] ;then
     set -- $(sort -n $FSPLIT | tail -1)
     herbstclient compare tags.focus.curframe_wcount gt 0 && { herbstclient jumpto $2; draw fsplit $3 0.5; }
-    shift 3
+    shift $#
   fi
 fi
 
