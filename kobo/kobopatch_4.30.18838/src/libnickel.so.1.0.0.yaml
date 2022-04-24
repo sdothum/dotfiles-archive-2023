@@ -181,14 +181,14 @@ Custom left & right margins:
   # - ReplaceInt: {Offset: 0x1C, Find: 14, Replace: 7}
   # - ReplaceInt: {Offset: 0x20, Find: 16, Replace: 8}
   - ReplaceInt: {Offset: 0x00, Find:  0, Replace: 0}
-  - ReplaceInt: {Offset: 0x04, Find:  2, Replace: 2}
-  - ReplaceInt: {Offset: 0x08, Find:  4, Replace: 4}
-  - ReplaceInt: {Offset: 0x0C, Find:  6, Replace: 5}
-  - ReplaceInt: {Offset: 0x10, Find:  8, Replace: 6}
-  - ReplaceInt: {Offset: 0x14, Find: 10, Replace: 7}
-  - ReplaceInt: {Offset: 0x18, Find: 12, Replace: 8}
-  - ReplaceInt: {Offset: 0x1C, Find: 14, Replace: 9}
-  - ReplaceInt: {Offset: 0x20, Find: 16, Replace: 10}
+  - ReplaceInt: {Offset: 0x04, Find:  2, Replace: 4}
+  - ReplaceInt: {Offset: 0x08, Find:  4, Replace: 8}
+  - ReplaceInt: {Offset: 0x0C, Find:  6, Replace: 9}
+  - ReplaceInt: {Offset: 0x10, Find:  8, Replace: 10}
+  - ReplaceInt: {Offset: 0x14, Find: 10, Replace: 11}
+  - ReplaceInt: {Offset: 0x18, Find: 12, Replace: 12}
+  - ReplaceInt: {Offset: 0x1C, Find: 14, Replace: 13}
+  - ReplaceInt: {Offset: 0x20, Find: 16, Replace: 14}
 
 Custom font sizes:
   - Enabled: no
