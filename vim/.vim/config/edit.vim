@@ -79,7 +79,7 @@ command! -range=% -nargs=0 CodeBlock silent! execute '<line1>,<line2>call edit#C
 
 " markup wiki code blocks
 nnoremap <silent><leader>` V:CodeBlock<CR>
-vmap     <silent><leader>`  :'<,'>CodeBlock<CR>
+vmap     <silent><leader>`  :CodeBlock<CR>
 
 " Text shift ___________________________________________________________________
 

@@ -382,7 +382,7 @@ imap <silent><S-F5> <C-o>:call <SID>toggleTypo()<CR>
 " autocmd plugin FileType markdown call textobj#quote#init()
 
 " ....................................................................... Vimade
-nmap <silent><C-F11>       :VimadeToggle<CR>
+nmap <silent><S-F11>       :VimadeToggle<CR>
 
 autocmd plugin BufWinEnter __Mundo_* VimadeBufDisable
 
