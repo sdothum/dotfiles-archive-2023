@@ -31,7 +31,7 @@
 = ════
   rsync
   syncthing
-# vsftpd
+  vsftpd
 # watchman
 
 

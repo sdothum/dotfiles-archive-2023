@@ -13,10 +13,10 @@ usage() {
 }
 
 # e.g. with optional glyph variants..
-#        make_install iosevka kobo                                                  # default kobo fonts
-#        make_install iosevka kobo a-single f-extended I-serifless family fablexic  # custom e-ink font
-#        make_install iosevka I-serifless f-extended at-tall                        # desktop fonts
-#        make_install iosevka -- I-serifless family Coding                          # single custom font, see font/iosevka
+#        make_install iosevka kobo                                               # default kobo fonts
+#        make_install iosevka kobo a-single f-extended I-serifless family aFont  # custom e-ink font
+#        make_install iosevka I-serifless f-extended at-tall                     # custom desktop fonts
+#        make_install iosevka -- I-serifless family forCoding                    # single custom font, see font/iosevka
 
 MAKE_INSTALL=/tmp/iosevka:make_install
 SRCDIR=$HOME/bin/functions/font
@@ -103,9 +103,11 @@ elif [ $ereader ] ;then
   version 10x
   # e-ink fonts
   e_ink iMonolexic
-  e_ink Monolexic I-serifless
-  e_ink iUnolexic f-extended
-  e_ink Unolexic  f-extended I-serifless
+  e_ink Monolexic   I-serifless
+  e_ink iUnolexic   f-extended
+  e_ink Unolexic    f-extended I-serifless
+  e_ink ielementary a-single
+  e_ink elementary  a-single   I-serifless
 
 elif [ $ebook ] ;then
   version 10x
