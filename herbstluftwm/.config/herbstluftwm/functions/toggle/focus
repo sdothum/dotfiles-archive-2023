@@ -16,18 +16,9 @@ status() {
   fi
 }
 
-toggle() { 
-  if [ $1 ] ;then
-    [ -s $DYNAMIC ] && { rm $DYNAMIC; touch $DYNAMIC; } || echo frames >$DYNAMIC  # see focus frame
-  else
-    [ -e $DYNAMIC ] && rm $DYNAMIC || touch $DYNAMIC
-  fi
-  status
-}
-
 case $1 in
-''    ) toggle; [ -e $DYNAMIC ] && focus window ;;  # see emit_hook and focus functions
-fsplit) toggle frames ;;
+''    ) [ -e $DYNAMIC ] && rm $DYNAMIC || touch $DYNAMIC; [ -e $DYNAMIC ] && focus window ;;  # see emit_hook and focus functions
+fsplit) [ -s $DYNAMIC ] && { rm $DYNAMIC; touch $DYNAMIC; } || echo frames >$DYNAMIC ;;       # see focus frame
 status) status ;;
 esac
 

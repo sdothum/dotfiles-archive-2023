@@ -32,7 +32,7 @@ settings() {
   done
   [ -e $SSPINE ] && ditto window_gap 'off [spine]' || ditto spine 'off'
   [ -e $SPANEL ] || ditto panel 'off'
-  [ -s $DYNAMIC ] && ditto frame 'split on' || { [ -e $DYNAMIC ] && ditto dynamic 'focus on' || ditto dynamic 'focus off'; }
+  [ -s $DYNAMIC ] && ditto dynamic 'frame on' || { [ -e $DYNAMIC ] && ditto dynamic 'focus on' || ditto dynamic 'focus off'; }
   [ -e $OSPINE ] && ditto overlap 'on'
   [ "$error" ] && { ditto ERROR error "$error"; unset error; }
   echo
