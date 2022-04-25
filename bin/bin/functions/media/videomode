@@ -12,7 +12,7 @@ V_DYNAMIC=/tmp/$(basename $0):dynamic
 V_NCURSES=/tmp/$(basename $0):ncurses
 
 case $1 in
-on ) [ -e $DYNAMIC ] && { rm $DYNAMIC; touch $V_DYNAMIC; }
+on ) [ -e $DYNAMIC ] && mv $DYNAMIC $V_DYNAMIC
      [ -e $NCURSES ] && touch $V_NCURSES
      rm -f $MENU
      [ -e $SPICOM:toggle ] && touch $NCURSES
@@ -20,7 +20,7 @@ on ) [ -e $DYNAMIC ] && { rm $DYNAMIC; touch $V_DYNAMIC; }
      [ -e $BLACKBOARD ] || blackboard  # bypass blackboard toggling if already on
      hdmi && pulse ;;                  # check hdmi audio
 
-off) [ -e $V_DYNAMIC ] && { touch $DYNAMIC; rm $V_DYNAMIC; }
+off) [ -e $V_DYNAMIC ] && mv $V_DYNAMIC $DYNAMIC
      [ -e $V_NCURSES ] || rm -f $NCURSES
      conky clock auto
      focus window                      # refresh panel title on close
