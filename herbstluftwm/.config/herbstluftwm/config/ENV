@@ -25,9 +25,9 @@ echo $DISPLAY >$SESSION/display  # for cron notifications, see notify
 # ................................................................. WM behaviour
 
 export DYNAMIC=$DESKTOP:dynamic
+export FSPLIT=$HLWM:fsplit
 export FOCUS=$HLWM:focus
 export LOCK=$HLWM:lock
-export FSPLIT=$DESKTOP:fsplit
 
 # .................................................................... WM states
 

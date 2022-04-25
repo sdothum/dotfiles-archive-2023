@@ -1,4 +1,5 @@
 #!/usr/bin/dash
+.
 # sdothum - 2016 (c) wtfpl
 [ $TRACE ] && CHILD="bin/gaps $@" . $PARENT
 
@@ -31,8 +32,7 @@ settings() {
   done
   [ -e $SSPINE ] && ditto window_gap 'off [spine]' || ditto spine 'off'
   [ -e $SPANEL ] || ditto panel 'off'
-  [ -e $DYNAMIC ] || ditto dynamic 'off'
-  [ -e $FSPLIT ] && ditto frame 'split on'
+  [ -s $DYNAMIC ] && ditto frame 'split on' || { [ -e $DYNAMIC ] && ditto dynamic 'focus on' || ditto dynamic 'focus off'; }
   [ -e $OSPINE ] && ditto overlap 'on'
   [ "$error" ] && { ditto ERROR error "$error"; unset error; }
   echo
@@ -74,9 +74,9 @@ while : ;do
   if [ "$attr" = "$value" ] ;then
     case $attr in
     c) term "colors" trap pastel list; continue ;;
-    p) [ -e $DYNAMIC ] && rm $DYNAMIC || touch $DYNAMIC ;;
+    d) toggle focus ;;
     i) [ -e $PANEL_INDENT ] && rm $PANEL_INDENT || usage ;;
-    l) [ -e $FSPLIT ] && rm $FSPLIT || touch $FSPLIT ;;
+    l) toggle focus fsplit ;;
     O) rm -f $OSPINE:color ;;
     p) [ -e $SPANEL ] && rm $SPANEL || touch $SPANEL ;;
     s) [ -e $SSPINE ] && rm $SSPINE || touch $SSPINE ;;

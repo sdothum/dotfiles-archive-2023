@@ -6,15 +6,29 @@
 
 # ......................................................... Toggle dynamic focus
 
-# Usage: toggle focus [overlay | status]
+# Usage: toggle focus [fsplit | status]
 
-status() { [ -e $1 ] && notify "Dynamic $2" On || notify low "Dynamic $2" Off; }
-toggle() { [ -e $1 ] && rm -f $1 || touch $1; status $1 $2; }
+status() { 
+  if [ -e $DYNAMIC ] ;then
+    [ -s $DYNAMIC ] && notify "Dynamic Frames" On || notify "Dynamic Focus" On
+  else
+    notify low "Dynamic Focus" Off
+  fi
+}
+
+toggle() { 
+  if [ $1 ] ;then
+    [ -s $DYNAMIC ] && { rm $DYNAMIC; touch $DYNAMIC; } || echo frames >$DYNAMIC  # see focus frame
+  else
+    [ -e $DYNAMIC ] && rm $DYNAMIC || touch $DYNAMIC
+  fi
+  status
+}
 
 case $1 in
-''    ) toggle $DYNAMIC Focus; [ -e $DYNAMIC ] && focus window ;;  # see emit_hook and focus functions
-fsplit) toggle $FSPLIT Frames ;;
-status) status $DYNAMIC Focus; status $FSPLIT Frames ;;
+''    ) toggle; [ -e $DYNAMIC ] && focus window ;;  # see emit_hook and focus functions
+fsplit) toggle frames ;;
+status) status ;;
 esac
 
 # vim: set ft=sh: #
