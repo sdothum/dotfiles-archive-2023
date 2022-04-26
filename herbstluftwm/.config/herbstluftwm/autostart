@@ -117,7 +117,6 @@ fi
 
 # add window management extensions
 emithook &
-[ -e $DYNAMIC ] || toggle focus
 
 # ................................................................ Final touches
 
@@ -131,6 +130,7 @@ is multihead || draw panel  # normally the responsibilty of draw root but requir
 conky clock auto
 rm -f $NCURSES
 
-sleep 4 && toggle focus status  # what dynamic window handling?
+sleep 4  # what dynamic window handling?
+[ -e $DYNAMIC ] && toggle focus status || toggle focus
 
 # vim: set ft=sh: #
