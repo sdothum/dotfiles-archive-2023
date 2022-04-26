@@ -322,29 +322,47 @@ Custom Sleep/Power-off timeouts:
       minutes to 10,20,30,60,120,240 minutes.
     # Values displayed on both menus
   - FindBaseAddressString: "5 mins\0"
-  - ReplaceString: {Offset:  0, Find: "5 mins\0", Replace: "10 mins"}
-  - ReplaceString: {Offset:  8, Find: "10 mins",  Replace: "20 mins"}
-  - ReplaceString: {Offset: 16, Find: "15 mins",  Replace: "30 mins"}
-  - ReplaceString: {Offset: 24, Find: "30 mins",  Replace: "1 hour"}
-  - ReplaceString: {Offset: 32, Find: "45 mins",  Replace: "2 hours"}
-  - ReplaceString: {Offset: 38, Find: "60 mins",  Replace: "4 hours"}
+  # - ReplaceString: {Offset:  0, Find: "5 mins\0", Replace: "10 mins"}
+  # - ReplaceString: {Offset:  8, Find: "10 mins",  Replace: "20 mins"}
+  # - ReplaceString: {Offset: 16, Find: "15 mins",  Replace: "30 mins"}
+  # - ReplaceString: {Offset: 24, Find: "30 mins",  Replace: "1 hour"}
+  # - ReplaceString: {Offset: 32, Find: "45 mins",  Replace: "2 hours"}
+  # - ReplaceString: {Offset: 38, Find: "60 mins",  Replace: "4 hours"}
+  - ReplaceString: {Offset:  0, Find: "5 mins\0", Replace: "2 mins"}
+  - ReplaceString: {Offset:  8, Find: "10 mins",  Replace: "3 mins"}
+  - ReplaceString: {Offset: 16, Find: "15 mins",  Replace: "5 mins"}
+  - ReplaceString: {Offset: 24, Find: "30 mins",  Replace: "10 mins"}
+  - ReplaceString: {Offset: 32, Find: "45 mins",  Replace: "15 mins"}
+  - ReplaceString: {Offset: 38, Find: "60 mins",  Replace: "30 mins"}
     # Replace values MOVed then added to the list in N3SettingsPowerView::initChoices:
     # Actual values used for sleep menu
   - BaseAddress: {Sym: "N3SettingsPowerView::initChoices()", Rel: 12}
-  - ReplaceInt:  {Offset:   0, Find: 5,  Replace:  10}
-  - ReplaceInt:  {Offset:  88, Find: 10, Replace:  20}
-  - ReplaceInt:  {Offset: 148, Find: 15, Replace:  30}
-  - ReplaceInt:  {Offset: 208, Find: 30, Replace:  60}
-  - ReplaceInt:  {Offset: 268, Find: 45, Replace: 120}
-  - ReplaceInt:  {Offset: 328, Find: 60, Replace: 240}
+  # - ReplaceInt:  {Offset:   0, Find: 5,  Replace:  10}
+  # - ReplaceInt:  {Offset:  88, Find: 10, Replace:  20}
+  # - ReplaceInt:  {Offset: 148, Find: 15, Replace:  30}
+  # - ReplaceInt:  {Offset: 208, Find: 30, Replace:  60}
+  # - ReplaceInt:  {Offset: 268, Find: 45, Replace: 120}
+  # - ReplaceInt:  {Offset: 328, Find: 60, Replace: 240}
+  - ReplaceInt:  {Offset:   0, Find: 5,  Replace:  2}
+  - ReplaceInt:  {Offset:  88, Find: 10, Replace:  3}
+  - ReplaceInt:  {Offset: 148, Find: 15, Replace:  5}
+  - ReplaceInt:  {Offset: 208, Find: 30, Replace: 10}
+  - ReplaceInt:  {Offset: 268, Find: 45, Replace: 15}
+  - ReplaceInt:  {Offset: 328, Find: 60, Replace: 30}
     # Actual values used for power menu
   - BaseAddress: {Sym: "N3SettingsPowerView::initChoices()", Rel: 466}
-  - ReplaceInt:  {Offset:   0, Find: 5,  Replace:  10}
-  - ReplaceInt:  {Offset:  60, Find: 10, Replace:  20}
-  - ReplaceInt:  {Offset: 118, Find: 15, Replace:  30}
-  - ReplaceInt:  {Offset: 176, Find: 30, Replace:  60}
-  - ReplaceInt:  {Offset: 234, Find: 45, Replace: 120}
-  - ReplaceInt:  {Offset: 290, Find: 60, Replace: 240}
+  # - ReplaceInt:  {Offset:   0, Find: 5,  Replace:  10}
+  # - ReplaceInt:  {Offset:  60, Find: 10, Replace:  20}
+  # - ReplaceInt:  {Offset: 118, Find: 15, Replace:  30}
+  # - ReplaceInt:  {Offset: 176, Find: 30, Replace:  60}
+  # - ReplaceInt:  {Offset: 234, Find: 45, Replace: 120}
+  # - ReplaceInt:  {Offset: 290, Find: 60, Replace: 240}
+  - ReplaceInt:  {Offset:   0, Find: 5,  Replace:  2}
+  - ReplaceInt:  {Offset:  60, Find: 10, Replace:  3}
+  - ReplaceInt:  {Offset: 118, Find: 15, Replace:  5}
+  - ReplaceInt:  {Offset: 176, Find: 30, Replace: 10}
+  - ReplaceInt:  {Offset: 234, Find: 45, Replace: 15}
+  - ReplaceInt:  {Offset: 290, Find: 60, Replace: 30}
 
 Set KePub hyphenation:
   - Enabled: no
