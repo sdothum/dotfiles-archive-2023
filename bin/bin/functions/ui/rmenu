@@ -34,7 +34,6 @@ usage() { echo "usage: $(basename $0) '<prompt>' [['<select>' | <row>]] [<option
 # version 1.7.x
 THEME=$HOME/.config/rofi/themes/rofi.theme
 font='Iosevka-menu'
-font='Iosevka-menu'
 wbg='#000000B0'
 bg='#000000FF'
 fg='#FDF6E3FF'
@@ -44,7 +43,7 @@ hfg='#20bbfcFF'
 
 # leader left or right (prompt case Right, RIGHT, right)
 lead=Right
-leader='⋯⋯⋯⋯⋯⋯⋯'
+leader='∿∿∿∿∿∿—'
 indent='       '  # for fzf
 outdent='   '
 
