@@ -110,31 +110,55 @@ My 24 line spacing values:
     # 24 replacement line spacing values: change these replace_float values to suit
     # your device and preferences:
   - BaseAddress:  {Sym: "ReadingSettings::lineHeightScalars() const", Rel: 112} # beginning of new table from above
-  - ReplaceFloat: {Offset:   0, Find: 1.0, Replace: 0.75}
-  - ReplaceFloat: {Offset:   8, Find: 1.0, Replace: 0.78}
-  - ReplaceFloat: {Offset:  16, Find: 1.0, Replace: 0.8}
-  - ReplaceFloat: {Offset:  24, Find: 1.0, Replace: 0.82}
-  - ReplaceFloat: {Offset:  32, Find: 1.0, Replace: 0.84}
-  - ReplaceFloat: {Offset:  40, Find: 1.0, Replace: 0.86}
-  - ReplaceFloat: {Offset:  48, Find: 1.0, Replace: 0.88}
-  - ReplaceFloat: {Offset:  56, Find: 1.0, Replace: 0.9}
-  - ReplaceFloat: {Offset:  64, Find: 1.0, Replace: 0.92}
-  - ReplaceFloat: {Offset:  72, Find: 1.0, Replace: 0.94}
-  - ReplaceFloat: {Offset:  80, Find: 1.0, Replace: 0.96}
-  - ReplaceFloat: {Offset:  88, Find: 1.0, Replace: 0.98}
-  - ReplaceFloat: {Offset:  96, Find: 1.0, Replace: 1.0}
-  - ReplaceFloat: {Offset: 104, Find: 1.0, Replace: 1.02}
+  # - ReplaceFloat: {Offset:   0, Find: 1.0, Replace: 0.75}
+  # - ReplaceFloat: {Offset:   8, Find: 1.0, Replace: 0.78}
+  # - ReplaceFloat: {Offset:  16, Find: 1.0, Replace: 0.8}
+  # - ReplaceFloat: {Offset:  24, Find: 1.0, Replace: 0.82}
+  # - ReplaceFloat: {Offset:  32, Find: 1.0, Replace: 0.84}
+  # - ReplaceFloat: {Offset:  40, Find: 1.0, Replace: 0.86}
+  # - ReplaceFloat: {Offset:  48, Find: 1.0, Replace: 0.88}
+  # - ReplaceFloat: {Offset:  56, Find: 1.0, Replace: 0.9}
+  # - ReplaceFloat: {Offset:  64, Find: 1.0, Replace: 0.92}
+  # - ReplaceFloat: {Offset:  72, Find: 1.0, Replace: 0.94}
+  # - ReplaceFloat: {Offset:  80, Find: 1.0, Replace: 0.96}
+  # - ReplaceFloat: {Offset:  88, Find: 1.0, Replace: 0.98}
+  # - ReplaceFloat: {Offset:  96, Find: 1.0, Replace: 1.0}
+  # - ReplaceFloat: {Offset: 104, Find: 1.0, Replace: 1.02}
+  - ReplaceFloat: {Offset:   0, Find: 1.0, Replace: 0.775}
+  - ReplaceFloat: {Offset:   8, Find: 1.0, Replace: 0.8}
+  - ReplaceFloat: {Offset:  16, Find: 1.0, Replace: 0.825}
+  - ReplaceFloat: {Offset:  24, Find: 1.0, Replace: 0.85}
+  - ReplaceFloat: {Offset:  32, Find: 1.0, Replace: 0.875}
+  - ReplaceFloat: {Offset:  40, Find: 1.0, Replace: 0.9}
+  - ReplaceFloat: {Offset:  48, Find: 1.0, Replace: 0.925}
+  - ReplaceFloat: {Offset:  56, Find: 1.0, Replace: 0.95}
+  - ReplaceFloat: {Offset:  64, Find: 1.0, Replace: 0.975}
+  - ReplaceFloat: {Offset:  72, Find: 1.0, Replace: 1.0}
+  - ReplaceFloat: {Offset:  80, Find: 1.0, Replace: 1.025}
+  - ReplaceFloat: {Offset:  88, Find: 1.0, Replace: 1.05}
+  - ReplaceFloat: {Offset:  96, Find: 1.0, Replace: 1.075}
+  - ReplaceFloat: {Offset: 104, Find: 1.0, Replace: 1.1}
   - FindBaseAddressHex: CDCC CCCC CCCC F03F 1F85 # beginning of old table
-  - ReplaceFloat: {Offset:  0, Find: 1.05, Replace: 1.05}
-  - ReplaceFloat: {Offset:  8, Find: 1.07, Replace: 1.07}
-  - ReplaceFloat: {Offset: 16, Find: 1.1,  Replace: 1.1}
-  - ReplaceFloat: {Offset: 24, Find: 1.35, Replace: 1.15}
-  - ReplaceFloat: {Offset: 32, Find: 1.7,  Replace: 1.2}
-  - ReplaceFloat: {Offset: 40, Find: 1.8,  Replace: 1.25}
-  - ReplaceFloat: {Offset: 48, Find: 2.2,  Replace: 1.3}
-  - ReplaceFloat: {Offset: 56, Find: 2.4,  Replace: 1.35}
-  - ReplaceFloat: {Offset: 64, Find: 2.6,  Replace: 1.4}
-  - ReplaceFloat: {Offset: 72, Find: 2.8,  Replace: 1.5}
+  # - ReplaceFloat: {Offset:  0, Find: 1.05, Replace: 1.05}
+  # - ReplaceFloat: {Offset:  8, Find: 1.07, Replace: 1.07}
+  # - ReplaceFloat: {Offset: 16, Find: 1.1,  Replace: 1.1}
+  # - ReplaceFloat: {Offset: 24, Find: 1.35, Replace: 1.15}
+  # - ReplaceFloat: {Offset: 32, Find: 1.7,  Replace: 1.2}
+  # - ReplaceFloat: {Offset: 40, Find: 1.8,  Replace: 1.25}
+  # - ReplaceFloat: {Offset: 48, Find: 2.2,  Replace: 1.3}
+  # - ReplaceFloat: {Offset: 56, Find: 2.4,  Replace: 1.35}
+  # - ReplaceFloat: {Offset: 64, Find: 2.6,  Replace: 1.4}
+  # - ReplaceFloat: {Offset: 72, Find: 2.8,  Replace: 1.5}
+  - ReplaceFloat: {Offset:  0, Find: 1.05, Replace: 1.15}
+  - ReplaceFloat: {Offset:  8, Find: 1.07, Replace: 1.2}
+  - ReplaceFloat: {Offset: 16, Find: 1.1,  Replace: 1.25}
+  - ReplaceFloat: {Offset: 24, Find: 1.35, Replace: 1.3}
+  - ReplaceFloat: {Offset: 32, Find: 1.7,  Replace: 1.35}
+  - ReplaceFloat: {Offset: 40, Find: 1.8,  Replace: 1.4}
+  - ReplaceFloat: {Offset: 48, Find: 2.2,  Replace: 1.45}
+  - ReplaceFloat: {Offset: 56, Find: 2.4,  Replace: 1.5}
+  - ReplaceFloat: {Offset: 64, Find: 2.6,  Replace: 1.6}
+  - ReplaceFloat: {Offset: 72, Find: 2.8,  Replace: 1.75}
     # The first 14 replace_float values above should allow the line spacing to be
     # adjusted in increments of one pixel when using a medium sized font on a high
     # resolution device. If you use a smaller font size and/or a lower resolution
@@ -157,15 +181,24 @@ Custom left & right margins:
       adjustment slider, as a percentage of screen width.
   - FindBaseAddressString: "\0\0\0\0\x02\0\0\0\x04\0\0\0\x06\0\0\0\x08\0\0\0\x0A\0\0\0\x0C\0\0\0\x0E\0\0\0\x10\0\0\0"
   # 9 values for replacement:
+  # - ReplaceInt: {Offset: 0x00, Find:  0, Replace: 0}
+  # - ReplaceInt: {Offset: 0x04, Find:  2, Replace: 1}
+  # - ReplaceInt: {Offset: 0x08, Find:  4, Replace: 2}
+  # - ReplaceInt: {Offset: 0x0C, Find:  6, Replace: 3}
+  # - ReplaceInt: {Offset: 0x10, Find:  8, Replace: 4}
+  # - ReplaceInt: {Offset: 0x14, Find: 10, Replace: 5}
+  # - ReplaceInt: {Offset: 0x18, Find: 12, Replace: 6}
+  # - ReplaceInt: {Offset: 0x1C, Find: 14, Replace: 7}
+  # - ReplaceInt: {Offset: 0x20, Find: 16, Replace: 8}
   - ReplaceInt: {Offset: 0x00, Find:  0, Replace: 0}
-  - ReplaceInt: {Offset: 0x04, Find:  2, Replace: 1}
-  - ReplaceInt: {Offset: 0x08, Find:  4, Replace: 2}
-  - ReplaceInt: {Offset: 0x0C, Find:  6, Replace: 3}
-  - ReplaceInt: {Offset: 0x10, Find:  8, Replace: 4}
-  - ReplaceInt: {Offset: 0x14, Find: 10, Replace: 5}
-  - ReplaceInt: {Offset: 0x18, Find: 12, Replace: 6}
-  - ReplaceInt: {Offset: 0x1C, Find: 14, Replace: 7}
-  - ReplaceInt: {Offset: 0x20, Find: 16, Replace: 8}
+  - ReplaceInt: {Offset: 0x04, Find:  2, Replace: 4}
+  - ReplaceInt: {Offset: 0x08, Find:  4, Replace: 8}
+  - ReplaceInt: {Offset: 0x0C, Find:  6, Replace: 9}
+  - ReplaceInt: {Offset: 0x10, Find:  8, Replace: 10}
+  - ReplaceInt: {Offset: 0x14, Find: 10, Replace: 11}
+  - ReplaceInt: {Offset: 0x18, Find: 12, Replace: 12}
+  - ReplaceInt: {Offset: 0x1C, Find: 14, Replace: 13}
+  - ReplaceInt: {Offset: 0x20, Find: 16, Replace: 14}
 
 Custom font sizes:
   - Enabled: no
@@ -299,29 +332,47 @@ Custom Sleep/Power-off timeouts:
       minutes to 10,20,30,60,120,240 minutes.
     # Values displayed on both menus
   - FindBaseAddressString: "5 mins\0"
-  - ReplaceString: {Offset:  0, Find: "5 mins\0", Replace: "10 mins"}
-  - ReplaceString: {Offset:  8, Find: "10 mins",  Replace: "20 mins"}
-  - ReplaceString: {Offset: 16, Find: "15 mins",  Replace: "30 mins"}
-  - ReplaceString: {Offset: 24, Find: "30 mins",  Replace: "1 hour"}
-  - ReplaceString: {Offset: 32, Find: "45 mins",  Replace: "2 hours"}
-  - ReplaceString: {Offset: 38, Find: "60 mins",  Replace: "4 hours"}
+  # - ReplaceString: {Offset:  0, Find: "5 mins\0", Replace: "10 mins"}
+  # - ReplaceString: {Offset:  8, Find: "10 mins",  Replace: "20 mins"}
+  # - ReplaceString: {Offset: 16, Find: "15 mins",  Replace: "30 mins"}
+  # - ReplaceString: {Offset: 24, Find: "30 mins",  Replace: "1 hour"}
+  # - ReplaceString: {Offset: 32, Find: "45 mins",  Replace: "2 hours"}
+  # - ReplaceString: {Offset: 38, Find: "60 mins",  Replace: "4 hours"}
+  - ReplaceString: {Offset:  0, Find: "5 mins\0", Replace: "1 mins"}
+  - ReplaceString: {Offset:  8, Find: "10 mins",  Replace: "2 mins"}
+  - ReplaceString: {Offset: 16, Find: "15 mins",  Replace: "3 mins"}
+  - ReplaceString: {Offset: 24, Find: "30 mins",  Replace: "5 mins"}
+  - ReplaceString: {Offset: 32, Find: "45 mins",  Replace: "10 mins"}
+  - ReplaceString: {Offset: 38, Find: "60 mins",  Replace: "15 mins"}
     # Replace values MOVed then added to the list in N3SettingsPowerView::initChoices:
     # Actual values used for sleep menu
   - BaseAddress: {Sym: "N3SettingsPowerView::initChoices()", Rel: 12}
-  - ReplaceInt:  {Offset:   0, Find: 5,  Replace:  10}
-  - ReplaceInt:  {Offset:  88, Find: 10, Replace:  20}
-  - ReplaceInt:  {Offset: 148, Find: 15, Replace:  30}
-  - ReplaceInt:  {Offset: 208, Find: 30, Replace:  60}
-  - ReplaceInt:  {Offset: 268, Find: 45, Replace: 120}
-  - ReplaceInt:  {Offset: 328, Find: 60, Replace: 240}
+  # - ReplaceInt:  {Offset:   0, Find: 5,  Replace:  10}
+  # - ReplaceInt:  {Offset:  88, Find: 10, Replace:  20}
+  # - ReplaceInt:  {Offset: 148, Find: 15, Replace:  30}
+  # - ReplaceInt:  {Offset: 208, Find: 30, Replace:  60}
+  # - ReplaceInt:  {Offset: 268, Find: 45, Replace: 120}
+  # - ReplaceInt:  {Offset: 328, Find: 60, Replace: 240}
+  - ReplaceInt:  {Offset:   0, Find: 5,  Replace:  1}
+  - ReplaceInt:  {Offset:  88, Find: 10, Replace:  2}
+  - ReplaceInt:  {Offset: 148, Find: 15, Replace:  3}
+  - ReplaceInt:  {Offset: 208, Find: 30, Replace:  5}
+  - ReplaceInt:  {Offset: 268, Find: 45, Replace: 10}
+  - ReplaceInt:  {Offset: 328, Find: 60, Replace: 15}
     # Actual values used for power menu
   - BaseAddress: {Sym: "N3SettingsPowerView::initChoices()", Rel: 466}
-  - ReplaceInt:  {Offset:   0, Find: 5,  Replace:  10}
-  - ReplaceInt:  {Offset:  60, Find: 10, Replace:  20}
-  - ReplaceInt:  {Offset: 118, Find: 15, Replace:  30}
-  - ReplaceInt:  {Offset: 176, Find: 30, Replace:  60}
-  - ReplaceInt:  {Offset: 234, Find: 45, Replace: 120}
-  - ReplaceInt:  {Offset: 290, Find: 60, Replace: 240}
+  # - ReplaceInt:  {Offset:   0, Find: 5,  Replace:  10}
+  # - ReplaceInt:  {Offset:  60, Find: 10, Replace:  20}
+  # - ReplaceInt:  {Offset: 118, Find: 15, Replace:  30}
+  # - ReplaceInt:  {Offset: 176, Find: 30, Replace:  60}
+  # - ReplaceInt:  {Offset: 234, Find: 45, Replace: 120}
+  # - ReplaceInt:  {Offset: 290, Find: 60, Replace: 240}
+  - ReplaceInt:  {Offset:   0, Find: 5,  Replace:  1}
+  - ReplaceInt:  {Offset:  60, Find: 10, Replace:  2}
+  - ReplaceInt:  {Offset: 118, Find: 15, Replace:  3}
+  - ReplaceInt:  {Offset: 176, Find: 30, Replace:  5}
+  - ReplaceInt:  {Offset: 234, Find: 45, Replace: 10}
+  - ReplaceInt:  {Offset: 290, Find: 60, Replace: 15}
 
 Set KePub hyphenation:
   - Enabled: no
