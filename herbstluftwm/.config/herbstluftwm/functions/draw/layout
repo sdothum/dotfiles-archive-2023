@@ -14,16 +14,15 @@ MASTER=${MASTER:-left}
 # menu order (0) standard layouts (1) split ratios
 ORDER=0
 
-[ $ORDER -eq 0 ] && 
-  layouts="grid\nhorizontal\nmax\nvertical\n1:1\n2:3\n1:2\n1:1:1\nspread" ||
-  layouts="1:1:1\n1:2\n2:3\n1:1\nspread\ngrid\nhorizontal\nmax\nvertical"
+[ $ORDER -eq 0 ] && layouts="grid\nhorizontal\nmax\nvertical\n1:1\n2:3\n1:2\n1:1:1\nspread" ||
+                    layouts="1:1:1\n1:2\n2:3\n1:1\nspread\ngrid\nhorizontal\nmax\nvertical"
 
 windows=$(herbstclient attr tags.focus.client_count)
 wcount=$(herbstclient attr tags.focus.curframe_wcount)
 # suppress error caused by no window in focus
 winid=$(herbstclient attr clients.focus.winid 2>/dev/null)
 
-# current layout
+# save current layout
 [ "$1" = '--' ] && shift || { [ -e $LAYOUT:$TAG ] && herbstclient dump >$LAYOUT:$TAG:$(cat $LAYOUT:$TAG); }
 
 # initial desktop layouts
@@ -54,8 +53,8 @@ layout() {
 
 # load tag ($1) with previous layout grid ($2)
 reload() {
-  echo $2 >$LAYOUT:$1
-  [ -e $LAYOUT:$1:$2 ] || return
+  echo $2 >$LAYOUT:$1             # set new layout grid for tag
+  [ -e $LAYOUT:$1:$2 ] || return  # first time?
   herbstclient chain . load "$(cat $LAYOUT:$1:$2)" . unlock
   exit
 }
@@ -96,7 +95,7 @@ shifty() {
 
 # otherwise, manually explode frame windows
 halves() {
-  reload $1 1:1
+  reload $1 halves
   if [ "$load" ] ;then
     herbstclient load $1 '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))'
   else
@@ -151,7 +150,7 @@ spread() {
 }
 
 thirds() {
-  reload $1 1:1:1
+  reload $1 thirds
   if [ "$load" ] || [ $windows -lt 3 ] ;then
     herbstclient load $1 '(split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)))'
     # herbstclient load $1 '(split horizontal:0.666600:0 (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)) (clients vertical:0))'
@@ -182,9 +181,8 @@ thirds() {
 }
 
 quarters() {
-  reload $1 1:1:1:1
+  reload $1 quarters
   # apply some loose window pre-positioning
-  draw layout thirds
   if [ "$load" ] || [ $windows -lt 4 ] ;then
     herbstclient load $1 '(split horizontal:0.750000:0 (split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))))'
   else
@@ -194,7 +192,7 @@ quarters() {
 
 # ....................................................................... Select
 
-default() { is display +1920 && echo '1:1:1' || is display +1440 && echo '1:1' || echo 'max'; }
+default() { is display +1920 && echo thirds || is display +1440 && echo halves || echo 'max'; }
 
 # restore default monitor margins
 [ $1 ] && [ -e $MONOCLE ] && toggle monocle
@@ -209,6 +207,7 @@ tags      ) for i in $TAGS ;do layout $i ;done
 1:2       |\
 1:3       |\
 1:1:1     |\
+1:1:1:1   |\
 spread    |\
 max       |\
 grid      |\
@@ -218,11 +217,12 @@ quarters  |\
 vertical  |\
 horizontal) layout=$1
             case $layout in
-            1:1   ) layout=halves    ;;
-            1:2   ) layout=one2two   ;;
-            1:3   ) layout=one2three ;;
-            2:3   ) layout=two2three ;;
-            1:1:1 ) layout=thirds    ;;
+            1:1    ) layout=halves    ;;
+            1:2    ) layout=one2two   ;;
+            1:3    ) layout=one2three ;;
+            2:3    ) layout=two2three ;;
+            1:1:1  ) layout=thirds    ;;
+            1:1:1:1) layout=quarters  ;;
             esac
             # may already be in lock state, see toggle monocle
             [ -e $LOCK ] || herbstclient lock
