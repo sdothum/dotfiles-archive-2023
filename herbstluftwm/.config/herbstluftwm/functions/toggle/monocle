@@ -19,11 +19,13 @@ fullscreen=$1
 # calculate pseudo golden ratio margins
 if is primary ;then
   restore tiled
-  tag=$(herbstclient attr monitors.focus.tag)
+  TAG=$(herbstclient attr monitors.focus.tag)
   if [ -e $MONOCLE ] ;then
     rm -f $MONOCLE
-    rm -f $MONOCLE:$tag
+    rm -f $MONOCLE:$TAG
   else
+    # current layout, see draw layout
+    [ -e $LAYOUT:$TAG ] && herbstclient dump >$LAYOUT:$TAG:$(cat $LAYOUT:$TAG)
     touch $MONOCLE
     set -- $(query display)
     # monocle margins only useful for large displays..
@@ -36,7 +38,7 @@ if is primary ;then
     # [ $1 -gt 2560 ] && D=3 || { [ $1 -gt 1440 ] && D=2 || D=16; }
     # echo "$(( ($1 - $2) / $D * 10 / 11 ))" >$MONOCLE
     echo $(( ($1 - $width) / 2 )) >$MONOCLE
-    cp $MONOCLE $MONOCLE:$tag
+    cp $MONOCLE $MONOCLE:$TAG
   fi
 
   winid=$(herbstclient attr clients.focus.winid)
@@ -65,18 +67,18 @@ if is primary ;then
     # allow toggling fullscreen (width) and monocle frame, else just max current window
     restore mono
     herbstclient chain . set_layout max . jumpto $winid
-    rm -f $FULLSCREEN:$tag
+    rm -f $FULLSCREEN:$TAG
   else
     # allow transitioning to full fullscreen, see draw monitor
     if ! is fullscreen ;then
       # restore mono
-      if [ -e $LAYOUT:$tag ] ;then
-        draw layout $(cat $LAYOUT:$tag)
+      if [ -e $LAYOUT:$TAG ] ;then
+        draw layout -- $(cat $LAYOUT:$TAG)
       # tag layouts shouldn't ever be undefined, but just in case..
       elif is multihead ;then
-        if   is display =3440 ;then draw layout 1:1:1
-        elif is display =2560 ;then draw layout 1:1
-        else                        draw layout grid
+        if   is display =3440 ;then draw layout -- 1:1:1
+        elif is display =2560 ;then draw layout -- 1:1  
+        else                        draw layout -- grid 
         fi
       fi
     fi

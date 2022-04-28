@@ -6,7 +6,8 @@
 
 # .................................................................. Draw layout
 
-# Usage: draw layout [tags | grid | horizontal | max | vertical | 1:1 | 2:3 | 1:2 | 1:1:1 | spread | default]
+# Usage: draw layout [--]** tags | grid | horizontal | max | vertical | 1:1 | 2:3 | 1:2 | 1:1:1 | spread | default
+# Note:  **suppress layout dump on restore *from* monocle, see toggle monocle
 
 # default master pane left or right
 MASTER=${MASTER:-left}
@@ -21,6 +22,9 @@ windows=$(herbstclient attr tags.focus.client_count)
 wcount=$(herbstclient attr tags.focus.curframe_wcount)
 # suppress error caused by no window in focus
 winid=$(herbstclient attr clients.focus.winid 2>/dev/null)
+
+# current layout
+[ "$1" = '--' ] && shift || { [ -e $LAYOUT:$TAG ] && herbstclient dump >$LAYOUT:$TAG:$(cat $LAYOUT:$TAG); }
 
 # initial desktop layouts
 layout() {
@@ -48,26 +52,34 @@ layout() {
   fi
 }
 
+# load tag ($1) with previous layout grid ($2)
+reload() {
+  echo $2 >$LAYOUT:$1
+  [ -e $LAYOUT:$1:$2 ] || return
+  herbstclient chain . load "$(cat $LAYOUT:$1:$2)" . unlock
+  exit
+}
+
 # ...................................................................... Layouts
 
 # grid, horizontal, max and vertical explode frame windows..
 grid() {
-  echo grid >$LAYOUT:$1
+  reload $1 grid
   herbstclient load $1 '(clients grid:0)'
 }
 
 horizontal() {
-  echo horizontal >$LAYOUT:$1
+  reload $1 horizontal
   herbstclient load $1 '(clients horizontal:0)'
 }
 
 max() {
-  echo max >$LAYOUT:$1
+  reload $1 max
   herbstclient load $1 '(clients max:0)'
 }
 
 vertical() {
-  echo vertical >$LAYOUT:$1
+  reload $1 vertical
   herbstclient load $1 '(clients vertical:0)'
 }
 
@@ -84,7 +96,7 @@ shifty() {
 
 # otherwise, manually explode frame windows
 halves() {
-  echo 1:1 >$LAYOUT:$1
+  reload $1 1:1
   if [ "$load" ] ;then
     herbstclient load $1 '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))'
   else
@@ -98,7 +110,7 @@ halves() {
 }
 
 one2two() {
-  echo 1:2 >$LAYOUT:$1
+  reload $1 1:2
   if [ "$load" ] || [ $windows -lt 3 ] ;then
     herbstclient load $1 '(split horizontal:0.333300:0 (clients vertical:0) (clients vertical:0))'
   else
@@ -108,7 +120,7 @@ one2two() {
 }
 
 one2three() {
-  echo 1:3 >$LAYOUT:$1
+  reload $1 1:3
   if [ "$load" ] || [ $windows -lt 3 ] ;then
     herbstclient load $1 '(split horizontal:0.250000:0 (clients vertical:0) (clients vertical:0))'
   else
@@ -118,7 +130,7 @@ one2three() {
 }
 
 two2three() {
-  echo 2:3 >$LAYOUT:$1
+  reload $1 2:3
   if [ "$load" ] || [ $windows -lt 3 ] ;then
     herbstclient load $1 '(split horizontal:0.400000:0 (clients vertical:0) (clients vertical:0))'
   else
@@ -128,7 +140,7 @@ two2three() {
 }
 
 spread() {
-  echo spread >$LAYOUT:$1
+  reload $1 spread
   if [ "$load" ] || [ $windows -lt 4 ] ;then
     herbstclient load $1 '(split horizontal:0.525000:0 (split horizontal:0.420000:0 (clients vertical:0) (clients vertical:0)) (clients vertical:0))'
   else
@@ -139,7 +151,7 @@ spread() {
 }
 
 thirds() {
-  echo 1:1:1 >$LAYOUT:$1
+  reload $1 1:1:1
   if [ "$load" ] || [ $windows -lt 3 ] ;then
     herbstclient load $1 '(split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)))'
     # herbstclient load $1 '(split horizontal:0.666600:0 (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)) (clients vertical:0))'
@@ -170,7 +182,7 @@ thirds() {
 }
 
 quarters() {
-  echo 1:1:1:1 >$LAYOUT:$1
+  reload $1 1:1:1:1
   # apply some loose window pre-positioning
   draw layout thirds
   if [ "$load" ] || [ $windows -lt 4 ] ;then
