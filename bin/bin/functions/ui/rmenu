@@ -43,7 +43,7 @@ hfg='#20bbfcFF'
 
 # leader left or right (prompt case Right, RIGHT, right)
 lead=Right
-leader='∿∿∿∿∿∿—'
+leader='—————— '
 indent='       '  # for fzf
 outdent='   '
 
@@ -96,9 +96,9 @@ else
 fi
 # convert prompt right to lower case
 [ $lead = left ] && prompt="${prompt}$leader   " || case $lead in
-  RIGHT) prompt="$leader   $(echo "$prompt" | uppercase)" ;;
-  right) prompt="$leader   $(echo "$prompt" | lowercase)" ;;
-  *    ) prompt="$leader   $(echo "$prompt" | sed -r 's/([^ ]*)/\u\1/g')" ;;
+  RIGHT) prompt="$leader $(echo "$prompt" | uppercase)" ;;
+  right) prompt="$leader $(echo "$prompt" | lowercase)" ;;
+  *    ) prompt="$leader $(echo "$prompt" | sed -r 's/([^ ]*)/\u\1/g')" ;;
   esac
 
 

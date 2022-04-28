@@ -7,7 +7,11 @@
 # ................................................. monolegible font adjustments
 # see make_install iosevka
 
-usage() { echo "usage: $(basename $0) q_hook | punctuation [<emdash>] | ligature [quasi-proportional] | bookweight [book+regular] | dyslexic [<space>]  [family]"; exit 1; }
+usage() { 
+  echo "usage: $(basename $0) q_hook | punctuation [<emdash>] | ligature [quasi-proportional] | bookweight [book+regular] | dyslexic [<space>]  [family]
+       $(basename $0) copy <family> <name>, font alias via commandline only"
+  exit 1
+}
 
 MAKE_INSTALL=/tmp/iosevka:make_install
 
@@ -90,9 +94,9 @@ ligature() {
   confirm 'add exploded double width ligatures'
   echo "
 Open(\$1);
-$(explode 0u00e6 0u0061 0u0065 0u00b7 $(( ${shape:-0} / 2 )) -70)
-$(explode 0u0152 0u004f 0u0045 0u00b7 $(( ${shape:-0} / 2 )) 40)
-$(explode 0u0153 0u006f 0u0065 0u00b7 $(( ${shape:-0} / 2 )) -70)
+$(explode 0u00e6 0u0061 0u0065 0u0335 $(( ${shape:-0} / 2 * 3 + 10 )) 0)
+$(explode 0u0152 0u004f 0u0045 0u0335 $(( ${shape:-0} / 2 * 3 + 10 )) 118)
+$(explode 0u0153 0u006f 0u0065 0u0335 $(( ${shape:-0} / 2 * 3 + 10 )) 0)
 $(explode 0u01fc 0u0041 0u0045 0u0301 $(( ${shape:-0} / 2 * 3 )) 200)
 $(explode 0u01fd 0u0061 0u0065 0u0301 $(( ${shape:-0} / 2 * 3 )) 0)
 Generate(\$1);
@@ -156,7 +160,7 @@ weight() {
     echo "
 $(regularweight 0u004d)
 $(regularweight 0u0057)
-$(regularweight 0u0077)
+$(reglarweight 0u0077)
 " >/tmp/fontforge.script
 
     echo
@@ -190,14 +194,38 @@ Generate(\$1);
   done
 }
 
+copy() {
+  confirm "copy $family to $alias"
+  rm -f $family*.ttx
+  rm -f $alias*.ttf
+
+  # dump to ttx
+  for i in $family*.ttf ;do
+    ditto ttx $i
+    ttx $i
+  done
+
+  # new alias
+  for i in $family*.ttx ;do
+    sed "s/$family/$alias/" $i >$alias${i#$family}
+  done
+
+  # generate new ttf
+  for i in $alias*.ttx ;do
+    ditto ttf $i
+    ttx $i
+  done
+}
+
 # main, see iosevka
 fforge=$1
 case $1 in
 q_hook     ) ;;
-ligature   ) [ $4 ] && { width=$2; shift 2; } || { shape=$2; shift; } ;;  # see iosevka for tricky bits
+ligature   ) [ $4 ] && { width=$2; shift 2; } || { shape=$2; shift; } ;;          # see iosevka for tricky bits
 punctuation) [ $2 ] && { emdash=$2; shift; } || emdash=2 ;;
 *weight    ) regular=${1%weight}; fforge=weight; [ "$2" = 'book+regular' ] && { adjust=true; shift; } ;;
 dyslexic   ) [ $2 ] && { space=$2; shift; } || space=2 ;;
+copy       ) [ $3 ] && { family=$2; alias=$3; shift 2; copy; exit; } || usage ;;  # commandline only!
 *          ) usage ;;
 esac
 shift
