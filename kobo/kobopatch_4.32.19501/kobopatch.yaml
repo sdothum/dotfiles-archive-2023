@@ -32,14 +32,14 @@ overrides:
 
   src/libnickel.so.1.0.0.yaml:
     My 10 line spacing values: no
-    My 24 line spacing values: no
-    Custom left & right margins: no
+    My 24 line spacing values: yes
+    Custom left & right margins: yes
     Custom font sizes: yes
     ePub fixed top/bottom margins: no
     ePub disable built-in body padding-bottom: no
     Custom kepub default margins: no
-    Block WiFi firmware upgrade: yes
-    Custom Sleep/Power-off timeouts: no
+    Block WiFi firmware upgrade: no
+    Custom Sleep/Power-off timeouts: yes
     Set KePub hyphenation: no
     Force user line spacing in KePubs: yes
     Force user line spacing in ePubs (part 1 of 2): yes
@@ -53,18 +53,18 @@ overrides:
     Custom navigation menu page number text: yes
     KePub stylesheet additions - text justify: no
     KePub stylesheet additions - optimizeSpeed: no
-    KePub stylesheet additions - optimizeLegibility: no
+    KePub stylesheet additions - optimizeLegibility: yes
     Shorten dictionary entry not found message: yes
     Change Wikipedia search language: no
-    Cyrillic Keyboard (GloHD/ClaraHD/AuraOne/H2O2):
-    Greek Keyboard (GloHD/ClaraHD/AuraOne/H2O2):
-    Bulgarian Phonetic Keyboard (GloHD/ClaraHD/AuraOne/H2O2/Forma/Libra):
+    Cyrillic Keyboard (GloHD/ClaraHD/AuraOne/H2O2): no
+    Greek Keyboard (GloHD/ClaraHD/AuraOne/H2O2): no
+    Bulgarian Phonetic Keyboard (GloHD/ClaraHD/AuraOne/H2O2/Forma/Libra): no
     Don't grab exclusive access to event0: no
     Both page turn buttons go next: yes
     Both page turn sides go next: no
     Increase page navigation history: no
     Replace adobe page numbers toggle with invert screen: no
-    Always show confirmation dialog before upgrading: no
+    Always show confirmation dialog before upgrading: yes
     Allow USB storage even when device locked: yes
     Hide browser from beta features: no
     Remove beta features not supported text: yes
