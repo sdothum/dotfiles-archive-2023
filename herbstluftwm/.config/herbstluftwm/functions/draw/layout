@@ -23,7 +23,8 @@ wcount=$(herbstclient attr tags.focus.curframe_wcount)
 winid=$(herbstclient attr clients.focus.winid 2>/dev/null)
 
 # save current layout
-[ "$1" = '--' ] && shift || { [ -e $LAYOUT:$TAG ] && herbstclient dump >$LAYOUT:$TAG:$(cat $LAYOUT:$TAG); }
+[ "$1" = '--' ] && shift || [ -e  $MONOCLE ] || 
+                   { [ -e $LAYOUT:$TAG ] && herbstclient dump >$LAYOUT:$TAG:$(cat $LAYOUT:$TAG); }
 
 # initial desktop layouts
 layout() {
@@ -195,7 +196,7 @@ quarters() {
 default() { is display +1920 && echo thirds || is display +1440 && echo halves || echo 'max'; }
 
 # restore default monitor margins
-[ $1 ] && [ -e $MONOCLE ] && toggle monocle
+[ $1 ] && [ -e  $MONOCLE ] && toggle monocle
 [ $1 ] && is fullscreen && toggle fullscreen
 
 case $1 in

@@ -62,7 +62,7 @@ done
 parentframe() { herbstclient attr clients.$i.parent_frame.$1 2>/dev/null || echo $2; }  # trap terminated client
 
 # find biggest frame to split (uses parent_frame in 0.9.5)
-if [ -z $1 ] && [ -s $DYNAMIC ] ;then
+if [ -z $1 ] && [ -s $DYNAMIC ] && [ ! -e $MONOCLE ] ;then
   >$FSPLIT
   for i in $(herbstclient list_clients); do 
     set -- $(parentframe content_geometry | sed 's/[-+].*//; s/x/ /')
