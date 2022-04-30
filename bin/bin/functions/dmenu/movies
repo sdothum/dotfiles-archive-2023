@@ -58,7 +58,7 @@ toggle() { [ $T ] && echo "\\\\\\n$(X $TOGGLE)"; }
 
 # move downloads to media folder
 catalogue() {
-  for i in $(find $nzb -maxdepth 2 -regex '.*\(mkv\|mp4\)') ;do
+  for i in $(find $nzb -maxdepth 3 -regex '.*\(mkv\|mp4\)') ;do
     mv ${i%/*} $library
   done
   unset movie
@@ -112,7 +112,7 @@ while : ;do
 
   movie=$(cat "$catlg" | sed "1i$(options)" | rmenu 'Movie' "$movie" -no-custom) || break
 
-  [ "$movie" = "$LAST" ] && movie=$(grep '[^ ]' $playlist | head -1)
+  [ "$movie" = "$(X $LAST)" ] && movie=$(grep '^[a-zA-Z0-9]' $playlist | head -1)
   case ${movie#$(X)} in
   "$NAME"     ) unset T; cache ;;
   "$DATE"     ) T=t; cache ;;
