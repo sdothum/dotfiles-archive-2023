@@ -29,11 +29,10 @@ expand() {
 
 # list of user scripts and functions
 script_history() { mhistory scripts "${file##*/}^$SEP $(echo ${file%/*} | sed "s,^stow/[^/]*/,,")"; }
+series()         { sed -r "s,(.*)/([^/]*)$,\2^$SEP \1," | sort | mhistory scripts | column -s^ -t | sed "2i$(X $REFRESH)"; }
 
 while : ;do
-  [ $file ] || file=1
-  file=$(files | sed -r "s,(.*)/([^/]*)$,\2^$SEP \1," | sort | mhistory scripts | column -s^ -t | sed "1i$(X $REFRESH)" | 
-      rmenu "Edit Script$error" $file) || exit
+  file=$(files | series | rmenu "Edit Script$error" $file) || exit
   if [ "${file#$(X)}" = "$REFRESH" ] ;then
     refresh=-
     unset file

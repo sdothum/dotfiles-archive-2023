@@ -15,12 +15,13 @@ INCLUDE='.*(cfg|conf(ig)*|ini|[^.][^s]rc)$'
 # search these project library folders..
 sources=$(cat $CONFIG/.configsrc | sed "s|\$HOME|$HOME|g; s/\$INCLUDE/$INCLUDE/")  # manual eval of $HOME
 
-files() { ffcache $refresh configs $sources | sed -r "s,^$HOME,~,; s,(.*)/([^/]*)$,\2^$SEP \1,"; unset refresh; }
+files()   { ffcache $refresh configs $sources | sed -r "s,^$HOME,~,; s,(.*)/([^/]*)$,\2^$SEP \1,"; unset refresh; }
+configs() { column -s^ -t | sed "2i$(X $REFRESH)"; }
 
 # .................................................................. Edit config
 
 while : ;do
-  file=$(files | mhistory configs | column -s^ -t | sed "1i$(X $REFRESH)" | rmenu 'Edit Config' -no-custom) || exit
+  file=$(files | mhistory configs | configs | rmenu 'Edit Config' -no-custom) || exit
 
   [ "${file#$(X)}" = "$REFRESH" ] && { refresh=-; unset file; continue; }
   mhistory configs "$(echo $file | sed "s/ *$SEP/^$SEP/")"

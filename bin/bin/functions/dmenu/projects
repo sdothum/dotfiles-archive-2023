@@ -16,9 +16,9 @@ EDIT='edit tags'
 PROJECTS=$CONFIG/.projectsrc
 history=$HISTORY/projects
 
-projects() { sed "s/  *::  */^$SEP /" $PROJECTS | mhistory projects | column -s^ -t | sed "1i$(X $EDIT)"; }
+projects() { sed "s/  *::  */^$SEP /" $PROJECTS | mhistory projects | column -s^ -t | sed "2i$(X $EDIT)"; }
 
-while files=$(projects | rmenu 'Edit Project' 1 -no-custom) || exit ;do
+while files=$(projects | rmenu 'Edit Project' -no-custom) || exit ;do
   case ${files#$(X)} in
   "$EDIT") gvim -f $PROJECTS $history ;;
 
