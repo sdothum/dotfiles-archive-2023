@@ -7,8 +7,8 @@
 
 usage() { 
   echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [family <name>]
-                            [D-serifless | I-serifless | Q-detached | a-single | b-rounded | d-tailed | f-extended | p-eared | p-serifed | q-hook | at-tall | 0-split | paren-flat | book+regular]*
-                            [-- <opions>*]"
+                            [D-serifless | I-serifless | Q-detached | a-single | b-rounded | d-tailed | f-extended | p-eared | p-serifed | q-hook | at-tall | 0-split | paren-flat | cap <parm> | book+regular]*
+                            [[version 10x | 15x] -- <opions>*]"
   exit 1
 }
 
@@ -17,6 +17,7 @@ usage() {
 #        make_install iosevka kobo a-single f-extended I-serifless family aFont  # custom e-ink font
 #        make_install iosevka I-serifless f-extended at-tall                     # custom desktop fonts
 #        make_install iosevka -- I-serifless family forCoding                    # single custom font, see font/iosevka
+#        make_install iosevka version 10x -- dyslexic kobo english I-serifless f-extended q-hook cap extended family Grotesk  # single custom ebook font with extended cap height
 
 MAKE_INSTALL=/tmp/iosevka:make_install
 SRCDIR=$HOME/bin/functions/font
@@ -28,6 +29,13 @@ trap "rm -f $MAKE_INSTALL" EXIT
 shift
 
 glyph() { unset b d p; eval $1=$2; GLYPH=$2; }
+
+version() {
+  [ -L $SRCDIR/iosevka ] && rm -f $SRCDIR/iosevka
+  [ -L $DEPOT/Iosevka ]  && rm -f $DEPOT/Iosevka
+  ln -s $SRCDIR/iosevka.$1 $SRCDIR/iosevka || usage
+  ln -s $DEPOT/Iosevka.$1  $DEPOT/Iosevka  || usage
+}
 
 while [ $1 ] ;do
   case $1 in
@@ -45,12 +53,14 @@ while [ $1 ] ;do
   0-split     ) zero=0-split ;;
   paren-flat  ) paren=paren-flat ;;                 # source code variant
   book+regular) adjust=book+regular ;;
+  cap         ) [ $2 ] && { cap="$1 $2"; shift; } || usage ;;
   source-only ) source_only=true ;;
   kindle      ) ereader=$1; adjust=book+regular ;;  # add regular/book weight blending (for small fonts on Kindle)
   kobo        ) ereader=$1; q=q-hook ;;
   family      ) [ $ereader ] && [ $2 ] && { family=$2; shift; } || usage ;;
   ebook       ) ebook=true ;;
   web         ) web=true ;;
+  version     ) [ $2 ] && { version $2; shift; } || usage ;;
   --          ) shift; . $HOME/bin/functions/font/iosevka $@; exit ;;
   *           ) usage ;;
   esac
@@ -65,6 +75,10 @@ update() {
   cd $HOME/.fonts/$2
 
   for i in $fonts ;do
+    # supplementary glyphs (as uncovered from ebooks)
+    fforge map $i 2e22 300c  # add corner bracket punctuation
+    fforge map $i 2e25 300d
+    # e-reader font folders
     file=$i.ttf
     folder=$STOW/$ereader/fonts/$1
     mkdir -p $folder
@@ -72,7 +86,7 @@ update() {
   done
 }
 
-options() { echo $@ $D $I $Q $a $b $d $f $p $q $zero; }  # list
+options() { echo $@ $D $I $Q $a $b $d $f $p $q $zero $cap; }  # list
 
 # family [options]*
 e_ink() {
@@ -85,14 +99,6 @@ e_ink() {
 dfont() { iosevka expanded            $(options $@) q-hook $at $paren; }
 wfont() { iosevka english I-serifless $(options $@) q-hook; }
 efont() { iosevka english             $(options $@) q-hook $adjust; }
-
-version() {
-  ln -s $SRCDIR/iosevka.$1 $SRCDIR/iosevka || exit
-  ln -s $DEPOT/Iosevka.$1  $DEPOT/Iosevka  || exit
-}
-
-[ -L $SRCDIR/iosevka ] && rm -f $SRCDIR/iosevka
-[ -L $DEPOT/Iosevka ] && rm -f $DEPOT/Iosevka
 
 if [ $family ] ;then
   version 10x
@@ -108,6 +114,7 @@ elif [ $ereader ] ;then
   e_ink Unolexic    f-extended I-serifless
   e_ink ielementary a-single
   e_ink elementary  a-single   I-serifless
+  [ "$cap" ] || e_ink Grotesk  I-serifless f-extended cap extended
 
 elif [ $ebook ] ;then
   version 10x
@@ -123,7 +130,7 @@ elif [ $web ] ;then
   version 10x
   # www fonts
   wfont heading  kobo webfont
-  wfont dyslexic kobo webfont
+  wfont dyslexic kobo f-extended cap 1.045 webfont
   wfont dyslexic quasi-proportional space 1.25 kobo webfont
 
 else
