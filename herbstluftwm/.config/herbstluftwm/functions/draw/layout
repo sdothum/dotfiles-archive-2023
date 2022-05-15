@@ -23,8 +23,7 @@ wcount=$(herbstclient attr tags.focus.curframe_wcount)
 winid=$(herbstclient attr clients.focus.winid 2>/dev/null)
 
 # save current layout
-[ "$1" = '--' ] && shift || [ -e  $MONOCLE ] || 
-                   { [ -e $LAYOUT:$TAG ] && herbstclient dump >$LAYOUT:$TAG:$(cat $LAYOUT:$TAG); }
+[ "$1" = '--' ] && shift || [ -e  $MONOCLE ] || { [ -e $LAYOUT:$TAG ] && herbstclient dump >$LAYOUT:$TAG:$(cat $LAYOUT:$TAG); }  # see reload
 
 # initial desktop layouts
 layout() {
