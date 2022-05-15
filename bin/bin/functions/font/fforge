@@ -9,11 +9,13 @@
 
 usage() { 
   echo "usage: $(basename $0) q_hook | punctuation [<emdash>] | ligature [quasi-proportional] | bookweight [book+regular] | dyslexic [<space>]  [family]
-       $(basename $0) copy <family> <name>, font alias via commandline only"
+       $(basename $0) copy <family> <name>, font alias via commandline only
+       $(basename $0) map  <family> <glyph> <glyph>, map U+<glyph> via commandline only"
   exit 1
 }
 
 MAKE_INSTALL=/tmp/iosevka:make_install
+REPO=/net/depot/Iosevka
 
 confirm() { [ -e $MAKE_INSTALL ] && ditto make_install "$1" || { ifyes "$1" || exit; }; }
 percent() { echo "$1 * 100" | bc | cut -d. -f1; }
@@ -92,12 +94,13 @@ ChangeWeight(-15);
 
 ligature() {
   confirm 'add exploded double width ligatures'
+  grep -q '^cap =' $REPO/private-build-plans.toml && adjust=21 || adjust=0  # cap extended adjustment
   echo "
 Open(\$1);
 $(explode 0u00e6 0u0061 0u0065 0u0335 $(( ${shape:-0} / 2 * 3 + 10 )) 0)
-$(explode 0u0152 0u004f 0u0045 0u0335 $(( ${shape:-0} / 2 * 3 + 10 )) 118)
+$(explode 0u0152 0u004f 0u0045 0u0335 $(( ${shape:-0} / 2 * 3 + 10 )) $(( 118 + $adjust )) )
 $(explode 0u0153 0u006f 0u0065 0u0335 $(( ${shape:-0} / 2 * 3 + 10 )) 0)
-$(explode 0u01fc 0u0041 0u0045 0u0301 $(( ${shape:-0} / 2 * 3 )) 200)
+$(explode 0u01fc 0u0041 0u0045 0u0301 $(( ${shape:-0} / 2 * 3 )) $(( 208 + $adjust )) )
 $(explode 0u01fd 0u0061 0u0065 0u0301 $(( ${shape:-0} / 2 * 3 )) 0)
 Generate(\$1);
 " >/tmp/fontforge.script
@@ -217,15 +220,34 @@ copy() {
   done
 }
 
+# map glyph
+map() {
+  confirm "map $from to $to"
+  echo "
+Open(\$1);
+Select(0u$from);
+Copy();
+Select(0u$to);
+Paste();
+Generate(\$1);
+" >/tmp/fontforge.script
+
+  for i in $family.ttf ;do
+    ditto map $i
+    fontforge --script /tmp/fontforge.script $i
+  done
+}
+
 # main, see iosevka
 fforge=$1
 case $1 in
 q_hook     ) ;;
-ligature   ) [ $4 ] && { width=$2; shift 2; } || { shape=$2; shift; } ;;          # see iosevka for tricky bits
+ligature   ) [ $4 ] && { width=$2; shift 2; } || { shape=$2; shift; } ;;               # see iosevka for tricky bits
 punctuation) [ $2 ] && { emdash=$2; shift; } || emdash=2 ;;
 *weight    ) regular=${1%weight}; fforge=weight; [ "$2" = 'book+regular' ] && { adjust=true; shift; } ;;
 dyslexic   ) [ $2 ] && { space=$2; shift; } || space=2 ;;
-copy       ) [ $3 ] && { family=$2; alias=$3; shift 2; copy; exit; } || usage ;;  # commandline only!
+copy       ) [ $3 ] && { family=$2; alias=$3; shift 2; copy; exit; }      || usage ;;  # pwd commandline only!
+map        ) [ $4 ] && { family=$2; from=$3; to=$4; shift 3; map; exit; } || usage ;;  # pwd commandline only!
 *          ) usage ;;
 esac
 shift

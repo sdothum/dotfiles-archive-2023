@@ -8,7 +8,7 @@
 
 # ......................................................................... Date
 
-day() { [ $(date '+%p') = AM ] && cat || tr '[:lower:]' '[:upper:]'; }  # (AM) Day (PM) DAY
+day() { [ $(date '+%p') = PM ] && cat || tr '[:upper:]' '[:lower:]'; }  # (AM) day (PM) Day
 
 # common date string for consistent script logging
 ditto $(date "+%a" | day) "${__TURQUOISE}$(date "+%-I %M'%S\"")"

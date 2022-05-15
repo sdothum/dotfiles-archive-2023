@@ -28,10 +28,10 @@ usage() {
                [english | ligature <name>]
                [double] [quasi-proportional] [space <decimal>] [ emdash <decimal> ]
                [grotesque (default) | atkinson | geometric | jost]
-               [a-single | b-corner | D-serifless | d-tailed | f-extended | G-toothed | I-serifless | j-serifed | p-eared | Q-detached | Q-crossing | q-hook | q-tailed | at-tall | 0-split | paren-flat]*
+               [a-single | b-corner | D-serifless | d-tailed | f-extended | G-toothed | I-serifless | j-serifed | p-eared | p-serifed | Q-detached | Q-crossing | q-hook | q-tailed | at-tall | 0-split | paren-flat]*
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
                [family <name> | <prefix>Monolexic]
-               [cap [-+]<decimal>]
+               [cap [-+]<decimal> | extended]
                [noround | sb <decimal>]
                [shape <emu>]
                [weight <integer> <name> | webfont]
@@ -46,9 +46,10 @@ usage() {
 REPO=/net/depot/Iosevka
 MAKE_INSTALL=/tmp/iosevka:make_install
 
-leading=1.25  # default coding line spacing
-extended=576  # extended regular shape (slightly tighter than Iosevka defaults)
-expanded=600  # maximum terminal source code and proof legibility
+leading=1.25       # default coding line spacing
+extended=576       # extended regular shape (slightly tighter than Iosevka defaults)
+expanded=600       # maximum terminal source code and proof legibility
+capextended=1.055  # default geometric cap height
 
 symbols() {
   ampersand=upper-open
@@ -175,7 +176,7 @@ shape()   { shape="shape = $(integer $1)"; }
 # metric overrides
 leading() { leading="leading = 'default_leading * $(real $1)'"; }
 sb()      { sb="sb = 'default_sb * $(real $1)'"; }
-cap()     { cap="cap = 'default_cap * $(real $1)'" && ditto override "$cap"; }
+cap()     { [ $1 = extended ] && unset cap || cap=$1; cap="cap = 'default_cap * $(real ${cap:-$capextended})'" && ditto override "$cap"; }
 xheight() { xheight="xheight = 'default_xheight * $(real $1)'" && ditto override "$xheight"; }
 
 weight() {
@@ -186,7 +187,7 @@ weight() {
 
 # e-reading only fontset
 # english() { exclude_chars='ranges = [[592, 687], [1024, 8191], [8304, 8351], [8400, 8447], [8528, 8703], [8960, 9631], [9728, 130041]]'; }  # prune unnecessary unicode sets
-english()  { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 566], [568, 586], [588, 709], [712, 712], [714, 727], [734, 768], [770, 805], [807, 820], [822, 915], [917, 936], [938, 955], [957, 959], [961, 7807], [7814, 7921], [7924, 8210], [8213, 8215], [8219, 8219], [8223, 8223], [8228, 8229], [8231, 8239], [8241, 8248], [8251, 8259], [8261, 8363], [8365, 8452], [8454, 8466], [8468, 8469], [8471, 8481], [8483, 8485], [8487, 8493], [8495, 8530], [8533, 8538], [8543, 8705], [8707, 8709], [8711, 8718], [8720, 8720], [8723, 8724], [8726, 8728], [8731, 8733], [8735, 8746], [8748, 8775], [8777, 8799], [8801, 8803], [8806, 9412], [9414, 9673], [9675, 64255], [64261, 130041]]'; }  # [8826, 8827, 8880, 8881] not excluded (?)
+english()  { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 566], [568, 586], [588, 709], [712, 712], [714, 727], [734, 768], [770, 805], [807, 820], [822, 915], [917, 936], [938, 955], [957, 959], [961, 7807], [7814, 7921], [7924, 8210], [8213, 8215], [8219, 8219], [8223, 8223], [8228, 8229], [8231, 8239], [8241, 8248], [8251, 8259], [8261, 8363], [8365, 8452], [8454, 8466], [8468, 8469], [8471, 8481], [8483, 8485], [8487, 8493], [8495, 8530], [8533, 8538], [8543, 8705], [8707, 8709], [8711, 8718], [8720, 8720], [8723, 8724], [8726, 8728], [8731, 8733], [8735, 8746], [8748, 8775], [8777, 8799], [8801, 8803], [8806, 9412], [9414, 9673], [9675, 11809], [11811, 11812], [11814, 64255], [64261, 130041]]'; }  # [8826, 8827, 8880, 8881] not excluded (?)
 
 family()   { [ $1 ] || return 1; family=$1; }
 space()    { space=$(real $1); }
@@ -223,12 +224,13 @@ while [ $1 ] ;do
   a-single    ) variant a-single ;;
   b-corner    ) variant b-corner p-serifed ;;         # alternate b p dyslexic glyphs
   D-serifless ) variant D-serifless ;;
-  d-tailed    ) variant b-corner d-tailed p-eared ;;        # alternate b d p dyslexic glyphs
-  f-extended  ) variant f-extended ;;             # unolexic (homage to universal grotesk)
+  d-tailed    ) variant b-corner d-tailed p-eared ;;  # alternate b d p dyslexic glyphs
+  f-extended  ) variant f-extended ;;                 # unolexic (homage to universal grotesk)
   G-toothed   ) variant G-toothed ;;
-  I-serifless ) variant I-serifless; initial ;;  # combined minimal stroke glyphs
+  I-serifless ) variant I-serifless; initial ;;       # combined minimal stroke glyphs
   j-serifed   ) variant j-serifed ;;
   p-eared     ) variant d-corner p-eared ;;
+  p-serifed   ) variant p-serifed; sb 0.7650 ;;       # add air for serif corner
   Q-crossing  ) variant Q-crossing ;;
   Q-detached  ) variant Q-detached ;;
   q-hook      ) variant 'q=HOOK-TAILED'; q_hook=true ;;
@@ -238,8 +240,8 @@ while [ $1 ] ;do
   paren-flat  ) variant paren ;;
   grotesque   ) grotesque ;;
   atkinson    ) grotesque; ebook hyperlegible; variant b-toothed G-toothed J-serifless p-eared Q-crossing q-tailed u-toothed ampersand at number_sign percent ;;
-  geometric   ) geometric; cap 1.225; build=-jost ;;
-  jost        ) geometric; cap 1.225; build=-jost; variant a-single J-serifless Q-crossing u-toothed ampersand at dollar number_sign percent question ;;
+  geometric   ) geometric; cap extended; build=-jost ;;
+  jost        ) geometric; cap extended; build=-jost; variant a-single J-serifless Q-crossing u-toothed ampersand at dollar number_sign percent question ;;
   family      ) family $2    || usage; shift ;;
   *Monolexic  ) initial ${1%Monolexic} ;;
   # font tweaks
