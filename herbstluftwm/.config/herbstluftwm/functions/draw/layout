@@ -37,12 +37,12 @@ layout() {
 
 # save current layout
 [ "$1" = '--' ] && shift || [ -e $MONOCLE ] ||
-  # for when workflow actions manage to thwart dump history
+  # for when manual frame manipulations bypass layout dump history
   if [ -e $LAYOUT:$TAG ] && [ -e $LAYOUT:$TAG:$(layout $1) ] && [ $(cat $LAYOUT:$TAG) = $(layout $1) ] ;then  # double tap re-initializaton
     rm $LAYOUT:$TAG
     rm $LAYOUT:$TAG:$(layout $1)
   else
-    herbstclient dump >$LAYOUT:$TAG:$(cat $LAYOUT:$TAG)  # store previous layout, see reload
+    herbstclient dump >$LAYOUT:$TAG:$(cat $LAYOUT:$TAG)  # store current layout, see reload
   fi
 
 # initial desktop layouts
