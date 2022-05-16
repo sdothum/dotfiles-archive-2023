@@ -4,7 +4,7 @@
 # herbstluftwm
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ......................................................... BEAKL Zi Keybindings
+# ......................................................... BEAKL Wi Keybindings
 
 BEAKL=$SESSION/beakl
 
@@ -14,7 +14,7 @@ if [ -e $BEAKL ] ;then
     DOWN=t
     UP=d
     RIGHT=s
-  else  # beaklzi
+  else  # beaklwi
     LEFT=t
     DOWN=r
     UP=n
