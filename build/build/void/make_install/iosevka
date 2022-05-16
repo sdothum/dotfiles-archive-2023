@@ -40,22 +40,22 @@ version() {
 while [ $1 ] ;do
   case $1 in
   D-serifless ) D=D-serifless ;;
-  I-serifless ) I=I-serifless ;;                    # source code variant
+  I-serifless ) I=I-serifless ;;               # source code variant
   Q-detached  ) Q=Q-detached ;;
   a-single    ) a=a-single ;;
-  b-rounded   ) glyph b b-rounded ;;                # unolexic
-  d-tailed    ) glyph d d-tailed ;;                 # ebook variant
-  f-extended  ) f=f-extended ;;                     # unolexic (homage to universal grotesk)
+  b-rounded   ) glyph b b-rounded ;;           # unolexic
+  d-tailed    ) glyph d d-tailed ;;            # ebook variant
+  f-extended  ) f=f-extended ;;                # unolexic (homage to universal grotesk)
   p-eared     ) glyph p p-eared ;;
   p-serifed   ) glyph p p-serifed ;;
-  q-hook      ) q=q-hook ;;                         # ebook variant
-  at-tall     ) at=at-tall ;;                       # source code variant
+  q-hook      ) q=q-hook ;;                    # ebook variant
+  at-tall     ) at=at-tall ;;                  # source code variant
   0-split     ) zero=0-split ;;
-  paren-flat  ) paren=paren-flat ;;                 # source code variant
+  paren-flat  ) paren=paren-flat ;;            # source code variant
   book+regular) adjust=book+regular ;;
   cap         ) [ $2 ] && { cap="$1 $2"; shift; } || usage ;;
   source-only ) source_only=true ;;
-  kindle      ) ereader=$1; adjust=book+regular ;;  # add regular/book weight blending (for small fonts on Kindle)
+  kindle      ) ereader=$1; sb='sb 0.6150' ;;  # side bearing difference to kobo's font rendering
   kobo        ) ereader=$1; q=q-hook ;;
   family      ) [ $ereader ] && [ $2 ] && { family=$2; shift; } || usage ;;
   ebook       ) ebook=true ;;
@@ -86,13 +86,13 @@ update() {
   done
 }
 
-options() { echo $@ $D $I $Q $a $b $d $f $p $q $zero $cap; }  # list
+options() { echo $@ $D $I $Q $a $b $d $f $p $q $zero; }  # list
 
 # family [options]*
 e_ink() {
   name=$1
   shift
-  iosevka dyslexic $ereader english $(options $@) $adjust family $name
+  iosevka dyslexic $ereader english $(options $@) $adjust $cap $sb family $name
   update $GLYPH $name
 }
 
@@ -114,7 +114,7 @@ elif [ $ereader ] ;then
   e_ink Unolexic    f-extended I-serifless
   e_ink ielementary a-single
   e_ink elementary  a-single   I-serifless
-  [ "$cap" ] || e_ink Grotesk  I-serifless f-extended cap extended
+  e_ink Grotesk     f-extended I-serifless cap extended
 
 elif [ $ebook ] ;then
   version 10x
