@@ -54,7 +54,8 @@ cache() {
   unset movie
 }
 
-toggle() { [ $T ] && echo "\\\\\\n$(X $TOGGLE)"; }
+toggle()   { [ $T ] && echo "\\\\\\n$(X $TOGGLE)"; }
+uncatlgd() {  [ $(find $nzb -maxdepth 1 -type d | wc -l) -gt 1 ]; }
 
 # move downloads to media folder
 catalogue() {
@@ -73,7 +74,7 @@ fi
 [ $cache ] && exit
 
 options() {
-  [ $(find $nzb -maxdepth 1 -type d | wc -l) -gt 1 ] && edit="\\\\\\n$(X $FILE)\\\\\\n$(X $CATALOGUE)" || unset edit
+  uncatlgd && edit="\\\\\\n$(X $FILE)\\\\\\n$(X $CATALOGUE)" || unset edit
   grep -q '[^ ]' "$playlist" && echo "$(X $LAST)\\\n$(X $USENET)\\\n$(X $(sortlist $T))$(toggle)$edit" || echo "$(X $(sortlist $T))$(toggle)$edit"
 }
 
@@ -110,6 +111,7 @@ while : ;do
   # focus monitor menu originally presented on
   [ $monitor ] && herbstclient focus_monitor $monitor
 
+  uncatlgd && movie=5  # highlight update catalogue
   movie=$(cat "$catlg" | sed "1i$(options)" | rmenu 'Movie' "$movie" -no-custom) || break
 
   [ "$movie" = "$(X $LAST)" ] && movie=$(grep '^[a-zA-Z0-9]' $playlist | head -1)
@@ -119,7 +121,7 @@ while : ;do
   "$TOGGLE"   ) [ $R ] && unset R || R=r; cache ;;
   "$USENET"   ) nzbgeek; unset movie ;;
   "$FILE"     ) killall 'ROX-Filer'; rox $nzb; rox "$library"; pwait "ROX-Filer"; cache ;;
-  "$CATALOGUE") catalogue; cache; continue ;;
+  "$CATALOGUE") catalogue; cache; movie=4; continue ;;  # highlight added movie
   *           ) movie=$(echo "$movie" | sed "s/^$SEP //"); playback ;;
   esac
 done
