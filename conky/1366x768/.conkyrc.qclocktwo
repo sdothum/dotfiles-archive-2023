@@ -1,4 +1,4 @@
--- conky.config = {
+conky.config = {
 	alignment = 'top_left',
 	color1 = '#2d2d2d',
 	default_color = '#ffffff',
