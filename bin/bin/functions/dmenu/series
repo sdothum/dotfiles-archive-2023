@@ -71,7 +71,7 @@ episodes() { find -maxdepth 1 -regex '.*S[0-9][0-9]E[0-9][0-9].*'; }
 catalogue() {
   for i in $(episodes) ;do
     series=$(echo $i | sed 's/\.S[0-9][0-9]E[0-9][0-9].*//; s/\.[0-9][0-9][0-9][0-9]$//')
-    [ -d $series ] || mkdir $series
+    [ -d $series ] || mkdir $series  # nzbget puts *all* series (including anime) into series directory, hence, link to anime directory
     mv $i $series
   done
   unset show
