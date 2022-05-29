@@ -7,7 +7,7 @@
 
 usage() { 
   echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [family <name>]
-                            [D-serifless | I-serifless | Q-detached | Q-hook | a-single | b-rounded | d-tailed | f-extended | p-eared | p-serifed | q-hook | at-tall | 0-split | paren-flat | cap <parm> | book+regular | english+greek]*
+                            [D-serifless | I-serifless | Q-detached | Q-hook | a-single | b-rounded | d-tailed | f-extended | p-eared | p-serifed | q-hook | at-tall | 0-split | paren-flat | cap <parm> | space <parm> | book+regular | english+greek]*
                             [[version 10x | 15x] -- <opions>*]"
   exit 1
 }
@@ -56,6 +56,7 @@ while [ $1 ] ;do
   book+regular ) adjust=book+regular ;;
   english+greek) english=english+greek ;;
   cap          ) [ $2 ] && { cap="$1 $2"; shift; } || usage ;;
+  space        ) [ $2 ] && { space="$1 $2"; shift; } || usage ;;
   source-only  ) source_only=true ;;
   kindle       ) ereader=$1; sb='sb 0.6150' ;;  # side bearing difference to kobo's font rendering
   kobo         ) ereader=$1; q=q-hook ;;
@@ -94,7 +95,7 @@ options() { echo $@ $D $I $Q $a $b $d $f $p $q $zero; }  # list
 e_ink() {
   name=$1
   shift
-  iosevka dyslexic $ereader ${english:-english} $(options $@) $adjust $cap $sb family $name
+  iosevka dyslexic $ereader ${english:-english} $(options $@) $adjust $cap $sb $space family $name
   update $GLYPH $name
 }
 
