@@ -34,11 +34,11 @@ cd $library
 # exclude directory kludge of .anime links in main series folder
 permissions() {
   if server || $usb ;then
-    find "$library" -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chmod -R 755 {} \; 2>/dev/null
-    find "$library" -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chown -R shum:users {} \; 2>/dev/null
+    find "$library" -maxdepth 2 -type d  -user sonarr -exec sudo chmod -R 755 {} \; 2>/dev/null
+    find "$library" -maxdepth 2 -type d  -user sonarr -exec sudo chown -R shum:users {} \; 2>/dev/null
   else
-    ssh $SERVER "find '$library' -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chmod -R 755 {} \\;"
-    ssh $SERVER "find '$library' -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chown -R shum:users {} \\;"
+    ssh $SERVER "find '$library' -maxdepth 2 -type d  -user sonarr -exec sudo chmod -R 755 {} \\;"
+    ssh $SERVER "find '$library' -maxdepth 2 -type d  -user sonarr -exec sudo chown -R shum:users {} \\;"
   fi
   find "$library" -name '*sample*' -exec rm {} \;
 }
@@ -59,9 +59,10 @@ T=t
 cache() {
   # stest -qr -n $catlg $(find "$library" -maxdepth 2 -type d) || return
   notify low 'Series' 'Caching library..'
+  rm -f $catlg
   [ -e $preprocess ] && . $preprocess  # special title format clean up
   retitle "$library" >>$retitle
-  ls -1$T "$library" | grep -v ' ' | sed 's/\./ /g' >$catlg
+  for i in $(ls -1$T "$library" | grep -v ' ') ;do [ -L $i ] || echo $i | sed 's/\./ /g' >>$catlg; done
 }
 
 episodes() { find -maxdepth 1 -regex '.*S[0-9][0-9]E[0-9][0-9].*'; }
