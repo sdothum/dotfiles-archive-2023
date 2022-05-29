@@ -126,11 +126,11 @@ abbr dp 'dmenu - projects'
 abbr dr 'dmenu - run'
 abbr ds 'dmenu - scripts'
 abbr nv 'nvpy'
-abbr vd 'gvim -d --role=gvimdiff'
+abbr vd 'v -d --role=gvimdiff'
 abbr sd 'sdiff -b -E -W -w(tput cols)'
 abbr vdarchive 'dirdiff ./ /net/archive(pwd)'
 abbr vdbackup 'dirdiff ./ /net/backup(pwd)'
-abbr vsh "gvim $HOME/.local/share/fish/fish_history"
+abbr vsh "v $HOME/.local/share/fish/fish_history"
 
 # ........................................................................ Regex
 
