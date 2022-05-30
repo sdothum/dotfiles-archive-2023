@@ -7,7 +7,7 @@
 
 usage() { 
   echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [family <name>]
-                            [D-serifless | I-serifless | Q-detached | Q-hook | a-single | b-rounded | d-tailed | f-extended | p-eared | p-serifed | q-hook | at-tall | 0-split | paren-flat | cap <parm> | space <parm> | book+regular | english+greek]*
+                            [D-serifless | I-serifless | Q-detached | Q-hook | a-single | b-rounded | d-tailed | f-extended | p-eared | p-serifed | q-hook | at-tall | 0-split | paren-flat | cap <parm> | space <parm> | book+regular | latin+greek]*
                             [[version 10x | 15x] -- <opions>*]"
   exit 1
 }
@@ -39,33 +39,33 @@ version() {
 
 while [ $1 ] ;do
   case $1 in
-  D-serifless  ) D=D-serifless ;;
-  I-serifless  ) I=I-serifless ;;               # source code variant
-  Q-detached   ) Q=Q-detached ;;
-  Q-hook       ) Q=Q-hook ;;
-  a-single     ) a=a-single ;;
-  b-rounded    ) glyph b b-rounded ;;           # unolexic
-  d-tailed     ) glyph d d-tailed ;;            # ebook variant
-  f-extended   ) f=f-extended ;;                # unolexic (homage to universal grotesk)
-  p-eared      ) glyph p p-eared ;;
-  p-serifed    ) glyph p p-serifed ;;
-  q-hook       ) q=q-hook ;;                    # ebook variant
-  at-tall      ) at=at-tall ;;                  # source code variant
-  0-split      ) zero=0-split ;;
-  paren-flat   ) paren=paren-flat ;;            # source code variant
-  book+regular ) adjust=book+regular ;;
-  english+greek) english=english+greek ;;
-  cap          ) [ $2 ] && { cap="$1 $2"; shift; } || usage ;;
-  space        ) [ $2 ] && { space="$1 $2"; shift; } || usage ;;
-  source-only  ) source_only=true ;;
-  kindle       ) ereader=$1; sb='sb 0.6150' ;;  # side bearing difference to kobo's font rendering
-  kobo         ) ereader=$1; q=q-hook ;;
-  family       ) [ $ereader ] && [ $2 ] && { family=$2; shift; } || usage ;;
-  ebook        ) ebook=true ;;
-  web          ) web=true ;;
-  version      ) [ $2 ] && { version $2; shift; } || usage ;;
-  --           ) shift; . $HOME/bin/functions/font/iosevka $@; exit ;;
-  *            ) usage ;;
+  D-serifless ) D=D-serifless ;;
+  I-serifless ) I=I-serifless ;;               # source code variant
+  Q-detached  ) Q=Q-detached ;;
+  Q-hook      ) Q=Q-hook ;;
+  a-single    ) a=a-single ;;
+  b-rounded   ) glyph b b-rounded ;;           # unolexic
+  d-tailed    ) glyph d d-tailed ;;            # ebook variant
+  f-extended  ) f=f-extended ;;                # unolexic (homage to universal grotesk)
+  p-eared     ) glyph p p-eared ;;
+  p-serifed   ) glyph p p-serifed ;;
+  q-hook      ) q=q-hook ;;                    # ebook variant
+  at-tall     ) at=at-tall ;;                  # source code variant
+  0-split     ) zero=0-split ;;
+  paren-flat  ) paren=paren-flat ;;            # source code variant
+  book+regular) adjust=book+regular ;;
+  latin+greek ) language=latin+greek ;;
+  cap         ) [ $2 ] && { cap="$1 $2"; shift; } || usage ;;
+  space       ) [ $2 ] && { space="$1 $2"; shift; } || usage ;;
+  source-only ) source_only=true ;;
+  kindle      ) ereader=$1; sb='sb 0.6150' ;;  # side bearing difference to kobo's font rendering
+  kobo        ) ereader=$1; q=q-hook ;;
+  family      ) [ $ereader ] && [ $2 ] && { family=$2; shift; } || usage ;;
+  ebook       ) ebook=true ;;
+  web         ) web=true ;;
+  version     ) [ $2 ] && { version $2; shift; } || usage ;;
+  --          ) shift; . $HOME/bin/functions/font/iosevka $@; exit ;;
+  *           ) usage ;;
   esac
   shift
 done
@@ -95,13 +95,13 @@ options() { echo $@ $D $I $Q $a $b $d $f $p $q $zero; }  # list
 e_ink() {
   name=$1
   shift
-  iosevka dyslexic $ereader ${english:-english} $(options $@) $adjust $cap $sb $space family $name
+  iosevka dyslexic $ereader ${language:-english} $(options $@) $adjust $cap $sb $space family $name
   update $GLYPH $name
 }
 
-dfont() { iosevka expanded            $(options $@) q-hook $at $paren; }
-wfont() { iosevka english I-serifless $(options $@) q-hook; }
-efont() { iosevka ${english:-english} $(options $@) q-hook $adjust; }
+dfont() { iosevka expanded             $(options $@) q-hook $at $paren; }
+wfont() { iosevka english I-serifless  $(options $@) q-hook; }
+efont() { iosevka ${language:-english} $(options $@) q-hook $adjust; }
 
 if [ $family ] ;then
   version 10x
