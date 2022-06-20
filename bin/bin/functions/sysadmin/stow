@@ -24,7 +24,7 @@ case $1 in
 sync ) link '&& stow' ;;
 clean) link '|| stow D' ;;
 check) link '&& ditto' ;;
-D | R) [ $2 ] && { /usr/bin/stow -v -t $HOME -d $STOW -$1 $2 2>&1 | grep -v BUG; true; } || usage ;;  # suppress stow path bugs
+D | R) if [ $2 ] ;then /usr/bin/stow -v -t $HOME -d $STOW -$1 $2 2>&1 | grep -v BUG ;else usage ;fi ;;  # suppress stow path bugs
 *    ) /usr/bin/stow -v -t $HOME -d $STOW -S --ignore=.deprecated $1 ;;
 esac
 

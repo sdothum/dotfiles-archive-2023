@@ -62,8 +62,8 @@ s*) tail -f $CRON:$2.log ;;
 
 * ) nohup sudo btrfs scrub start -Bd $(volume $1) >/dev/null 2>&1 &
     log=$CRON:$1.log
-    show $1 >$log
-    [ $USER != root ] && { pstat Xorg && term "$1" "tail -f $log" || tail -f $log; } ;;
+    show $1 >$log &
+    [ $USER != root ] && { if pstat Xorg ;then term "$1" "tail -f $log" ;else tail -f $log ;fi } ;;
 esac
 
 # vim: set ft=sh: #

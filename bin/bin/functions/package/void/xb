@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/usr/bin/bash
 # sdothum - 2016 (c) wtfpl
 
 # Package
@@ -20,8 +20,9 @@ usage() {
   echo "        H .. hold"
   echo "       -H .. unhold"
   echo "        Q .. installed"
-  echo "    .. $(basename $0) C | H | S | U"
-  echo "        C    backup cache"
+  echo "    .. $(basename $0) B | C | H | S | U"
+  echo "        B    backup cache"
+  echo "        C    check database"
   echo "        H    held (list)"
   echo "        S    installed (count)"
   echo "        U    upgrade system"
@@ -62,7 +63,8 @@ upgrade_check() {
 
 # default (no options) to package query
 case $1 in
- C) [ $2 ] && usage || action=backup ;;
+ B) [ $2 ] && usage || action=backup ;;
+ C) [ $2 ] && usage || action=check ;;
  S) [ $2 ] && { action=sync; yes='-y'; } || action=count ;;
 SS) [ $2 ] && { action=force; yes='-y'; } ;;
 -S) [ $2 ] && action=sync || sudo xbps-install -S; exit ;;
@@ -84,6 +86,7 @@ esac
 
 shift; [ $1 ] || case $action in
 backup ) ;;
+check  ) ;;
 held   ) ;;
 history) ;;
 count  ) ;;
@@ -117,13 +120,14 @@ status()  { current=$(echo $1 | version); latest=$(latest $1); cached=$(cached $
 
 case $action in
 backup    ) rsync $CACHE $BACKUP ;;
+check     ) ditto xbps 'checking database..'; sudo xbps-pkgdb -a 2> >(egrep -v 'ERROR: (php-fpm|preload):') ;;  # suppress hash mismatch (bash redirect syntax)
 count     ) ditto installed "$(xbps-query -l $options | wc -l) packages" ;;
 dependency) for i in $(xbps-query -x $package | sed 's/>=.*//; s/-[0-9].*/-/') ;do installed $i ;done | sort ;;
 downgrade ) sudo xdowngrade $@ ;;  # downgrade must include package dependencies
 file      ) xlocate $package ;;
 force     ) sudo xbps-install -f $yes $options $package ;;
 held      ) for i in $(xbps-query --list-hold-pkgs) ;do ditto held "$i $(status $i)" ;done ;;
-history   ) [ $package ] && { ls -l $CACHE/$package* 2>/dev/null; true; } || history ;;
+history   ) if [ $package ] ;then  ls -l $CACHE/$package* 2>/dev/null ;else history ;fi ;;
 hold      ) [ $pkgver ] && { sudo xbps-pkgdb -m hold $options $package; ditto hold "$pkgver"; xb C; } ;;
 installed ) xbps-query -l $options | cut -d' ' -f2- | sed -r "s/^([^ ]*)/${YELLOW}\1${NOCOLOR}/" | grep "$@" && ditto installed "$@" ;;
 query     ) [ $options ] && xbps-query -R $options $package || xbps-query -Rs $options "$package" | a $package ;;

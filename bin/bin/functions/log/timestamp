@@ -8,9 +8,10 @@
 
 # ......................................................................... Date
 
-day() { [ $(date '+%p') = PM ] && cat || tr '[:upper:]' '[:lower:]'; }  # (AM) day (PM) Day
-
+# tod() { [ $(date '+%p') = PM ] && cat || tr '[:upper:]' '[:lower:]'; }  # (am) day (PM) DAY
 # common date string for consistent script logging
-ditto $(date "+%a" | day) "${__TURQUOISE}$(date "+%-I %M'%S\"")"
+# ditto @ "$(date "+%a" | tod) $(date "+%-I°%M'%S\"")"
+
+ditto @ "$(date "+%a" | tr '[:upper:]' '[:lower:]') $(date "+%-H°%M'%S\"")"
 
 # vim: set ft=sh: #

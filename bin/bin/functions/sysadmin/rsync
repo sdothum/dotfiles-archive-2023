@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/usr/bin/bash
 # sdothum - 2016 (c) wtfpl
 
 # Sysadmin
@@ -10,6 +10,9 @@ usage() { echo "usage: $(basename $0) [--list-only] [<option>] arm | backup | de
 
 EXCLUDE=$(dirname $0)/.rsync_exclude
 PLEX=/opt/plexmediaserver/Library/Application\ Support
+
+# import user path
+. $HOME/bin/functions/shell/user_path colors  # bash shell required for cron colors
 
 laptop=lumen
 netbook=monad
@@ -148,22 +151,35 @@ vps() {
   ssh thedarnedestthing.com sudo /etc/init.d/nginx restart
 }
 
+backup() { rsync -r --delete --exclude='.cache' /net/* /backup/; }
+
+home() {
+  [ $1 ] && HOME=/home/$1 || { ifyes "backup $HOME to /net/archive" || exit; }
+  mkdir -pv /net/archive/home || exit 1
+  rsync -r --delete --exclude='VirtualBox VMs' $exclude_trash $HOME /net/archive/home/
+}
+
+depot() {
+  if server ;then
+    ifyes "backup depot to $laptop" && rsync -r --delete /net/depot $laptop:/net/
+  else
+    ifno "restore depot to $SERVER" || rsync /net/depot $SERVER:/net/
+  fi
+}
+
+wiki () {
+  ifno 'recover thedarnedestthing.com:/vimwiki' && exit
+  trace "thedarnedestthing.com:/vimwiki => $(hostname)"
+  rsync -r --delete thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/vimwiki $HOME/
+}
 
 case $1 in
 ''      ) usage ;;
 arm     ) cpu arm && rsync -r --delete --exclude='*sync-conflict*' $USER@$SERVER:$STOW $HOME/ ;;
-backup  ) server && { ifyes 'backup /net to /backup' && rsync -r --delete --exclude='.cache' /net/* /backup/; } ;;
-
-home    ) ifyes "backup $HOME to /net/archive" || exit
-          mkdir -pv /net/archive/home || exit 1
-          rsync -r --delete --exclude='VirtualBox VMs' $exclude_trash $HOME /net/archive/home/ ;;
-
-depot   ) if server ;then
-            ifyes "backup depot to $laptop" && rsync -r --delete /net/depot $laptop:/net/
-          else
-            ifno "restore depot to $SERVER" || rsync /net/depot $SERVER:/net/
-          fi ;;
-
+backup  ) home; server && ifyes 'backup /net to /backup' && backup ;;
+BACKUP  ) trace backup /net; backup ;;                 # cron command only
+home    ) [ $2 ] && trace backup /home/$2; home $2 ;;  # cron parm
+depot   ) depot ;;
 dotfiles) dotfiles ;;
 music   ) music ;;
 pi      ) server && rsync -r --delete /usr/share/icons/Paper pi:$HOME/.local/share/icons/ ;;
@@ -174,12 +190,8 @@ ttrss   ) rsync -r --delete /srv/http/tt-rss/themes/my*.css $target:/srv/http/tt
 usb     ) usb; sync ;;
 vps     ) vps ;;
 xbps    ) exec xb C ;;  # backup xbps cache
-
-wiki    ) ifno 'recover thedarnedestthing.com:/vimwiki' && exit
-          trace "thedarnedestthing.com:/vimwiki => $(hostname)"
-          rsync -r --delete thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/vimwiki $HOME/ ;;
-
-*       ) [ $2 ] && { rsync $@; true; } || usage ;;
+wiki    ) wiki ;;
+*       ) if [ $2 ] ;then rsync $@ ;else usage ;fi ;;
 esac
 
 # vim: set ft=sh: #

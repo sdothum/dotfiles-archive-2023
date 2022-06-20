@@ -59,7 +59,7 @@ uncatlgd() {  [ $(find $nzb -maxdepth 1 -type d | wc -l) -gt 1 ]; }
 
 # move downloads to media folder
 catalogue() {
-  for i in $(find $nzb -maxdepth 3 -regex '.*\(mkv\|mp4\)') ;do
+  for i in $(find $nzb -maxdepth 3 -regex '.*\(avi\|mkv\|mp4\)') ;do
     mv ${i%/*} $library
   done
   unset movie
