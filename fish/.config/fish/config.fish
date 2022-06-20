@@ -125,6 +125,13 @@ test -n $SESSION/browser
 test -z $BROWSER
   and set -x BROWSER qutebrowser
 
+# ................................................................. Applications
+
+# suppress missing google api keys message 
+export GOOGLE_API_KEY="no"
+export GOOGLE_DEFAULT_CLIENT_ID="no"
+export GOOGLE_DEFAULT_CLIENT_SECRET="no"
+
 # .................................................................. Directories
 
 set -x corne $HOME/stow/corne/qmk_firmware/keyboards/crkbd/keymaps
