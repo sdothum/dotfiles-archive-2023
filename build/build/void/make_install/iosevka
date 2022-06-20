@@ -7,7 +7,7 @@
 
 usage() { 
   echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [family <name>]
-                            [D-serifless | I-serifless | Q-detached | Q-hook | a-single | b-rounded | d-tailed | f-extended | p-eared | p-serifed | q-hook | at-tall | 0-split | paren-flat | cap <parm> | space <parm> | book+regular | latin+greek]*
+                            [D-serifless | I-serifless | Q-detached | Q-hook | a-single | b-rounded | d-tailed | d-toothless | f-extended | p-eared | p-serifed | q-hook | at-tall | 0-split | paren-flat | cap <parm> | space <parm> | book+regular | latin+greek]*
                             [[version 10x | 15x] -- <opions>*]"
   exit 1
 }
@@ -46,6 +46,7 @@ while [ $1 ] ;do
   a-single    ) a=a-single ;;
   b-rounded   ) glyph b b-rounded ;;           # unolexic
   d-tailed    ) glyph d d-tailed ;;            # ebook variant
+  d-toothless ) glyph d d-toothless ;;         # with p-eared
   f-extended  ) f=f-extended ;;                # unolexic (homage to universal grotesk)
   p-eared     ) glyph p p-eared ;;
   p-serifed   ) glyph p p-serifed ;;

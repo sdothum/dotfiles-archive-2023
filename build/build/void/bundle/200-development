@@ -28,6 +28,11 @@
   elixir
 
 
+= erlang
+= ══════
+  erlang
+
+
 = haskell
 = ═══════
 # ghc
@@ -73,6 +78,12 @@ d s python-PyQt4      # amphetype dependency
 = ═══════════
   ruby
   ruby-devel  # passenger dependency
+
+
+= tk
+= ══
+  tk      # tkremind
+  tcllib  # tkremind
 
 
 = web

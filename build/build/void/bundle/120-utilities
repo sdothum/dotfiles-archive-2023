@@ -37,6 +37,7 @@
 
 = system monitor
 = ══════════════
+  btop
 # glances
   gsmartcontrol [server]
   htop
@@ -49,6 +50,7 @@
 
 = test
 = ════
+m speedtest
 
 
 # vim: set ft=conf: #
