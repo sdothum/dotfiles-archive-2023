@@ -39,7 +39,7 @@ overrides:
     ePub disable built-in body padding-bottom: no
     Custom kepub default margins: no
     Block WiFi firmware upgrade: no
-    Custom Sleep/Power-off timeouts: yes
+    Custom Sleep/Power-off timeouts: no
     Set KePub hyphenation: no
     Force user line spacing in KePubs: yes
     Force user line spacing in ePubs (part 1 of 2): yes
