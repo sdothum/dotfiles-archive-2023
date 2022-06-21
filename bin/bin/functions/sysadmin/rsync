@@ -151,11 +151,12 @@ vps() {
   ssh thedarnedestthing.com sudo /etc/init.d/nginx restart
 }
 
-backup() { rsync -r --delete --exclude='.cache' /net/* /backup/; }
+backup() { for i in /net/* ;do trace backup $i; rsync -r --delete --exclude='.cache' $i /backup/ ;done }
 
 home() {
   [ $1 ] && HOME=/home/$1 || { ifyes "backup $HOME to /net/archive" || exit; }
   mkdir -pv /net/archive/home || exit 1
+  trace backup $HOME
   rsync -r --delete --exclude='VirtualBox VMs' $exclude_trash $HOME /net/archive/home/
 }
 
@@ -177,8 +178,8 @@ case $1 in
 ''      ) usage ;;
 arm     ) cpu arm && rsync -r --delete --exclude='*sync-conflict*' $USER@$SERVER:$STOW $HOME/ ;;
 backup  ) home; server && ifyes 'backup /net to /backup' && backup ;;
-BACKUP  ) trace backup /net; backup ;;                 # cron command only
-home    ) [ $2 ] && trace backup /home/$2; home $2 ;;  # cron parm
+BACKUP  ) backup ;;   # cron command only
+home    ) home $2 ;;  # cron parm
 depot   ) depot ;;
 dotfiles) dotfiles ;;
 music   ) music ;;
