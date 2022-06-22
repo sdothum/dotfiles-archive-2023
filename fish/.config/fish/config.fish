@@ -73,10 +73,6 @@ set -x NNTPSERVER news.sunnyusenet.com
 # set -x EDITOR 'vi -e'
 set -x EDITOR 'vim'XDG_RUNTIME_DIR
 set -x VISUAL 'gvim -f'
-set -x FZF_DEFAULT_OPTS "--cycle --reverse  --prompt='    ─────  ' --ansi --color=dark,hl:#dc322f,hl+:#dc322f,fg+:232,bg+:#fdf6e3,bg:#fdf6e3,marker:160,prompt:#268bd2,info:#268bd2"
-set -x NNN_USE_EDITOR 1
-set -x NNN_SHOW_HIDDEN 1
-set -x NNN_RESTRICT_0B 1
 
 set -x XIVIEWER 'feh'
 set -x PLAYER 'mpv'
@@ -128,9 +124,16 @@ test -z $BROWSER
 # ................................................................. Applications
 
 # suppress missing google api keys message 
-export GOOGLE_API_KEY="no"
-export GOOGLE_DEFAULT_CLIENT_ID="no"
-export GOOGLE_DEFAULT_CLIENT_SECRET="no"
+set -x GOOGLE_API_KEY no
+set -x GOOGLE_DEFAULT_CLIENT_ID no
+set -x GOOGLE_DEFAULT_CLIENT_SECRET no
+
+# nnn config
+set -x NNN_USE_EDITOR 1
+set -x NNN_SHOW_HIDDEN 1
+set -x NNN_RESTRICT_0B 1
+set -x NNN_FIFO /tmp/nnn:fifo
+set -x NNN_PLUG 'j:jump;p:preview-tui'
 
 # .................................................................. Directories
 
