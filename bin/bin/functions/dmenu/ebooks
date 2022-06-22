@@ -10,9 +10,10 @@
 EDIT='file manager'
 SWITCH='switch library'
 
-LIBRARY=${LIBRARY:-/net/media/ebooks/library}
-CATLGS=$(ls -1 $LIBRARY | grep 'kindle:' | sed -r 's/(.*)/\1\\\\n/')
-CATLG=$LIBRARY/${CATLG:-kindle:science-fiction}
+EXCLUDE='dictionary|kobo*|textbook|dmenu*'''
+LIBRARY=${LIBRARY:-/net/media/ebooks/books}
+CATLGS=$(ls -1 $LIBRARY | egrep -v "$EXCLUDE" | sed -r 's/(.*)/\1\\\\n/')
+CATLG=$LIBRARY/${CATLG:-science-fiction}
 
 # ebook library
 while [ "$1" ] ;do
@@ -24,7 +25,7 @@ done
 
 # build catalogue
 catlg() {
-  fcache $CATLG -maxdepth 4 -regex '.*\(mobi\|epub\|azw3\|azw\|kfx\)' |
+  find $CATLG -maxdepth 4 -regex '.*\(mobi\|epub\|azw3\|azw\|kfx\)' |
       sed -re "s,$CATLG/([^/]*)/(.*/)*([^/]*)\.(mobi|epub|azw3|azw|kfx),\1$SEP\3," \
           -e 's/(.*) - .*/\1/; s/ \(.*\)//' \
           -e "s/(.*)$SEP(.*)/\2^$SEP \1/" |
@@ -59,10 +60,11 @@ while : ;do
   book=$(catlg | mhistory ebooks | column -s^ -t | sed "1i$(X $EDIT)\n$(X $SWITCH)" | rmenu "E-book" -filter \"$author\" -no-custom)
 
   case ${book#$(X)} in
-  "$EDIT"  ) killall 'ROX-Filer'; rox "$CATLG"; pwait "ROX-Filer"; catlg; continue ;;
+  # "$EDIT") killall 'ROX-Filer'; rox "$CATLG"; pwait 'ROX-Filer'; catlg; continue ;;
+  "$EDIT"  ) killall 'nnn' 2>/dev/null; term 'ebooks' WAIT nnn -s ebooks; continue ;;
 
-  "$SWITCH") library=$(ls -1 $LIBRARY | grep 'kindle:' | rmenu "Catalogue" -no-custom)
-             [ $library ] && { CATLG=$LIBRARY/$library; catlg; }
+  "$SWITCH") library=$(ls -1 $LIBRARY | egrep -v "$EXCLUDE" | rmenu "Catalogue" -no-custom)
+             [ "$library" ] && { CATLG=$LIBRARY/$library; }
              continue ;;
   esac
 

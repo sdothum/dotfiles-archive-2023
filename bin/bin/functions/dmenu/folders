@@ -9,6 +9,7 @@
 filemanagers="
   filelight
   ncdu
+  nnn
   ranger
   rox
   thunar
@@ -28,6 +29,7 @@ while name=$(echo | mhistory folders | rmenu 'Find Folder') || exit ;do
     case $action in
     term     ) cd $dir; term "$dir" ;;
 
+    nnn        |\
     ncdu       |\
     ranger   ) term "$dir" $action "$dir" ;;
 

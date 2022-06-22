@@ -97,7 +97,7 @@ playback() {
     copy  ) cp -rf "$video" $passport; break ;;
     mrqe  ) surf "http://www.mrqe.com/search?q=$movie"; pwait "surf http://www.mrqe.com/search?q=$movie" ;;
     imdb  ) surf "http://www.imdb.com/find?s=all&q=$movie"; pwait "surf http://www.imdb.com/find?s=all&q=$movie" ;;
-    manage) term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger "$library"; cache; break ;;
+    manage) term 'movies' WAIT nnn "$video" || term 'movies' WAIT nnn "$library"; cache; break ;;
     delete) rm -rf "$video"; cache; break ;;
     mark  ) mhistory "$playlist" "$movie"; cache; break ;;
     exit  ) exit ;;
@@ -120,7 +120,8 @@ while : ;do
   "$DATE"     ) T=t; cache ;;
   "$TOGGLE"   ) [ $R ] && unset R || R=r; cache ;;
   "$USENET"   ) nzbgeek; unset movie ;;
-  "$FILE"     ) killall 'ROX-Filer'; rox $nzb; rox "$library"; pwait "ROX-Filer"; cache ;;
+  # "$FILE"   ) killall 'ROX-Filer'; rox $nzb; rox "$library"; pwait "ROX-Filer"; cache ;;
+  "$FILE"     ) killall 'nnn' 2>/dev/null; term 'movies' WAIT nnn -s movies; cache; continue ;;
   "$CATALOGUE") catalogue; cache; movie=4; continue ;;  # highlight added movie
   *           ) movie=$(echo "$movie" | sed "s/^$SEP //"); playback ;;
   esac

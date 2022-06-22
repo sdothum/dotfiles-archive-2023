@@ -94,7 +94,8 @@ while : ;do
   "$NAME"     ) unset T; cache; continue ;;
   "$DATE"     ) T=t; cache; continue ;;
   "$SONARR"   ) sonarr; unset show; continue ;;
-  "$FILE"     ) killall 'ROX-Filer'; rox "$library"; pwait "ROX-Filer"; cache; continue ;;
+  # "$FILE"   ) killall 'ROX-Filer'; rox "$library"; pwait "ROX-Filer"; cache; continue ;;
+  "$FILE"     ) killall 'nnn' 2>/dev/null; term 'series' WAIT nnn "$library"; cache; continue ;;
   "$CATALOGUE") catalogue; cache; continue ;;
 
   *           ) series=""$library"/$(echo $show | sed 's/ /./g')"
