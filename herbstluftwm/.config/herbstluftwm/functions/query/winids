@@ -6,6 +6,6 @@
 
 # .............................................................. List of winid's
 
-herbstclient foreach C clients. echo C | grep -v focus
+herbstclient foreach C clients. echo C | grep -v focus | cut -d. -f2  # 0x...
 
 # vim: set ft=sh: #

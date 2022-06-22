@@ -21,7 +21,7 @@ windows=$(herbstclient attr tags.focus.client_count)
 wcount=$(herbstclient attr tags.focus.curframe_wcount)
 # suppress error caused by no window in focus
 winid=$(herbstclient attr clients.focus.winid 2>/dev/null)
-set -x
+
 # layout functions
 layout() {
   case $1 in

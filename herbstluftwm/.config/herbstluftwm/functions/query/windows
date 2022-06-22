@@ -6,7 +6,7 @@
 
 # .............................................................. List of windows
 for i in $(query winids) ;do
-  herbstclient attr $i | egrep 'class =|title ='
+  herbstclient attr clients.$i | egrep 'class =|title ='
 done
 
 # vim: set ft=sh: #

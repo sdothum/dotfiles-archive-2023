@@ -8,9 +8,9 @@
 
 # Usage: query wtitle <winid>
 
-instance=$(herbstclient attr $1.instance)
+instance=$(herbstclient attr clients.$1.instance)
 # convert utf-8 to ascii, otherwise focus hlwm may not list all winids
-title=$(asciititle $(herbstclient attr $1.title))
+title=$(asciititle $(herbstclient attr clients.$1.title))
 # note: ^$SEP for use with dmenu column alignment, see focus hlwm, restore hidden
 echo "$instance^$SEP $title"
 

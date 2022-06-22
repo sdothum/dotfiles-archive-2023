@@ -33,7 +33,7 @@ tag() {
 }
 
 for i in $(query winids) ;do
-  TAG=$(herbstclient attr $i.tag)
+  TAG=$(herbstclient attr clients.$i.tag)
   window="$TAG$DLM$(query wtitle $i) ^$(tag)$DLM$i"
   [ "$windows" ] && windows="$windows\n$window" || windows="$window"
 done
