@@ -74,8 +74,8 @@ fi
 [ $cache ] && exit
 
 options() {
-  uncatlgd && edit="\\\\\\n$(X $FILE)\\\\\\n$(X $CATALOGUE)" || unset edit
-  grep -q '[^ ]' "$playlist" && echo "$(X $LAST)\\\n$(X $USENET)\\\n$(X $(sortlist $T))$(toggle)$edit" || echo "$(X $(sortlist $T))$(toggle)$edit"
+  uncatlgd && edit="\\\\\\n$(X $CATALOGUE)" || unset edit
+  grep -q '[^ ]' "$playlist" && echo "$(X $LAST)\\\n$(X $USENET)\\\n$(X $FILE)\\\n$(X $(sortlist $T))$(toggle)$edit" || echo "$(X $(sortlist $T))$(toggle)$edit"
 }
 
 playback() {

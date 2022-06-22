@@ -63,6 +63,7 @@ cache() {
   [ -e $preprocess ] && . $preprocess  # special title format clean up
   retitle "$library" >>$retitle
   for i in $(ls -1$T "$library" | grep -v ' ') ;do [ -L $i ] || echo $i | sed 's/\./ /g' >>$catlg; done
+  unset show
 }
 
 episodes() { find -maxdepth 1 -regex '.*S[0-9][0-9]E[0-9][0-9].*'; }
