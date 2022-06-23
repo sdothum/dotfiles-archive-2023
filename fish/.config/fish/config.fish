@@ -133,7 +133,7 @@ set -x NNN_USE_EDITOR 1
 set -x NNN_SHOW_HIDDEN 1
 set -x NNN_RESTRICT_0B 1
 set -x NNN_FIFO /tmp/nnn:fifo
-set -x NNN_PLUG 'j:jump;p:preview-tui'
+set -x NNN_PLUG 'j:jump;J:jump-refresh;p:preview-tui'
 
 # .................................................................. Directories
 
