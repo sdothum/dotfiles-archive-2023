@@ -1,0 +1,22 @@
+# sdothum - 2016 (c) wtfpl
+
+# nnn
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... fcache directories
+
+# see jump / jump-refresh
+directory() {
+  case $1 in
+  $HOME*                      ) echo $HOME                       ;;
+  /net/depot*                 ) echo /net/depot                  ;;
+  /net/media/music*           ) echo /net/media/music            ;;
+  /net/media/ebooks*          ) echo /net/media/ebooks           ;;
+  /net/media/videos/anime*    ) echo /net/media/videos/anime     ;;
+  /net/media/videos/animation*) echo /net/media/videos/animation ;;
+  /net/media/videos/movies*   ) echo /net/media/videos/movies    ;;
+  /net/media/videos/series*   ) echo /net/media/videos/series    ;;
+  /net/media/videos*          ) echo /net/media/videos           ;;
+  *                           ) echo $1                          ;;
+  esac
+}
