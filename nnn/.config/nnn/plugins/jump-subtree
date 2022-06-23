@@ -6,7 +6,7 @@
 
 # ................................................................. Jump refresh
 
-# force cache rebuild
-env REFRESH=- $(dirname $0)/jump $@
+# fcache PWD
+env SUBTREE=pwd $(dirname $0)/jump $@  # see .jump:caches
 
 # vim: set ft=sh: #

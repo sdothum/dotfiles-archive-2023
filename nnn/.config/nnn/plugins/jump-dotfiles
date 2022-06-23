@@ -4,9 +4,13 @@
 # nnn Plugin
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ................................................................. Jump refresh
+# ................................................................ Jump dotfiles
 
-# force cache rebuild
-env REFRESH=- $(dirname $0)/jump $@
+DOTFILES=/net/depot/dotfiles
+
+# fcache depot
+SRC=${2##*/stow}
+[ -e $DOTFILES/$SRC ] && two=$DOTFILES/$SRC || two=$DOTFILES
+env SUBTREE=pwd $(dirname $0)/jump $1 $two $3  # see .jump:caches
 
 # vim: set ft=sh: #
