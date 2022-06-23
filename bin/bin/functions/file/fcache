@@ -15,6 +15,7 @@ usage() {
 }
 
 FCACHE=$CACHEDIR/fcache
+BOOKMARKS="$(dirname $0)/.fcache:bookmarks"
 
 # Note: non-directory caches automatically update their associated directory caches via stest
 #       but directory caches (used in fuzzy jumping) require manual updating, as required,
@@ -49,7 +50,7 @@ dcache=$FCACHE:d$(cname $node)
 # if unchanged files in non-directory search, return cache
 # Note: always returns directory cache
 if [ -e $cache ] && [ -e $dcache ] && [ -z $refresh ] ;then
-  [ $type != d ] && stest -dqr -n $dcache $(cat $dcache) || exec cat $cache
+  [ $type != d ] && stest -dqr -n $dcache $(cat $dcache) || exec cat $cache $BOOKMARKS  # append bookmarks
 fi
 
 notify "$node" 'Updating fcache'
@@ -61,6 +62,6 @@ eval find $link $node $maxdepth -type d 2>/dev/null | ${filter:-exclude} >$dcach
 
 wait
 grep -q "$node" $FCACHE || echo $type $node $maxdepth $perm $regextype $regex >>$FCACHE  # see fcached (tbd)
-[ $nocat ] || cat $cache                                                                 # see fcached (tbd)
+[ $nocat ] || cat $cache $BOOKMARKS                                                      # append bookmarks
 
 # vim: set ft=sh: #
