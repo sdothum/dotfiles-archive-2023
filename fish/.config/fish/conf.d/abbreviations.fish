@@ -123,12 +123,14 @@ abbr X x
 # ......................................................................... Edit
 
 abbr ddf 'dirdiff'
+abbr ddfn 'dirdiff (env VISUAL=vim nnn -p -)'              # file picker mode
 abbr de 'dmenu - edit'
 abbr dp 'dmenu - projects'
 abbr dr 'dmenu - run'
 abbr ds 'dmenu - scripts'
 abbr nv 'nvpy'
 abbr vd 'v -d --role=gvimdiff'
+abbr vdn 'v -d --role=gvimdiff (env VISUAL=vim nnn -p -)'  # file picker mode
 abbr sd 'sdiff -b -E -W -w(tput cols)'
 abbr vdarchive 'dirdiff ./ /net/archive(pwd)'
 abbr vdbackup 'dirdiff ./ /net/backup(pwd)'
