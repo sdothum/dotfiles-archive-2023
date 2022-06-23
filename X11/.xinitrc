@@ -7,6 +7,10 @@
 #   startx -- -layout Multihead
 # Note: .xinitrc takes precedence over .xsession, use either but ensure dbus is enabled
 
+BOOTWM=$SESSION/boot:wm  # see console_login, user_login
+
+rm -f $BOOTWM            # cancel autostart of wm if manually started
+
 # ................................................................... User setup
 
 # build installed terminal
@@ -24,7 +28,7 @@ killall bash
 # autocutsel -selection PRIMARY -fork &
 # Enable automounting removable devices
 exists udiskie && udiskie --automount --notify --no-tray &
-exists qk && qk start  # cli autokey
+exists qk && { qk stop >/dev/null; qk start; }  # reattach cli autokey to xorg instance
 pulse &
 
 # ........................................................................ D-Bus
@@ -42,8 +46,8 @@ chmod 600 $HOME/.dbus/Xdbus
 
 # ................................................................ Gnome keyring
 
-eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
-export SSH_AUTH_SOCK
+# eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+# export SSH_AUTH_SOCK
 
 # ........................................................................... UI
 
@@ -78,8 +82,9 @@ windowmanager=$1
 tv_over() { xrandr --output $1 --off --output HDMI1 --primary --mode $2 --rate 60 --dpi 96; }
 
 case $(hostname) in
-  luna ) xrandr --output DVI-D-1 --mode 1680x1050 --output HDMI-1 --primary --mode 1920x1080 --rate 60 --left-of DVI-D-1 --dpi 96 ;;
-  lumen) hdmi && tv_over LVDS1 3440x1440 ;;
+  # luna ) xrandr --output DVI-D-1 --mode 1680x1050 --output HDMI-1 --primary --mode 1920x1080 --rate 60 --left-of DVI-D-1 --dpi 96 ;;
+  luna ) xrandr --output HDMI-1 --mode 3440x1440  --rate 60 --dpi 96 ;;
+  lumen) hdmi && tv_over LVDS1 1920x1080 ;;
   motu ) hdmi && tv_over eDP1 1920x1080 ;;
 esac
 # pulseeffects --gapplication-service &
@@ -126,7 +131,7 @@ dw* ) xexec dwm ;;
 
 he* ) pkill -KILL -f 'herbst'
       # export ROOT=$HOME/tmp
-      rm -f /tmp/hlwm:* 2>/dev/null
+      rm -f /tmp/herbstluftwm:* 2>/dev/null
       export PANEL_BOTTOM=true
       export SETROOT=$(cat $HOME/.setroot 2>/dev/null)  # setroot last wallpaper or wall, otherwise random wall
       setpath $HOME/.config/herbstluftwm
@@ -137,6 +142,7 @@ he* ) pkill -KILL -f 'herbst'
 gn* ) xexec gnome-session ;;
 i3  ) xexec i3 ;;
 kd* ) xexec startkde ;;
+le* ) xexec leftwm ;;
 lxd*) xexec lxsession ;;
 lxq*) xexec startlxqt ;;
 ma* ) xexec mate-session ;;
