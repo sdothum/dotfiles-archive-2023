@@ -75,6 +75,7 @@ abbr gprename 'gprename $PWD'
 abbr m 'less'
 abbr mv 'mv -i'
 abbr mvv 'mv -iv'
+abbr N 'env VISUAL=vim nnn -p -'  # cmd .. (N) file picker mode
 abbr n 'env VISUAL=vim nnn'
 abbr nb 'env VISUAL=vim nnn -s ebooks'
 abbr r 'vifm'
