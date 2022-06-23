@@ -11,6 +11,8 @@
 /home/shum/attachments
 /home/shum/bin
 /home/shum/build
+/home/shum/build/alpine
+/home/shum/build/void
 /home/shum/documents
 /home/shum/images
 /home/shum/images/backgrounds
@@ -37,6 +39,8 @@
 /home/shum/tmp
 /net/archive
 /net/depot
+/net/depot/dotfiles
+/net/depot/qmk_firmware
 /net/downloads/flac
 /net/downloads/http
 /net/downloads/nzbs/completed

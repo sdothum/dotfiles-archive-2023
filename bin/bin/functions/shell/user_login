@@ -18,7 +18,7 @@ if console ;then
   echo
   # delayed startup of default wm for remote computers
   if [ -s $BOOTWM ] ;then
-    (sleep $(cat $BOOTWM); [ -e $BOOTWM ] && startx -- 2>/dev/null) &  # not as clean as "x" (?).. do not autostart if already manually launched
+    (sleep $(cat $BOOTWM); [ -e $BOOTWM ] && startx -- 2>/tmp/startx:reboot.log) &  # not as clean as "x" (?).. do not autostart if already manually launched
   fi
 elif [ -e $FORTUNE:term ] ;then
   if [ ! -e $FORTUNE ] ;then
