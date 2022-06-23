@@ -30,6 +30,7 @@ d dnsmasq  [server]
 
 = network security
 = ════════════════
+  lynis
   openssh
 
 
