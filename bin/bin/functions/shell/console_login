@@ -9,6 +9,9 @@
 PIXELSERV=$SESSION/pixelserv
 RSYNC=$SESSION/rsync
 WMAIL=$SESSION/wmail
+BOOTWM=$SESSION/boot:wm
+
+DELAY=300  # unattended wm startup if set
 
 # bootstrap SSD scheduler
 if [ $USER != root ] ;then
@@ -61,6 +64,9 @@ if [ $USER != root ] ;then
         wsync -v
       fi
     fi
+
+    # wm startup
+    [ $DELAY ] && echo $DELAY >$BOOTWM
   fi
 
   # reset keyboard layout
