@@ -4,8 +4,8 @@
 # see bundle_install
 
 
-# android
-# ═══════
+= android
+= ═══════
   android-tools
   scrcpy
 
@@ -69,6 +69,9 @@ d m amphetype
 
 = viewer
 = ══════
+  bat         # syntax highlighting for nnn preview-tui
+  catimg      # image viewer for nnn preview-tui
+  nsxiv       # image viewer for nnn imgview
   epdfview    [server]
   fbreader    [server]
   feh
