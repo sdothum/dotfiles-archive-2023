@@ -12,6 +12,7 @@
 = terminal
 = ════════
   alacritty    [! cpu atom]
+  kitty        # need for nnn preview-tui plugin
   rxvt-unicode [cpu atom]
   urxvt-perls  [cpu atom]
 # xterm
