@@ -76,7 +76,7 @@ abbr m 'less'
 abbr mv 'mv -i'
 abbr mvv 'mv -iv'
 abbr N 'env VISUAL=vim nnn -de -p -'  # cmd .. (N) file picker mode
-abbr n 'env VISUAL=vim nnn -de'
+abbr n 'env VISUAL=vim nnn -de -Pp'
 abbr nb 'env VISUAL=vim nnn -de -s ebooks'
 abbr r 'vifm'
 abbr R 'env VISUAL=vim ranger'
