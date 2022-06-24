@@ -71,7 +71,7 @@ hc keybind Super-$Mod-Control-v       chain . spawn pkill '(mpv|omxplayer)' . em
 hc keybind Super-w                    spawn dmenu wiki
 hc keybind Super-Control-w            spawn dmenu wiki diary
 hc keybind Super-$Mod-w               spawn weather time
-hc keybind Super-x                    spawn toggle term 'nnn' nnn $HOME
+hc keybind Super-x                    spawn toggle term 'nnn' env VISUAL=vim nnn -de $HOME
 hc keybind Super-z                    spawn toggle rox
 hc keybind Super-Control-z            spawn dmenu screensaver
 
