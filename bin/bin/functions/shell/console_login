@@ -11,7 +11,7 @@ RSYNC=$SESSION/rsync
 WMAIL=$SESSION/wmail
 BOOTWM=$SESSION/boot:wm
 
-DELAY=300  # unattended wm startup if set
+DELAY=120  # unattended wm startup if set
 
 # bootstrap SSD scheduler
 if [ $USER != root ] ;then

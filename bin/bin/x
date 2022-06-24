@@ -8,8 +8,9 @@
 
 # ............................................................... Window manager
 
-usage() { echo "usage: $(basename $0) 'start | 2bwm | awesome | bspwm | budgie | cinnamon | dwm | gnome | goomwwm | guile | herbstluftwm | i3 | kde | lxde | lxqt | notion | openbox | ratpoison | razor-qt | spectrwm | stumpwm | subtle | shell | windowchef | wmii | wmutils | wtftw | xfce4 | xmonad"; exit 1; }
+usage() { echo "usage: $(basename $0) 'start | 2bwm | awesome | bspwm | budgie | cinnamon | dwm | gnome | goomwwm | guile | herbstluftwm | i3 | kde | lxde | lxqt | notion | openbox | ratpoison | razor-qt | spectrwm | stumpwm | subtle | shell | windowchef | wmii | wmutils | wtftw | xfce4 | xmonad"; rm -f $BOOTWM; exit 1; }
 
+BOOTWM=$SESSION/boot:wm  # see console_login, user_login
 WM=$HOME/.windowmanager
 
 # sh -c 'cd /usr/share/figlet; for i in *tlf ;do toilet -F gay -f $i $(cat $WM); echo $i; read prompt ;done'
@@ -19,6 +20,7 @@ font=emboss
 
 # see .xinitrc
 case $1 in
+abort | halt | stop ) [ -e $BOOTWM ] && ditto user_login 'canceling startx'; rm -f $BOOTWM; exit ;;  # boot intercept shortcut
 ''  ) ;;
 2b* ) echo 2bwm >$WM ;;
 aw* ) echo awesome >$WM ;;
@@ -58,17 +60,10 @@ if console ;then
   wm=$(cat $WM)
   [ ${#wm} -le 12 ] && extra=' '  # emboss spacing
   [ $font = emboss ] && seat=$(echo $wm | sed -r "s/(.)/\1 $extra/g; s/ *$//") || seat=$wm
-  # echo "${__GREEN}$(figlet -t -f lean $seat)${NOCOLOR}"
-  echo ${__GREEN}
-  # avoid dash shell echo "$(figlet)" escape character issues
-  # figlet -t -d $HOME/.fonts/figlet -f s-relief $seat
-  # figlet -t -f lean $seat
   void && toilet -F gay -f $font "$seat" || toilet -F rainbow -f $font "$seat"
   echo
   sleep 1
-  # echo ${NOCOLOR}
-  # escape to shell prompt
-  [ $wm = shell ] && exit
+  [ $wm = shell ] && exit  # escape to shell prompt
 
   if [ -f $HOME/.mount-nfs ] ;then
     if [ ! -d /net/depot/dotfiles ] ;then
@@ -92,6 +87,7 @@ if console ;then
   fi
 
   # session specific clean up
+  pkill -KILL $wm
   case $wm in
   2b* ) ;;
   aw* ) ;;
@@ -101,13 +97,11 @@ if console ;then
   dw* ) ;;
   gn* ) ;;
   go* ) ;;
-
-  he* ) pkill -KILL -f 'herbst'
-        killall -KILL qutebrowser 2>/dev/null
-        killall -KILL weechat 2>/dev/null ;;
-
+  gu* ) ;;
+  he* ) ;;
   i3  ) ;;
   kde ) ;;
+  le* ) ;;
   lxd*) ;;
   lxq*) ;;
   ma* ) ;;
@@ -126,6 +120,10 @@ if console ;then
   xf* ) ;;
   xm* ) ;;
   esac
+
+  # rare dangling instances..
+  killall -KILL qutebrowser 2>/dev/null
+  killall -KILL weechat 2>/dev/null 
 
   cpu arm && { pstat syncthing || { tmout ifno 'sync with syncthing' || wsync -s; } }
 else

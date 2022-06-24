@@ -6,7 +6,7 @@
 
 # ..................................................... GUI/ncurses menu wrapper
 
-# Usage: rmenu '<prompt>' [['<select>' | <row>]] [<option>]*
+# Usage: ... | rmenu '<prompt>' [['<select>' | <row>]] [<option>]*
 #              where, select - rofi select highlight
 #                     row    - rofi row highlight
 #                     option - rofi options e.g. -filter <filter> -no-custom
@@ -149,7 +149,7 @@ if [ $display ] ;then
     stdin=$(mktemp)
     stdout=$(mktemp)
     trap "rm -f $stdin $stdout" EXIT
-    items >$stdin
+    items >$stdin  # this is the input list!
     # escape movie title (year) parentheses and quotes for terminal wrappers (see alacritty and urxvt wrappers in ~/bin)
     term "$(escape $title)" WAIT $window SHELL "cat $stdin | fZf $print --prompt=\\\"$(escape $prompt)  \\\" --query=\\\"$query\\\" >$stdout"
     input=$(tail -1 $stdout)
