@@ -12,7 +12,6 @@
 hdmi() { pacmd list-sinks | grep -q hdmi; }
 
 restart() {
-  echo  # force lf prior to service messages
   service restart alsa
   # pulseaudio -k
   # manually restore audio device

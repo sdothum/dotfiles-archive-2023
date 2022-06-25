@@ -44,8 +44,8 @@ hfg='#20bbfcFF'
 # leader left or right (prompt case Right, RIGHT, right)
 lead=Right
 leader='—————— '
-indent='    '  # for fzf
-outdent=''
+indent='     '  # for fzf
+outdent='   '
 
 # .......................................................................... GUI
 
