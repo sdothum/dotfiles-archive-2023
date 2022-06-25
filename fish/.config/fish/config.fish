@@ -129,11 +129,9 @@ set -x GOOGLE_DEFAULT_CLIENT_ID no
 set -x GOOGLE_DEFAULT_CLIENT_SECRET no
 
 # nnn config
-set -x NNN_USE_EDITOR 1
-set -x NNN_SHOW_HIDDEN 1
-set -x NNN_RESTRICT_0B 1
-set -x NNN_FIFO /tmp/nnn:fifo
 set -x NNN_PLUG 'c:jump-subtree;d:jump-dotfiles;i:imgview;j:jump;J:jump-refresh;p:preview-tui'
+set -x NNN_BMS "b:/net/archive/home/shum/stow;d:/net/depot/dotfiles"
+set -x NNN_OPTS aeEfHoQx
 
 # .................................................................. Directories
 
