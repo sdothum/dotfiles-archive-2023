@@ -17,7 +17,7 @@ if console ;then
   find $HOME -iname '*sync-conflict*' -exec rm -v {} \;  # purge syncthing conflicts
   echo
   # delayed startup of default wm for remote computers
-  if [ -s $BOOTWM ] ;then
+  if [ -s $BOOTWM ] ;then  # see console_login
     (sleep $(cat $BOOTWM); [ -e $BOOTWM ] && startx -- 2>/tmp/startx:reboot.log) &  # not as clean as "x" (?).. do not autostart if already manually launched
   fi
 elif [ -e $FORTUNE:term ] ;then

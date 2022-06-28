@@ -1,0 +1,13 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................. less wrapper
+
+# do not appear to be able to combine prompt color with other options in env LESS
+export LESS='-RX -P ?B %f  %lt-%lb/%L  %Pb\%: [pipe]  %lt-%lb/\.\.'
+/bin/less --use-color -DP202 $@
+
+# vim: set ft=sh: #

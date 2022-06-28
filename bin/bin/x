@@ -61,19 +61,23 @@ esac
 nfs() {
   case $1 in
   mount ) if [ ! -d /net/depot/dotfiles ] ;then
-            ditto nfs 'mount..'
-            # sudo mount -v $HOME/Maildir
-            sudo mount -v /net
+            ditto nfs 'mount..' 
+            grep -q "^$HOME/Maildir" /etc/fstab && sudo mount -v $HOME/Maildir 
+            sudo mount -v /net 
           fi ;;
-  umount) ditto nfs 'umount..'
-          # sudo umount -v $HOME/Maildir
-          sudo umount -v /net ;;
+  umount) ditto nfs 'umount..' 
+          sudo umount -v /net 
+          grep -q "^$HOME/Maildir" /etc/fstab && sudo umount -v $HOME/Maildir ;;
   esac
 }
+
+NFSLOG=/tmp/.xinit:nfs.log
 
 nfs mount
 # suppress nfs messages to console when server is offline
 [ -e $SESSION/nfs ] && trap "nfs umount" EXIT
+
+# ........................................................................ Xinit
 
 # start X11 from init console
 if console ;then

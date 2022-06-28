@@ -22,6 +22,8 @@ RADIO=/tmp/audio:radio
 LSPACE="    $SEP"
 RSPACE="$SEP    "
 UTF='□'
+LEADER='◯►⋯  '
+LEADER='◯∘⋯  '
 
 # ............................................................... Available apps
 
@@ -45,7 +47,7 @@ playlist() {
 # ......................................................................... Main
 
 # global dmenu functions, see bin/functions/dmenu/*
-X()        { echo "◯►⋯  $@"; }                # menu option prefix (follow piping ".. | column .." to avoid trailing space insertion), see also rmenu
+X()        { echo "$LEADER$@"; }              # menu option prefix (follow piping ".. | column .." to avoid trailing space insertion), see also rmenu
 sortlist() { [ $1 ] && echo 'sort by name' || echo 'sort by date'; }  # playlist order
 previous() { echo | mhistory $1 | head -1; }  # most recent (app) history
 unquote()  { echo $@ | sed "s/'//g"; }        # remove single quotes for subword match

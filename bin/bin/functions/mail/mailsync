@@ -91,9 +91,9 @@ one_pass() {
   rm -f $MAILDIR/*.lock
   # purge empty messages
   find $MAILDIR/sdothum -type f -size 0 -exec rm -v {} \;
-  offlineimap -c $HOME/.offlineimaprc -o -u Basic >>/tmp/offlineimap.log
+  offlineimap -c $HOME/.offlineimaprc -o -u Basic >>/tmp/offlineimap.log 2>&1
   trace 'Starting imapfilter..'
-  imapfilter -v -c $HOME/.imapfilter/dovecot.lua >>/tmp/imapfilter.log
+  imapfilter -v -c $HOME/.imapfilter/dovecot.lua >>/tmp/imapfilter.log 2>&1
   trace 'Starting notmuch..'
   notmuch new >>/tmp/notmuch.log 2>&1
   tag_messages
