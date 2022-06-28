@@ -71,7 +71,7 @@ set -x NNTPSERVER news.sunnyusenet.com
 
 # default editor
 # set -x EDITOR 'vi -e'
-set -x EDITOR 'vim'XDG_RUNTIME_DIR
+set -x EDITOR 'vim'
 set -x VISUAL 'gvim -f'
 
 set -x XIVIEWER 'feh'
@@ -123,19 +123,18 @@ test -z $BROWSER
 
 # ................................................................. Applications
 
+# source shell variables
+function SOURCE --description 'usage: SOURCE <script>'
+  for i in (grep '^export ' $argv); eval $i; end
+end
+
 # suppress missing google api keys message 
 set -x GOOGLE_API_KEY no
 set -x GOOGLE_DEFAULT_CLIENT_ID no
 set -x GOOGLE_DEFAULT_CLIENT_SECRET no
 
-# nnn config
-set -x NNN_PLUG 'c:jump-subtree;d:jump-dotfiles;i:imgview;j:jump;J:jump-refresh;p:preview-tui'
-set -x NNN_BMS "b:/net/media/ebooks/books;c:$HOME/.config;d:/net/depot/dotfiles;h:$HOME;p:/net/photos;r:/etc/sv;s:$HOME/stow;v:/net/media/videos"
-#      NNN_FCOLORS 'c1e2272e006033f7c6d6abc4'      change dir/exe colors
-set -x NNN_FCOLORS 'c1e2de28006033f7c627abc4'
-set -x LS_COLORS 'di=01;38;5;221:ex=00;38;5;40'  # match ls colors!
-set -x NNN_OPTS aeEfHoQx
-# set -x USE_SCOPE 1
+# source nnn environment (and LS_COLORS)
+SOURCE $HOME/bin/functions/shell/nnn
 
 # .................................................................. Directories
 
