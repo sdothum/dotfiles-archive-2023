@@ -7,7 +7,7 @@
 = browser
 = ═══════
   chromium
-# firefox
+  firefox
   lynx
   qutebrowser
 # surf
