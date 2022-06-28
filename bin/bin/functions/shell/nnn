@@ -20,7 +20,7 @@ export NNN_OPTS=aeEfHoQx
 # export USE_SCOPE=1
 
 case $1 in
-TMUX) tmux_session 'nnn' env VISUAL=vim /bin/nnn -Pp $TDIR ;;  # see herbstluftwm keybinds
+TMUX) tmux_session 'nnn' env VISUAL=vim /bin/nnn -Pp $TDIR ;;  # see herbstluftwm appbinds
 *   ) /bin/nnn $@ ;;
 esac
 
