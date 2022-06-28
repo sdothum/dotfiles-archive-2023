@@ -6,7 +6,7 @@
 
 # ............................................................... Instance winid
 usage() {
-  echo "usage: focus $(basename $0) <instance>"
+  echo "usage: query $(basename $0) <instance>"
   exit 1
 }
 

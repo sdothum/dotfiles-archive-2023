@@ -6,13 +6,13 @@
 
 # .................................................................. Title winid
 usage() {
-  echo "usage: focus $(basename $0) <title>"
+  echo "usage: query $(basename $0) <title>"
   exit 1
 }
 
 [ $1 ] || usage
 
-for i in $(query winids) ;do herbstclient compare $i.title = $1 && { echo $i; winid=true; } ;done
+for i in $(query winids) ;do herbstclient compare clients.$i.title = $1 && { echo $i; winid=true; } ;done
 [ $winid ] || echo ''
 
 # vim: set ft=sh: #
