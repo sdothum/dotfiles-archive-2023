@@ -76,8 +76,8 @@ set -x VISUAL 'gvim -f'
 
 set -x XIVIEWER 'feh'
 set -x PLAYER 'mpv'
-# less prompt
-set -x LESS '-RX -P ?B %f  %lt-%lb/%L  %Pb\%: [pipe]  %lt-%lb/\.\.'
+# less prompt (replaced by wrapper to be able to set prompt colour)
+# set -x LESS '-RX -P ?B %f  %lt-%lb/%L  %Pb\%: [pipe]  %lt-%lb/\.\.'
 set -x PAGER 'less'
 
 # ..................................................... Development environments
@@ -130,8 +130,12 @@ set -x GOOGLE_DEFAULT_CLIENT_SECRET no
 
 # nnn config
 set -x NNN_PLUG 'c:jump-subtree;d:jump-dotfiles;i:imgview;j:jump;J:jump-refresh;p:preview-tui'
-set -x NNN_BMS "b:/net/archive/home/shum/stow;d:/net/depot/dotfiles"
+set -x NNN_BMS "b:/net/media/ebooks/books;c:$HOME/.config;d:/net/depot/dotfiles;h:$HOME;p:/net/photos;r:/etc/sv;s:$HOME/stow;v:/net/media/videos"
+#      NNN_FCOLORS 'c1e2272e006033f7c6d6abc4'      change dir/exe colors
+set -x NNN_FCOLORS 'c1e2de28006033f7c627abc4'
+set -x LS_COLORS 'di=01;38;5;221:ex=00;38;5;40'  # match ls colors!
 set -x NNN_OPTS aeEfHoQx
+# set -x USE_SCOPE 1
 
 # .................................................................. Directories
 
