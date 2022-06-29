@@ -39,28 +39,27 @@ toggle_term() {
       fi
     fi
   else
-    # see term (urxvt)
-    $msg $@
+    $msg $@  # see term
   fi
 }
 
 # toggle application, note application specific exception handling
 toggle_app() {
-  # handle rox filer binary name
+  # handle binary / class name differences
   case $msg in
-  rox   ) app=ROX-Filer       ;;
+  rox       ) class=ROX-Filer ;;
   esac
-  if pgrep -lf ${app:-$msg} | grep -qv toggle ;then
+  # close application
+  if pgrep -lf ${class:-$msg} | grep -qv toggle ;then
     case $msg in
-    xpad    ) xpad --quit;      exit ;;  # xpad multiple windows shortcut
-    decorate) killall decorate; exit ;;
-    rox     ) killall $app;     exit ;;  # close method can hang dmenu
+    xpad    ) xpad --quit;    exit ;;  # xpad multiple windows shortcut
+    rox     ) killall $class; exit ;;  # close method can hang dmenu
     esac
-    app=${app:-$msg}
+    class=${class:-$msg}
     lock
     focus=true
-    winids=$(query instance $app)
-    [ "$winids" ] || winids=$(query title $app)
+    winids=$(query instance $class)
+    [ "$winids" ] || winids=$(query title $class)
     if [ "$winids" ] ;then
       for i in $winids ;do
         if ! close $i ;then
@@ -73,6 +72,7 @@ toggle_app() {
       focus $msg $@
     fi
     unlock
+  # launch application
   else
     focus $msg $@
   fi
