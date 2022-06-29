@@ -5,6 +5,17 @@
 
 # ....................................................................... tt-rss
 
+usage() { echo "usage: $(basename $0) tt-rss [config.php]"; exit 1; }
+
+CONFIG=/srv/http/tt-rss/config.php
+
+case $2 in
+''        ) ;;
+config.php) sed -i "/define('SINGLE_USER_MODE'/s/false/true/" $CONFIG
+            sed -i "/define('SELF_URL_PATH'/a\ \ define('_SKIP_SELF_URL_PATH_CHECKS', true);" $CONFIG ;;
+*         ) usage ;;
+esac
+
 service status postgresql | grep -q 'run:' && db=postgresql || db=mysql
 
 ifno 'create tt-rss database' || create=true
@@ -35,6 +46,6 @@ fi
 ditto INFO check '/etc/php/php.ini'
 ditto INFO install 'service enable php-fpm nginx -> reboot'
 ditto INFO http://localhost:8000/tt-rss/[install] '[ttrss, ttrss] [admin, password]'
-ditto INFO config.php 'SINGLE_USER_MODE true'
+ditto INFO config.php 'after http install, run "post_install tt-rss config.php"'
 
 # vim: set ft=sh: #
