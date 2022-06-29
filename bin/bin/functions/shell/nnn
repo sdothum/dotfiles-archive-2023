@@ -8,9 +8,9 @@
 
 # Usage: nnn TMUX | [path]
 
-NNN=/usr/local/bin/nnn    # nnn compiled with icons, see make_install nnn
-TDIR=/net/downloads/http  # default tmux directory
-[ -e $NNN ] || NNN=/bin/nnn
+NNN=/usr/local/bin/nnn           # nnn compiled with icons, see make_install nnn
+TDIR=/net/downloads/http         # default tmux directory
+[ -e $NNN ] || make_install nnn  # NNN=/bin/nnn
 
 # nnn config
 # export NNN_FIFO=/tmp/nnn:fifo                  # NNN_OPTS 'a' option
