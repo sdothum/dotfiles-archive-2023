@@ -6,9 +6,6 @@
 
 # ........................................................ Applications keybinds
 
-# hc keybind Super-Return             spawn toggle scratchpad
-# hc keybind Super-Control-Return     spawn term 'Terminal' FORTUNE VERTICAL tmux 'new-session -n ""'
-# hc keybind Super-$Mod-Return        spawn term 'Terminal' FORTUNE STACK VERTICAL tmux 'new-session -n ""'
 hc keybind Super-Return               spawn focus hlwm
 hc keybind Super-Control-Return       spawn focus hlwm raise
 hc keybind Super-$Mod-Return          spawn focus hlwm close
@@ -71,7 +68,6 @@ hc keybind Super-$Mod-Control-v       chain . spawn pkill '(mpv|omxplayer)' . em
 hc keybind Super-w                    spawn dmenu wiki
 hc keybind Super-Control-w            spawn dmenu wiki diary
 hc keybind Super-$Mod-w               spawn weather time
-# hc keybind Super-x                  spawn tmux_session 'nnn' env VISUAL=vim nnn -Pp /net/downloads/http
 hc keybind Super-x                    spawn toggle nnn TMUX
 hc keybind Super-z                    spawn toggle rox
 hc keybind Super-Control-z            spawn dmenu screensaver
