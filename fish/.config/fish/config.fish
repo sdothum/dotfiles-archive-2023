@@ -102,9 +102,6 @@ set -x XDG_DOWNLOAD_DIR /net/downloads/http
 set -x XDG_RUNTIME_DIR /tmp/runtime-$USER
 set -x NNTPSERVER news.sunnyusenet.com
 
-# tt-rss
-set -x SELF_URL_PATH 'http://luna:8000/tt-rss/'
-
 # ..................................................................... Defaults
 
 test -n $HTTP_PROXY 
