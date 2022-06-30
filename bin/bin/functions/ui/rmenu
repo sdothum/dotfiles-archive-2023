@@ -12,7 +12,6 @@
 #                     option - rofi options e.g. -filter <filter> -no-custom
 #
 # Note:
-#   - Persistent ncurses mode set with ~/.ncurses, see toggle ncurses
 #   - Temporary ncurses mode set with variable TERMINAL, see bin/dmenu
 #   - rofi matching method can be set with env variable "matching"
 
