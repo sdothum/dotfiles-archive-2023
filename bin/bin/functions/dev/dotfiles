@@ -9,7 +9,7 @@
 # .......................................................................... Git
 
 usage() {
-  echo "usage: $(basename $0) [<stowdir>] add <package>[/<filespec>]* | comment [<comment>] | edit | ignore | init | list | log | undo | rm <dir>"
+  echo "usage: $(basename $0) [<stowdir>] add [-f] <package>[/<filespec>]* | comment [<comment>] | edit | ignore | init | list | log | undo | rm <dir>"
   ditto rules "$(dirname $0)/.dotfiles:folders"
   exit 1
 }
@@ -91,7 +91,8 @@ unset pending
 case $1 in
 help   ) usage ;;
 ''     ) for i in $DOTFILES ;do add $i ;done ;;
-add    ) shift; force=-f; add $@ ;;
+add    ) shift; [ "$1" = '-f' ] && { force=-f; shift; }
+         add $@ ;;
 
 amend    |\
 comment) shift; DESC=$@
