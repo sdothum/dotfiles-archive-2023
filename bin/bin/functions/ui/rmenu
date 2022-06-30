@@ -49,8 +49,6 @@ outdent='   '
 
 # .......................................................................... GUI
 
-[ -e "$MENU" ] && window=MENU || window=STACK
-
 if [ -z $TERMINAL ] ;then
   if gui ;then
     display=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1)
@@ -143,26 +141,17 @@ rofi_stub() {
 }
 
 stdin=$(mktemp)
-stdout=$(mktemp)
-trap "rm -f $stdin $stdout" EXIT
-
+trap "rm -f $stdin" EXIT
 # ... | rmenu
 sed "s/^/$indent/; s/$outdent$(X)/$(X)/" >$stdin  # cache stdin
 
 # menu UI
 if [ $display ] ;then
-  if [ -e $NCURSES ] ;then
-    # escape movie title (year) parentheses and quotes for terminal wrappers (see alacritty and urxvt wrappers in ~/bin)
-    term "$(escape $title)" WAIT $window SHELL "cat $stdin | fZf $print --prompt=\\\"$(escape $prompt)  \\\" --query=\\\"$query\\\" >$stdout"
-    input=$(tail -1 $stdout)
-    [ -n "$input" ]
-  else
-    indent='          '
-    input=$(cat $stdin| rofi_stub $@)
-  fi
+  indent='          '
+  input=$(cat $stdin| rofi_stub $@)
 else
   input=$(cat $stdin | fZf $print --prompt="\"$prompt\"" | tail -1)
-  [ -n "$input" ]
+  [ -n "$input" ]  # see sh test below
 fi
 
 [ $? -ne 0 ] && exit 1
