@@ -27,8 +27,8 @@ hc keybind $Mod-Shift-q             chain . spawn kill -KILL $BROWSER . spawn qu
 hc keybind $Mod-Control-Shift-q     chain . spawn kill -KILL $BROWSER . spawn pkill -KILL -f startx
 hc keybind $Mod-Control-Shift-r     reload
 hc keybind $Mod-w                   chain . close_or_remove . emit_hook focus_window
-hc keybind $Mod-Return              spawn toggle scratchy
-hc keybind $Mod-Shift-Return        spawn toggle itchy
+hc keybind $Mod-Return              spawn toggle scratchpad
+hc keybind $Mod-Shift-Return        spawn toggle scratchpad note vim $HOME/tmp/scratchpad:note 
 hc keybind $Mod-Control-Return      spawn term 'term'
 hc keybind $Mod-Escape              spawn toggle focus
 hc keybind $Mod-Shift-Escape        spawn toggle focus fsplit

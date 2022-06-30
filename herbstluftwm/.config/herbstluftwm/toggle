@@ -48,6 +48,7 @@ toggle_app() {
   # handle binary / class name differences
   case $msg in
   rox       ) class=ROX-Filer ;;
+  scratchpad) class=$1        ;;  # see keybinds
   esac
   # close application
   if pgrep -lf ${class:-$msg} | grep -qv toggle ;then
