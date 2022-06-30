@@ -6,7 +6,7 @@
 
 # .................................................................. Title winid
 usage() {
-  echo "usage: query $(basename $0) <title>"
+  echo "usage: $(basename $0) title <title>"
   exit 1
 }
 

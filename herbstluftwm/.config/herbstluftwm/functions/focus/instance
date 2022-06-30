@@ -7,7 +7,7 @@
 # ............................................................... Focus instance
 
 usage() {
-  echo "usage: focus $(basename $0) <instance>"
+  echo "usage: $(basename $0) instance <instance>"
   exit 1
 }
 
