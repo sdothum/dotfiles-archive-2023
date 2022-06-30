@@ -26,7 +26,6 @@ hc keybind Super-5                    spawn sudo xbacklight =100
 hc keybind Super-6                    spawn sudo xbacklight +5
 hc keybind Super-equal                spawn dmenu calc
 hc keybind Super-Control-equal        spawn toggle plover
-hc keybind Super-BackSpace            spawn toggle ncurses
 hc keybind Super-apostrophe           spawn toggle conky
 hc keybind Super-Control-apostrophe   spawn toggle panel
 # hc keybind Super-F1                 spawn keymap toggle

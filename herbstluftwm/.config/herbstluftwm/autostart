@@ -128,7 +128,6 @@ is multihead || draw panel  # normally the responsibilty of draw root but requir
 # pseudo screen saver
 # cpu arm || conky clock auto
 conky clock auto
-rm -f $NCURSES
 
 sleep 4  # what dynamic window handling?
 [ -e $DYNAMIC ] && toggle focus status || toggle focus
