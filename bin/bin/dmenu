@@ -55,8 +55,7 @@ unquote()  { echo $@ | sed "s/'//g"; }        # remove single quotes for subword
 # if not sourced, execute dmenu message
 trap 'unset TERMINAL' EXIT
 if [ $(basename $0) = dmenu ] ;then
-  [ -t 1 ] && export TERMINAL=true
-  [ "$1" = '-' ] && { unset TERMINAL; shift; }  # toggle rofi from terminal invocation (for testing)
+  [ "$1" = '-' ] && shift || { [ -t 1 ] && export TERMINAL=true; }  # "-" toggle rofi from terminal invocation (for testing)
   msg=$1
   # unhide desktop
   console || { is multihead || conky clock off; }

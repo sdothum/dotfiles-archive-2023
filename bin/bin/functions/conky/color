@@ -6,7 +6,7 @@
 
 # ................................................................. Conky colorN
 
-usage() { echo "usage: conky $(basename $0) <#> (of color#)"; exit 1; }
+usage() { echo "usage: $(basename $0) color <#> (of color#)"; exit 1; }
 
 [ $1 ] || usage
 

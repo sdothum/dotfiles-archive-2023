@@ -6,7 +6,7 @@
 # ........................................................................ Conky
 
 # btrfs filesystem disk free stats
-usage() { echo "usage: conky $(basename $0) fs [decimal | percent]"; exit 1; }
+usage() { echo "usage: $(basename $0) btrfs fs [decimal | percent]"; exit 1; }
 
 [ $1 ] || usage
 

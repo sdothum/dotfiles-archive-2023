@@ -8,6 +8,7 @@
 
 # gpaste history add not available on raspberry pi, and xsel hangs(?) script
 # cpu arm && echo -n "$@" | xsel -b || gpaste-client add "$@"
-cpu arm || gpaste-client add "$@"
+cpu arm && exit
+[ $1 ] && gpaste-client add "$@" || gpaste-client | head -1 | cut -d' ' -f2
 
 # vim: set ft=sh: #

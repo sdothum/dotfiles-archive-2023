@@ -23,16 +23,10 @@ init() {
 password() {
   if [ $# -eq 1 ] ;then
     if password=$($PASS $1 2>/dev/null) ;then
-      # interactive mode?
-      if ps -ef | grep $PPID | grep -q $SHELL ;then
-        [ -e $PASSWORD_STORE_DIR/username/${1#*/}.gpg ] && username=$($PASS username/${1#*/}) || username=$($PASS username/default)
-        echo "$username\n$password"
-        notify $1 "$username\n$password"
-        $PASS show --clip $1
-      else
-        echo $password
-      fi
-      exit
+      [ -e $PASSWORD_STORE_DIR/username/${1#*/}.gpg ] && username=$($PASS username/${1#*/}) || username=$($PASS username/default)
+      echo "$username\n$password"
+      notify $1 "$username\n$password"
+      clipboard $password
     else
       echo "Undefined password"
     fi
