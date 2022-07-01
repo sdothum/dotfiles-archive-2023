@@ -14,8 +14,8 @@ TDIR=/net/downloads/http         # default tmux directory
 
 # nnn config
 # export NNN_FIFO=/tmp/nnn:fifo                  # NNN_OPTS 'a' option
-export NNN_PLUG='c:jump-subtree;d:jump-dotfiles;e:eject;i:imgview;j:jump;J:jump-refresh;p:preview-tui'
-export NNN_BMS="b:/net/media/ebooks/books;c:$HOME/.config;D:/net/depot/dotfiles;d:/net/downloads/http;h:$HOME;k:/run/media/shum/KOBOeReader/.kobo;m:/run/media/shum;p:/net/photos;r:/etc/sv;S:$HOME/sandbox;s:$HOME/stow;v:/net/media/videos"
+export NNN_PLUG='d:jump-dotfiles;e:eject;i:imgview;j:jump;J:jump-refresh;p:preview-tui'
+export NNN_BMS="a:/net/archive/home/shum/stow;b:/net/media/ebooks/books;c:$HOME/.config;D:/net/depot/dotfiles;d:/net/downloads/http;h:$HOME;k:/run/media/shum/KOBOeReader/.kobo;m:/run/media/shum;p:/net/photos;r:/etc/sv;S:$HOME/sandbox;s:$HOME/stow;v:/net/media/videos"
 #      NNN_FCOLORS 'c1e2272e006033f7c6d6abc4'      change dir/exe colors
 export NNN_FCOLORS='c1e2de28006033f7c627abc4'
 export LS_COLORS='di=01;38;5;221:ex=00;38;5;40'  # match nnn colors!

@@ -11,6 +11,6 @@ name=$(find $store -follow -name '*.gpg' | sed -r "s,.*password-store/(.*).gpg$,
     sort | column -s^ -t | rmenu 'Password' -no-custom) || exit
 
 name=$(echo $name | sed -r "s,([^ ]*) *$SEP *([^ ]*),\2/\1,")
-term 'Password' pass $name
+pass $name
 
 # vim: set ft=sh: #

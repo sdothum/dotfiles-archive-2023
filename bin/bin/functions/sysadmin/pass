@@ -24,9 +24,9 @@ password() {
   if [ $# -eq 1 ] ;then
     if password=$($PASS $1 2>/dev/null) ;then
       [ -e $PASSWORD_STORE_DIR/username/${1#*/}.gpg ] && username=$($PASS username/${1#*/}) || username=$($PASS username/default)
-      echo "$username\n$password"
+      [ -t 1 ] && echo "$username\n$password"
       notify $1 "$username\n$password"
-      clipboard $password
+      $PASS show --clip $1 >/dev/null 2>&1  # suppress message will clear warning
     else
       echo "Undefined password"
     fi
