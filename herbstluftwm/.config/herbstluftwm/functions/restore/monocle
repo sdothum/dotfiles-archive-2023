@@ -14,7 +14,7 @@ if is primary ;then
     [ -e $MONOCLE ] && [ -e $MONOCLE:$1 ] && exit
     if [ -e $MONOCLE ] && [ ! -e $MONOCLE:$1 ] ;then
       rm -f $MONOCLE
-    else [ ! -e $MONOCLE ] && [ -e $MONOCLE:$1 ]
+    elif [ ! -e $MONOCLE ] && [ -e $MONOCLE:$1 ] ;then
       cp $MONOCLE:$1 $MONOCLE
     fi
     draw refresh force

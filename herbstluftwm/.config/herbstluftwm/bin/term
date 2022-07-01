@@ -72,7 +72,7 @@ done
 
 [ -z "$name" ] && [ "$title" ] && name="$NAME ${title#* }"
 
-if [ $stack ] ;then $TERM $theme $title $name $geometry $cmd &
+if [ $stack ] ;then       $TERM $theme $title $name $geometry $cmd &
 else                focus $TERM $theme $title $name $geometry $cmd
 fi
 

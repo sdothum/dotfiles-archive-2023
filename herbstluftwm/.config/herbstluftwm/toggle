@@ -42,7 +42,7 @@ toggle_term() {
     $msg $@  # see term
   fi
 }
-
+set -x
 # toggle application, note application specific exception handling
 toggle_app() {
   # handle binary / class name differences

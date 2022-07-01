@@ -8,6 +8,6 @@
 
 # Usage: toggle scratchpad [name [command]]
 
-[ $1 ] && tmux_session $@ || tmux_session scratchpad
+[ $1 ] && { tmux_session $@; true; } || tmux_session scratchpad
 
 # vim: set ft=sh: #
