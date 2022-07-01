@@ -28,7 +28,7 @@ usage() {
                [english | latin+greek | ligature <name>]
                [double] [quasi-proportional] [space <decimal>] [ emdash <decimal> ]
                [grotesque (default) | atkinson | geometric | jost]
-               [a-single | b-corner | D-serifless | d-tailed | d-toothless | f-extended | G-toothed | I-serifless | j-serifed | p-eared | p-serifed | Q-crossing | Q-detached | Q-hook | q-hook | q-tailed | at-tall | 0-split | paren-flat]*
+               [a-single | b-corner | D-serifless | d-tailed | d-toothless | f-extended | G-toothed | I-serifless | i-serifed | j-serifed | p-eared | p-serifed | Q-crossing | Q-detached | Q-hook | q-hook | q-tailed | at-tall | 0-split | paren-flat]*
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
                [family <name> | <prefix>Monolexic]
                [cap [-+]<decimal> | extended]
@@ -137,6 +137,7 @@ variant() {
     G-toothed  ) glyph capital_g=toothed-serifless-hooked ;;
     I-serifed  ) glyph capital_i=serifed ;;
     I-serifless) glyph capital_i=serifless ;;
+    i-serifed  ) glyph i=serifed ;;
     J-serifless) glyph capital_j=serifless ;;
     j-serifed  ) glyph j=flat-hook-serifed ;;
     j-serifless) glyph j=serifless ;;
@@ -198,6 +199,7 @@ ebook()    { variant asterisk; no_litigation=true; family i$(echo $1 | sed 's/.*
 
 initial()  { [ $ebook ] && family=$(echo $family | sed -r "s/^(.*)([A-Z][^ ]*)/$1\2/"); }  # prefix family
 ligature() { [ $1 ] || return 1; [ $1 = default ] && ligature=default-calt || ligature=$1; inherits="inherits = '$ligature'"; }
+spacing()  { spacing=$1; ditto 'spacing' $1; }
 
 grotesque    # default typeface
 leading $leading
@@ -205,7 +207,7 @@ no_litigation=false
 mono=--mono  # nerdfont (pango no longer supports double width display)
 shape 500
 sb 0.7000
-spacing=term
+spacing term
 
 while [ $1 ] ;do
   case "$1" in
@@ -221,8 +223,8 @@ while [ $1 ] ;do
   latin+greek ) latin_greek;  ditto exclude_chars "$1" ;;
   ligature    ) ligature $2  || usage; shift ;;
   double      ) unset mono ;;
-  quasi*      ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi${family#*Mono}; variant I-serifed ;;
-  dyslexic    ) shape $expanded; sb 0.7150; leading 1.5000; space 2; emdash 2; width=135; ebook monolexic ;;
+  quasi*      ) spacing quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi$(echo $family | sed -r 's/.*(Hyper|Mono|Quasi)//'); variant I-serifed ;;
+  dyslexic    ) shape $expanded;            sb 0.7150; leading 1.5000; space 2; emdash 2; width=135; ebook monolexic ;;
   # font
   a-single    ) variant a-single ;;
   b-corner    ) variant b-corner p-serifed ;;         # alternate b p dyslexic glyphs
@@ -232,6 +234,7 @@ while [ $1 ] ;do
   f-extended  ) variant f-extended ;;                 # unolexic (homage to universal grotesk)
   G-toothed   ) variant G-toothed ;;
   I-serifless ) variant I-serifless; initial ;;       # combined minimal stroke glyphs
+  i-serifed   ) variant i-serifed ;;
   j-serifed   ) variant j-serifed ;;
   p-eared     ) variant d-toothless p-eared ;;
   p-serifed   ) variant p-serifed; sb 0.7650 ;;       # add air for serif corner
@@ -250,20 +253,20 @@ while [ $1 ] ;do
   family      ) family $2    || usage; shift ;;
   *Monolexic  ) initial ${1%Monolexic} ;;
   # font tweaks
-  cap         ) cap $2       || usage; shift ;;                  # H height (affects descender as well)
-  kindle      ) leading 1.4185 ;;                                # because only 3 space settings (this is maximum value with proper menu typeface)
-  kobo        ) leading 1.4185 ;;                                # any value >= 1 (but have retained setting for interested kindle users)
-  book+regular) adjust="book+regular" ;;                         # see fforge bookweight
-  leading     ) leading $2   || usage; shift ;;                  # line spacing > 1.0
+  cap         ) cap $2       || usage; shift ;;                                 # H height (affects descender as well)
+  kindle      ) leading 1.4185 ;;                                               # because only 3 space settings (this is maximum value with proper menu typeface)
+  kobo        ) leading 1.4185 ;;                                               # any value >= 1 (but have retained setting for interested kindle users)
+  book+regular) adjust="book+regular" ;;                                        # see fforge bookweight
+  leading     ) leading $2   || usage; shift ;;                                 # line spacing > 1.0
   noround     ) unset sb ;;
-  sb          ) sb $2        || usage; shift ;;                  # side bearing (spacing)
-  shape       ) shape $2     || usage; shift ;;                  # cell width
-  space       ) space $2     || usage; shift ;;                  # space width
-  emdash      ) emdash $2    || usage; shift ;;                  # emdash width
-  weight      ) weight $2 $3 || usage; shift 2 ;;                # custom font weight
-  # webfont   ) weight 500 medium; initial w; regular=medium ;;  # heavier font for web usage
+  sb          ) sb $2        || usage; shift ;;                                 # side bearing (spacing)
+  shape       ) shape $2     || usage; shift ;;                                 # cell width
+  space       ) space $2     || usage; shift; [ $space = 1 ] && unset space ;;  # space width
+  emdash      ) emdash $2    || usage; shift ;;                                 # emdash width
+  weight      ) weight $2 $3 || usage; shift 2 ;;                               # custom font weight
+  # webfont   ) weight 500 medium; initial w; regular=medium ;;                 # heavier font for web usage
   webfont     ) initial w ;;
-  xheight     ) xheight $2   || usage; shift ;;                  # height of x (experimental for larger fontsizes)
+  xheight     ) xheight $2   || usage; shift ;;                                 # height of x (experimental for larger fontsizes)
   *           ) usage ;;
   esac
   shift
