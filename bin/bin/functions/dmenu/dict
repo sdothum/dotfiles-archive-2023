@@ -34,7 +34,7 @@ while hints=$(dict "$word" >/dev/null 2>&1 | cut -d: -f2 | xargs -n1 | sort -uf)
   # "No definitions found for $word" sorted above, hence, ordered match..
   echo "$hints" | tr '\n' ' ' | egrep -q 'definitions.*for.*found.*No'
   if [ $? -eq 0 ] ;then word=$(echo | rmenu "No definitions found for \"$word\"") || exit
-  else                  word=$(echo "$hints" | rmenu 'Spelling Hints') || exit
+  else                  word=$(echo "$hints" | rmenu 'Spelling Hints')            || exit
   fi
   word=$(unquote $word)
 done

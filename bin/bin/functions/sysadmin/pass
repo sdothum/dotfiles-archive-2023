@@ -10,8 +10,12 @@ usage() { echo "usage: $(basename $0) <name> | a'dd <name> <password> | eX'port 
 
 PASSWORD_STORE_DIR=${PASSWORD_STORE_DIR:-$HOME/.password-store}
 PASS=/usr/bin/pass
+PINENTRY=/usr/bin/pinentry
 XDIR=$HOME/sandbox
 image=$(basename $0).sh
+
+# force desktop passphrase ui
+ls -l $PINENTRY 2>/dev/null | grep -q 'pinentry-gtk-2' || sudo ln -sf /usr/bin/pinentry-gtk-2 /usr/bin/pinentry
 
 init() {
   ifno 'initialize password store' && exit 1

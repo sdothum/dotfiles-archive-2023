@@ -61,7 +61,7 @@ if [ $debug ] ;then
   read input
 fi
 
-if [ -z $FEELSLIKE ] ;then [ -n "$CURRENT" ] && echo "${CURRENT%, }$sep${TEMPERATURE}°" || echo "${TEMPERATURE}°"
+if [ -z $FEELSLIKE ] ;then [ -n "$CURRENT" ] && echo "${CURRENT%, }$sep${TEMPERATURE}°"                     || echo "${TEMPERATURE}°"
 else                       [ -n "$CURRENT" ] && echo "${CURRENT%, }$sep${TEMPERATURE}° Feels ${FEELSLIKE}°" || echo "${TEMPERATURE}° Feels ${FEELSLIKE}°"
 fi
 
