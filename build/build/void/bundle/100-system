@@ -37,7 +37,7 @@
   gnome-keyring
   gnupg2
 d pass
-  pinentry-gtk  # pass dependency
+d pinentry-gtk  # for x11 desktop passphrase
 # polkit-gnome
 
 
