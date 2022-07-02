@@ -13,7 +13,7 @@
 # crontab: 0 0 * * * [ -s /tmp/scrub ] && <path>/scrub $(cat /tmp/scrub)
 
 usage() { 
-  echo "usage: $(basename $0) a'll | boot | root | net | share | backup"
+  echo "usage: $(basename $0) a'll | [[-] boot | root | net | share | backup]"
   echo "       $(basename $0) c'ancel | s'tatus | I'nitialize  [boot | root | net | share | backup]"
   exit 1
 }
@@ -26,13 +26,13 @@ CRON=/tmp/scrub  # see crontab -l
 
 # butterfs maintenance
 volume() {
-  case $@ in
-  boot  ) echo /boot ;;
-  root  ) echo /boot ;;
-  net   ) echo /net ;;
-  share ) echo /net ;;
+  case $1 in
+  boot  ) echo /boot   ;;
+  root  ) echo /boot   ;;
+  net   ) echo /net    ;;
+  share ) echo /net    ;;
   backup) echo /backup ;;
-  *     ) echo $@ ;;
+  *     ) ;;
   esac
 }
 
@@ -53,8 +53,16 @@ show() {
   rm -f $CRON  # remove triggered cron scrub, see crontab -l
 }
 
+# schedule cron scrub, see crontab
+if [ "$1" = '-' ] ;then
+  volume $2 >$CRON
+  [ -s $CRON ]|| { rm $CRON; usage; }
+  ditto 'scheduled' "scrub $2"
+  exit
+fi
+
 case $1 in
-'') [ -e $CRON ] && { rm -f $CRON $CRON:.log; } || usage ;;  # assumes scrub:<fs>.log crontab file naming
+'') [ -e $CRON ] && { ditto "$CRON" $(cat $CRON); ifno "cancel scrub?" || rm $CRON; true; } || usage ;;  # assumes scrub:<fs>.log crontab file naming
 a*) scrub boot; scrub share; scrub backup ;;
 c*) sudo btrfs scrub cancel $(volume $2) ;;
 I*) sudo rm -f /var/lib/btrfs/*.* ;;
@@ -63,7 +71,7 @@ s*) tail -f $CRON:$2.log ;;
 * ) nohup sudo btrfs scrub start -Bd $(volume $1) >/dev/null 2>&1 &
     log=$CRON:$1.log
     show $1 >$log &
-    [ $USER != root ] && { if pstat Xorg ;then term "$1" "tail -f $log" ;else tail -f $log ;fi } ;;
+    if pstat Xorg ;then alacritty --title "$1" -e "tail -f $log" ;else tail -f $log ;fi ;;
 esac
 
 # vim: set ft=sh: #

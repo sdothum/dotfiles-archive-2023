@@ -199,7 +199,7 @@ ebook()    { variant asterisk; no_litigation=true; family i$(echo $1 | sed 's/.*
 
 initial()  { [ $ebook ] && family=$(echo $family | sed -r "s/^(.*)([A-Z][^ ]*)/$1\2/"); }  # prefix family
 ligature() { [ $1 ] || return 1; [ $1 = default ] && ligature=default-calt || ligature=$1; inherits="inherits = '$ligature'"; }
-spacing()  { spacing=$1; ditto 'spacing' $1; }
+spacing()  { spacing=$1; }
 
 grotesque    # default typeface
 leading $leading
@@ -219,8 +219,8 @@ while [ $1 ] ;do
   heading     ) shape 650; sb 0.8000; leading 1.2500; weight 300 light; ebook monolegible ;;  # web heading
   menu        ) leading 1.5000; sb 0.9000; build=-menu ;;                                     # rofi menu
   proof       ) leading 2.0000; sb 0.8000; build=${build}-proof ;;                            # for pure writing :)
-  english     ) english_only; ditto exclude_chars "$1" ;;
-  latin+greek ) latin_greek;  ditto exclude_chars "$1" ;;
+  english     ) english_only; ditto char_set "$1" ;;
+  latin+greek ) latin_greek;  ditto char_set "$1" ;;
   ligature    ) ligature $2  || usage; shift ;;
   double      ) unset mono ;;
   quasi*      ) spacing quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi$(echo $family | sed -r 's/.*(Hyper|Mono|Quasi)//'); variant I-serifed ;;
@@ -276,6 +276,7 @@ done
 [ $family ]  || family=Iosevka$build
 [ $mono ]    || family=${family}-double
 
+ditto spacing "$spacing"
 ditto override "$leading"
 ditto override "$shape" 
 ditto override "$sb"
