@@ -234,8 +234,11 @@ max       |\
 grid      |\
 halves    |\
 thirds    |\
+one2two   |\
 quarters  |\
 vertical  |\
+one2three |\
+two2three |\
 horizontal) [ -e $LOCK ] || herbstclient lock  # may already be in lock state, see toggle monocle
             $(layout $1) $TAG
             notify "Layout $TAG" "$1"

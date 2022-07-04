@@ -22,7 +22,7 @@ esac
 # flat ui panel refresh (border width 0 suppresses pulsing borders)
 set_layout() {
   herbstclient set_layout $1
-  touch_panel
+  touch_panel &
 }
 
 restore tiled
