@@ -25,7 +25,7 @@ DEPOT=/net/depot
 GLYPH=b-rounded
 
 touch $MAKE_INSTALL
-trap "rm -f $MAKE_INSTALL" EXIT
+trap "rm -f $MAKE_INSTALL; pkill -f iosevka" EXIT INT 
 shift
 
 glyph() { unset b d p; eval $1=$2; GLYPH=$2; }
