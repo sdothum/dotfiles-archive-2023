@@ -6,11 +6,13 @@
 
 # ...................................................................... Browser
 
+BROWSER=/usr/bin/surf
+
 if [ "$1" ] ;then
-  /usr/bin/surf "$@"
+  $BROWSER "$@" &
 else
   pong $SERVER && TTRSS=$SERVER || TTRSS=localhost
-  /usr/bin/surf http://$TTRSS:8000/tt-rss/ &
+  $BROWSER http://$TTRSS:8000/tt-rss/ &
 fi
 
 # vim: set ft=sh: #

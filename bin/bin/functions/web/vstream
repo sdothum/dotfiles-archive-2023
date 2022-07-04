@@ -8,6 +8,7 @@
 
 usage() { echo "usage: $(basename $0)  netflix | prime"; exit 0; }
 
+BROWSER=firefox
 BROWSER=chromium
 options='-s statusbar.hide true'  # see web/qutebrowser
 delay=1
@@ -24,17 +25,22 @@ void && pulse
 videomode on
 # is display -1920 && draw layout max || { is display -=2560 && draw layout 2:3 || draw layout spread; }
 
-RUNOPT=$options $BROWSER $SERVICE &
 if [ $BROWSER = chromium ] ;then
+  RUNOPT=$options $BROWSER $SERVICE &
   xdotool search --sync --onlyvisible --name 'Chromium'
-  # set right full "window"
-  xdotool key Alt+Shift+s
+  xdotool key Alt+Shift+s  # set right full "window"
   sleep $delay
   xdotool key F11
   sleep $delay
-  # xdotool key Alt+f
-  # sleep $delay
   xdotool key Alt+space
+elif [ $BROWSER = firefox ] ;then
+  $BROWSER $SERVICE &
+  sleep 4
+  xdotool search --sync --onlyvisible --class 'Firefox'
+  xdotool key Alt+Shift+s  # set right full "window"
+  sleep $delay
+  xdotool key Control+Shift+period
+  switch layout max
 fi
 herbstclient shift_edge right
 pwait "$SERVICE"
