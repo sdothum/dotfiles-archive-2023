@@ -12,7 +12,11 @@ video='play kodi vstream'
 USENET_CRAWLER=https://www.usenet-crawler.com/movies?t=2040
 NZBGET=http:///$SERVER:6789/nzbget:nzbget/
 BROWSER=surf
+NFSMOUNT=/srv/nfs4/net
 root=true
+
+# nfs check
+[ -e ${NFSMOUNT}/media/videos/series ] || { notify critical 'nfs error' '/net/media unavailable'; exit 1; }
 
 # meta dmenu menu!
 media=$(previous media)
