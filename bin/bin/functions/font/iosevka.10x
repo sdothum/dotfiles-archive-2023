@@ -195,7 +195,7 @@ space()    { space=$(real $1); }
 emdash()   { emdash=$(real $1); }
 ebook()    { variant asterisk; no_litigation=true; family i$(echo $1 | sed 's/.*/\u&/'); regular=book; ebook=true; }
 
-initial()  { [ $ebook ] && family=$(echo $family | sed -r "s/^(.*)([A-Z][^ ]*)/$1\2/"); }  # prefix family
+initial()  { family=$(echo $family | sed -r "s/^(.*)([A-Z][^ ]*)/$1\2/"); }  # prefix family
 ligature() { [ $1 ] || return 1; [ $1 = default ] && ligature=default-calt || ligature=$1; inherits="inherits = '$ligature'"; }
 spacing()  { spacing=$1; }
 

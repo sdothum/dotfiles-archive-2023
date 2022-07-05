@@ -117,7 +117,7 @@ version() { sed 's|^.*/||; s/^[a-zA-Z-]*//; s/.x.*//'; }  # trim path*, package 
 latest()  { package=$(echo $1 | sed 's/-[0-9].*//'); xbps-query -Rs "$package-" | grep " $package-[0-9]" | cut -d' ' -f2 | version; }
 cached()  { package=$(echo $1 | sed 's/-[0-9].*//'); xb h "$package-" | grep "$package-[0-9]" | tail -1 | version; }
 status()  { current=$(echo $1 | version); latest=$(latest $1); cached=$(cached $1); [ "$cached" != "$latest" ] && { [ "$current" = "$cached" ] || echo -n "$NOCOLOR$cached "; echo "$__RED[$latest]"; } || echo "$NOCOLOR$latest"; }
-
+set -x
 case $action in
 backup    ) rsync $CACHE $BACKUP ;;
 check     ) ditto xbps 'checking database..'; sudo xbps-pkgdb -a 2> >(egrep -v 'ERROR: (php-fpm|preload):') ;;  # suppress hash mismatch (bash redirect syntax)
@@ -136,7 +136,7 @@ requiredby) xbps-query -X $package ;;
 search    ) xbps-query -Rs $options $package | a $package ;;
 sync      ) sudo xbps-install $yes $options $package ;;
 update    ) sudo xbps-install $yes $options -u $package ;;
-upgrade   ) sudo xbps-install -y -u xbps | grep -q 'is up to date' || exec xb U; sudo xbps-install $options -u; upgrade_actions; xb H ;;
+upgrade   ) sudo xbps-install -y -u xbps | grep -q 'is up to date' || exec xb U; sudo xbps-install $options -u; upgrade_actions; xb H ;;  # 2 stage upgrade!
 unhold    ) [ $pkgver ] && { sudo xbps-pkgdb -m unhold $options $package; ditto unhold "$pkgver"; } ;;
 esac
 
