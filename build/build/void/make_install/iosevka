@@ -7,7 +7,7 @@
 
 usage() { 
   echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [family <name>]
-                            [D-serifless | I-serifless | Q-detached | Q-hook | a-single | b-rounded | d-tailed | d-toothless | f-extended | p-eared | p-serifed | q-hook | at-tall | 0-split | paren-flat | cap <parm> | space <parm> | book+regular | latin+greek]*
+                            [D-serifless | I-serifless | Q-crossing | Q-detached | Q-hook | a-single | b-rounded | d-tailed | d-toothless | f-extended | p-eared | p-serifed | q-hook | at-tall | 0-split | paren-flat | cap <parm> | space <parm> | book+regular | latin+greek]*
                             [[version 10x | 15x] -- <opions>*]"
   exit 1
 }
@@ -15,7 +15,9 @@ usage() {
 # e.g. with optional glyph variants..
 #        make_install iosevka kobo                                               # default kobo fonts
 #        make_install iosevka kobo a-single f-extended I-serifless family aFont  # custom e-ink font
-#        make_install iosevka I-serifless f-extended at-tall                     # custom desktop fonts
+#        make_install iosevka                                                    # default desktop fonts
+#        make_install iosevka I-serifless f-extended at-tall                     # grotesk style desktop fonts
+#        make_install iosevka I-serifless a-single at-tall cap extended          # elementary style desktop fonts
 #        make_install iosevka -- I-serifless family forCoding                    # single custom font, see font/iosevka
 #        make_install iosevka version 10x -- dyslexic kobo english I-serifless f-extended q-hook cap extended family Grotesk  # single custom ebook font with extended cap height
 
@@ -41,6 +43,7 @@ while [ $1 ] ;do
   case $1 in
   D-serifless ) D=D-serifless ;;
   I-serifless ) I=I-serifless ;;               # source code variant
+  Q-crossing  ) Q=Q-crossing ;;
   Q-detached  ) Q=Q-detached ;;
   Q-hook      ) Q=Q-hook ;;
   a-single    ) a=a-single ;;
@@ -90,19 +93,19 @@ update() {
   done
 }
 
-options() { echo $@ $D $I $Q $a $b $d $f $p $q $zero; }  # list
+options() { echo $D $I $Q $a $b $d $f $p $q $zero $at $paren $adjust $cap $sb $@; }  # list
 
 # family [options]*
 e_ink() {
   name=$1
   shift
-  iosevka dyslexic $ereader ${language:-english} $(options $@) $adjust $cap $sb $space family $name
+  iosevka dyslexic $ereader ${language:-english} $(options $@) $space family $name
   update $GLYPH $name
 }
 
-dfont() { iosevka expanded             $(options $@) q-hook $at $paren; }
+dfont() { iosevka expanded             $(options $@) q-hook; }
 wfont() { iosevka english I-serifless  $(options $@) q-hook; }
-efont() { iosevka ${language:-english} $(options $@) q-hook $adjust; }
+efont() { iosevka ${language:-english} $(options $@) q-hook; }
 
 if [ $family ] ;then
   version 10x
