@@ -301,15 +301,15 @@ currently() {
 panel() {
   while read -r line ;do
     case $line in
-    S*       ) currently                     ;;  # clock based info
-    X*       ) active_window; desktops       ;;
-    C*       ) [ "${line#?}" = '  0%' ] || cpu_usage=${line#?}; cpu_stat ;;  # ignore 0%
-    T*       ) cpu_temp=${line#?};  cpu_stat ;;
-    # M*     ) mem_usage=$(echo ${line#?} | sed 's/..M/M/'); cpu_stat ;;
-    # M*     ) mem_usage=$(echo ${line#?} | sed 's/..M/ᴹ/; s/G/ᴳ/'); cpu_stat ;;
-    M*       ) mem_usage=$(echo ${line#?} | sed 's/..M/⠍/; s/G/⠛/'); cpu_stat ;;
-    !*       ) echo "$cpu_usage" >$STAT:cpu; echo "$cpu_temp" >$STAT:temp; echo "$mem_usage" >$STAT:mem ;;  # save stats for draw root redraw
-    *_changed) desktops ;;
+    S*        ) currently                     ;;  # clock based info
+    X*        ) active_window; desktops       ;;
+    C*        ) [ "${line#?}" = '  0%' ] || cpu_usage=${line#?}; cpu_stat ;;  # ignore 0%
+    T*        ) cpu_temp=${line#?};  cpu_stat ;;
+    # M*      ) mem_usage=$(echo ${line#?} | sed 's/..M/M/'); cpu_stat ;;
+    # M*      ) mem_usage=$(echo ${line#?} | sed 's/..M/ᴹ/; s/G/ᴳ/'); cpu_stat ;;
+    M*        ) mem_usage=$(echo ${line#?} | sed 's/..M/⠍/; s/G/⠛/'); cpu_stat ;;
+    !*        ) echo "$cpu_usage" >$STAT:cpu; echo "$cpu_temp" >$STAT:temp; echo "$mem_usage" >$STAT:mem ;;  # save stats for draw root redraw
+    *_changed*) active_window; desktops ;;
     esac
     
     [ $MUSL ] && { line=$(xtitle -f 'X%s'); active_window; desktops; }  # see below
