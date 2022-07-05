@@ -8,6 +8,7 @@ conky.config = {
 	-- font = 'Noto Sans Mono:size=24', conky.text = [[ ${voffset 493}
   -- font = 'Major Mono Display:size=24',
   font = 'Unolexic:size=20',
+  font = 'elementary:size=20',
 	-- gap_x = 0,
 	-- new xorg doesn't center on primary monitor
 	gap_x = -1680,

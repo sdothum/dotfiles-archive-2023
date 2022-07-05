@@ -8,6 +8,7 @@ conky.config = {
 	-- font = 'Noto Sans Mono:size=18', conky.text = [[ ${voffset 362}
 	-- font = 'Major Mono Display:size=18',
 	font = 'Unolexic:size=16',
+	font = 'elementary:size=16',
 	gap_x = 0,
 	gap_y = 0,
   maximum_width = 1920,
