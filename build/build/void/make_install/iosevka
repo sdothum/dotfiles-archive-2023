@@ -7,7 +7,7 @@
 
 usage() { 
   echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [family <name>]
-                            [D-serifless | I-serifless | Q-crossing | Q-detached | Q-hook | a-single | b-rounded | d-tailed | d-toothless | f-extended | p-eared | p-serifed | q-hook | at-tall | 0-split | paren-flat | cap <parm> | space <parm> | book+regular | latin+greek]*
+                            [D-serifless | I-serifless | Q-crossing | Q-detached | Q-hook | a-single | b-rounded | d-tailed | d-toothless | f-extended | p-eared | p-serifed | q-hook | at-tall | 0-split | paren-flat | [cap off | <parm>] | space <parm> | book+regular | latin+greek]*
                             [[version 10x | 15x] -- <opions>*]"
   exit 1
 }
@@ -25,6 +25,7 @@ MAKE_INSTALL=/tmp/iosevka:make_install
 SRCDIR=$HOME/bin/functions/font
 DEPOT=/net/depot
 GLYPH=b-rounded
+cap='cap extended'  # new make_install default, "cap off" to disable
 
 touch $MAKE_INSTALL
 trap "rm -f $MAKE_INSTALL; pkill -f iosevka" EXIT INT 
@@ -59,7 +60,7 @@ while [ $1 ] ;do
   paren-flat  ) paren=paren-flat ;;            # source code variant
   book+regular) adjust=book+regular ;;
   latin+greek ) language=latin+greek ;;
-  cap         ) [ $2 ] && { cap="$1 $2"; shift; } || usage ;;
+  cap         ) [ $2 ] && { [ $2 = 'off' ] && unset cap || cap="$1 $2"; shift; } || usage ;;
   space       ) [ $2 ] && { space="$1 $2"; shift; } || usage ;;
   source-only ) source_only=true ;;
   kindle      ) ereader=$1; sb='sb 0.6150' ;;  # side bearing difference to kobo's font rendering
