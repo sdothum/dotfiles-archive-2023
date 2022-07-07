@@ -141,7 +141,7 @@ vps() {
   TDT=/srv/http/thedarnedestthing.com
   APPLICATION=$TDT/application
   sudo touch $APPLICATION/log/restart.txt
-  trace 'update => thedarnedestthing.com:/application'
+  trace -- 'update => thedarnedestthing.com:/application'
   rsync -L --delete --exclude=vimwiki $exclude_http_local $APPLICATION thedarnedestthing.com:$TDT/
   rsync -r --delete $APPLICATION/thedarnedestthing.db thedarnedestthing.com:$APPLICATION/
   rsync -r --delete $APPLICATION/log/restart.txt thedarnedestthing.com:$APPLICATION/log/
@@ -151,12 +151,12 @@ vps() {
   ssh thedarnedestthing.com sudo /etc/init.d/nginx restart
 }
 
-backup() { for i in /net/* ;do trace backup $i; rsync -r --delete --exclude='.cache' $i /backup/ ;done }
+backup() { for i in /net/* ;do trace -- backup $i; rsync -r --delete --exclude='.cache' $i /backup/ ;done }
 
 home() {
   [ $1 ] && HOME=/home/$1 || { ifyes "backup $HOME to /net/archive" || exit; }
   mkdir -pv /net/archive/home || exit 1
-  trace backup $HOME
+  trace -- backup $HOME
   rsync -r --delete --exclude='VirtualBox VMs' $exclude_trash $HOME /net/archive/home/
 }
 
@@ -170,7 +170,7 @@ depot() {
 
 wiki () {
   ifno 'recover thedarnedestthing.com:/vimwiki' && exit
-  trace "thedarnedestthing.com:/vimwiki => $(hostname)"
+  trace -- "thedarnedestthing.com:/vimwiki => $(hostname)"
   rsync -r --delete thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/vimwiki $HOME/
 }
 
@@ -194,5 +194,7 @@ xbps    ) exec xb C ;;  # backup xbps cache
 wiki    ) wiki ;;
 *       ) if [ $2 ] ;then rsync $@ ;else usage ;fi ;;
 esac
+
+trace --  # elapsed time
 
 # vim: set ft=sh: #
