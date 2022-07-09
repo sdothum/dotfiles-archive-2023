@@ -11,8 +11,9 @@ BROWSER=/usr/bin/firefox
 if [ "$1" ] ;then
   $BROWSER "$@" &
 else
-  pong $SERVER && TTRSS=$SERVER || TTRSS=localhost
-  $BROWSER http://$TTRSS:8000/tt-rss/ &
+  # pong $SERVER && TTRSS=$SERVER || TTRSS=localhost
+  # $BROWSER http://$TTRSS:8000/tt-rss/ &
+  $BROWSER &
 fi
 
 # vim: set ft=sh: #
