@@ -99,7 +99,11 @@ test -e $SESSION/http_proxy
   and set -x HTTP_PROXY (cat $SESSION/http_proxy)
 
 set -x XDG_DOWNLOAD_DIR /net/downloads/http
-set -x XDG_RUNTIME_DIR /tmp/runtime-$USER
+# set -x XDG_RUNTIME_DIR /tmp/runtime-$USER
+set -x XDG_RUNTIME_DIR /run/user/(id -u)
+sudo mkdir -p $XDG_RUNTIME_DIR
+sudo chown $USER $XDG_RUNTIME_DIR
+sudo chmod 700 $XDG_RUNTIME_DIR
 set -x NNTPSERVER news.sunnyusenet.com
 
 # ..................................................................... Defaults
