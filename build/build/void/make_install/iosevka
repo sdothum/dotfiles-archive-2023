@@ -7,7 +7,7 @@
 
 usage() { 
   echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [family <name>]
-                            [D-serifless | I-serifless | Q-crossing | Q-detached | Q-hook | a-single | b-rounded | d-tailed | d-toothless | f-extended | p-eared | p-serifed | q-hook | at-tall | 0-split | paren-flat | [cap off | <parm>] | space <parm> | book+regular | latin+greek]*
+                            [elementary | grotesk | D-serifless | I-serifless | Q-crossing | Q-detached | Q-hook | a-single | b-rounded | d-tailed | d-toothless | f-extended | p-eared | p-serifed | q-hook | at-tall | 0-split | paren-flat | [cap off | <parm>] | space <parm> | book+regular | latin+greek]*
                             [[version 10x | 15x] -- <opions>*]"
   exit 1
 }
@@ -16,8 +16,8 @@ usage() {
 #        make_install iosevka kobo                                               # default kobo fonts
 #        make_install iosevka kobo a-single f-extended I-serifless family aFont  # custom e-ink font
 #        make_install iosevka                                                    # default desktop fonts
-#        make_install iosevka I-serifless f-extended at-tall                     # grotesk style desktop fonts
-#        make_install iosevka I-serifless a-single at-tall cap extended          # elementary style desktop fonts
+#        make_install iosevka grotesk                                            # grotesk style desktop fonts
+#        make_install iosevka elementary                                         # elementary style desktop fonts
 #        make_install iosevka -- I-serifless family forCoding                    # single custom font, see font/iosevka
 #        make_install iosevka version 10x -- dyslexic kobo english I-serifless f-extended q-hook cap extended family Grotesk  # single custom ebook font with extended cap height
 
@@ -63,6 +63,8 @@ while [ $1 ] ;do
   cap         ) [ $2 ] && { [ $2 = 'off' ] && unset cap || cap="$1 $2"; shift; } || usage ;;
   space       ) [ $2 ] && { space="$1 $2"; shift; } || usage ;;
   source-only ) source_only=true ;;
+  elementary  ) I=I-serifless; a=a-single ;;
+  grotesk     ) I=I-serifless; f=f-extended ;;
   kindle      ) ereader=$1; sb='sb 0.6150' ;;  # side bearing difference to kobo's font rendering
   kobo        ) ereader=$1; q=q-hook ;;
   family      ) [ $ereader ] && [ $2 ] && { family=$2; shift; } || usage ;;
@@ -104,7 +106,7 @@ e_ink() {
   update $GLYPH $name
 }
 
-dfont() { iosevka expanded             $(options $@) q-hook; }
+dfont() { iosevka expanded at-tall     $(options $@) q-hook; }
 wfont() { iosevka english I-serifless  $(options $@) q-hook; }
 efont() { iosevka ${language:-english} $(options $@) q-hook; }
 

@@ -51,6 +51,9 @@ d pinentry-gtk  # for x11 desktop passphrase
   pulseaudio
   alsa-plugins-pulseaudio
   pulseaudio-equalizer-ladspa
+# pipewire
+# alsa-pipewire
+# rtkit  # pipewire run dependency, in addition to dbus
 
 
 = system utility
