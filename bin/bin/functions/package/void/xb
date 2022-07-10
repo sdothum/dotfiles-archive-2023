@@ -118,9 +118,12 @@ latest()  { package=$(echo $1 | sed 's/-[0-9].*//'); xbps-query -Rs "$package-" 
 cached()  { package=$(echo $1 | sed 's/-[0-9].*//'); xb h "$package-" | grep "$package-[0-9]" | tail -1 | version; }
 status()  { current=$(echo $1 | version); latest=$(latest $1); cached=$(cached $1); [ "$cached" != "$latest" ] && { [ "$current" = "$cached" ] || echo -n "$NOCOLOR$cached "; echo "$__RED[$latest]"; } || echo "$NOCOLOR$latest"; }
 
+# list of apps that typically fail package check (due to particular install)
+IGNORE='chromium|php-fpm|pinentry|preload'
+
 case $action in
 backup    ) rsync $CACHE $BACKUP ;;
-check     ) ditto xbps 'checking database..'; sudo xbps-pkgdb -a 2> >(egrep -v 'ERROR: (php-fpm|preload):') ;;  # suppress hash mismatch (bash redirect syntax)
+check     ) ditto xbps 'checking database..'; sudo xbps-pkgdb -a 2> >(egrep -v "ERROR: ($IGNORE):") ;;  # suppress hash mismatch (bash redirect syntax)
 count     ) ditto installed "$(xbps-query -l $options | wc -l) packages" ;;
 dependency) for i in $(xbps-query -x $package | sed 's/>=.*//; s/-[0-9].*/-/') ;do installed $i ;done | sort ;;
 downgrade ) sudo xdowngrade $@ ;;  # downgrade must include package dependencies
