@@ -68,6 +68,7 @@ abbr friendlybear 'smbclient -R bcast //friendlybear/patricia motu om'
 
 # ......................................................................... File
 
+abbr c 'cat'
 abbr cp 'cp -i'
 abbr cpl 'cp -iLRfv'
 abbr cpv 'cp -iv'
@@ -75,14 +76,10 @@ abbr gprename 'gprename $PWD'
 abbr m 'less'
 abbr mv 'mv -i'
 abbr mvv 'mv -iv'
-abbr N 'env VISUAL=vim nnn -p -'  # cmd .. (N) file picker mode
-abbr n 'env VISUAL=vim nnn -Pp'
-abbr nb 'env VISUAL=vim nnn -s ebooks'
-abbr r 'vifm'
-abbr R 'env VISUAL=vim ranger'
 abbr rm 'rm -i'
 abbr rmv 'rm -iv'
-# abbr t 'tail -f'
+abbr s 'sort -n'
+abbr t 'tail -f'
 
 # .................................................................... Directory
 
@@ -100,6 +97,14 @@ abbr pp 'pwd'
 abbr tree 'sudo tree -aCF'
 abbr treed 'sudo tree -aCdF'
 
+# ................................................................. File manager
+
+abbr N 'env VISUAL=vim nnn -p -'  # cmd .. (N) file picker mode
+abbr n 'env VISUAL=vim nnn -Pp'
+abbr nb 'env VISUAL=vim nnn -s ebooks'
+abbr r 'vifm'
+abbr R 'env VISUAL=vim ranger'
+
 # ....................................................................... Search
 
 abbr fd 'find -type d'
@@ -109,10 +114,11 @@ abbr g 'ugrep --ignore-case'
 abbr locate 'sudo locate'
 abbr mgrep 'pcregrep -r -M'
 abbr w 'which'
+function d; cd (dirname (which $argv 2>/dev/null) 2>/dev/null); test $HOME = (pwd) && ditto "$argv" 'not found'; end  # no 755 in $HOME
 
 # ...................................................................... Desktop
 
-abbr c 'clear ; setterm -cursor on'
+abbr cl 'clear ; setterm -cursor on'
 abbr cursor 'setterm -cursor on'
 abbr gaps 'rlwrap gaps'
 abbr h: 'ls -l /tmp/herbstluftwm:*'
