@@ -141,8 +141,8 @@ elif [ $web ] ;then
   # www fonts
   unset cap
   wfont heading  kobo webfont
-  # wfont dyslexic f-extended cap 1.045 kobo webfont
-  wfont dyslexic a-single cap 1.045 kobo webfont
+  wfont dyslexic f-extended cap 1.045 kobo webfont
+  # wfont dyslexic a-single cap 1.045 kobo webfont
   wfont dyslexic quasi-proportional space 1.25 kobo webfont
   dfont cap extended family wIosevka
 
