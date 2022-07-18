@@ -24,13 +24,14 @@ hc rule windowrole="'.* Tiny RSS'"         tag=1 focus=on
 # hc rule class=Vimb                       tag=1 once index=0 focus=on hook=max
 # hc rule class=VimbT                      tag=1 once
 # hc rule instance='www.netflix.com__ca'   tag=1 index=1 focus=on
+# hc rule class=qutebrowser                tag=1 once index=0 focus=on hook=max
 hc rule class=Minitube                     tag=1
 hc rule class=dwb                          tag=1
 hc rule class=luakit                       tag=1
-# hc rule class=qutebrowser                tag=1 once index=0 focus=on hook=max
 hc rule title=RSS                          tag=1 index=1 focus=off
 # hc rule title=IM                         tag=2 index=0 focus=on
 # hc rule title=IRC                        tag=2 index=1 focus=on
+# hc rule class=firefox                    tag=2 once index=0 focus=on hook=max
 hc rule class=Pidgin                       tag=2
 hc rule title=IM                           tag=2 focus=on
 hc rule title=Messenger                    tag=2 focus=on
