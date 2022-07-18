@@ -25,10 +25,13 @@
   btrbk
   dosfstools
   exfat-utils
-# fuse
+  fuse
   fuse-exfat
 # gvfs
 # mbuffer
+# mtpfs     # for supernote
+# gvfs-mtp  # for supernote
+  jmtpfs    # for supernote
 # ntfs-3g
 
 

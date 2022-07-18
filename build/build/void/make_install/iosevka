@@ -63,8 +63,8 @@ while [ $1 ] ;do
   cap         ) [ $2 ] && { [ $2 = 'off' ] && unset cap || cap="$1 $2"; shift; } || usage ;;
   space       ) [ $2 ] && { space="$1 $2"; shift; } || usage ;;
   source-only ) source_only=true ;;
-  elementary  ) I=I-serifless; a=a-single ;;
-  grotesk     ) I=I-serifless; f=f-extended ;;
+  elementary  ) style=$1 ;;
+  grotesk     ) style=$1 ;;
   kindle      ) ereader=$1; sb='sb 0.6150' ;;  # side bearing difference to kobo's font rendering
   kobo        ) ereader=$1; q=q-hook ;;
   family      ) [ $ereader ] && [ $2 ] && { family=$2; shift; } || usage ;;
@@ -96,7 +96,7 @@ update() {
   done
 }
 
-options() { echo $D $I $Q $a $b $d $f $p $q $zero $at $paren $adjust $cap $sb $@; }  # list
+options() { echo $D $I $Q $a $b $d $f $p $q $zero $at $paren $adjust $cap $sb $style $@; }  # list
 
 # family [options]*
 e_ink() {
@@ -139,9 +139,12 @@ elif [ $ebook ] ;then
 elif [ $web ] ;then
   version 10x
   # www fonts
+  unset cap
   wfont heading  kobo webfont
-  wfont dyslexic kobo f-extended cap 1.045 webfont
+  # wfont dyslexic f-extended cap 1.045 kobo webfont
+  wfont dyslexic a-single cap 1.045 kobo webfont
   wfont dyslexic quasi-proportional space 1.25 kobo webfont
+  dfont cap extended family wIosevka
 
 else
   version 15x

@@ -5,6 +5,7 @@
 
 # ......................................................................... fuse
 
+sudo sed -i '/^#user_allow_other *$/s/^#//g' /etc/fuse.conf
 echo fuse | sudo tee /etc/modules-load.d/fuse.conf
 sudo modprobe fuse
 
