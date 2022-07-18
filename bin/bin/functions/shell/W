@@ -1,19 +1,17 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Web
+# Shell
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ...................................................................... Browser
+# ........................................................................... cd
 
-BROWSER=/usr/bin/firefox
+# Usage: . W <executable>
 
-if [ "$1" ] ;then
-  $BROWSER --new-window "$@" &
-else
-  # pong $SERVER && TTRSS=$SERVER || TTRSS=localhost
-  # $BROWSER http://$TTRSS:8000/tt-rss/ &
-  $BROWSER --new-window &
-fi
+NOTFOUND=/tmp/W:notfound
+
+rm -f $NOTFOUND
+cd $(dirname $(which $1 2>/dev/null || touch $NOTFOUND) 2>/dev/null)
+[ -e $NOTFOUND ] && ditto "$1" 'not found'
 
 # vim: set ft=sh: #

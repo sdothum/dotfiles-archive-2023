@@ -11,7 +11,7 @@ usage() { echo "usage: $(basename $0) DVI-'0 | DVI-'1 | l'eft | r'ght | a'll | d
 target=/net/photos/batchqueue
 target=$HOME/thedarnedestthing.com/application/public/images
 quality=92
-refresh=1  # allow desktup refresh (from dmenu)
+refresh=3  # allow desktup refresh (from dmenu)
 
 if server ;then
   case $@ in
@@ -19,6 +19,7 @@ if server ;then
   l* | *0) opts='--geometry=3440x1440+0+0' ;;
   r* | *1) opts='--geometry=1680x1050+3440+0' ;;
   a*     ) opts='--geometry=5120x1440+0+0' ;;
+  d*     ) sleep $refresh; set -- $(query display); opts="--geometry=$1x$2+0+0" ;;
   s*     ) opts=-s ;;
   *      ) usage ;;
   esac

@@ -10,20 +10,25 @@
 
 NNN=/usr/local/bin/nnn           # nnn compiled with icons, see make_install nnn
 TDIR=/net/downloads/http         # default tmux directory
+
 [ -e $NNN ] || make_install nnn  # NNN=/bin/nnn
+# PREVIEW=-Pp                    # un/comment to toggle preview-tui on launch
 
 # nnn config
 # export NNN_FIFO=/tmp/nnn:fifo                  # NNN_OPTS 'a' option
-export NNN_PLUG='d:jump-dotfiles;e:eject;i:imgview;j:jump;J:jump-refresh;p:preview-tui'
-export NNN_BMS="a:/net/archive/home/shum/stow;b:/net/media/ebooks/books;c:$HOME/.config;D:/net/depot/dotfiles;d:/net/downloads/http;f:$HOME/.fonts;h:$HOME;k:/run/media/shum/KOBOeReader/.kobo;K:$HOME/stow/kobo;m:/run/media/shum;p:/net/photos;r:/etc/sv;S:$HOME/sandbox;s:$HOME/stow;v:/net/media/videos"
+export NNN_PLUG='d:jump-dotfiles;e:eject;i:imgview;j:jump;J:jump-refresh;m:mount;p:preview-tui;r:rox'
+export NNN_BMS="a:/net/archive/home/shum/stow;b:/net/media/ebooks/books;c:$HOME/.config;D:/net/depot/dotfiles;d:/net/downloads/http;f:$HOME/.fonts;h:$HOME;i:$HOME/images/backgrounds/webb;k:/run/media/shum/KOBOeReader/.kobo;K:$HOME/stow/kobo;m:/run/media/shum;p:/net/photos;r:/etc/sv;S:$HOME/sandbox;s:$HOME/stow;v:/net/media/videos"
 #      NNN_FCOLORS 'c1e2272e006033f7c6d6abc4'      change dir/exe colors
 export NNN_FCOLORS='c1e2de28006033f7c627abc4'
 export LS_COLORS='di=01;38;5;221:ex=00;38;5;40'  # match nnn colors!
 export NNN_OPTS=aeEfHoQux
 
+# sloppy mtp automount
+mtp mount && NDIR=$(mtp)
+
 case $1 in
-TMUX) tmux_session 'nnn' env VISUAL=vim $NNN -Pp $TDIR ;;  # see herbstluftwm appbinds
-*   ) $NNN $@ ;;
+TMUX) tmux_session 'nnn' env VISUAL=vim $NNN $PREVIEW $TDIR ;;  # see herbstluftwm appbinds
+*   ) $NNN "${NDIR:-$@}" $PREVIEW ;;
 esac
 
 # vim: set ft=sh: #

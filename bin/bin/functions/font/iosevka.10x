@@ -28,7 +28,7 @@ usage() {
                [english | latin+greek | ligature <name>]
                [double] [quasi-proportional] [space <decimal>] [ emdash <decimal> ]
                [grotesque (default) | atkinson | geometric | jost]
-               [a-single | b-corner | D-serifless | d-tailed | d-toothless | f-extended | G-toothed | I-serifless | i-serifed | j-serifed | p-eared | p-serifed | Q-crossing | Q-detached | Q-hook | q-hook | q-tailed | at-tall | 0-split | paren-flat]*
+               [elementary | grotesk | a-single | b-corner | D-serifless | d-tailed | d-toothless | f-extended | G-toothed | g-double | I-serifless | i-serifed | j-serifed | p-eared | p-serifed | Q-crossing | Q-detached | Q-hook | q-hook | q-tailed | at-tall | 0-split | paren-flat]*
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
                [family <name> | <prefix>Monolexic]
                [cap [-+]<decimal> | extended]
@@ -74,6 +74,7 @@ grotesque() {
   b=toothless-rounded
   d=toothed-serifless
   f=flat-hook-crossbar-at-x-height
+  g=single-storey-serifless
   i=hooky
   j=flat-hook-serifless
   k=straight-serifless
@@ -103,6 +104,7 @@ geometric() {
   b=toothed
   d=toothed-serifless
   f=serifless-crossbar-at-x-height
+  g=single-storey-serifless
   i=serifless
   j=straight-line
   k=symmetric-touching-serifless
@@ -133,6 +135,7 @@ variant() {
     d-toothless) glyph d=toothless-corner-serifless ;;
     f-extended ) glyph f=flat-hook-extended-crossbar-at-x-height ;;
     G-toothed  ) glyph capital_g=toothed-serifless-hooked ;;
+    g-double   ) glyph g=double-storey ;;
     I-serifed  ) glyph capital_i=serifed ;;
     I-serifless) glyph capital_i=serifless ;;
     i-serifed  ) glyph i=serifed ;;
@@ -223,7 +226,7 @@ while [ $1 ] ;do
   double      ) unset mono ;;
   quasi*      ) spacing quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi$(echo $family | sed -r 's/.*(Hyper|Mono|Quasi)//'); variant I-serifed ;;
   dyslexic    ) shape $expanded;            sb 0.7150; leading 1.5000; space 2; emdash 2; width=135; ebook monolexic ;;
-  # font
+  # glyphs
   a-single    ) variant a-single ;;
   b-corner    ) variant b-corner p-serifed ;;         # alternate b p dyslexic glyphs
   D-serifless ) variant D-serifless ;;
@@ -231,6 +234,7 @@ while [ $1 ] ;do
   d-toothless ) variant d-toothless p-eared ;;
   f-extended  ) variant f-extended ;;                 # unolexic (homage to universal grotesk)
   G-toothed   ) variant G-toothed ;;
+  g-double    ) variant g-double ;;
   I-serifless ) variant I-serifless; initial ;;       # combined minimal stroke glyphs
   i-serifed   ) variant i-serifed ;;
   j-serifed   ) variant j-serifed ;;
@@ -244,13 +248,15 @@ while [ $1 ] ;do
   at-tall     ) variant at-tall ;;
   0-split     ) variant 0-split ;;
   paren-flat  ) variant paren ;;
+  elementary  ) variant I-serifless a-single ;;
+  grotesk     ) variant I-serifless f-extended ;;
   grotesque   ) grotesque ;;
   atkinson    ) grotesque; ebook hyperlegible; variant b-toothed G-toothed J-serifless p-eared Q-crossing q-tailed u-toothed ampersand at number_sign percent ;;
   geometric   ) geometric; cap extended; build=-jost ;;
   jost        ) geometric; cap extended; build=-jost; variant a-single J-serifless Q-crossing u-toothed ampersand at dollar number_sign percent question ;;
+  # font
   family      ) family $2    || usage; shift ;;
   *Monolexic  ) initial ${1%Monolexic} ;;
-  # font tweaks
   cap         ) cap $2       || usage; shift ;;                                 # H height (affects descender as well)
   kindle      ) leading 1.4185 ;;                                               # because only 3 space settings (this is maximum value with proper menu typeface)
   kobo        ) leading 1.4185 ;;                                               # any value >= 1 (but have retained setting for interested kindle users)
@@ -319,7 +325,7 @@ b = '$b'
 d = '$d'
 e = 'flat-crossbar'
 f = '$f'
-g = 'single-storey-serifless'
+g = '$g'
 i = '$i'
 j = '$j'
 k = '$k'
