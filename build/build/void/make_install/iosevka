@@ -117,14 +117,16 @@ if [ $family ] ;then
 
 elif [ $ereader ] ;then
   version 10x
-  # e-ink fonts
+  # e-ink fonts (dyslexic default)
   e_ink iMonolexic
   e_ink Monolexic   I-serifless
   e_ink iUnolexic   f-extended
   e_ink Unolexic    f-extended I-serifless
-  e_ink ielementary a-single
-  e_ink elementary  a-single   I-serifless
-  e_ink Grotesk     f-extended I-serifless cap extended
+  e_ink iGeolexic   a-single
+  e_ink Geolexic    a-single   I-serifless
+  # special spacing
+  e_ink grotesk     f-extended I-serifless cap extended space 1.6667
+  e_ink elementary  a-single   I-serifless cap extended space 1.6667
 
 elif [ $ebook ] ;then
   version 10x
@@ -141,8 +143,8 @@ elif [ $web ] ;then
   # www fonts
   unset cap
   wfont heading  kobo webfont
-  wfont dyslexic f-extended cap 1.045 kobo webfont
-  # wfont dyslexic a-single cap 1.045 kobo webfont
+  wfont dyslexic f-extended cap 1.045 space 1.515 kobo webfont
+  # wfont dyslexic a-single cap 1.045 space 1.515 kobo webfont
   wfont dyslexic quasi-proportional space 1.25 kobo webfont
   dfont cap extended family wIosevka
 
