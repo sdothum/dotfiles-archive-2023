@@ -14,8 +14,9 @@ RULES=kobopatch.yaml
 
 [ -e $RULES.original ] && { ifno "overwrite $RULES" && exit; } || original $RULES
 [ -e src/nickel.yaml ] || { ditto dir "yaml files not found"; exit 1; }
-dos2unix $RULES 2>/dev/null
-sed -i '/^overrides:/,$d' $RULES  # prune overrides
+dos2unix $RULES.original 2>/dev/null
+sed -i '/^overrides:/,$d' $RULES.original  # prune overrides
+cp -f $RULES.original $RULES
 cd src >/dev/null
 RULES=../$RULES
 echo "overrides:" >>$RULES
@@ -26,5 +27,17 @@ for i in *yaml ;do
   echo "\n  src/$i:" >>$RULES
   perl -0777 -pe 's/([[:alpha:]].*)\n.*Enabled:(.*)/\1\2/g' $i | grep '^[[:alpha:]]' | sed 's/^/    /' >>$RULES
 done
+cd ..
+RULES=${RULES#../}
+cp -f $RULES $RULES.new
+cat $RULES
+ditto yaml $RULES
+ditto diff $RULES.new ../kobopatch/kobopatch.yaml.new
+diff $RULES.new ../kobopatch/kobopatch.yaml.new
+ifno "ln $(pwd)" && exit
+DIR=$(pwd)
+cd ..
+rm -f kobopatch
+ln -svf $DIR kobopatch
 
 # vim: set ft=sh: #

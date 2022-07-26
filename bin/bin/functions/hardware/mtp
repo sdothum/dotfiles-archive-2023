@@ -16,14 +16,16 @@ mounted() { mount | grep -q "^jmtpfs on $MTP "; }
 
 case $1 in
 mount  ) if $(device) ;then
-          [ "$(name)" = '' ] && { jmtpfs $MTP >/dev/null && notify "$(name)" "$MTP mounted" || notify critical "$MTP" "mount failed"; } || notify "$(name)" 'already mounted'
-        else
-          exit 1
-        fi ;;
+           [ "$(name)" = '' ] && { jmtpfs $MTP >/dev/null && notify "$(name)" "$MTP mounted" || notify critical "$MTP" "mount failed"; } || notify "$(name)" 'already mounted'
+         else
+           exit 1
+         fi ;;
 
 u*mount) if mounted ;then
-          [ "$(pwd)" = "${MTP%/*}" ] && { name=$(name); fusermount -u $MTP && notify "$name" "$MTP unmounted" || notify critical "$name" "$MTP umount failed"; }
-        fi ;;
+           name=$(name)
+           echo $(pwd) | grep -q "$MTP/$name" && { notify critical "$name" "$MTP busy"; exit 1; }
+           fusermount -u $MTP && notify "$name" "$MTP unmounted" || notify critical "$name" "$MTP umount failed"
+         fi ;;
 
 mounted) mounted ;;
 ls     ) $(device) && jmtpfs -l ;;

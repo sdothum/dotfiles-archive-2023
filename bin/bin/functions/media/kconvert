@@ -6,6 +6,8 @@
 
 # ................................................................ ebook convert
 
+# Usage: [env dropcap=<class>] kconvert <epub>
+
 dmenu econvert azw3 "$@"  # kindle
 dmenu econvert epub "$@"  # kobo
 

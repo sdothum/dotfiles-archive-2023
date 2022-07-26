@@ -17,7 +17,7 @@ usage() {
 MAKE_INSTALL=/tmp/iosevka:make_install
 REPO=/net/depot/Iosevka
 
-confirm() { [ -e $MAKE_INSTALL ] && ditto make_install "$1" || { ifyes "$1" || exit; }; }
+confirm() { [ -e $MAKE_INSTALL ] && ditto "$(basename $0)" "$1" || { ifyes "$1" || exit; }; }
 percent() { echo "$1 * 100" | bc | cut -d. -f1; }
 
 # substitute curly tail q

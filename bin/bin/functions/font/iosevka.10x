@@ -236,7 +236,7 @@ while [ $1 ] ;do
   f-extended  ) variant $1 ;;                   # unolexic (homage to universal grotesk)
   G-toothed   ) variant $1 ;;
   g-double    ) variant $1 ;;
-  I-serifless ) variant $1 initial ;;           # combined minimal stroke glyphs
+  I-serifless ) variant $1; initial ;;          # combined minimal stroke glyphs
   i-serifed   ) variant $1 ;;
   J-descending) variant $1 ;;
   j-serifed   ) variant $1 ;;
