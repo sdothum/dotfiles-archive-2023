@@ -114,7 +114,7 @@ abbr g 'ugrep --ignore-case'
 abbr locate 'sudo locate'
 abbr mgrep 'pcregrep -r -M'
 abbr w 'which'
-function d; cd (dirname (which $argv 2>/dev/null) 2>/dev/null); test $HOME = (pwd) && ditto "$argv" 'not found'; end  # no 755 in $HOME
+function W; cd (dirname (which $argv 2>/dev/null) 2>/dev/null); test $HOME = (pwd) && begin ditto "$argv" 'not found'; cd -; end; end  # no 755 in $HOME
 
 # ...................................................................... Desktop
 
