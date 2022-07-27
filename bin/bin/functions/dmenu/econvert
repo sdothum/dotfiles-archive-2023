@@ -5,13 +5,13 @@
 
 # ...................................................................... E-books
 
-usage() { echo "usage: [env dropcap=<class>] $(basename $0) econvert [azw3 | epub | reformat] [default | justify | noindent | poetry | all] [<file> | '<regex>', default '*epub']"; exit 1; }
+usage() { echo "usage: [dropcap=<class>] $(basename $0) econvert [azw3 | epub | reformat] [default | justify | noindent | poetry | all] [<file> | '<regex>', default '*epub']"; exit 1; }
 
 KINDLE=/run/media/$USER/Kindle
 [ -d $KINDLE ] && sudo mount -o remount,rw $(mount | grep $KINDLE | cut -d' ' -f1) $KINDLE
 KINDLE=$KINDLE/documents/
 
-[ $dropcap ] && dropcap=".$dropcap" || dropcap='.drop, .dropcap, .dropcaps'  # handle non-standard dropcap class names
+[ $dropcap ] && dropcap=".${dropcap#.}" || dropcap='.drop, .dropcap, .dropcaps'  # handle non-standard dropcap class names
 
 # enhanced em-legible spacing!
 # em_indent=2,2      # conventional paragraph indent
