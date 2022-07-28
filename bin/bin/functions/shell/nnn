@@ -23,7 +23,8 @@ export NNN_BMS="a:/net/archive/home/shum/stow;b:/net/media/ebooks/books;c:$HOME/
 #      NNN_FCOLORS 'c1e2272e006033f7c6d6abc4'      change dir/exe colors
 export NNN_FCOLORS='c1e2de28006033f7c627abc4'
 export LS_COLORS='di=01;38;5;221:ex=00;38;5;40'  # match nnn colors!
-export NNN_OPTS=aceEfHoQux
+export NNN_OPTS=aefHoQRux
+export VISUAL=gvim                               # detach editor
 
 # sloppy mtp automount
 mtp mount && NDIR=$(mtp)
