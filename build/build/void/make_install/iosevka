@@ -118,15 +118,17 @@ if [ $family ] ;then
 elif [ $ereader ] ;then
   version 10x
   # e-ink fonts (dyslexic default)
-  e_ink iMonolexic
-  e_ink Monolexic   I-serifless
-  e_ink iUnolexic   f-extended
-  e_ink Unolexic    f-extended I-serifless
-  e_ink iGeolexic   a-single
-  e_ink Geolexic    a-single   I-serifless
+  # e_ink iMonolexic
+  # e_ink Monolexic   I-serifless
+  # e_ink iUnolexic   f-extended
+  # e_ink Unolexic    f-extended I-serifless
+  # e_ink iGeolexic   a-single
+  # e_ink Geolexic    a-single   I-serifless
   # special spacing
-  e_ink grotesk     f-extended I-serifless cap extended space 1.6667
-  e_ink elementary  a-single   I-serifless cap extended space 1.6667
+  e_ink igrotesk    f-extended cap extended space 1.6667
+  # e_ink grotesk     f-extended cap extended I-serifless space 1.6667
+  e_ink ielementary a-single   cap extended space 1.6667
+  # e_ink elementary  a-single   cap extended I-serifless space 1.6667
 
 elif [ $ebook ] ;then
   version 10x
