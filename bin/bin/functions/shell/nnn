@@ -15,16 +15,17 @@ TDIR=/net/downloads/http         # default tmux directory
 # PREVIEW=-Pp                    # un/comment to toggle preview-tui on launch
 
 # nnn config
-# export NNN_FIFO=/tmp/nnn:fifo                  # NNN_OPTS 'a' option
+# export NNN_FIFO=/tmp/nnn:fifo  # NNN_OPTS 'a' option
 # export NNN_OPENER=$XDG_CONFIG_HOME/nnn/plugins/nuke
+export NNN_TRASH=1               # trash-cli
 export NNN_OPENER=xdg-open
 export NNN_PLUG='d:jump-dotfiles;e:eject;i:imgview;j:jump;J:jump-refresh;m:mount;p:preview-tui;r:rox'
 export NNN_BMS="a:/net/archive/home/shum/stow;b:/net/media/ebooks/books;c:$HOME/.config;D:/net/depot/dotfiles;d:/net/downloads/http;f:$HOME/.fonts;h:$HOME;i:$HOME/images/backgrounds/webb;k:/run/media/shum/KOBOeReader/.kobo;K:$HOME/stow/kobo;m:/run/media/shum;p:/net/photos;r:/etc/sv;S:$HOME/sandbox;s:$HOME/stow;v:/net/media/videos"
-#      NNN_FCOLORS 'c1e2272e006033f7c6d6abc4'      change dir/exe colors
+#      NNN_FCOLORS 'c1e2272e006033f7c6d6abc4'                  # change dir/exe colors
 export NNN_FCOLORS='c1e2de28006033f7c627abc4'
-export LS_COLORS='di=01;38;5;221:ex=00;38;5;40'  # match nnn colors!
+export LS_COLORS='di=01;38;5;221:ex=00;38;5;40:ln=00;38;5;51'  # match nnn colors!
 export NNN_OPTS=aefHoQRux
-export VISUAL=gvim                               # detach editor
+export VISUAL=gvim                                             # detach editor
 
 # sloppy mtp automount
 mtp mount && NDIR=$(mtp)

@@ -26,13 +26,15 @@ def main(stdscr):
     try:
         j=0
         for i in range(0, 255):
-            stdscr.addstr(' %03i ' % i, curses.color_pair(i+1))
+            stdscr.addstr(' %03i' % i, curses.color_pair(i+1))
+            stdscr.addstr('%s ' % hex(i)[1:], curses.color_pair(i+1))
             j+=1
             if j == columns:
                 stdscr.addstr('\n')
                 j=0
         # 255 (#eeeeee) most closely matches 015 (#ffffff) if .Xresourses set as such, otherwise..
-        stdscr.addstr(' %03i ' % 255, curses.color_pair(255))
+        stdscr.addstr(' %03i' % 255, curses.color_pair(255))
+        stdscr.addstr('%s ' % hex(255)[1:], curses.color_pair(255))
     except curses.ERR:
         # End of screen reached
         pass

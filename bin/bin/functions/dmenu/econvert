@@ -5,14 +5,11 @@
 
 # ...................................................................... E-books
 
-usage() { echo "usage: [dropcap="<.class>*"] $(basename $0) econvert [azw3 | epub | reformat] [default | justify | noindent | poetry | all] [<file> | '<regex>', default '*epub']"; exit 1; }
+usage() { echo "usage: $(basename $0) econvert [azw3 | epub | reformat] [default | justify | noindent | poetry | all] [<file> | '<regex>', default '*epub']"; exit 1; }
 
 KINDLE=/run/media/$USER/Kindle
 [ -d $KINDLE ] && sudo mount -o remount,rw $(mount | grep $KINDLE | cut -d' ' -f1) $KINDLE
 KINDLE=$KINDLE/documents/
-
-[ "$dropcap" ] && dropcap=".${dropcap#.}" || dropcap='[class^="big"] [class^="char-style-override"] [class^="dcap"] [class^="drop"] [class^="first-letter"] [class^="pcalibre"] [class^="pcalibre"]:first-letter'  # handle non-standard dropcap class names
-dropcap="$(echo $dropcap | sed 's/ /, /g')"  # separate (span) classes
 
 # enhanced em-legible spacing!
 # em_indent=2,2      # conventional paragraph indent
@@ -115,8 +112,7 @@ eval ebook-convert \"$file\" \"${output%.*}.$format\"                           
                    --change-justification=\"$justify\"                                          \
                    --remove-paragraph-spacing --remove-paragraph-spacing-indent-size=$em_indent \
                    --insert-blank-line --insert-blank-line-size=$em_linespace                   \
-                   --filter-css=\'font-family\'                                                 \
-                   --extra-css=\"$dropcap { float: none\; }\"                                   \
+                   --filter-css=\'font-family, float\'                                          \
                    >/tmp/ebook-convert.log 2>/dev/null || exit  # suppress plugin initialization warnings
 
 # ........................................................................ Write
