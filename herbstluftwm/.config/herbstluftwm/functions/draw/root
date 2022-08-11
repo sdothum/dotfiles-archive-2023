@@ -74,7 +74,7 @@ select_color() {
   lname $WALLCOLOR >/dev/null || ln -sf $(find $PALETTE -name '*.png' | head -1) $WALLCOLOR
   ln -sf $WALLCOLOR $BACKGROUND
   pick_image $(find $PALETTE -name '*.png')
-  color $(basename $(ls -l $WALLCOLOR | cut -d'>' -f2) .png)
+  color $(basename $(readlink -f $WALLCOLOR) .png)
 }
 
 # ................................................................ Set wallpaper
