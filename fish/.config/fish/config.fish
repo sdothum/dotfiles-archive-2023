@@ -72,7 +72,8 @@ set -x NNTPSERVER news.sunnyusenet.com
 # default editor
 # set -x EDITOR 'vi -e'
 set -x EDITOR 'vim'
-set -x VISUAL 'gvim -f'
+# set -x VISUAL 'gvim -f'
+set -x VISUAL 'gvim'
 
 set -x XIVIEWER 'feh'
 set -x PLAYER 'mpv'
