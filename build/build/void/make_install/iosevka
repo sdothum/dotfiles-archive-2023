@@ -16,6 +16,7 @@ usage() {
 #        make_install iosevka kobo                                               # default kobo fonts
 #        make_install iosevka kobo a-single f-extended I-serifless family aFont  # custom e-ink font
 #        make_install iosevka                                                    # default desktop fonts
+#        make_install iosevka Q-bar                                              # default desktop fonts
 #        make_install iosevka grotesk                                            # grotesk style desktop fonts
 #        make_install iosevka elementary                                         # elementary style desktop fonts
 #        make_install iosevka kobo latin+greek myfonts space 1.5000 eQ-bar       # my custom e-reader fonts
