@@ -20,7 +20,7 @@ TDIR=/net/downloads/http         # default tmux directory
 export NNN_TRASH=1               # trash-cli
 export NNN_OPENER=xdg-open
 export NNN_PLUG='d:jump-dotfiles;e:eject;i:imgview;j:jump;J:jump-refresh;m:mount;p:preview-tui;r:rox'
-export NNN_BMS="a:/net/archive/home/shum/stow;b:/net/media/ebooks/books;c:$HOME/.config;D:/net/depot/dotfiles;d:/net/downloads/http;f:$HOME/.fonts;h:$HOME;i:$HOME/images/backgrounds/webb;k:/run/media/shum/KOBOeReader/.kobo;K:$HOME/stow/kobo;m:/run/media/shum;p:/net/photos;r:/etc/sv;S:$HOME/sandbox;s:$HOME/stow;v:/net/media/videos"
+export NNN_BMS="a:/net/archive$HOME/stow;B:/net/media/ebooks/books;b:$HOME/bin;C:/net/media/ebooks/calibre;c:$HOME/.config;D:/net/depot/dotfiles;d:/net/downloads/http;e:/etc;f:$HOME/.fonts;h:$HOME;i:$HOME/images/backgrounds/webb;K:/run/media/$USER/KOBOeReader/.kobo;k:$HOME/stow/kobo;m:/run/media/$USER;p:/net/photos;r:/etc/sv;S:$HOME/sandbox;s:$HOME/stow;t:/tmp;v:/net/media/videos"
 #      NNN_FCOLORS 'c1e2272e006033f7c6d6abc4'                  # change dir/exe colors
 export NNN_FCOLORS='c1e2de28006033f7c627abc4'
 export LS_COLORS='di=01;38;5;221:ex=00;38;5;40:ln=00;38;5;51'  # match nnn colors!
@@ -32,7 +32,7 @@ mtp mount && NDIR=$(mtp)
 [ $1 != TMUX ] && trap 'mtp umount' EXIT  # must manually eject if mounted during toggle tmux session, see herbstluftwm appbinds
 
 case $1 in
-TMUX) tmux_session 'nnn' env VISUAL=vim $NNN $PREVIEW $TDIR ;;
+TMUX) tmux_session 'nnn' $NNN $PREVIEW $TDIR ;;
 *   ) $NNN "${NDIR:-$@}" $PREVIEW ;;
 esac
 

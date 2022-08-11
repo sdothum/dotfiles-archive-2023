@@ -70,6 +70,7 @@ X ) xport; exit ;;
 * ) password $@ ;;
 esac
 
+underline
 usage
 
 # vim: set ft=sh: #
