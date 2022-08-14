@@ -7,7 +7,7 @@
 
 usage() { 
   echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [family <name>]
-                            [myfonts | elementary | grotesk | D-serifless | I-serifless | J-descending | eQ-bar | Q-bar | Q-crossing | Q-detached | Q-hook | a-single | b-rounded | d-tailed | d-toothless | f-extended | p-eared | p-serifed | q-hook | at-tall | 0-split | paren-flat | [cap off | <parm>] | space <parm> | book+regular | latin+greek]*
+                            [myfonts | elementary | grotesk | D-serifless | I-serifless | J-descending | [e|g]Q-[bar|straight] | Q-[crossing|detached|hook|straight] | a-single | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat | [cap off | <parm>] | space <parm> | book+regular | latin+greek]*
                             [[version 10x | 15x] -- <opions>*]"
   exit 1
 }
@@ -46,24 +46,28 @@ version() {
 while [ $1 ] ;do
   case $1 in
   D-serifless ) D=$1 ;;
-  I-serifless ) I=$1 ;;                 # source code variant
+  I-serifless ) I=$1 ;;        # source code variant
   J-descending) J=$1 ;;
-  eQ-bar      ) Q_bar=Q-bar ;;          # elementary/Geolexic font variation
+  eQ-bar      ) eQ=${1#?} ;;   # elementary/Geolexic font variation
+  gQ-bar      ) gQ=${1#?} ;;   # grotesk/Unolexic font variation
+  eQ-straight ) eQ=${1#?} ;;   # elementary/Geolexic font variation
+  gQ-straight ) gQ=${1#?} ;;   # grotesk/Unolexic font variation
   Q-bar       ) Q=$1 ;;
   Q-crossing  ) Q=$1 ;;
   Q-detached  ) Q=$1 ;;
   Q-hook      ) Q=$1 ;;
+  Q-straight  ) Q=$1 ;;
   a-single    ) a=$1 ;;
-  b-rounded   ) glyph b b-rounded ;;    # unolexic
-  d-tailed    ) glyph d d-tailed ;;     # ebook variant
-  d-toothless ) glyph d d-toothless ;;  # with p-eared
-  f-extended  ) f=$1 ;;                 # unolexic (homage to universal grotesk)
-  p-eared     ) glyph p p-eared ;;
-  p-serifed   ) glyph p p-serifed ;;
-  q-hook      ) q=$1 ;;                 # ebook variant
-  at-tall     ) at=$1 ;;                # source code variant
+  b-rounded   ) glyph b $1 ;;  # unolexic
+  d-tailed    ) glyph d $1 ;;  # ebook variant
+  d-toothless ) glyph d $1 ;;  # with p-eared
+  f-extended  ) f=$1 ;;        # unolexic (homage to universal grotesk)
+  p-eared     ) glyph p $1 ;;
+  p-serifed   ) glyph p $1 ;;
+  q-hook      ) q=$1 ;;        # ebook variant
+  at-tall     ) at=$1 ;;       # source code variant
   0-split     ) zero=$1 ;;
-  paren-flat  ) paren=$1 ;;             # source code variant
+  paren-flat  ) paren=$1 ;;    # source code variant
   book+regular) adjust=$1 ;;
   latin+greek ) language=$1 ;;
   cap         ) [ $2 ] && { [ $2 = 'off' ] && unset cap || cap="$1 $2"; shift; } || usage ;;
@@ -113,9 +117,9 @@ e_ink() {
   update $GLYPH $name
 }
 
-dfont() { iosevka expanded at-tall     $(options $@) q-hook; }
-wfont() { iosevka english I-serifless  $(options $@) q-hook; }
-efont() { iosevka ${language:-english} $(options $@) q-hook; }
+dfont() { iosevka expanded at-tall Q-bar $(options $@) q-hook; }
+wfont() { iosevka english          Q-bar $(options $@) q-hook asterisk-high; }  # override dyslexic "asterisk-low"
+efont() { iosevka ${language:-english}   $(options $@) q-hook; }
 
 if [ $family ] ;then
   version 10x
@@ -127,18 +131,20 @@ elif [ $ereader ] && [ $dyslexic ] ;then
   # e-ink fonts (dyslexic default)
   e_ink iMonolexic
   e_ink Monolexic   I-serifless
-  e_ink iUnolexic   f-extended
-  e_ink Unolexic    f-extended I-serifless
-  e_ink iGeolexic   a-single   $Q_bar
-  e_ink Geolexic    a-single   $Q_bar I-serifless
+  e_ink iUnolexic   f-extended $gQ
+  e_ink Unolexic    f-extended $gQ I-serifless
+  e_ink iGeolexic   a-single   $eQ
+  e_ink Geolexic    a-single   $eQ I-serifless
 
 elif [ $ereader ] ;then
   version 10x
   # special spacing
-  e_ink igrotesk    f-extended cap extended ${space:-space 1.6667}
-  e_ink grotesk     f-extended cap extended I-serifless ${space:-space 1.6667}
-  e_ink ielementary a-single   cap extended $Q_bar ${space:-space 1.6667}
-  e_ink elementary  a-single   cap extended $Q_bar I-serifless ${space:-space 1.6667}
+  gQ=Q-straight
+  e_ink igrotesk    f-extended cap extended $gQ ${space:-space 1.6667}
+  e_ink grotesk     f-extended cap extended $gQ I-serifless ${space:-space 1.6667}
+  eQ=Q-straight
+  e_ink ielementary a-single   cap extended $eQ ${space:-space 1.6667}
+  e_ink elementary  a-single   cap extended $eQ I-serifless ${space:-space 1.6667}
 
 elif [ $ebook ] ;then
   version 10x
@@ -157,7 +163,7 @@ elif [ $web ] ;then
   wfont heading  kobo webfont
   wfont dyslexic f-extended cap 1.045 space 1.515 kobo webfont
   # wfont dyslexic a-single cap 1.045 space 1.515 kobo webfont
-  wfont dyslexic quasi-proportional space 1.25 kobo webfont
+  wfont dyslexic quasi-proportional   space 1.25  kobo webfont
   dfont cap extended family wIosevka
 
 else
