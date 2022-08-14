@@ -18,8 +18,8 @@ usage() {
   exit 1
 }
 
-interval=300     # default 5 minute interval reporting
-CRON=/tmp/scrub  # see crontab -l
+interval=${interval:-300}                     # default 5 minute interval reporting
+CRON=/tmp/scrub                               # see crontab -l
 
 # import user path
 . $HOME/bin/functions/shell/user_path colors  # bash shell required for cron colors
