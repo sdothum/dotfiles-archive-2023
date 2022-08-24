@@ -7,7 +7,7 @@
 
 usage() { 
   echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [family <name>]
-                            [myfonts | elementary | grotesk | D-serifless | I-serifless | J-descending | [e|g]Q-[bar|straight|default] | Q-[crossing|detached|hook|straight] | a-single | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat | [cap off | <parm>] | space <parm> | book+regular | latin+greek]*
+                            [myfonts [Q] | elementary | grotesk | D-serifless | [e]G-[hookless|toothless|default] | I-serifless | J-descending | [e|g]Q-[bar|straight|default] | Q-[bar|crossing|detached|hook|straight] | a-single | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat | [cap off | <parm>] | space <parm> | book+regular | latin+greek]*
                             [[version 10x | 15x] -- <opions>*]"
   exit 1
 }
@@ -29,8 +29,9 @@ DEPOT=/net/depot
 GLYPH=b-rounded
 cap='cap extended'  # new make_install default, "cap off" to disable
 dyslexic=true       # default e-reader dyslexic font families
-gQ=Q-straight       # capital Q defaults for Unolexic/grotesk
-eQ=Q-bar            # capital Q defaults for Geolexic/elementary
+gQ=Q-bar            # capital Q default for Unolexic/grotesk
+eQ=Q-straight       # capital Q default for Geolexic/elementary
+eG=G-hookless       # capital G default for elementary
 
 touch $MAKE_INSTALL
 trap "rm -f $MAKE_INSTALL; pkill -f iosevka" EXIT INT
@@ -48,11 +49,16 @@ version() {
 while [ $1 ] ;do
   case $1 in
   D-serifless   ) D=$1 ;;
+  [e]G-hookless ) ${1%G*}G=${1#?} ;;
+  [e]G-toothless) ${1%G*}G=${1#?} ;;
+  [e]G-*        ) unset ${1%G*}G  ;;
+  G-hookless    ) G=$1 ;;
+  G-toothless   ) G=$1 ;;
   I-serifless   ) I=$1 ;;             # source code variant
   J-descending  ) J=$1 ;;
   [eg]Q-bar     ) ${1%Q*}Q=${1#?} ;;  # elementary/Geolexic font variation
   [eg]Q-straight) ${1%Q*}Q=${1#?} ;;  # elementary/Geolexic font variation
-  [eg]Q-*       ) unset ${1%Q*}Q ;;
+  [eg]Q-*       ) unset ${1%Q*}Q  ;;
   Q-bar         ) Q=$1 ;;
   Q-crossing    ) Q=$1 ;;
   Q-detached    ) Q=$1 ;;
@@ -74,10 +80,10 @@ while [ $1 ] ;do
   cap           ) [ $2 ] && { [ $2 = 'off' ] && unset cap || cap="$1 $2"; shift; } || usage ;;
   space         ) [ $2 ] && { space="$1 $2"; shift; } || usage ;;
   source-only   ) source_only=true ;;
-  myfonts       ) unset dyslexic ;;              # my elementary and grotesk fonts with tweaked space cell width
+  myfonts       ) [ "$2" = Q ] && { for_Q=true; shift; }; unset dyslexic ;;  # my elementary and grotesk fonts with tweaked space cell width
   elementary    ) style=$1 ;;
   grotesk       ) style=$1 ;;
-  kindle        ) ereader=$1; sb='sb 0.6150' ;;  # side bearing difference to kobo's font rendering
+  kindle        ) ereader=$1; sb='sb 0.6150' ;;                            # side bearing difference to kobo's font rendering
   kobo          ) ereader=$1; q=q-hook ;;
   family        ) [ $ereader ] && [ $2 ] && { family=$2; shift; } || usage ;;
   ebook         ) ebook=true ;;
@@ -102,13 +108,13 @@ update() {
     fforge map $i 2e25 300d
     # e-reader font folders
     file=$i.ttf
-    folder=$STOW/$ereader/fonts/$1
-    mkdir -p $folder
-    cp -v $file $folder/
+    FOLDER=$STOW/$ereader/fonts/$1
+    mkdir -p $FOLDER
+    cp -v $file $FOLDER/
   done
 }
 
-options() { echo $D $I $J $Q $a $b $d $f $p $q $zero $at $paren $adjust $cap $sb $style $@; }  # list
+options() { echo $D $G $I $J $Q $a $b $d $f $p $q $zero $at $paren $adjust $cap $sb $style $@; }  # list
 
 # family [options]*
 e_ink() {
@@ -116,6 +122,15 @@ e_ink() {
   shift
   iosevka dyslexic $ereader ${language:-english} $(options $@) $space family $name
   update $GLYPH $name
+}
+
+myfonts() {
+  ditto myfonts $Q
+  space=${space:-space 1.3333}
+  e_ink igrotesk    f-extended cap extended     $gQ $space
+  e_ink grotesk     f-extended cap extended     $gQ I-serifless $space
+  e_ink ielementary a-single   cap extended $eG $eQ $space
+  e_ink elementary  a-single   cap extended $eG $eQ I-serifless $space
 }
 
 dfont() { iosevka expanded at-tall Q-bar $(options $@) q-hook; }
@@ -140,10 +155,16 @@ elif [ $ereader ] && [ $dyslexic ] ;then
 elif [ $ereader ] ;then
   version 10x
   # special spacing
-  e_ink igrotesk    f-extended cap extended $gQ ${space:-space 1.6667}
-  e_ink grotesk     f-extended cap extended $gQ I-serifless ${space:-space 1.6667}
-  e_ink ielementary a-single   cap extended $eQ ${space:-space 1.6667}
-  e_ink elementary  a-single   cap extended $eQ I-serifless ${space:-space 1.6667}
+  if [ $for_Q ] ;then
+    unset eQ gQ
+    for Q in Q-bar Q-bend Q-crossing Q-detached Q-straight ;do 
+      myfonts
+      rm -fr ${FOLDER%/*}.space:${space#* }.$Q
+      mv -v ${FOLDER%/*} ${FOLDER%/*}.space:${space#* }.$Q
+    done
+  else
+    myfonts
+  fi
 
 elif [ $ebook ] ;then
   version 10x
@@ -159,11 +180,10 @@ elif [ $web ] ;then
   version 10x
   # www fonts
   unset cap
-  wfont heading  kobo webfont
-  wfont dyslexic f-extended cap 1.045 space 1.515 kobo webfont
-  # wfont dyslexic a-single cap 1.045 space 1.515 kobo webfont
-  wfont dyslexic quasi-proportional   space 1.25  kobo webfont
-  dfont cap extended family wIosevka
+  # wfont heading  kobo webfont
+  wfont dyslexic f-extended cap 1.045 space 1.5 kobo webfont
+  # wfont dyslexic quasi-proportional   space 1.25  kobo webfont
+  # dfont cap extended family wIosevka
 
 else
   version 15x
