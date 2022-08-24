@@ -28,7 +28,7 @@ usage() {
                [english | latin+greek | ligature <name>]
                [double] [quasi-proportional] [space <decimal>] [ emdash <decimal> ]
                [grotesque (default) | atkinson | geometric | jost]
-               [elementary | grotesk | a-single | b-corner | D-serifless | d-[tailed|toothless] | f-extended | G-toothed | g-double | I-serifless | i-serifed | J-descending | j-[serifed|serifless] | p-[eared|serifed] | Q-[bar|crossing|detached|hook|straight] | q-[hook|tailed] | asterisk-high | at-tall | 0-split | paren-flat]*
+               [elementary | grotesk | a-single | b-corner | D-serifless | d-[tailed|toothless] | f-extended | G-[hookless|toothed|toothless] | g-double | I-serifless | i-serifed | J-descending | j-[serifed|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|straight] | q-[hook|tailed] | asterisk-high | at-tall | 0-split | paren-flat]*
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
                [family <name> | <prefix>Monolexic]
                [cap [-+]<decimal> | extended]
@@ -82,7 +82,7 @@ grotesque() {
   k=straight-serifless
   l=flat-tailed
   p=earless-corner
-  q=tailed
+  q=diagonal-tailed
   t=flat-hook-short-neck2
   u=toothless-rounded
   y=straight-turn
@@ -137,7 +137,9 @@ variant() {
     d-tailed     ) glyph d=tailed-serifless ;;
     d-toothless  ) glyph d=toothless-corner-serifless ;;
     f-extended   ) glyph f=flat-hook-extended-crossbar-at-x-height ;;
+    G-hookless   ) glyph capital_g=toothless-corner-serifless-hookless ;;
     G-toothed    ) glyph capital_g=toothed-serifless-hooked ;;
+    G-toothless  ) glyph capital_g=toothless-corner-serifless-hooked ;;
     g-double     ) glyph g=double-storey ;;
     I-serifed    ) glyph capital_i=serifed ;;
     I-serifless  ) glyph capital_i=serifless ;;
@@ -149,10 +151,11 @@ variant() {
     p-eared      ) glyph p=eared ;;
     p-serifed    ) glyph p=motion-serifed ;;
     Q-bar        ) glyph capital_q=vertical-crossing ;;
+    Q-bend       ) glyph capital_q=detached-bend-tailed ;;
     Q-crossing   ) glyph capital_q=crossing ;;
     Q-detached   ) glyph capital_q=detached-tailed ;;
     Q-straight   ) glyph capital_q=straight ;;
-    q-tailed     ) glyph q=diagonal-tailed ;;
+    q-tailed     ) glyph q=tailed ;;
     u-toothed    ) glyph u=toothed ;;
     ampersand    ) glyph ampersand=closed ;;
     asterisk-low ) glyph asterisk=penta-low ;;   # paragraph separator (ebook) glyph
@@ -240,7 +243,9 @@ while [ $1 ] ;do
   d-tailed     ) variant $1 b-corner p-eared ;;  # alternate b d p dyslexic glyphs
   d-toothless  ) variant $1 p-eared ;;
   f-extended   ) variant $1 ;;                   # unolexic (homage to universal grotesk)
+  G-hookless   ) variant $1 ;;
   G-toothed    ) variant $1 ;;
+  G-toothless  ) variant $1 ;;
   g-double     ) variant $1 ;;
   I-serifless  ) variant $1; initial ;;          # combined minimal stroke glyphs
   i-serifed    ) variant $1 ;;
@@ -250,12 +255,13 @@ while [ $1 ] ;do
   p-eared      ) variant $1 d-toothless ;;
   p-serifed    ) variant $1 sb 0.7650 ;;         # add air for serif corner
   Q-bar        ) variant $1 ;;
+  Q-bend       ) variant $1 ;;
   Q-crossing   ) variant $1 ;;
   Q-detached   ) variant $1 ;;
   Q-hook       ) variant 'Q=HOOK-TAILED'; Q_hook=true ;;
   Q-straight   ) variant $1 ;;
   q-hook       ) variant 'q=HOOK-TAILED'; q_hook=true ;;
-  q-tailed     ) unset q_hook ;;
+  q-tailed     ) variant $1; unset q_hook ;;
   asterisk-high) variant $1 ;;
   at-tall      ) variant $1 ;;
   0-split      ) variant $1 ;;

@@ -10,13 +10,13 @@ NZBS=/net/downloads/nzbs/completed
 DOWNLOADS=/net/downloads/http
 
 # wrapper to default opening to /net/downloads if no location given
-if   [ $1 ]             ;then start=$1
+if   [ "$1" ]           ;then start="$1"
 elif ! empty $NZBS      ;then start=$NZBS
 elif ! empty $DOWNLOADS ;then start=$DOWNLOADS
 else                          start=$HOME
 fi
 
 # see appbinds, toggle rox focuses frame
-/usr/bin/rox $start 2>>/tmp/rox.log
+/usr/bin/rox "$start" 2>>/tmp/rox.log
 
 # vim: set ft=sh: #
