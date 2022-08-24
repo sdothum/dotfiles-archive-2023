@@ -131,6 +131,9 @@ function SOURCE --description 'usage: SOURCE <script>'
   for i in (grep '^export ' $argv); eval $i; end
 end
 
+# for alot mail
+set -x VIM /usr/share/vim/vim9*
+
 # suppress missing google api keys message 
 set -x GOOGLE_API_KEY no
 set -x GOOGLE_DEFAULT_CLIENT_ID no
