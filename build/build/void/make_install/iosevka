@@ -7,7 +7,7 @@
 
 usage() { 
   echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [family <name>]
-                            [myfonts [Q] | elementary | grotesk | D-serifless | [e]G-[hookless|toothless|default] | I-serifless | J-descending | [e|g]Q-[bar|straight|default] | Q-[bar|crossing|detached|hook|straight] | a-single | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat | [cap off | <parm>] | space <parm> | book+regular | latin+greek]*
+                            [myfonts [Q] | elementary | grotesk | open | D-serifless | [e]G-[hookless|toothless|default] | I-serifless | J-descending | [e|g]Q-[bar|straight|default] | Q-[bar|crossing|detached|hook|straight] | a-single | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat | [cap off | <parm>] | space <parm> | book+regular | latin+greek]*
                             [[version 10x | 15x] -- <opions>*]"
   exit 1
 }
@@ -83,6 +83,7 @@ while [ $1 ] ;do
   myfonts       ) [ "$2" = Q ] && { for_Q=true; shift; }; unset dyslexic ;;  # my elementary and grotesk fonts with tweaked space cell width
   elementary    ) style=$1 ;;
   grotesk       ) style=$1 ;;
+  open          ) open=$1 ;;
   kindle        ) ereader=$1; sb='sb 0.6150' ;;                            # side bearing difference to kobo's font rendering
   kobo          ) ereader=$1; q=q-hook ;;
   family        ) [ $ereader ] && [ $2 ] && { family=$2; shift; } || usage ;;
@@ -127,10 +128,10 @@ e_ink() {
 myfonts() {
   ditto myfonts $Q
   space=${space:-space 1.3333}
-  e_ink igrotesk    f-extended cap extended     $gQ $space
-  e_ink grotesk     f-extended cap extended     $gQ I-serifless $space
-  e_ink ielementary a-single   cap extended $eG $eQ $space
-  e_ink elementary  a-single   cap extended $eG $eQ I-serifless $space
+  # e_ink igrotesk    f-extended cap extended     $gQ $space
+  # e_ink grotesk     f-extended cap extended     $gQ I-serifless $space
+  e_ink ielementary a-single   cap extended $eG $eQ $open $space
+  e_ink elementary  a-single   cap extended $eG $eQ $open I-serifless $space
 }
 
 dfont() { iosevka expanded at-tall Q-bar $(options $@) q-hook; }
