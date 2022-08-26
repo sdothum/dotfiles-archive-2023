@@ -84,7 +84,7 @@ while [ $1 ] ;do
   elementary    ) style=$1 ;;
   grotesk       ) style=$1 ;;
   open          ) open=$1 ;;
-  kindle        ) ereader=$1; sb='sb 0.6150' ;;                            # side bearing difference to kobo's font rendering
+  kindle        ) ereader=$1; sb='sb 0.6150' ;;                              # side bearing difference to kobo's font rendering
   kobo          ) ereader=$1; q=q-hook ;;
   family        ) [ $ereader ] && [ $2 ] && { family=$2; shift; } || usage ;;
   ebook         ) ebook=true ;;
@@ -128,8 +128,8 @@ e_ink() {
 myfonts() {
   ditto myfonts $Q
   space=${space:-space 1.3333}
-  # e_ink igrotesk    f-extended cap extended     $gQ $space
-  # e_ink grotesk     f-extended cap extended     $gQ I-serifless $space
+  e_ink igrotesk    f-extended cap extended     $gQ $space
+  e_ink grotesk     f-extended cap extended     $gQ I-serifless $space
   e_ink ielementary a-single   cap extended $eG $eQ $open $space
   e_ink elementary  a-single   cap extended $eG $eQ $open I-serifless $space
 }
@@ -138,14 +138,12 @@ dfont() { iosevka expanded at-tall Q-bar $(options $@) q-hook; }
 wfont() { iosevka english          Q-bar $(options $@) q-hook asterisk-high; }  # override dyslexic "asterisk-low"
 efont() { iosevka ${language:-english}   $(options $@) q-hook; }
 
-if [ $family ] ;then
+if [ $family ] ;then                      # custom e-ink font (non-published)
   version 10x
-  # custom e-ink font (non-published)
   e_ink $family
 
-elif [ $ereader ] && [ $dyslexic ] ;then
+elif [ $ereader ] && [ $dyslexic ] ;then  # e-ink fonts (dyslexic default)
   version 10x
-  # e-ink fonts (dyslexic default)
   e_ink iMonolexic
   e_ink Monolexic   I-serifless
   e_ink iUnolexic   f-extended $gQ
@@ -153,9 +151,8 @@ elif [ $ereader ] && [ $dyslexic ] ;then
   e_ink iGeolexic   a-single   $eQ
   e_ink Geolexic    a-single   $eQ I-serifless
 
-elif [ $ereader ] ;then
+elif [ $ereader ] ;then                   # special spacing
   version 10x
-  # special spacing
   if [ $for_Q ] ;then
     unset eQ gQ
     for Q in Q-bar Q-bend Q-crossing Q-detached Q-straight ;do 
@@ -167,9 +164,8 @@ elif [ $ereader ] ;then
     myfonts
   fi
 
-elif [ $ebook ] ;then
+elif [ $ebook ] ;then                     # e-reader fonts
   version 10x
-  # e-reader fonts
   efont ebook
   efont ebook    I-serifless
   efont ebook    quasi-proportional
@@ -177,18 +173,16 @@ elif [ $ebook ] ;then
   efont dyslexic quasi-proportional
   efont dyslexic quasi-proportional I-serifless
 
-elif [ $web ] ;then
+elif [ $web ] ;then                       # www fonts
   version 10x
-  # www fonts
   unset cap
-  # wfont heading  kobo webfont
+  wfont heading  kobo webfont
   wfont dyslexic f-extended cap 1.045 space 1.5 kobo webfont
-  # wfont dyslexic quasi-proportional   space 1.25  kobo webfont
-  # dfont cap extended family wIosevka
+  wfont dyslexic quasi-proportional   space 1.25  kobo webfont
+  dfont cap extended family wIosevka
 
-else
+else                                      # desktop fonts
   version 15x
-  # desktop fonts
   dfont
   dfont proof
   dfont menu
