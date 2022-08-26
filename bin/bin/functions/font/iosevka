@@ -28,7 +28,7 @@ usage() {
                [english | latin+greek | ligature <name>]
                [double] [quasi-proportional] [space <decimal>] [ emdash <decimal> ]
                [grotesque (default) | atkinson | geometric | jost]
-               [elementary | grotesk | a-single | b-corner | D-serifless | d-[tailed|toothless] | f-extended | G-[hookless|toothed|toothless] | g-double | I-serifless | i-serifed | J-descending | j-[serifed|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|straight] | q-[hook|tailed] | asterisk-high | at-tall | 0-split | paren-flat]*
+               [elementary | grotesk | open | a-single | b-corner | D-serifless | d-[tailed|toothless] | f-extended | G-[hookless|toothed|toothless] | g-double | I-serifless | i-serifed | J-descending | j-[serifed|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|straight] | q-[hook|tailed] | asterisk-high | at-tall | 0-split | paren-flat]*
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
                [family <name> | <prefix>Monolexic]
                [cap [-+]<decimal> | extended]
@@ -66,12 +66,15 @@ symbols() {
 
 # atkinson hyperlegible typeface
 grotesque() {
+  capital_b=standard-interrupted-serifless
   capital_d=more-rounded-serifless
   capital_g=toothless-rounded-serifless-hooked
   capital_i=short-serifed
   capital_j=descending-flat-hook-serifless
   capital_k=straight-serifless
+  capital_p=closed
   capital_q=detached-bend-tailed
+  capital_r=straight
   a=double-storey-serifless
   b=toothless-rounded
   d=toothed-serifless
@@ -96,12 +99,15 @@ grotesque() {
 # jost* typeface
 geometric() {
   unset q_hook
+  capital_b=standard-interrupted-serifless
   capital_d=more-rounded-serifless
   capital_g=toothless-rounded-serifless-hooked
   capital_i=serifless
   capital_j=descending-serifless
   capital_k=symmetric-touching-serifless
+  capital_p=closed
   capital_q=detached-tailed
+  capital_r=straight
   a=single-storey-serifless
   b=toothed
   d=toothed-serifless
@@ -131,6 +137,7 @@ variant() {
   for o in $@ ;do  # "o"nly non-variant character ($i in use for variant :) ..since rectified with long variant names
     case $o in
     a-single     ) glyph a=single-storey-serifless ;;
+    B-open       ) glyph capital_b=standard-interrupted-serifless ;;
     b-corner     ) glyph b=toothless-corner ;;
     b-toothed    ) glyph b=toothed ;;
     D-serifless  ) glyph capital_d=standard-serifless ;;
@@ -148,6 +155,7 @@ variant() {
     J-serifless  ) glyph capital_j=serifless ;;
     j-serifed    ) glyph j=flat-hook-serifed ;;
     j-serifless  ) glyph j=serifless ;;
+    P-open       ) glyph capital_p=open ;;
     p-eared      ) glyph p=eared ;;
     p-serifed    ) glyph p=motion-serifed ;;
     Q-bar        ) glyph capital_q=vertical-crossing ;;
@@ -156,6 +164,7 @@ variant() {
     Q-detached   ) glyph capital_q=detached-tailed ;;
     Q-straight   ) glyph capital_q=straight ;;
     q-tailed     ) glyph q=tailed ;;
+    R-open       ) glyph capital_r=straight-open ;;
     u-toothed    ) glyph u=toothed ;;
     ampersand    ) glyph ampersand=closed ;;
     asterisk-low ) glyph asterisk=penta-low ;;   # paragraph separator (ebook) glyph
@@ -269,6 +278,7 @@ while [ $1 ] ;do
   elementary   ) variant I-serifless a-single ;;
   grotesk      ) variant I-serifless f-extended ;;
   grotesque    ) grotesque ;;
+  open         ) variant B-open P-open R-open G-hookless ;;
   atkinson     ) grotesque; ebook hyperlegible; variant b-toothed G-toothed J-serifless p-eared Q-crossing q-tailed u-toothed ampersand at number_sign percent ;;
   geometric    ) geometric; cap extended; build=-jost ;;
   jost         ) geometric; cap extended; build=-jost; variant a-single J-serifless Q-crossing u-toothed ampersand at dollar number_sign percent question ;;
@@ -329,15 +339,18 @@ fi
 
 # a tweaked :-) atkinson hyperlegible font character emulation
 variants="
-capital-d = '$capital_d'              # D
-capital-g = '$capital_g'              # G
-capital-i = '$capital_i'              # I
-capital-j = '$capital_j'              # J
-capital-k = '$capital_k'              # K
-capital-m = 'flat-bottom'             # M
-capital-q = '$capital_q'              # Q
-capital-u = 'toothless-rounded'       # U
-capital-w = 'straight-flat-top'       # W
+capital-b = '$capital_b'                   # B
+capital-d = '$capital_d'                   # D
+capital-g = '$capital_g'                   # G
+capital-i = '$capital_i'                   # I
+capital-j = '$capital_j'                   # J
+capital-k = '$capital_k'                   # K
+capital-m = 'flat-bottom'                  # M
+capital-p = '$capital_p'                   # P
+capital-q = '$capital_q'                   # Q
+capital-r = '$capital_r'                   # R
+capital-u = 'toothless-rounded'            # U
+capital-w = 'straight-flat-top'            # W
 a = '$a'
 b = '$b'
 d = '$d'
@@ -355,34 +368,36 @@ t = '$t'
 u = '$u'
 w = 'straight-flat-top'
 y = '$y'
-zero = '$zero'                        # 0
-one = '$one'                          # 1
-two = 'straight-neck'                 # 2
-four = 'closed'                       # 4
-five = 'oblique-upper-left-bar'       # 5
-six = '$six'                          # 6
-eight = 'two-circles'                 # 8
-brace = 'straight'                    # {}
-ampersand = '$ampersand'              # &
-asterisk = '$asterisk'                # *
-at = '$at'                            # @
-cyrl-ef = 'serifless'                 # ф 
-cyrl-capital-ka = '$cyrl_ka'          # К
-cyrl-ka = '$cyrl_ka'                  # к
-cyrl-yeri = 'round'                   # ь
-cyrl-yery = 'round'                   # Ы
-dollar = '$dollar'                    # $
-eszet = 'sulzbacher'                  # ß
-long-s = 'bent-hook'                  # ſ
-lower-iota = 'flat-tailed'            # ι
-# lower-lambda = 'straight-turn'      # λ
-lower-mu = 'tailless'                 # µ
-lower-xi = 'rounded'                  # ξ 
-number-sign = '$number_sign'          # #
-$(vsn paragraph-sign pilcrow) = 'low' # ¶
-paren = '$paren'                      # ()
-percent = '$percent'                  # %
-question = '$question'                # ?
+zero = '$zero'                             # 0
+one = '$one'                               # 1
+two = 'straight-neck'                      # 2
+four = 'closed'                            # 4
+five = 'oblique-upper-left-bar'            # 5
+six = '$six'                               # 6
+eight = 'two-circles'                      # 8
+brace = 'straight'                         # {}
+ampersand = '$ampersand'                   # &
+asterisk = '$asterisk'                     # *
+at = '$at'                                 # @
+cyrl-ef = 'serifless'                      # ф
+cyrl-capital-ka = '$cyrl_ka'               # К
+cyrl-ka = '$cyrl_ka'                       # к
+$(vsn '' "cyrl-capital-zhe = 'straight'")  # Ж
+$(vsn '' "cyrl-zhe = 'straight'")          # ж
+cyrl-yeri = 'round'                        # ь
+cyrl-yery = 'round'                        # Ы
+dollar = '$dollar'                         # $
+eszet = 'sulzbacher'                       # ß
+long-s = 'bent-hook'                       # ſ
+lower-iota = 'flat-tailed'                 # ι
+# lower-lambda = 'straight-turn'           # λ
+lower-mu = 'tailless'                      # µ
+lower-xi = 'rounded'                       # ξ
+number-sign = '$number_sign'               # #
+$(vsn paragraph-sign pilcrow) = 'low'      # ¶
+paren = '$paren'                           # ()
+percent = '$percent'                       # %
+question = '$question'                     # ?
 "
 
 # based on sample.toml (with quote and backtick conversion to single quotes)
