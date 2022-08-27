@@ -26,7 +26,7 @@
 usage() {
   echo "usage: iosevka [normal (default) | extended | expanded | ebook | dyslexic | heading]
                [english | latin+greek | ligature <name>]
-               [double] [quasi-proportional] [space <decimal>] [ emdash <decimal> ]
+               [double] [quasi-[proportional|extension] [space <decimal>] [ emdash <decimal> ]
                [grotesque (default) | atkinson | geometric | jost]
                [elementary | grotesk | open | a-single | b-corner | D-serifless | d-[tailed|toothless] | f-extended | G-[hookless|toothed|toothless] | g-double | I-serifless | i-serifed | J-descending | j-[serifed|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|straight] | q-[hook|tailed] | asterisk-high | at-tall | 0-split | paren-flat]*
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
@@ -243,7 +243,8 @@ while [ $1 ] ;do
   latin+greek  ) latin_greek;  ditto char_set "$1" ;;
   ligature     ) ligature $2  || usage; shift ;;
   double       ) unset mono ;;
-  quasi*       ) spacing quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi$(echo $family | sed -r 's/.*(Hyper|Mono|Quasi)//'); variant I-serifed ;;
+  quasi-pro*   ) spacing quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi$(echo $family | sed -r 's/.*(Hyper|Mono|Quasi)//'); variant I-serifed ;;
+  quasi-ext*   ) spacing quasi-proportional-extension-only ;;
   dyslexic     ) shape $expanded;            sb 0.7150; leading 1.5000; space 2; emdash 2; width=135; ebook monolexic ;;
   # glyphs
   a-single     ) variant $1 ;;
