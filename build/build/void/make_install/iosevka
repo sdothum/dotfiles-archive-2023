@@ -132,9 +132,9 @@ e_ink() {
 myfonts() {
   ditto myfonts $Q
   space=${space:-space 1.3333}
-  # e_ink igrotesk    f-extended ${cap:-cap extended}     $gQ $space
-  # e_ink grotesk     f-extended ${cap:-cap extended}     $gQ I-serifless $space
-  # e_ink ielementary a-single   ${cap:-cap extended} $eG $eQ $open $space
+  e_ink igrotesk    f-extended ${cap:-cap extended}     $gQ $space
+  e_ink grotesk     f-extended ${cap:-cap extended}     $gQ I-serifless $space
+  e_ink ielementary a-single   ${cap:-cap extended} $eG $eQ $open $space
   e_ink elementary  a-single   ${cap:-cap extended} $eG $eQ $open I-serifless $space
 }
 
