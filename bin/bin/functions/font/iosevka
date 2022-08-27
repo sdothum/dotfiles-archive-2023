@@ -66,7 +66,7 @@ symbols() {
 
 # atkinson hyperlegible typeface
 grotesque() {
-  capital_b=standard-interrupted-serifless
+  capital_b=standard-serifless
   capital_d=more-rounded-serifless
   capital_g=toothless-rounded-serifless-hooked
   capital_i=short-serifed
@@ -99,7 +99,7 @@ grotesque() {
 # jost* typeface
 geometric() {
   unset q_hook
-  capital_b=standard-interrupted-serifless
+  capital_b=standard-serifless
   capital_d=more-rounded-serifless
   capital_g=toothless-rounded-serifless-hooked
   capital_i=serifless
