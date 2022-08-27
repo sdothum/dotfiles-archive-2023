@@ -7,7 +7,10 @@
 
 usage() { 
   echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [family <name>]
-                            [myfonts [Q] | elementary | grotesk | open | D-serifless | [e]G-[hookless|toothless|default] | I-serifless | J-descending | [e|g]Q-[bar|straight|default] | Q-[bar|crossing|detached|hook|straight] | a-single | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat | [cap off | <parm>] | space <parm> | book+regular | latin+greek]*
+                            book+regular | latin+greek]*
+                            quasi-extension | space <parm>
+                            [myfonts [Q] | elementary | grotesk | open | D-serifless | [e]G-[hookless|toothless|default] | I-serifless | J-descending | [e|g]Q-[bar|straight|default] | Q-[bar|crossing|detached|hook|straight] | a-single | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat
+                            cap <parm>]
                             [[version 10x | 15x] -- <opions>*]"
   exit 1
 }
@@ -27,11 +30,11 @@ MAKE_INSTALL=/tmp/iosevka:make_install
 # SRCDIR=$HOME/bin/functions/font
 DEPOT=/net/depot
 GLYPH=b-rounded
-cap='cap extended'  # new make_install default, "cap off" to disable
 dyslexic=true       # default e-reader dyslexic font families
 gQ=Q-bar            # capital Q default for Unolexic/grotesk
 eQ=Q-straight       # capital Q default for Geolexic/elementary
 eG=G-hookless       # capital G default for elementary
+quasicap=1.0675     # quasi-extension cap height
 
 touch $MAKE_INSTALL
 trap "rm -f $MAKE_INSTALL; pkill -f iosevka" EXIT INT
@@ -40,11 +43,11 @@ shift
 glyph() { unset b d p; eval $1=$2; GLYPH=$2; }
 
 version() {
-  # [ -L $SRCDIR/iosevka ] && rm -f $SRCDIR/iosevka
   [ -L $DEPOT/Iosevka ]  && rm -f $DEPOT/Iosevka
-  # ln -s $SRCDIR/iosevka.$1 $SRCDIR/iosevka || usage
   ln -s $DEPOT/Iosevka.$1  $DEPOT/Iosevka  || usage
 }
+
+version 10x  # default e-reader fonts
 
 while [ $1 ] ;do
   case $1 in
@@ -78,6 +81,7 @@ while [ $1 ] ;do
   book+regular  ) adjust=$1 ;;
   latin+greek   ) language=$1 ;;
   cap           ) [ $2 ] && { [ $2 = 'off' ] && unset cap || cap="$1 $2"; shift; } || usage ;;
+  quasi-ext*    ) quasi=$1; cap="cap $quasicap"; version 15x ;;
   space         ) [ $2 ] && { space="$1 $2"; shift; } || usage ;;
   source-only   ) source_only=true ;;
   myfonts       ) [ "$2" = Q ] && { for_Q=true; shift; }; unset dyslexic ;;  # my elementary and grotesk fonts with tweaked space cell width
@@ -115,7 +119,7 @@ update() {
   done
 }
 
-options() { echo $D $G $I $J $Q $a $b $d $f $p $q $zero $at $paren $adjust $cap $sb $style $@; }  # list
+options() { echo $D $G $I $J $Q $a $b $d $f $p $q $zero $at $paren $adjust $cap $sb $style $quasi $@; }  # list
 
 # family [options]*
 e_ink() {
@@ -128,10 +132,10 @@ e_ink() {
 myfonts() {
   ditto myfonts $Q
   space=${space:-space 1.3333}
-  e_ink igrotesk    f-extended cap extended     $gQ $space
-  e_ink grotesk     f-extended cap extended     $gQ I-serifless $space
-  e_ink ielementary a-single   cap extended $eG $eQ $open $space
-  e_ink elementary  a-single   cap extended $eG $eQ $open I-serifless $space
+  # e_ink igrotesk    f-extended ${cap:-cap extended}     $gQ $space
+  # e_ink grotesk     f-extended ${cap:-cap extended}     $gQ I-serifless $space
+  # e_ink ielementary a-single   ${cap:-cap extended} $eG $eQ $open $space
+  e_ink elementary  a-single   ${cap:-cap extended} $eG $eQ $open I-serifless $space
 }
 
 dfont() { iosevka expanded at-tall Q-bar $(options $@) q-hook; }
@@ -139,11 +143,9 @@ wfont() { iosevka english          Q-bar $(options $@) q-hook asterisk-high; }  
 efont() { iosevka ${language:-english}   $(options $@) q-hook; }
 
 if [ $family ] ;then                      # custom e-ink font (non-published)
-  version 10x
   e_ink $family
 
 elif [ $ereader ] && [ $dyslexic ] ;then  # e-ink fonts (dyslexic default)
-  version 10x
   e_ink iMonolexic
   e_ink Monolexic   I-serifless
   e_ink iUnolexic   f-extended $gQ
@@ -152,7 +154,6 @@ elif [ $ereader ] && [ $dyslexic ] ;then  # e-ink fonts (dyslexic default)
   e_ink Geolexic    a-single   $eQ I-serifless
 
 elif [ $ereader ] ;then                   # special spacing
-  version 10x
   if [ $for_Q ] ;then
     unset eQ gQ
     for Q in Q-bar Q-bend Q-crossing Q-detached Q-straight ;do 
@@ -165,7 +166,6 @@ elif [ $ereader ] ;then                   # special spacing
   fi
 
 elif [ $ebook ] ;then                     # e-reader fonts
-  version 10x
   efont ebook
   efont ebook    I-serifless
   efont ebook    quasi-proportional
@@ -174,12 +174,11 @@ elif [ $ebook ] ;then                     # e-reader fonts
   efont dyslexic quasi-proportional I-serifless
 
 elif [ $web ] ;then                       # www fonts
-  version 10x
   unset cap
   wfont heading  kobo webfont
   wfont dyslexic f-extended cap 1.045 space 1.5 kobo webfont
   wfont dyslexic quasi-proportional   space 1.25  kobo webfont
-  dfont cap extended family wIosevka
+  dfont ${cap:-cap extended} family wIosevka
 
 else                                      # desktop fonts
   version 15x
