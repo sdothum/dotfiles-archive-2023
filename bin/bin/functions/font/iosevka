@@ -6,7 +6,7 @@
 
 # ...................................................................... iosevka
 
-# for git iosevka 10.x and 15.x
+# for git iosevka 10.x and 16.x
 
 # eg. source code and desktop fonts..
 #     iosevka expanded I-serifless at-tall 
@@ -131,7 +131,8 @@ geometric() {
 
 # for stricter typeface matching
 glyph() { eval $1; variant="$variant $1"; }
-vsn()   { readlink -f $REPO | grep -q 10x && echo $1 || echo $2; } # iosevka specific version attributes
+# vsn() { readlink -f $REPO | grep -q 10x && echo $1 || echo $2; } # iosevka specific version attributes (old function with 2 positional parameters)
+vsn()   { readlink -f $REPO | grep -q 10x && { [ $# -gt 1 ] && echo $1; true; } || { [ $# -gt 1 ] && shift; echo $1; } }
  
 variant() {
   for o in $@ ;do  # "o"nly non-variant character ($i in use for variant :) ..since rectified with long variant names
@@ -340,18 +341,18 @@ fi
 
 # a tweaked :-) atkinson hyperlegible font character emulation
 variants="
-capital-b = '$capital_b'                   # B
-capital-d = '$capital_d'                   # D
-capital-g = '$capital_g'                   # G
-capital-i = '$capital_i'                   # I
-capital-j = '$capital_j'                   # J
-capital-k = '$capital_k'                   # K
-capital-m = 'flat-bottom'                  # M
-capital-p = '$capital_p'                   # P
-capital-q = '$capital_q'                   # Q
-capital-r = '$capital_r'                   # R
-capital-u = 'toothless-rounded'            # U
-capital-w = 'straight-flat-top'            # W
+capital-b = '$capital_b'                # B
+capital-d = '$capital_d'                # D
+capital-g = '$capital_g'                # G
+capital-i = '$capital_i'                # I
+capital-j = '$capital_j'                # J
+capital-k = '$capital_k'                # K
+capital-m = 'flat-bottom'               # M
+capital-p = '$capital_p'                # P
+capital-q = '$capital_q'                # Q
+capital-r = '$capital_r'                # R
+capital-u = 'toothless-rounded'         # U
+capital-w = 'straight-flat-top'         # W
 a = '$a'
 b = '$b'
 d = '$d'
@@ -369,47 +370,52 @@ t = '$t'
 u = '$u'
 w = 'straight-flat-top'
 y = '$y'
-zero = '$zero'                             # 0
-one = '$one'                               # 1
-two = 'straight-neck'                      # 2
-four = 'closed'                            # 4
-five = 'oblique-upper-left-bar'            # 5
-six = '$six'                               # 6
-eight = 'two-circles'                      # 8
-brace = 'straight'                         # {}
-ampersand = '$ampersand'                   # &
-asterisk = '$asterisk'                     # *
-at = '$at'                                 # @
-cyrl-ef = 'serifless'                      # ф
-cyrl-capital-ka = '$cyrl_ka'               # К
-cyrl-ka = '$cyrl_ka'                       # к
-$(vsn '' "cyrl-capital-zhe = 'straight'")  # Ж
-$(vsn '' "cyrl-zhe = 'straight'")          # ж
-cyrl-yeri = 'round'                        # ь
-cyrl-yery = 'round'                        # Ы
-dollar = '$dollar'                         # $
-eszet = 'sulzbacher'                       # ß
-long-s = 'bent-hook'                       # ſ
-lower-iota = 'flat-tailed'                 # ι
-# lower-lambda = 'straight-turn'           # λ
-lower-mu = 'tailless'                      # µ
-lower-xi = 'rounded'                       # ξ
-number-sign = '$number_sign'               # #
-$(vsn paragraph-sign pilcrow) = 'low'      # ¶
-paren = '$paren'                           # ()
-percent = '$percent'                       # %
-question = '$question'                     # ?
+zero = '$zero'                          # 0
+one = '$one'                            # 1
+two = 'straight-neck'                   # 2
+four = 'closed'                         # 4
+five = 'oblique-upper-left-bar'         # 5
+six = '$six'                            # 6
+eight = 'two-circles'                   # 8
+brace = 'straight'                      # {}
+ampersand = '$ampersand'                # &
+asterisk = '$asterisk'                  # *
+at = '$at'                              # @
+cyrl-ef = 'serifless'                   # ф
+cyrl-capital-ka = '$cyrl_ka'            # К
+cyrl-ka = '$cyrl_ka'                    # к
+$(vsn "cyrl-capital-zhe = 'straight'")  # Ж
+$(vsn "cyrl-zhe = 'straight'")          # ж
+cyrl-yeri = 'round'                     # ь
+cyrl-yery = 'round'                     # Ы
+dollar = '$dollar'                      # $
+eszet = 'sulzbacher'                    # ß
+long-s = 'bent-hook'                    # ſ
+lower-iota = 'flat-tailed'              # ι
+# lower-lambda = 'straight-turn'        # λ
+lower-mu = 'tailless'                   # µ
+lower-xi = 'rounded'                    # ξ
+number-sign = '$number_sign'            # #
+$(vsn paragraph-sign pilcrow) = 'low'   # ¶
+paren = '$paren'                        # ()
+percent = '$percent'                    # %
+question = '$question'                  # ?
 "
 
 # based on sample.toml (with quote and backtick conversion to single quotes)
 echo "
-[buildPlans.$family]  # <iosevka-custom> is your plan name
-family = '$family'    # Font menu family name
-spacing = '$spacing'  # Optional; Values: 'normal', 'term', 'fontconfig-mono', or 'fixed'
-serifs = 'sans'       # Optional; Values: 'sans' or 'slab'
+### See https://github.com/be5invis/Iosevka/blob/master/doc/custom-build.md for comprehensive
+### documentation of the options in this file
+
+[buildPlans.$family]                 # <iosevka-custom> is your plan name
+family = '$family'                   # Font menu family name
+spacing = '$spacing'                 # Optional; Values: 'normal', 'term', 'fontconfig-mono', or 'fixed'
+serifs = 'sans'                      # Optional; Values: 'sans' or 'slab'
+$(vsn 'export-glyph-names = false')  # Set this to true for ligature support in Kitty (increased file size)
+
 no-cv-ss = true
 no-litigation = $no_litigation
-$(vsn '' "webfont-formats = ['ttf', 'woff2']")
+$(vsn "webfont-formats = ['ttf', 'woff2']")
 
 ###################################################################################################
 # Configure variants
