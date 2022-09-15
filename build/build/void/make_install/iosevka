@@ -7,10 +7,10 @@
 
 usage() { 
   echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [family <name>]
-                            book+regular | latin+greek | supplemental
-                            quasi-extension | space <parm>
-                            [myfonts [Q] | elementary | grotesk | open | D-serifless | [e]G-[hookless|toothless|default] | I-serifless | J-descending | [e|g]Q-[bar|straight|default] | Q-[bar|crossing|detached|hook|straight] | a-single | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat
-                            cap <parm>]
+                            [book+regular | latin+greek | supplemental]
+                            [quasi-extension | space <parm>]
+                            [myfonts [Q] | elementary | grotesk | open | D-serifless | [e]G-[hookless|toothless|default] | I-serifless | J-descending | [d|e|g]Q-[bar|horizontal|open|straight|default] | Q-[bar|crossing|detached|hook|straight|custom] | a-single | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat
+                            [ascender <parm> | cap <parm>]
                             [[version 10x | 16x] -- <opions>*]"
   exit 1
 }
@@ -33,9 +33,8 @@ GLYPH=b-rounded
 language=english  # default e-reader glyph set
 dyslexic=true     # default e-reader dyslexic font families
 gQ=Q-bar          # capital Q default for Unolexic/grotesk
-eQ=Q-straight     # capital Q default for Geolexic/elementary
+eQ=Q-staight      # capital Q default for elementary
 eG=G-hookless     # capital G default for elementary
-quasicap=1.0675   # quasi-extension cap height
 latest=16x        # lastest version
 
 touch $MAKE_INSTALL
@@ -53,52 +52,57 @@ version 10x  # default e-reader fonts
 
 while [ $1 ] ;do
   case $1 in
-  D-serifless   ) D=$1 ;;
-  [e]G-hookless ) ${1%G*}G=${1#?} ;;
-  [e]G-toothless) ${1%G*}G=${1#?} ;;
-  [e]G-*        ) unset ${1%G*}G  ;;
-  G-hookless    ) G=$1 ;;
-  G-toothless   ) G=$1 ;;
-  I-serifless   ) I=$1 ;;             # source code variant
-  J-descending  ) J=$1 ;;
-  [eg]Q-bar     ) ${1%Q*}Q=${1#?} ;;  # elementary/Geolexic font variation
-  [eg]Q-straight) ${1%Q*}Q=${1#?} ;;  # elementary/Geolexic font variation
-  [eg]Q-*       ) unset ${1%Q*}Q  ;;
-  Q-bar         ) Q=$1 ;;
-  Q-crossing    ) Q=$1 ;;
-  Q-detached    ) Q=$1 ;;
-  Q-hook        ) Q=$1 ;;
-  Q-straight    ) Q=$1 ;;
-  a-single      ) a=$1 ;;
-  b-rounded     ) glyph b $1 ;;       # unolexic
-  d-tailed      ) glyph d $1 ;;       # ebook variant
-  d-toothless   ) glyph d $1 ;;       # with p-eared
-  f-extended    ) f=$1 ;;             # unolexic (homage to universal grotesk)
-  p-eared       ) glyph p $1 ;;
-  p-serifed     ) glyph p $1 ;;
-  q-hook        ) q=$1 ;;             # ebook variant
-  at-tall       ) at=$1 ;;            # source code variant
-  0-split       ) zero=$1 ;;
-  paren-flat    ) paren=$1 ;;         # source code variant
-  book+regular  ) adjust=$1 ;;
-  latin+greek   ) language=$1 ;;
-  supplemental  ) language=$1 ;;
-  cap           ) [ $2 ] && { [ $2 = 'off' ] && unset cap || cap="$1 $2"; shift; } || usage ;;
-  quasi-ext*    ) quasi=$1; cap="cap $quasicap"; version $latest ;;
-  space         ) [ $2 ] && { space="$1 $2"; shift; } || usage ;;
-  source-only   ) source_only=true ;;
-  myfonts       ) [ "$2" = Q ] && { for_Q=true; shift; }; unset dyslexic ;;  # my elementary and grotesk fonts with tweaked space cell width
-  elementary    ) style=$1 ;;
-  grotesk       ) style=$1 ;;
-  open          ) open=$1 ;;
-  kindle        ) ereader=$1; sb='sb 0.6150' ;;                              # side bearing difference to kobo's font rendering
-  kobo          ) ereader=$1; q=q-hook ;;
-  family        ) [ $ereader ] && [ $2 ] && { family=$2; shift; } || usage ;;
-  ebook         ) ebook=true ;;
-  web           ) web=true ;;
-  version       ) [ $2 ] && { version $2; shift; } || usage ;;
-  --            ) shift; . $HOME/bin/functions/font/iosevka $@; exit ;;
-  *             ) usage ;;
+  D-serifless      ) D=$1 ;;
+  [e]G-hookless    ) eval ${1%G*}G=${1#?} ;;
+  [e]G-toothless   ) eval ${1%G*}G=${1#?} ;;
+  [e]G-*           ) unset ${1%G*}G  ;;
+  G-hookless       ) G=$1 ;;
+  G-toothless      ) G=$1 ;;
+  I-serifless      ) I=$1 ;;                  # source code variant
+  J-descending     ) J=$1 ;;
+  [deg]Q-bar       ) eval ${1%Q*}Q=${1#?} ;;  # elementary/Geolexic font variation
+  [deg]Q-horizontal) eval ${1%Q*}Q=${1#?} ;;  # elementary/Geolexic font variation
+  [deg]Q-straight  ) eval ${1%Q*}Q=${1#?} ;;  # elementary/Geolexic font variation
+  [deg]Q-custom    ) eval ${1%Q*}Q=${1#?} ;;  # elementary/Geolexic font variation
+  [deg]Q-*         ) unset ${1%Q*}Q  ;;
+  Q-bar            ) Q=$1 ;;
+  Q-crossing       ) Q=$1 ;;
+  Q-detached       ) Q=$1 ;;
+  Q-hook           ) Q=$1 ;;
+  Q-horizontal     ) Q=$1 ;;
+  Q-open           ) Q=$1 ;;
+  Q-straight       ) Q=$1 ;;
+  a-single         ) a=$1 ;;
+  b-rounded        ) glyph b $1 ;;            # unolexic
+  d-tailed         ) glyph d $1 ;;            # ebook variant
+  d-toothless      ) glyph d $1 ;;            # with p-eared
+  f-extended       ) f=$1 ;;                  # unolexic (homage to universal grotesk)
+  p-eared          ) glyph p $1 ;;
+  p-serifed        ) glyph p $1 ;;
+  q-hook           ) q=$1 ;;                  # ebook variant
+  at-tall          ) at=$1 ;;                 # source code variant
+  0-split          ) zero=$1 ;;
+  paren-flat       ) paren=$1 ;;              # source code variant
+  book+regular     ) adjust=$1 ;;
+  latin+greek      ) language=$1 ;;
+  supplemental     ) language=$1 ;;
+  ascender         ) [ $2 ] && { ascender="$1 $2"; shift; } || usage ;;
+  cap              ) [ $2 ] && { [ $2 = 'off' ] && unset cap || cap="$1 $2"; shift; } || usage ;;
+  quasi-ext*       ) quasi=$1; version $latest ;;
+  space            ) [ $2 ] && { space="$1 $2"; shift; } || usage ;;
+  source-only      ) source_only=true ;;
+  myfonts          ) [ "$2" = Q ] && { for_Q=true; shift; }; unset dyslexic ;;  # my elementary and grotesk fonts with tweaked space cell width
+  elementary       ) style=$1 ;;
+  grotesk          ) style=$1 ;;
+  open             ) open=$1; unset eG eQ ;;
+  kindle           ) ereader=$1 ;;
+  kobo             ) ereader=$1; q=q-hook ;;
+  family           ) [ $ereader ] && [ $2 ] && { family=$2; shift; } || usage ;;
+  ebook            ) ebook=true ;;
+  web              ) web=true ;;
+  version          ) [ $2 ] && { version $2; shift; } || usage ;;
+  --               ) shift; . $HOME/bin/functions/font/iosevka $@; exit ;;
+  *                ) usage ;;
   esac
   shift
 done
@@ -122,25 +126,25 @@ update() {
   done
 }
 
-options() { echo $D $G $I $J $Q $a $b $d $f $p $q $zero $at $paren $adjust $cap $sb $style $quasi $@; }  # list
+options() { echo $D $G $I $J $Q $a $b $d $f $p $q $zero $at $paren $adjust $ascender $cap $sb $style $quasi $@; }  # list
 
 # family [options]*
 e_ink() {
   name=$1
   shift
-  iosevka dyslexic $ereader $language $(options $@) $space family $name
+  iosevka dyslexic $ereader $language $(options $@) q-hook $space family $name
   update $GLYPH $name
 }
 
 myfonts() {
   ditto myfonts $Q
-  space=${space:-space 1.3333}
-  e_ink igrotesk     ${cap:-cap extended} f-extended     $gQ $space
-  e_ink grotesk      ${cap:-cap extended} f-extended     $gQ I-serifless $space
-  e_ink ielementary  ${cap:-cap extended} a-single   $eG $eQ $open $space
-  e_ink elementary   ${cap:-cap extended} a-single   $eG $eQ $open I-serifless $space
-  language=supplemental  # glyph set
-  e_ink supplemental ${cap:-cap extended}
+  language=${language:-latin+greek}
+  e_ink idyslexic   ${cap:-cap extended}                                  $dQ ${space:-space 2}
+  e_ink dyslexic    ${cap:-cap extended}            I-serifless           $dQ ${space:-space 2}
+  e_ink igrotesk    ${cap:-cap extended} f-extended                       $gQ ${space:-space 1.5}
+  e_ink grotesk     ${cap:-cap extended} f-extended I-serifless           $gQ ${space:-space 1.5}
+  e_ink ielementary ${cap:-cap extended} a-single               $open $eG $eQ ${space:-space 1.3333}
+  e_ink elementary  ${cap:-cap extended} a-single   I-serifless $open $eG $eQ ${space:-space 1.3333}
 }
 
 dfont() { iosevka expanded at-tall Q-bar $(options $@) q-hook; }
@@ -180,9 +184,10 @@ elif [ $ebook ] ;then                     # e-reader fonts
 
 elif [ $web ] ;then                       # www fonts
   unset cap
-  wfont heading  kobo webfont
-  wfont dyslexic f-extended cap 1.045 space 1.5 kobo webfont
-  wfont dyslexic quasi-proportional   space 1.25  kobo webfont
+  version $latest
+  wfont heading  quasi-extension    kobo webfont
+  wfont dyslexic quasi-extension    f-extended cap extended space 1.5 kobo webfont
+  wfont dyslexic quasi-proportional space 1.25 kobo webfont
   dfont ${cap:-cap extended} family wIosevka
 
 else                                      # desktop fonts
@@ -190,6 +195,7 @@ else                                      # desktop fonts
   dfont
   dfont proof
   dfont menu
+  dfont dyslexic a-single open quasi-extension cap extended space 1.15 family elemental  # panel/dunst/browser font
 fi
 
 # vim: set ft=sh: #
