@@ -1,0 +1,22 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Kindle
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................... FONT_RAMP
+
+usage() { echo "usage: $(basename $0) <size> <exponent>"; exit 1; }
+
+[ $1 ] && start=$1    || start=5.578
+[ $2 ] && exponent=$2 || exponent=1.05
+
+steps() { for i in $(seq 0 13) ;do echo "$1 * $2 ^ $i" | bc ;done | tr '\n' ' '; echo; }
+
+STEPS="$(steps $start $exponent)"
+[ "$STEPS" = "$(steps 0 0)" ] && usage
+echo $STEPS >FONT_RAMP
+cat FONT_RAMP
+
+
+# vim: set ft=sh: #
