@@ -57,7 +57,7 @@ compose_vim() {
   DRAFT=$HOME/drafts/${1#/tmp/}.draft
   format_message $1
   cp $1 $DRAFT
-  gvim -f -c 'set filetype=mail' $DRAFT  # must set filetype to invoke ftplugin composeMail()
+  vim -g -f -c 'set filetype=mail' $DRAFT  # must set filetype to invoke ftplugin composeMail()
   cp $DRAFT $1
   # cleanup sup mail draft histories
   # find $HOME/.vim/undo -name '*tmp*sup.*' -exec sudo rm {} \;

@@ -8,7 +8,7 @@
 # see make_install iosevka
 
 usage() { 
-  echo "usage: $(basename $0) Q_hook | q_hook | punctuation [<emdash>] | ligature [quasi-proportional] | bookweight [book+regular] | dyslexic [<space>]  [family]
+  echo "usage: $(basename $0) Q_hook | Q_custom | q_hook | punctuation [<emdash>] | ligature [quasi-proportional] | bookweight [book+regular] | dyslexic [<space>]  [family]
        $(basename $0) copy <family> <name>, font alias via commandline only
        $(basename $0) map  <family> <glyph> <glyph>, map U+<glyph> via commandline only"
   exit 1
@@ -20,16 +20,22 @@ REPO=/net/depot/Iosevka
 confirm() { [ -e $MAKE_INSTALL ] && ditto "$(basename $0)" "$1" || { ifyes "$1" || exit; }; }
 percent() { echo "$1 * 100" | bc | cut -d. -f1; }
 
+replace() {
+  echo "
+Select($2);
+Copy();
+Select($1);
+Paste();
+"
+}
+
 # substitute curly tail q
 q_hook() {
   # copy char 0u024b and paste to char 0u0071
   # confirm 'atkinson q-hook'  # see iosevka
   echo "
 Open(\$1);
-Select(0u024b);
-Copy();
-Select(0u0071);
-Paste();
+$(replace 0u0071 0u024b)
 Generate(\$1);
 " >/tmp/fontforge.script
 
@@ -44,15 +50,43 @@ Q_hook() {
   # confirm 'Q-hook'  # see iosevka
   echo "
 Open(\$1);
-Select(0u024a);
-Copy();
-Select(0u0051);
-Paste();
+$(replace 0u0051 0u024a)
 Generate(\$1);
 " >/tmp/fontforge.script
 
   for i in *ttf ;do
     ditto Q_hook $i
+    fontforge --script /tmp/fontforge.script $i
+  done
+}
+
+overlay() {
+  echo "
+Select($2);
+CopyReference();
+Select($1);
+PasteWithOffset($3,$4);
+"
+}
+
+Q_custom() {
+  # copy char 0u03d8 and paste to char 0u0051
+  # confirm 'Q-custom'  # see iosevka
+  # $(overlay 0u0051 0u0325 $(( $shape / 3 * 4 )) 35)  # circle to cell edge
+  # $(overlay 0u0051 0u0325 $(( $shape / 4 * 5 )) 35)  # circle to glyph edge
+  Q_offset() {
+    echo "
+Open(\$1);
+$(replace 0u0051 0u004f)
+$(overlay 0u0051 0u2035 $x -650)
+Generate(\$1);
+" >/tmp/fontforge.script
+}
+
+  for i in *ttf ;do
+    ditto Q_custom $i
+    echo $i | egrep -q 'italic|oblique' && x=-$(( $shape / 13 )) || x=$(( $shape / 10 ))
+    Q_offset  # offset dependencies
     fontforge --script /tmp/fontforge.script $i
   done
 }
@@ -125,6 +159,20 @@ Generate(\$1);
 
   for i in *.ttf ;do
     ditto ligature $i
+    fontforge --script /tmp/fontforge.script $i
+  done
+}
+
+Q_horizontal() {
+  confirm 'extend horizontal Q'
+  echo "
+Open(\$1);
+$(overlay 0u0051 0u0335 $(( $shape / 4 * 5 )) -225)
+Generate(\$1);
+" >/tmp/fontforge.script
+
+  for i in *.ttf ;do
+    ditto Q_horizontal $i
     fontforge --script /tmp/fontforge.script $i
   done
 }
@@ -243,10 +291,7 @@ map() {
   confirm "map $from to $to"
   echo "
 Open(\$1);
-Select(0u$from);
-Copy();
-Select(0u$to);
-Paste();
+$(replace 0u$to 0u$from)
 Generate(\$1);
 " >/tmp/fontforge.script
 
@@ -259,15 +304,17 @@ Generate(\$1);
 # main, see iosevka
 fforge=$1
 case $1 in
-q_hook     ) ;;
-Q_hook     ) ;;
-ligature   ) [ $4 ] && { width=$2; shift 2; } || { shape=$2; shift; } ;;               # see iosevka for tricky bits
-punctuation) [ $2 ] && { emdash=$2; shift; } || emdash=2 ;;
-*weight    ) regular=${1%weight}; fforge=weight; [ "$2" = 'book+regular' ] && { adjust=true; shift; } ;;
-dyslexic   ) [ $2 ] && { space=$2; shift; } || space=2 ;;
-copy       ) [ $3 ] && { family=$2; alias=$3; shift 2; copy; exit; }      || usage ;;  # pwd commandline only!
-map        ) [ $4 ] && { family=$2; from=$3; to=$4; shift 3; map; exit; } || usage ;;  # pwd commandline only!
-*          ) usage ;;
+q_hook      ) ;;
+Q_hook      ) ;;
+Q_horizontal) shape=$2; shift ;;
+Q_custom    ) shape=$2; shift ;;
+ligature    ) [ $4 ] && { width=$2; shift 2; } || { shape=$2; shift; } ;;               # see iosevka for tricky bits
+punctuation ) [ $2 ] && { emdash=$2; shift; } || emdash=2 ;;
+*weight     ) regular=${1%weight}; fforge=weight; [ "$2" = 'book+regular' ] && { adjust=true; shift; } ;;
+dyslexic    ) [ $2 ] && { space=$2; shift; } || space=2 ;;
+copy        ) [ $3 ] && { family=$2; alias=$3; shift 2; copy; exit; }      || usage ;;  # pwd commandline only!
+map         ) [ $4 ] && { family=$2; from=$3; to=$4; shift 3; map; exit; } || usage ;;  # pwd commandline only!
+*           ) usage ;;
 esac
 shift
 [ $2 ] && usage

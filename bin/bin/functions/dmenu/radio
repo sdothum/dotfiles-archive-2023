@@ -31,7 +31,7 @@ while station=$(playlist | rmenu "$(station)" -no-custom) || exit ;do
   case ${station#$(X)} in
   "$TOGGLE") pstat 'mpv --no-cache --quiet' && stop || mpv --no-cache --quiet $(url $(cat $RADIO)) &; exit ;;
   "$CLEAR" ) stop; rm -f $RADIO; exit ;;
-  "$EDIT"  ) gvim -f $stations ;;
+  "$EDIT"  ) vim -g -f $stations ;;
 
   *        ) pstat 'mpv --no-cache --quiet' && stop
              url=$(url "$station")

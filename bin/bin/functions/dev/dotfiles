@@ -99,7 +99,7 @@ comment) shift; DESC=$@
          [ "$DESC" ] && git commit --amend --no-edit --message="$DESC" || git commit --amend ;;
 
 edit     |\
-ignore ) gvim .gitignore ;;
+ignore ) vim -g .gitignore ;;
 
 init   ) init ;;
 list   ) git log --pretty=format:"%h - %an, %ar : %s" ;;

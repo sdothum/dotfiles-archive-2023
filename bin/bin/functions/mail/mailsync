@@ -126,8 +126,7 @@ mail_daemon() {
     if [ $? -eq 0 ] ;then
       trace 'No new email'
       break
-    else
-      one_pass
+    else one_pass
       trace 'Cycling..'
       sleep $interval
     fi

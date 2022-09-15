@@ -26,12 +26,17 @@
 usage() {
   echo "usage: iosevka [normal (default) | extended | expanded | ebook | dyslexic | heading]
                [english | latin+greek | supplemental | ligature <name>]
-               [double] [quasi-[proportional|extension] [space <decimal>] [ emdash <decimal> ]
+
                [grotesque (default) | atkinson | geometric | jost]
-               [elementary | grotesk | open | a-single | b-corner | D-serifless | d-[tailed|toothless] | f-extended | G-[hookless|toothed|toothless] | g-double | I-serifless | i-serifed | J-descending | j-[serifed|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|straight] | q-[hook|tailed] | asterisk-high | at-tall | 0-split | paren-flat]*
+               [elementary | grotesk | open | a-single | b-corner | D-serifless | d-[tailed|toothless] | f-extended | G-[hookless|toothed|toothless] | g-double | I-serifless | i-serifed | J-descending | j-[serifed|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|open|straight|custom] | q-[hook|tailed] | asterisk-high | at-tall | 0-split | paren-flat]*
+
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
+               [double] [space <decimal>] [ emdash <decimal> ]
                [family <name> | <prefix>Monolexic]
-               [cap [-+]<decimal> | extended]
+
+               [ascender [+-]<integer>]
+               [cap [-+]<integer> | extended]
+               [quasi-[proportional|extension]]
                [noround | sb <decimal>]
                [shape <emu>]
                [weight <integer> <name> | webfont]
@@ -46,12 +51,14 @@ usage() {
 REPO=/net/depot/Iosevka
 MAKE_INSTALL=/tmp/iosevka:make_install
 
-default_leading=1250  # set to pre-15.x value
+default_leading=1250  # scale font to match 10.x
+default_xheight=530   # scale font to match 10.x
+default_ascender=775  # scale font to match 10.x
 
 leading=1.25          # default coding line spacing
 extended=576          # extended regular shape (slightly tighter than Iosevka defaults)
 expanded=600          # maximum terminal source code and proof legibility
-capextended=1.055     # default geometric cap height
+capextended=40        # default geometric cap height adjustment
 
 symbols() {
   ampersand=upper-open
@@ -106,7 +113,7 @@ geometric() {
   capital_j=descending-serifless
   capital_k=symmetric-touching-serifless
   capital_p=closed
-  capital_q=detached-tailed
+  capital_q=straight
   capital_r=straight
   a=single-storey-serifless
   b=toothed
@@ -163,6 +170,8 @@ variant() {
     Q-bend       ) glyph capital_q=detached-bend-tailed ;;
     Q-crossing   ) glyph capital_q=crossing ;;
     Q-detached   ) glyph capital_q=detached-tailed ;;
+    Q-horizontal ) glyph capital_q=horizontal-tailed ;;
+    Q-open       ) glyph capital_q=open-swash ;;
     Q-straight   ) glyph capital_q=straight ;;
     q-tailed     ) glyph q=tailed ;;
     R-open       ) glyph capital_r=straight-open ;;
@@ -198,10 +207,12 @@ real() {
 shape()   { shape="shape = $(integer $1)"; }
 
 # metric overrides
-leading() { leading="leading = '$default_leading * $(real $1)'"; }
-sb()      { sb="sb = 'default_sb * $(real $1)'"; }
-cap()     { [ $1 = extended ] && unset cap || cap=$1; cap="cap = 'default_cap * $(real ${cap:-$capextended})'" && ditto override "$cap"; }
-xheight() { xheight="xheight = 'default_xheight * $(real $1)'" && ditto override "$xheight"; }
+leading()  { leading="leading = '$default_leading * $(real $1)'"; }
+sb()       { sb="sb = 'default_sb * $(real $1)'"; }
+ascender() { ascender="ascender = '$default_ascender + $(integer $1)'" && ditto override "$ascender"; }
+# cap()    { [ $1 = extended ] && unset cap || cap=$1; cap="cap = 'default_cap * $(real ${cap:-$capextended})'" && ditto override "$cap"; }
+cap()      { [ $1 = extended ] && unset cap || cap=$1; cap="cap = 'default_cap + $(integer ${cap:-$capextended})'" && ditto override "$cap"; }
+xheight()  { xheight="xHeight = '$default_xheight + $(integer $1)'" && ditto override "$xheight"; }
 
 weight() {
   weight=$(integer $1) || return 1
@@ -210,9 +221,9 @@ weight() {
 }
 
 # e-reading only fontset
-english_only() { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 566], [568, 585], [588, 709], [712, 712], [714, 727], [734, 768], [770, 805], [807, 820], [822, 915], [917, 936], [938, 955], [957, 959], [961, 7807], [7814, 7921], [7924, 8190], [8352, 8363], [8365, 8452], [8454, 8466], [8468, 8469], [8471, 8481], [8483, 8485], [8487, 8493], [8495, 8530], [8533, 8538], [8543, 8705], [8707, 8709], [8711, 8718], [8720, 8720], [8723, 8724], [8726, 8728], [8731, 8733], [8735, 8746], [8748, 8775], [8777, 8799], [8801, 8803], [8806, 9412], [9414, 9673], [9675, 9727], [9984, 11809], [11811, 11812], [11814, 64255], [64261, 130041]]'; }  # [8826, 8827, 8880, 8881] not excluded (?)
-latin_greek()  { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 566], [568, 585], [588, 709], [712, 712], [714, 727], [734, 768], [770, 805], [807, 820], [822, 879], [1024, 7678], [7936, 8190], [8352, 8363], [8365, 8452], [8454, 8466], [8468, 8469], [8471, 8481], [8483, 8485], [8487, 8493], [8495, 8530], [8533, 8538], [8543, 8705], [8707, 8709], [8711, 8718], [8720, 8720], [8723, 8724], [8726, 8728], [8731, 8733], [8735, 8746], [8748, 8775], [8777, 8799], [8801, 8803], [8806, 9412], [9414, 9673], [9675, 9727], [9984, 11809], [11811, 11812], [11814, 64255], [64261, 130041]]'; }
-supplemental() { exclude_chars='ranges = [[8588, 9673], [9677, 11359], [11859, 42559], [43880, 64255], [65534, 130041]]'; }
+english_only() { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 566], [568, 585], [588, 709], [712, 712], [714, 727], [734, 768], [770, 805], [807, 820], [822, 915], [917, 936], [938, 955], [957, 959], [961, 7807], [7814, 7921], [7924, 8190], [8352, 8363], [8365, 8452], [8454, 8466], [8468, 8469], [8471, 8481], [8483, 8485], [8487, 8493], [8495, 8530], [8533, 8538], [8543, 8705], [8707, 8709], [8711, 8718], [8720, 8720], [8723, 8724], [8726, 8728], [8731, 8733], [8735, 8746], [8748, 8775], [8777, 8799], [8801, 8803], [8806, 9412], [9414, 9673], [9675, 9727], [9984, 11809], [11811, 11812], [11814, 64255], [64259, 130041]]'; }  # [8826, 8827, 8880, 8881] not excluded (?)
+latin_greek()  { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 566], [568, 585], [588, 709], [712, 712], [714, 727], [734, 768], [770, 805], [807, 820], [822, 879], [1024, 7678], [7936, 8190], [8352, 8363], [8365, 8452], [8454, 8466], [8468, 8469], [8471, 8481], [8483, 8485], [8487, 8493], [8495, 8530], [8533, 8538], [8543, 8705], [8707, 8709], [8711, 8718], [8720, 8720], [8723, 8724], [8726, 8728], [8731, 8733], [8735, 8746], [8748, 8775], [8777, 8799], [8801, 8803], [8806, 9412], [9414, 9673], [9675, 9727], [9984, 11809], [11811, 11812], [11814, 64255], [64259, 130041]]'; }
+supplemental() { exclude_chars='ranges = [[8592, 9673], [9677, 11360], [12800, 42560], [57344, 64256], [65520, 130041]]'; }
 
 family()   { [ $1 ] || return 1; family=$1; }
 space()    { space=$(real $1); }
@@ -230,6 +241,8 @@ mono=--mono  # nerdfont (pango no longer supports double width display)
 shape 500
 sb 0.7000
 spacing term
+xheight 0   # set default xHeight (to 10.x)
+ascender 0  # set default ascender (to 10.x)
 
 while [ $1 ] ;do
   case "$1" in
@@ -272,7 +285,10 @@ while [ $1 ] ;do
   Q-crossing   ) variant $1 ;;
   Q-detached   ) variant $1 ;;
   Q-hook       ) variant 'Q=HOOK-TAILED'; Q_hook=true ;;
+  Q-horizontal ) variant $1;              Q_horizontal=true ;;
+  Q-open       ) variant $1 ;;
   Q-straight   ) variant $1 ;;
+  Q-custom     ) variant 'Q=CUSTOM';      Q_custom=true ;;
   q-hook       ) variant 'q=HOOK-TAILED'; q_hook=true ;;
   q-tailed     ) variant $1; unset q_hook ;;
   asterisk-high) variant $1 ;;
@@ -289,9 +305,10 @@ while [ $1 ] ;do
   # font
   family       ) family $2    || usage; shift ;;
   *Monolexic   ) initial ${1%Monolexic} ;;
-  cap          ) cap $2       || usage; shift ;;                                 # H height (affects descender as well)
-  kindle       ) leading 1.4185 ;;                                               # because only 3 space settings (this is maximum value with proper menu typeface)
-  kobo         ) leading 1.4185 ;;                                               # any value >= 1 (but have retained setting for interested kindle users)
+  ascender     ) ascender $2  || usage; shift ;;                                 # affects descender as well
+  cap          ) cap $2       || usage; shift ;;                                 # H height
+  kindle       ) leading $(vsn 1.4185 1.5); sb='sb 0.6150' ;;                    # side bearing difference to kobo's font rendering
+  kobo         ) leading $(vsn 1.4185 1) ;;                                      # any value >= 1 (but have retained setting for interested kindle users)
   book+regular ) adjust="book+regular" ;;                                        # see fforge bookweight
   leading      ) leading $2   || usage; shift ;;                                 # line spacing > 1.0
   noround      ) unset sb ;;
@@ -574,6 +591,7 @@ $leading
 $sb
 $cap
 $xheight
+$(vsn "$ascender")
 
 # End metric override section
 ###################################################################################################
@@ -589,18 +607,20 @@ if [ $ebook ] ;then
   mkdir -p $HOME/.fonts/$family
   cp -v dist/$family/ttf/* $HOME/.fonts/$family
 else
-  nerdfont $mono $family                                  # insert glyphs
+  nerdfont $mono $family                                      # insert glyphs
 fi
 
-[ $q_hook ] && fforge q_hook $family                      # hyperlegible font mod for better q
-[ $Q_hook ] && fforge Q_hook $family                      # hooked capital Q
+[ $q_hook       ] && fforge q_hook $family                    # hyperlegible font mod for better q
+[ $Q_hook       ] && fforge Q_hook $family                    # hooked capital Q
+[ $Q_horizontal ] && fforge Q_horizontal ${shape#*=} $family  # open horizontal capital Q
+[ $Q_custom      ] && fforge Q_custom    ${shape#*=} $family  # custom capital Q
 
-[ $ebook ] && [ $spacing = term ] && { fforge punctuation $emdash $family; unset width; }  # wide cell emdash and double width ellipsis
+[ $ebook ] && [ $spacing != 'quasi-proportional' ] && { fforge punctuation ${emdash:-2} $family; unset width; }  # wide cell emdash and double width ellipsis
 
-[ $ebook ] && fforge ligature $width ${shape#*=} $family  # ae width character adjustment
+[ $ebook ] && fforge ligature $width ${shape#*=} $family      # ae width character adjustment
 
-[ $space ] && fforge dyslexic $space $family              # lengthen space character cell width
+[ $space ] && fforge dyslexic $space $family                  # lengthen space character cell width
 
-[ $ebook ] && fforge ${regular}weight $adjust $family     # rename weight for e-reader (as regular)
+[ $ebook ] && fforge ${regular}weight $adjust $family         # rename weight for e-reader (as regular)
 
 # vim: set ft=sh: #

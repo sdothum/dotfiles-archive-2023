@@ -53,7 +53,7 @@ while read file <&3 ;do
     if ! diff --brief $w "${file#./}" "${target%/}/${file#./}" >/dev/null 2>&1 ;then
       diff $w "${file#./}" "${target%/}/${file#./}" | colordiff  # reverse diff --color highlighting
       # see herbstluftwm gvimdiff rule
-      ifno "edit ${file#./}" && break || gvim -d -c "$diffopt" -f --role=gvimdiff "${file#./}" "${target%/}/${file#./}"
+      ifno "edit ${file#./}" && break || vim -g -d -c "$diffopt" -f --role=gvimdiff "${file#./}" "${target%/}/${file#./}"
       blink=${BLINK}
     else
       break

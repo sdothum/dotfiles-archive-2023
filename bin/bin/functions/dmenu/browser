@@ -39,7 +39,7 @@ browsers="
 browser=$default
 while browser=$(apps "$browsers" | sed "$edit" | rmenu 'Browser' $browser -no-custom) || exit ;do
   case ${browser#$(X)} in
-  "$EDIT"      ) gvim -f -c "/$(echo $1 | sed 's,/,.,g').*" $2; dmenu bookmarks ;;
+  "$EDIT"      ) vim -g -f -c "/$(echo $1 | sed 's,/,.,g').*" $2; dmenu bookmarks ;;
 
   brave          |\
   chromium       |\

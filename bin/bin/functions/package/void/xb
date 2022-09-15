@@ -81,6 +81,7 @@ f ) action=file ;;
  d) action=dependency ;;
 -d) action=requiredby ;;
 h ) action=history ;;
+? ) usage ;;
 * ) action=query; set -- 0 $@ ;;  # preserve argv stack
 esac
 

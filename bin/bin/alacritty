@@ -35,7 +35,8 @@ esac
 echo "$@" | egrep -q '[-](t|title)' || title="--title alacritty"
 
 # quantum colour theme :)
-/usr/bin/alacritty --option font.size=$size                           \
+/usr/bin/alacritty --option font.normal.family="${MONOFONT:-Iosevka}" \
+                            font.size=$size                           \
                             window.padding.x=$paddingX                \
                             window.padding.y=$paddingY                \
                             font.offset.x=$offsetX                    \

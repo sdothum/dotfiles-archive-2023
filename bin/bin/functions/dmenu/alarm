@@ -18,7 +18,7 @@ duration() { echo $1 | sed -r 's/^[^0-9]//; s/([0-9])$/\1m/'; }
 
 timers() {
   while delay=$(echo | mhistory alarm | column -s^ -t | sed "1i$(X $EDIT)" | rmenu 'Duration [m]/s') || exit ;do
-    [ "${delay#$(X)}" = "$EDIT" ] && { gvim -f $HISTORY/alarm; continue; }
+    [ "${delay#$(X)}" = "$EDIT" ] && { vim -g -f $HISTORY/alarm; continue; }
 
     delay=$(unquote $delay)
     if echo $delay | grep -q "$SEP" ;then

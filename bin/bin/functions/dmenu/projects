@@ -20,7 +20,7 @@ projects() { sed "s/  *::  */^$SEP /" $PROJECTS | mhistory projects | column -s^
 
 while files=$(projects | rmenu 'Edit Project' -no-custom) || exit ;do
   case ${files#$(X)} in
-  "$EDIT") gvim -f $PROJECTS $history ;;
+  "$EDIT") vim -g -f $PROJECTS $history ;;
 
   *      ) mhistory projects "$(echo $files | sed "s/ *$SEP/^$SEP/")"
            eval echo ${files#*$SEP} | tr ' ' '\n' | exclude | sort | xargs -r v

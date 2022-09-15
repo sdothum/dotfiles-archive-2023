@@ -7,6 +7,6 @@
 # ....................................................................... E-mail
 
 # notmuch mail client
-gvim --role=notmuch -c NotMuch
+vim -g --role=notmuch -c NotMuch
 
 # vim: set ft=sh: #

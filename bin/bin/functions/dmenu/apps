@@ -26,7 +26,7 @@ apps() {
 pgm=$(previous apps)
 while pgm=$(apps | sed  "1i$(X $EDIT)" | rmenu 'open' $pgm -no-custom) || exit ;do
   case ${pgm#$(X)} in
-  "$EDIT") gvim -f $pgms ;;
+  "$EDIT") vim -g -f $pgms ;;
   *      ) mhistory apps "$pgm"; eval exec $(grep "$pgm" $pgms | cut -d'#' -f1) ;;
   esac
 done

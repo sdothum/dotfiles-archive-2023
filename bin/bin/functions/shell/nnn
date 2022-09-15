@@ -25,7 +25,6 @@ export NNN_BMS="a:/net/archive$HOME/stow;B:/net/media/ebooks/books;b:$HOME/bin;C
 export NNN_FCOLORS='c1e2de28006033f7c627abc4'
 export LS_COLORS='di=01;38;5;221:ex=00;38;5;40:ln=00;38;5;51'  # match nnn colors!
 export NNN_OPTS=aefHoQRux
-export VISUAL=gvim                                             # detach editor
 
 # sloppy mtp automount
 mtp mount && NDIR=$(mtp)
