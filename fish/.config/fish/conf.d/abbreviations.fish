@@ -99,11 +99,11 @@ abbr treed 'sudo tree -aCdF'
 
 # ................................................................. File manager
 
-abbr N 'env VISUAL=vim nnn -p -'  # cmd .. (N) file picker mode
-abbr n 'env VISUAL=vim nnn -Pp'
-abbr nb 'env VISUAL=vim nnn -s ebooks'
+abbr N 'nnn -p -'  # cmd .. (N) file picker mode
+abbr n 'nnn -Pp'
+abbr nb 'nnn -s ebooks'
 abbr r 'vifm'
-abbr R 'env VISUAL=vim ranger'
+abbr R 'ranger'
 
 # ....................................................................... Search
 
@@ -129,14 +129,14 @@ abbr X x
 # ......................................................................... Edit
 
 abbr ddf 'dirdiff'
-abbr ddfn 'dirdiff (env VISUAL=vim nnn -p -)'              # file picker mode
+abbr ddfn 'dirdiff (nnn -p -)'              # file picker mode
 abbr de 'dmenu - edit'
 abbr dp 'dmenu - projects'
 abbr dr 'dmenu - run'
 abbr ds 'dmenu - scripts'
 abbr nv 'nvpy'
 abbr vd 'v -d --role=gvimdiff'
-abbr vdn 'v -d --role=gvimdiff (env VISUAL=vim nnn -p -)'  # file picker mode
+abbr vdn 'v -d --role=gvimdiff (nnn -p -)'  # file picker mode
 abbr sd 'sdiff -b -E -W -w(tput cols)'
 abbr vdarchive 'dirdiff ./ /net/archive(pwd)'
 abbr vdbackup 'dirdiff ./ /net/backup(pwd)'
@@ -166,6 +166,7 @@ abbr d 'dict'
 abbr dot 'rlwrap dotfiles'
 abbr handbrake 'ghb'
 abbr hex 'hexdump -C'
+abbr kc "kconvert '*epub'"
 abbr kindle 'dmenu econvert azw3'
 abbr eformat 'dmenu econvert reformat'
 abbr kobo 'dmenu econvert epub'
