@@ -307,7 +307,7 @@ while [ $1 ] ;do
   *Monolexic   ) initial ${1%Monolexic} ;;
   ascender     ) ascender $2  || usage; shift ;;                                 # affects descender as well
   cap          ) cap $2       || usage; shift ;;                                 # H height
-  kindle       ) leading $(vsn 1.4185 1.5); sb='sb 0.6150' ;;                    # side bearing difference to kobo's font rendering
+  kindle       ) leading $(vsn 1.4185 1.5); shape $extended; sb 0.6450 ;;        # side bearing difference to kobo's font rendering
   kobo         ) leading $(vsn 1.4185 1) ;;                                      # any value >= 1 (but have retained setting for interested kindle users)
   book+regular ) adjust="book+regular" ;;                                        # see fforge bookweight
   leading      ) leading $2   || usage; shift ;;                                 # line spacing > 1.0

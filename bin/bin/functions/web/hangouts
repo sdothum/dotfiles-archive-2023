@@ -6,6 +6,7 @@
 
 # .............................................................. Google hangouts
 
-$BROWSER https://hangouts.google.com/ &
+HANGOUTS=$SESSION/hangouts
+surf -z1.15 $(cat $HANGOUTS) &
 
 # vim: set ft=sh: #

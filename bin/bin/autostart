@@ -11,6 +11,7 @@ AUTOCONNECT=$SESSION/autoconnect
 CMST=$SESSION/cmst
 CALENDAR=$SESSION/calendar
 FCCACHE=$SESSION/.fc-cache
+HANGOUTS=$SESSION/hangouts
 IRC=$SESSION/irc
 JABBER=$SESSION/jabber
 MAIL=$SESSION/mail
@@ -101,12 +102,12 @@ pstat gpaste-client || gpaste-client start &
 # ................................................................ Terminal apps
 
 if [ -e $JABBER ] ;then
-  # is multihead && herbstclient focus_monitor 1 || switch tag $CHAT
+  # is multihead && herbstclient focus_monitor 1 || switch tag $HANGOUT
   # wait for window visibility before switching monitors, for urxvt font handling
   tmux_session jabber mcabber &
 fi
 if [ -e $IRC ] ;then
-  # is multihead && herbstclient focus_monitor 1 || switch tag $CHAT
+  # is multihead && herbstclient focus_monitor 1 || switch tag $HANGOUT
   # wait for window visibility before switching monitors, for urxvt font handling
   tmux_session irc weechat &
 fi
@@ -121,6 +122,8 @@ kill -KILL $BROWSER 2>/dev/null  # remove dangling instance on server
 # rm -rf $XDG_RUNTIME_DIR/$BROWSER 2>/dev/null
 
 [ -e $THEDARNEDESTTHING ] && thedarnedestthing &
+switch tag $CHAT
+[ -e $HANGOUTS ] && { hangouts; sleep 1; }
 switch tag $WEB
 [ -e $WWW      ] && $BROWSER &
 [ -e $TERM     ] && toggle scratchpad

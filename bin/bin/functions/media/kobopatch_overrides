@@ -27,6 +27,7 @@ for i in *yaml ;do
   echo "\n  src/$i:" >>$RULES
   perl -0777 -pe 's/([[:alpha:]].*)\n.*Enabled:(.*)/\1\2/g' $i | grep '^[[:alpha:]]' | sed 's/^/    /' >>$RULES
 done
+
 cd ..
 RULES=${RULES#../}
 cp -f $RULES $RULES.new
@@ -34,10 +35,16 @@ cat $RULES
 ditto yaml $RULES
 ditto diff $RULES.new ../kobopatch/kobopatch.yaml.new
 diff $RULES.new ../kobopatch/kobopatch.yaml.new
+
 ifno "ln $(pwd)" && exit
+vim -g -d --role=gvimdiff -f $RULES ../kobopatch/kobopatch.yaml
+for i in src/*.yaml ;do vim -g -d --role=gvimdiff -f $i ../kobopatch/$i ;done
 DIR=$(pwd)
 cd ..
 rm -f kobopatch
 ln -svf $DIR kobopatch
+
+ditto fonts /usr/local/Qt-5.2.1-arm/lib/fonts
+ditto rm Caecilia* Malabor* OpenDyslexic* Rakuten*
 
 # vim: set ft=sh: #
