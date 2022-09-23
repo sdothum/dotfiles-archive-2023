@@ -9,7 +9,8 @@ usage() {
   echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [family <name>]
                             [book+regular | latin+greek | supplemental]
                             [quasi-extension | space <parm>]
-                            [myfonts [Q] | elementary | grotesk | open | D-serifless | [e]G-[hookless|toothless|default] | I-serifless | J-descending | [d|e|g]Q-[bar|horizontal|open|straight|default] | Q-[bar|crossing|detached|hook|straight|custom] | a-single | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat
+                            [myfonts [Q] | altmono | elementary | grotesk | open ]
+                            [ D-serifless | [e]G-[hookless|toothless|default] | I-serifless | J-descending | [d|e|g]Q-[bar|horizontal|open|straight|default] | Q-[bar|crossing|detached|hook|straight|custom] | a-single | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat ]
                             [ascender <parm> | cap <parm>]
                             [[version 10x | 16x] -- <opions>*]"
   exit 1
@@ -25,6 +26,11 @@ usage() {
 #        make_install iosevka kobo latin+greek myfonts space 1.5000 eQ-bar       # my custom e-reader fonts
 #        make_install iosevka -- I-serifless family forCoding                    # single custom font, see font/iosevka
 #        make_install iosevka version 10x -- dyslexic kobo english I-serifless f-extended q-hook cap extended family Grotesk  # single custom ebook font with extended cap height
+#
+# my current font preferences..
+#        make_install iosevka altmono
+#        make_install iosevka kobo myfonts open quasi-ext supplemental eQ-straight space 1.3333
+#        make_install iosevka web Q-bar
 
 MAKE_INSTALL=/tmp/iosevka:make_install
 # SRCDIR=$HOME/bin/functions/font
@@ -95,6 +101,7 @@ while [ $1 ] ;do
   elementary       ) style=$1 ;;
   grotesk          ) style=$1 ;;
   open             ) open=$1; unset eG eQ ;;
+  altmono          ) altmono='a-single open cap extended' ;;                    # alternate "monospace" coding font
   kindle           ) ereader=$1 ;;
   kobo             ) ereader=$1; q=q-hook ;;
   family           ) [ $ereader ] && [ $2 ] && { family=$2; shift; } || usage ;;
@@ -192,10 +199,10 @@ elif [ $web ] ;then                       # www fonts
 
 else                                      # desktop fonts
   version $latest
-  dfont
-  dfont proof
-  dfont menu
-  dfont dyslexic a-single open quasi-extension cap extended space 1.15 family elemental  # panel/dunst/browser font
+  dfont $altmono
+  dfont $altmono proof
+  dfont $altmono menu
+  # dfont dyslexic a-single open quasi-extension cap extended space 1.15 family elemental  # panel/dunst/browser font
 fi
 
 # vim: set ft=sh: #
