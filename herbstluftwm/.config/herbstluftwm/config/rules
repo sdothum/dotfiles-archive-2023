@@ -33,6 +33,7 @@ hc rule title=RSS                          tag=1 index=1 focus=off
 # hc rule title=IRC                        tag=2 index=1 focus=on
 # hc rule class=firefox                    tag=2 once index=0 focus=on hook=max
 hc rule class=Pidgin                       tag=2
+hc rule class=surf                         tag=2 once index=0 focus=on
 hc rule title=IM                           tag=2 focus=on
 hc rule title=Messenger                    tag=2 focus=on
 hc rule title=Twitter                      tag=2
