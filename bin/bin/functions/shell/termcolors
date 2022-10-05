@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # sdothum - 2016 (c) wtfpl
 
-# Terminal
+# Shell Colors
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ....................................................................... Colors
@@ -41,3 +41,5 @@ def main(stdscr):
     stdscr.getch()
 
 curses.wrapper(main)
+
+# vim: set ft=python: #

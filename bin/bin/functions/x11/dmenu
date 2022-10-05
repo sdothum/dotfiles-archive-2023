@@ -9,11 +9,11 @@
 # Usage: dmenu [-] <function>
 #              where, '-' disables in terminal command line mode
 # Note:  non-dmenu messages within $0/functions/dmenu
-#        source $HOME/bin/dmenu
+#        source dmenu
 #        POSIX standard for use with dash shell
 
 CONFIG=${0%/dmenu}/functions/dmenu
-export HISTORY=$HOME/bin/functions/dmenu/.history
+export HISTORY=$CONFIG/.history
 # currently playing, see music, radia
 MUSIC=/tmp/audio:music
 RADIO=/tmp/audio:radio

@@ -11,7 +11,7 @@
 # extra line space with invisible border, color 236 == #263238
 color='dark,hl:226,hl+:226,fg+:051,bg+:-1,bg:-1,marker:160,prompt:027,info:027'
 
-# in terminal or new term, see bin/dmenu
+# in terminal or new term, see X11/dmenu
 [ $TERMINAL ] || reverse='--reverse'
 export FZF_DEFAULT_OPTS="--cycle $reverse --prompt='    ─────  ' --ansi --color=$color"
 

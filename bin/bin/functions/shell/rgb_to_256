@@ -1,4 +1,10 @@
 #!/usr/bin/python2
+# sdothum - 2016 (c) wtfpl
+
+# Shell Colors
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... Colors
 
 """ Convert values between RGB hex codes and xterm-256 color codes.
 
@@ -374,3 +380,5 @@ if __name__ == '__main__':
         short, rgb = rgb2short(arg)
         sys.stdout.write('RGB %s -> xterm color approx \033[38;5;%sm%s (%s)' % (arg, short, short, rgb))
         sys.stdout.write("\033[0m\n")
+
+# vim: set ft=python: #

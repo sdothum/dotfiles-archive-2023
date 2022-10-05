@@ -376,6 +376,6 @@ while [ -e $DEBUG ] ;do
   fi
   init
 done
-rm -f $ANIMATE  # remove on break but not toggle (see bin/qclocktwo)
+rm -f $ANIMATE  # remove on break but not toggle (see X11/qclocktwo)
 
 # vim: set ft=sh: #

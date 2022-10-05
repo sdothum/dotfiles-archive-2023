@@ -11,11 +11,13 @@ KINDLE=/run/media/$USER/Kindle
 [ -d $KINDLE ] && sudo mount -o remount,rw $(mount | grep $KINDLE | cut -d' ' -f1) $KINDLE
 KINDLE=$KINDLE/documents/
 
+# kobo,kindle tuples
 # enhanced em-legible spacing!
-# em_indent=2,2      # conventional paragraph indent
-# em_linespace=0,1   # conventional indent,noindent spacing
+# em_indent=2,2        # conventional paragraph indent
+# em_linespace=0,1     # conventional indent,noindent spacing
 # em_linespace=0.33,1.25
-em_indent=1.80,1.95  # adjust indent to 3x space per rendering engine (kobo, kindle)
+# em_indent=1.80,1.95  # adjust indent to 3x space per rendering engine (kindle shape 600) see iosevka
+em_indent=1.80,1.80    # adjust indent to 3x space per rendering engine (kindle shape 576) see iosevka
 em_linespace=0,1.25
 
 # override device/cloud transfer and create kindle/kobo file

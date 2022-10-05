@@ -1,11 +1,11 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Dev
+# Query
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ................................................................. m2crypto fix
+# ................................................................ quikey phrase
 
-cpu arm && export SWIG_FEATURES=-cpperraswarn
+qk ls | grep " $1 " | cut -d\| -f5 | sed 's/^ *//; s/ *$//'
 
-/usr/bin/swig $@
+# vim: set ft=sh: #

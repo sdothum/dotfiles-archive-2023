@@ -12,12 +12,12 @@
 #                     option - rofi options e.g. -filter <filter> -no-custom
 #
 # Note:
-#   - Temporary ncurses mode set with variable TERMINAL, see bin/dmenu
+#   - Temporary ncurses mode set with variable TERMINAL, see X11/dmenu
 #   - rofi matching method can be set with env variable "matching"
 
 usage() { echo "usage: $(basename $0) '<prompt>' [['<select>' | <row>]] [<option>]*"; exit 1; }
 
-. $HOME/bin/dmenu  # to outdent X() menu options
+. $(which dmenu)  # to outdent X() menu options
 
 # version 1.6.x
 # unset fzf query highlight to list all
