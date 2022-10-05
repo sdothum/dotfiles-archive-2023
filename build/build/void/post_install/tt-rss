@@ -18,7 +18,7 @@ esac
 
 service status postgresql | grep -q 'run:' && db=postgresql || db=mysql
 
-ifno 'create tt-rss database' || create=true
+ifno "create tt-rss ${db:-mysql} database" || create=true
 original /etc/php/php.ini
 
 if [ $db = postgresql ] ;then

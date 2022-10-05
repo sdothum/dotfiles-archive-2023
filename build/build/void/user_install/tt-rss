@@ -5,14 +5,26 @@
 
 # ....................................................................... tt-rss
 
-exit  # testing new tt-rss
 
 TTRSS=/srv/http/tt-rss
 THEMES=$TTRSS/themes
 FUNCTIONS=$TTRSS/include/functions.php
 FEEDS=$TTRSS/classes/feeds.php
 button='images/close.png'
+FEEDLY=https://github.com/levito/tt-rss-feedly-theme.git
+COMMIT=b6cb83e  # custom theme based on
 
+[ -d /net/depot/tt-rss-feedly-theme ] || {
+  cd /net/depot
+  git clone $FEEDLY
+  git checkout $COMMIT
+}
+
+cd /net/depot/tt-rss-feedly-theme
+cp -rv feedly* $TTRSS/themes.local/
+ditto INFO preferences 'theme -> feedly-sepia -> customize'
+
+exit  # testing new tt-rss
 # my distraction free theme
 theme=sal
 

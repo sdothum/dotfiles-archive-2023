@@ -10,7 +10,7 @@ usage() {
                             [book+regular | latin+greek | supplemental]
                             [quasi-extension | space <parm>]
                             [myfonts [Q] | altmono | elementary | grotesk | open ]
-                            [ D-serifless | [e]G-[hookless|toothless|default] | I-serifless | J-descending | [d|e|g]Q-[bar|horizontal|open|straight|default] | Q-[bar|crossing|detached|hook|straight|custom] | a-single | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat ]
+                            [ D-serifless | [e]G-[hookless|toothless|default] | I-serifless | J-descending | j-serifed | [d|e|g]Q-[bar|horizontal|open|straight|default] | Q-[bar|crossing|detached|hook|straight|custom] | a-single | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat ]
                             [ascender <parm> | cap <parm>]
                             [[version 10x | 16x] -- <opions>*]"
   exit 1
@@ -27,7 +27,7 @@ usage() {
 #        make_install iosevka -- I-serifless family forCoding                    # single custom font, see font/iosevka
 #        make_install iosevka version 10x -- dyslexic kobo english I-serifless f-extended q-hook cap extended family Grotesk  # single custom ebook font with extended cap height
 #
-# my current font preferences..
+# current font preferences..
 #        make_install iosevka altmono
 #        make_install iosevka kobo myfonts open quasi-ext supplemental eQ-straight space 1.3333
 #        make_install iosevka web Q-bar
@@ -39,7 +39,7 @@ GLYPH=b-rounded
 language=english  # default e-reader glyph set
 dyslexic=true     # default e-reader dyslexic font families
 gQ=Q-bar          # capital Q default for Unolexic/grotesk
-eQ=Q-staight      # capital Q default for elementary
+eQ=Q-straight     # capital Q default for elementary
 eG=G-hookless     # capital G default for elementary
 latest=16x        # lastest version
 
@@ -66,6 +66,7 @@ while [ $1 ] ;do
   G-toothless      ) G=$1 ;;
   I-serifless      ) I=$1 ;;                  # source code variant
   J-descending     ) J=$1 ;;
+  j-serifed        ) j=$1 ;;
   [deg]Q-bar       ) eval ${1%Q*}Q=${1#?} ;;  # elementary/Geolexic font variation
   [deg]Q-horizontal) eval ${1%Q*}Q=${1#?} ;;  # elementary/Geolexic font variation
   [deg]Q-straight  ) eval ${1%Q*}Q=${1#?} ;;  # elementary/Geolexic font variation
@@ -100,7 +101,7 @@ while [ $1 ] ;do
   myfonts          ) [ "$2" = Q ] && { for_Q=true; shift; }; unset dyslexic ;;  # my elementary and grotesk fonts with tweaked space cell width
   elementary       ) style=$1 ;;
   grotesk          ) style=$1 ;;
-  open             ) open=$1; unset eG eQ ;;
+  open             ) open=$1 ;;
   altmono          ) altmono='a-single open cap extended' ;;                    # alternate "monospace" coding font
   kindle           ) ereader=$1 ;;
   kobo             ) ereader=$1; q=q-hook ;;
@@ -133,7 +134,7 @@ update() {
   done
 }
 
-options() { echo $D $G $I $J $Q $a $b $d $f $p $q $zero $at $paren $adjust $ascender $cap $sb $style $quasi $@; }  # list
+options() { echo $D $G $I $J $Q $a $b $d $f $j $p $q $zero $at $paren $adjust $ascender $cap $sb $style $quasi $@; }  # list
 
 # family [options]*
 e_ink() {
@@ -202,7 +203,7 @@ else                                      # desktop fonts
   dfont $altmono
   dfont $altmono proof
   dfont $altmono menu
-  # dfont dyslexic a-single open quasi-extension cap extended space 1.15 family elemental  # panel/dunst/browser font
+  dfont dyslexic a-single open quasi-extension cap extended space 1.15 family elemental  # panel/dunst/browser font
 fi
 
 # vim: set ft=sh: #
