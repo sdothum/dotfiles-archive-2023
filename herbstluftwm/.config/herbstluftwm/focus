@@ -10,7 +10,7 @@
 # Usage: focus <msg> [<options>*], see functions/focus
 
 # dmenu functions
-. $HOME/bin/dmenu
+. $(which dmenu)
 
 TAG=$(herbstclient attr monitors.focus.tag)
 
