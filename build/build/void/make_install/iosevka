@@ -29,7 +29,7 @@ usage() {
 #
 # current font preferences..
 #        make_install iosevka altmono
-#        make_install iosevka kobo myfonts open quasi-ext supplemental eQ-straight space 1.3333
+#        make_install iosevka kobo myfonts quasi-ext supplemental space 1.3333
 #        make_install iosevka web Q-bar
 
 MAKE_INSTALL=/tmp/iosevka:make_install
@@ -40,7 +40,7 @@ language=english  # default e-reader glyph set
 dyslexic=true     # default e-reader dyslexic font families
 gQ=Q-bar          # capital Q default for Unolexic/grotesk
 eQ=Q-straight     # capital Q default for elementary
-eG=G-hookless     # capital G default for elementary
+eG=G-toothless    # capital G default for elementary
 latest=16x        # lastest version
 
 touch $MAKE_INSTALL
@@ -147,12 +147,13 @@ e_ink() {
 myfonts() {
   ditto myfonts $Q
   language=${language:-latin+greek}
-  e_ink idyslexic   ${cap:-cap extended}                                  $dQ ${space:-space 2}
-  e_ink dyslexic    ${cap:-cap extended}            I-serifless           $dQ ${space:-space 2}
-  e_ink igrotesk    ${cap:-cap extended} f-extended                       $gQ ${space:-space 1.5}
-  e_ink grotesk     ${cap:-cap extended} f-extended I-serifless           $gQ ${space:-space 1.5}
-  e_ink ielementary ${cap:-cap extended} a-single               $open $eG $eQ ${space:-space 1.3333}
-  e_ink elementary  ${cap:-cap extended} a-single   I-serifless $open $eG $eQ ${space:-space 1.3333}
+  e_ink idyslexic   ${cap:-cap extended}                                 $dQ ${space:-space 2}
+  e_ink dyslexic    ${cap:-cap extended}            I-serifless          $dQ ${space:-space 2}
+  e_ink igrotesk    ${cap:-cap extended} f-extended                      $gQ ${space:-space 1.5}
+  e_ink grotesk     ${cap:-cap extended} f-extended I-serifless          $gQ ${space:-space 1.5}
+  e_ink ielementary ${cap:-cap extended} a-single                    $eG $eQ ${space:-space 1.3333}
+  e_ink elementary  ${cap:-cap extended} a-single   I-serifless      $eG $eQ ${space:-space 1.3333}
+  e_ink elegance    ${cap:-cap extended} a-single   I-serifless open     $eQ ${space:-space 1.3333}
 }
 
 dfont() { iosevka expanded at-tall Q-bar $(options $@) q-hook; }
