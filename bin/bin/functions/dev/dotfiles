@@ -22,7 +22,7 @@ usage() {
 # git rm --cached -r <dir>
 
 # list of folders under stow root
-DOTFILES=$(cat ${0%/*}/.dotfiles:folders)
+DOTFILES=$(cat $(dirname $0)/.dotfiles:folders)
 cd $STOW
 git reset >/dev/null  # undo any previous aborted dotfiles
 # syncthing housekeeping

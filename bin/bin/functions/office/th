@@ -19,7 +19,7 @@ fi
 [ $2 ] && usage
 
 # see dmenu dict
-[ $(dict $1 | wc -l) -gt 1 ] && output=$(dict $1 | grep -A9999 '^From.*Thesaurus' | sed '1,3d' | sed 's/^From/,From/' | tr '\n' ' ' | tr ',' '\n' | sed 's/^ *//g' | sed '/^From /,$d') || exit
+[ $(/usr/bin/dict $1 | wc -l) -gt 1 ] && output=$(/usr/bin/dict $1 | grep -A9999 '^From.*Thesaurus' | sed '1,3d' | sed 's/^From/,From/' | tr '\n' ' ' | tr ',' '\n' | sed 's/^ *//g' | sed '/^From /,$d') || exit
 
 # trim trailing dictionary content following moby thesaurus
 while echo "$output" | grep -q '^From.*Dictionary' ;do

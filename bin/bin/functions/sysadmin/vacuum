@@ -46,7 +46,7 @@ generate() {
   [ -e $rules ] && { ifno "overwrite $rules" || rm $rules; }
   # handle regex with 'while read' vs 'for loop' expansion
   for i in $protect ;do
-    file=${0%/*}/.vacuum:protect:$i
+    file=$(dirname $0)/.vacuum:protect:$i
     [ -s $file ] || continue
     while read path <&3 ;do
       [ ${path%${path#?}} = '#' ] && continue

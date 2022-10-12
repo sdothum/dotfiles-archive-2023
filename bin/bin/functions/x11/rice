@@ -10,8 +10,8 @@
 
 msg=$1
 [ $msg ] && shift || usage $0
-if [ -e ${0%/rice}/functions/rice/$msg ] ;then
-  . ${0%/rice}/functions/rice/$msg $@
+if [ -e $(dirname $0)/functions/rice/$msg ] ;then
+  . $(dirname $0)/functions/rice/$msg $@
 else
   usage $0
 fi

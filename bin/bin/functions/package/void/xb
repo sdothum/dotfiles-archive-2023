@@ -38,7 +38,7 @@ usage() {
 
 CACHE=/var/cache/xbps
 BACKUP=/net/depot/
-XBDIR=${0%/*}
+XBDIR=$(dirname $0)
 ACTIONS=$XBDIR/.xb_actions  # tuple: <action> <package> -> file: .xb_<action>, see upgrade_check and upgrade_actions 
 [ $1 ] || usage
 

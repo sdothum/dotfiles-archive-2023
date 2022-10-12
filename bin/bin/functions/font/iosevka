@@ -28,7 +28,7 @@ usage() {
                [english | latin+greek | supplemental | ligature <name>]
 
                [grotesque (default) | atkinson | geometric | jost]
-               [elementary | grotesk | open | a-single | b-corner | D-serifless | d-[tailed|toothless] | f-extended | G-[hookless|toothed|toothless] | g-double | I-serifless | i-serifed | J-descending | j-[serifed|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|open|straight|custom] | q-[hook|tailed] | asterisk-high | at-tall | 0-split | paren-flat]*
+               [elementary | grotesk | open | a-single | b-corner | D-serifless | d-[tailed|toothless] | f-extended | G-[hookless|toothed|toothless] | g-double | I-serifless | i-serifed | J-descending | j-[serifed|serifless] | l-[hooky|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|open|straight|custom] | q-[hook|tailed] | t-cross | y-straight | asterisk-high | at-tall | 0-split | paren-flat]*
 
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
                [double] [space <decimal>] [ emdash <decimal> ]
@@ -163,6 +163,8 @@ variant() {
     J-serifless  ) glyph capital_j=serifless ;;
     j-serifed    ) glyph j=flat-hook-serifed ;;
     j-serifless  ) glyph j=serifless ;;
+    l-hooky      ) glyph l=hooky ;;
+    l-serifless  ) glyph l=serifless ;;
     P-open       ) glyph capital_p=open ;;
     p-eared      ) glyph p=eared ;;
     p-serifed    ) glyph p=motion-serifed ;;
@@ -175,7 +177,9 @@ variant() {
     Q-straight   ) glyph capital_q=straight ;;
     q-tailed     ) glyph q=tailed ;;
     R-open       ) glyph capital_r=straight-open ;;
+    t-cross      ) glyph t=cross-short-neck2 ;;
     u-toothed    ) glyph u=toothed ;;
+    y-straight   ) glyph y=straight ;;
     ampersand    ) glyph ampersand=closed ;;
     asterisk-low ) glyph asterisk=penta-low ;;   # paragraph separator (ebook) glyph
     asterisk-high) glyph asterisk=penta-high ;;  # webfont restoration
@@ -278,6 +282,8 @@ while [ $1 ] ;do
   J-descending ) variant $1 ;;
   j-serifed    ) variant $1 ;;
   j-serifless  ) variant $1 ;;
+  l-hooky      ) variant $1 ;;
+  l-serifless  ) variant $1 ;;
   p-eared      ) variant $1 d-toothless ;;
   p-serifed    ) variant $1 sb 0.7650 ;;         # add air for serif corner
   Q-bar        ) variant $1 ;;
@@ -291,6 +297,8 @@ while [ $1 ] ;do
   Q-custom     ) variant 'Q=CUSTOM';      Q_custom=true ;;
   q-hook       ) variant 'q=HOOK-TAILED'; q_hook=true ;;
   q-tailed     ) variant $1; unset q_hook ;;
+  t-cross      ) variant $1 ;;
+  y-straight   ) variant $1 ;;
   asterisk-high) variant $1 ;;
   at-tall      ) variant $1 ;;
   0-split      ) variant $1 ;;

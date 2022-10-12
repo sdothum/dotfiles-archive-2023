@@ -27,7 +27,7 @@ category=${1:-series}
 PASSPORT="/run/media/$USER/My Passport/$category"
 catlg=$CACHEDIR/dmenu:$category
 [ -d "$PASSPORT" ] && { library=$PASSPORT; usb=true; } || library=${LIBRARY:-/net/media/videos/$category}
-preprocess=${0%/dmenu}/functions/dmenu/.preproc/$category
+preprocess=$(dirname $0)/functions/dmenu/.preproc/$category
 retitle="$library"/.retitle
 cd $library
 
