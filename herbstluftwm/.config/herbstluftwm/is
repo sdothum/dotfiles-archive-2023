@@ -11,8 +11,8 @@
 
 msg=$1
 [ $msg ] && shift || usage $0
-if [ -e ${0%/is}/functions/is/$msg ] ;then
-  . ${0%/is}/functions/is/$msg $@
+if [ -e $(dirname $0)/functions/is/$msg ] ;then
+  . $(dirname $0)/functions/is/$msg $@
 else
   usage $0
 fi

@@ -19,7 +19,7 @@
 #          desktop real estate currently satisfied with a single "primary" ultra wide monitor  
 
 # load theme
-# . ${0%/draw}/config/ENV
+# . $XDG_CONFIG_HOME/herbstluftwm/config/ENV
 case $@ in
 secondary*) panel=$(query pheight secondary) ;;
 *         ) panel=$(query pheight primary) ;;

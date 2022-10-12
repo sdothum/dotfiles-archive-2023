@@ -49,7 +49,7 @@ dohc
 # ...................................................... Configuration framework
 
 # for i in $HOME/.config/herbstluftwm/config/*
-for i in ${0%/autostart}/config/* ;do
+for i in $(dirname $0)/config/* ;do
   ditto "loading herbstluftwm config ${i##*/}"
   . $i
   # add dummy hc cmd for any sources that don't e.g. ENV
@@ -58,7 +58,7 @@ for i in ${0%/autostart}/config/* ;do
 done
 
 # monitor dependent env must be set after detect monitors
-. ${0%/autostart}/config/ENV
+. $XDG_CONFIG_HOME/herbstluftwm/config/ENV
 # env
 
 # ...................................................................... Desktop

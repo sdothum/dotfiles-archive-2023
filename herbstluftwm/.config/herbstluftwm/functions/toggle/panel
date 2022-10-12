@@ -7,7 +7,7 @@
 # ................................................................. Toggle panel
 
 which lemonbar >/dev/null 2>&1 || exit
-[ $PANEL ] || . ${0%/toggle}/config/ENV
+[ $PANEL ] || . $XDG_CONFIG_HOME/herbstluftwm/config/ENV
 panel=$PANEL:$(herbstclient attr monitors.focus.index)
 [ -e $panel ] && rm -f $panel || touch $panel
 

@@ -16,8 +16,8 @@ TAG=$(herbstclient attr monitors.focus.tag)
 
 msg=$1
 [ $msg ] && shift || usage $0
-if [ -e ${0%/focus}/functions/focus/$msg ] ;then
-  . ${0%/focus}/functions/focus/$msg $@
+if [ -e $(dirname $0)/functions/focus/$msg ] ;then
+  . $(dirname $0)/functions/focus/$msg $@
   # force panel refresh
   xtitle -f 'X%s
 ' >$(cat $PANEL_FIFO)

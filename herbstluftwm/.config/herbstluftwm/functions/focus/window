@@ -19,7 +19,7 @@ for i in $(seq 1 $frames) ;do
   if [ $i -ge $frames ] ;then
     herbstclient cycle_frame 1
     # clear any prior title info
-    [ $PANEL_FIFO ] || . ${0%/focus}/config/ENV
+    [ $PANEL_FIFO ] || . $XDG_CONFIG_HOME/herbstluftwm/config/ENV
     # see restore panel
     echo 'T ' >$(cat $PANEL_FIFO)
     break
