@@ -92,7 +92,7 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 
 .ttrss_index .dijitToolbar span.left { padding-top: 1px !important; }
 
-.ttrss_index i.icon-syndicate.material-icons { padding-left: 3px !important; padding-top: 2px !important; margin-right: 4px !important; font-size: 16px !important; color: rgba(177,37,37,.85) !important; line-height: 100% !important; height: 16px !important; vertical-align: bottom !important; display: block !important; }
+.ttrss_index i.icon-syndicate.material-icons { padding-left: 3px !important; padding-top: 2px !important; margin-left: 0 !important; margin-right: 0 !important; font-size: 16px !important; color: rgba(177,37,37,.85) !important; line-height: 100% !important; height: 16px !important; vertical-align: bottom !important; display: block !important; }
 
 /* toolbar status */
 .ttrss_index span#feed_title { color: #b12525 !important; font-size: 14px !important; font-weight: 500 !important; }
