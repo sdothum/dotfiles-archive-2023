@@ -8,7 +8,7 @@
 
 usage() { echo "usage: $(basename $0) <size> <exponent>"; exit 1; }
 
-[ $1 ] && start=$1    || start=5.555
+[ $1 ] && start=$1    || start=5.435
 [ $2 ] && exponent=$2 || exponent=1.05
 
 steps() { for i in $(seq 0 13) ;do echo "$1 * $2 ^ $i" | bc ;done | tr '\n' ' '; echo; }
