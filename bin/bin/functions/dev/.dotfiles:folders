@@ -14,7 +14,7 @@
   kindle
   kobo/*/*yaml
   kobo/*/src/*yaml
-  kobo/fonts.Q*
+  kobo/fonts.*
   kobo/calibre_sync_columns.mkd
   kustom
   picom
