@@ -25,13 +25,13 @@
 
 usage() {
   echo "usage: iosevka [normal (default) | extended | expanded | ebook | dyslexic | heading]
-               [english | latin+greek | supplemental | ligature <name>]
+               [english | latin+greek | cyrillic | fluent | ligature <name>]
 
                [grotesque (default) | atkinson | geometric | jost]
                [elementary | grotesk | open | a-single | b-corner | D-serifless | d-[tailed|toothless] | f-extended | G-[hookless|toothed|toothless] | g-double | I-serifless | i-serifed | J-descending | j-[serifed|serifless] | l-[hooky|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|open|straight|custom] | q-[hook|tailed] | t-cross | y-straight | asterisk-high | at-tall | 0-split | paren-flat]*
 
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
-               [double] [space <decimal>] [ emdash <decimal> ]
+               [double] [space M|<decimal>] [ emdash <decimal> ]
                [family <name> | <prefix>Monolexic]
 
                [ascender [+-]<integer>]
@@ -227,10 +227,11 @@ weight() {
 # e-reading only fontset
 english_only() { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 566], [568, 585], [588, 709], [712, 712], [714, 727], [734, 768], [770, 805], [807, 820], [822, 915], [917, 936], [938, 955], [957, 959], [961, 7807], [7814, 7921], [7924, 8190], [8352, 8363], [8365, 8452], [8454, 8466], [8468, 8469], [8471, 8481], [8483, 8485], [8487, 8493], [8495, 8530], [8533, 8538], [8543, 8705], [8707, 8709], [8711, 8718], [8720, 8720], [8723, 8724], [8726, 8728], [8731, 8733], [8735, 8746], [8748, 8775], [8777, 8799], [8801, 8803], [8806, 9412], [9414, 9673], [9675, 9727], [9984, 11809], [11811, 11812], [11814, 64255], [64259, 130041]]'; }  # [8826, 8827, 8880, 8881] not excluded (?)
 latin_greek()  { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 566], [568, 585], [588, 709], [712, 712], [714, 727], [734, 768], [770, 805], [807, 820], [822, 879], [1024, 7678], [7936, 8190], [8352, 8363], [8365, 8452], [8454, 8466], [8468, 8469], [8471, 8481], [8483, 8485], [8487, 8493], [8495, 8530], [8533, 8538], [8543, 8705], [8707, 8709], [8711, 8718], [8720, 8720], [8723, 8724], [8726, 8728], [8731, 8733], [8735, 8746], [8748, 8775], [8777, 8799], [8801, 8803], [8806, 9412], [9414, 9673], [9675, 9727], [9984, 11809], [11811, 11812], [11814, 64255], [64259, 130041]]'; }
-supplemental() { exclude_chars='ranges = [[8592, 9673], [9677, 11360], [12800, 42560], [57344, 64256], [65520, 130041]]'; }
+cyrillic()     { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 566], [568, 585], [588, 709], [712, 712], [714, 727], [734, 768], [770, 805], [807, 820], [822, 879], [3584, 7678], [7936, 8190], [8352, 8363], [8365, 8452], [8454, 8466], [8468, 8469], [8471, 8481], [8483, 8485], [8487, 8493], [8495, 8530], [8533, 8538], [8543, 8705], [8707, 8709], [8711, 8718], [8720, 8720], [8723, 8724], [8726, 8728], [8731, 8733], [8735, 8746], [8748, 8775], [8777, 8799], [8801, 8803], [8806, 9412], [9414, 9673], [9675, 9727], [9984, 11809], [11811, 11812], [11814, 64255], [64259, 130041]]'; }
+fluent() { exclude_chars='ranges = [[3584, 3647], [8592, 9673], [9677, 11360], [12800, 42560], [57344, 64256], [65520, 130041]]'; }
 
 family()   { [ $1 ] || return 1; family=$1; }
-space()    { space=$(real $1); }
+space()    { [ $1 = "M" ] && space=$1 || space=$(real $1); }
 emdash()   { emdash=$(real $1); }
 ebook()    { variant asterisk-low; no_litigation=true; family i$(echo $1 | sed 's/.*/\u&/'); regular=book; ebook=true; }
 
@@ -260,7 +261,8 @@ while [ $1 ] ;do
   proof        ) leading 2.0000; sb 0.8000; build=${build}-proof ;;                            # for pure writing :)
   english      ) english_only; ditto char_set "$1" ;;
   latin+greek  ) latin_greek;  ditto char_set "$1" ;;
-  supplemental ) supplemental; ditto char_set "$1" ;;
+  cyrillic     ) cyrillic;     ditto char_set "$1" ;;
+  fluent       ) fluent; ditto char_set "$1" ;;
   ligature     ) ligature $2  || usage; shift ;;
   double       ) unset mono ;;
   quasi-pro*   ) spacing quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi$(echo $family | sed -r 's/.*(Hyper|Mono|Quasi)//'); variant I-serifed ;;
@@ -341,7 +343,7 @@ ditto spacing "$spacing"
 ditto override "$leading"
 ditto override "$shape" 
 ditto override "$sb"
-[ $space ] && ditto override "space ${space}x"
+[ $space ] && ditto override "space ${space}$([ $space = 'M' ] || echo x)"
 [ $emdash ] && ditto override "emdash ${emdash}x"
 [ "$variant" ] && ditto variants "$variant"
 [ $adjust ] && ditto adjust "book+weight"

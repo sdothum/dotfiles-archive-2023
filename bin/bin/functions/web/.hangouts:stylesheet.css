@@ -1,0 +1,5 @@
+* { word-break: break-all !important; }
+
+c-wiz * { max-width: 576px !important; }  /* google chat input field */
+
+* { font-family: elemental,monospace !important; }

@@ -248,14 +248,26 @@ $(reglarweight 0u0077)
 
 # double cell width space
 dyslexic() {
-  width=$(percent $space)
-  confirm "${space}x width space character"
-  echo "
+  if [ $space = "M" ] ;then
+    confirm '"M" width space character'
+    echo "
+Open(\$1);
+Select(0u004d);
+w = GlyphInfo('Width');
+Select(0u0020);
+SetWidth(w);
+Generate(\$1);
+" >/tmp/fontforge.script
+  else
+    width=$(percent $space)
+    confirm "${space}x width space character"
+    echo "
 Open(\$1);
 Select(0u0020);
 Transform($width,0,0,100,0,0);
 Generate(\$1);
 " >/tmp/fontforge.script
+  fi
 
   for i in *.ttf ;do
     ditto space $i

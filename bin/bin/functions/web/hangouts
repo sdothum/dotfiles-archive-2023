@@ -7,7 +7,7 @@
 # .............................................................. Google hangouts
 
 HANGOUTS=$SESSION/hangouts
-# surf -z1.15 -C $XDG_CONFIG_HOME/surf/stylesheet.css $(cat $HANGOUTS) &
-surf -z1.15 $(cat $HANGOUTS) &
+# surf -z1.15 $(cat $HANGOUTS) &
+surf -z1.15 -C $(dirname $0)/.hangouts:stylesheet.css $(cat $HANGOUTS) &  # fit input field
 
 # vim: set ft=sh: #
