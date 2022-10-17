@@ -7,7 +7,7 @@
 
 usage() { 
   echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [family <name>]
-                            [book+regular | latin+greek | supplemental]
+                            [book+regular | latin+greek | cyrillic | fluent]
                             [quasi-extension | space <parm>]
                             [myfonts [Q] | altmono | elementary | grotesk | open ]
                             [ D-serifless | [e]G-[hookless|toothless|default] | I-serifless | J-descending | j-serifed | [d|e|g]Q-[bar|horizontal|open|straight|default] | Q-[bar|crossing|detached|hook|straight|custom] | a-single | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat ]
@@ -29,19 +29,19 @@ usage() {
 #
 # current font preferences..
 #        make_install iosevka altmono
-#        make_install iosevka kobo myfonts quasi-ext supplemental space 1.3333
+#        make_install iosevka kobo myfonts quasi-ext space 1.3333
 #        make_install iosevka web Q-bar
 
 MAKE_INSTALL=/tmp/iosevka:make_install
 # SRCDIR=$HOME/bin/functions/font
 DEPOT=/net/depot
 GLYPH=b-rounded
-language=english  # default e-reader glyph set
-dyslexic=true     # default e-reader dyslexic font families
-gQ=Q-bar          # capital Q default for Unolexic/grotesk
-eQ=Q-straight     # capital Q default for elementary
-eG=G-toothless    # capital G default for elementary
-latest=16x        # lastest version
+language=fluent  # default e-reader glyph set
+dyslexic=true    # default e-reader dyslexic font families
+gQ=Q-bar         # capital Q default for Unolexic/grotesk
+eQ=Q-straight    # capital Q default for elementary
+eG=G-toothless   # capital G default for elementary
+latest=16x       # lastest version
 
 touch $MAKE_INSTALL
 trap "rm -f $MAKE_INSTALL; pkill -f iosevka" EXIT INT
@@ -92,7 +92,8 @@ while [ $1 ] ;do
   paren-flat       ) paren=$1 ;;              # source code variant
   book+regular     ) adjust=$1 ;;
   latin+greek      ) language=$1 ;;
-  supplemental     ) language=$1 ;;
+  cyrillic         ) language=$1 ;;
+  fluent           ) language=$1 ;;
   ascender         ) [ $2 ] && { ascender="$1 $2"; shift; } || usage ;;
   cap              ) [ $2 ] && { [ $2 = 'off' ] && unset cap || cap="$1 $2"; shift; } || usage ;;
   quasi-ext*       ) quasi=$1; version $latest ;;
@@ -146,14 +147,14 @@ e_ink() {
 
 myfonts() {
   ditto myfonts $Q
-  language=${language:-latin+greek}
-  e_ink idyslexic   ${cap:-cap extended}                                 $dQ ${space:-space 2}
-  e_ink dyslexic    ${cap:-cap extended}            I-serifless          $dQ ${space:-space 2}
-  e_ink igrotesk    ${cap:-cap extended} f-extended                      $gQ ${space:-space 1.5}
-  e_ink grotesk     ${cap:-cap extended} f-extended I-serifless          $gQ ${space:-space 1.5}
-  e_ink ielementary ${cap:-cap extended} a-single                    $eG $eQ ${space:-space 1.3333}
-  e_ink elementary  ${cap:-cap extended} a-single   I-serifless      $eG $eQ ${space:-space 1.3333}
-  e_ink elegance    ${cap:-cap extended} a-single   I-serifless open     $eQ ${space:-space 1.3333}
+  language=${language:-fluent}
+  # e_ink idyslexic   ${cap:-cap extended}                                 $dQ ${space:-space 2}
+  # e_ink dyslexic    ${cap:-cap extended}            I-serifless          $dQ ${space:-space 2}
+  # e_ink igrotesk    ${cap:-cap extended} f-extended                      $gQ ${space:-space 1.3333}
+  # e_ink grotesk     ${cap:-cap extended} f-extended I-serifless          $gQ ${space:-space 1.3333}
+  # e_ink ielementary ${cap:-cap extended} a-single                    $eG $eQ ${space:-space 1.3333}
+  # e_ink elementary  ${cap:-cap extended} a-single   I-serifless      $eG $eQ ${space:-space 1.3333}
+  e_ink eloquent    ${cap:-cap extended} a-single   I-serifless open     $eQ ${space:-space 1.3333}
 }
 
 dfont() { iosevka expanded at-tall Q-bar $(options $@) q-hook; }
@@ -204,7 +205,7 @@ else                                      # desktop fonts
   dfont $altmono
   dfont $altmono proof
   dfont $altmono menu
-  dfont dyslexic a-single open quasi-extension cap extended space 1.15 family elemental  # panel/dunst/browser font
+  dfont dyslexic a-single open quasi-extension cap extended space M family elemental  # panel/dunst/browser font
 fi
 
 # vim: set ft=sh: #
