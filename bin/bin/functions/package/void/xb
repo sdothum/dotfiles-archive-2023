@@ -61,6 +61,14 @@ upgrade_check() {
   xlocate -S >/dev/null 2>&1 &
 }
 
+# over a list of packages
+iterate() {
+  action=$1
+  shift
+  for i in $@ ;do xb $action $i ;done
+  exit
+}
+
 # default (no options) to package query
 case $1 in
  B) [ $2 ] && usage || action=backup ;;
@@ -73,8 +81,8 @@ SS) [ $2 ] && { action=force; yes='-y'; } ;;
 -U) [ $2 ] && action=update ;;
  R) action=remove; recursive='-R' ;;
 -R) action=remove ;;
- H) [ $2 ] && action=hold || action=held ;;
--H) action=unhold ;;
+ H) [ $3 ] && iterate $@ || [ $2 ] && action=hold || action=held ;;
+-H) [ $3 ] && iterate $@ || action=unhold ;;
  Q) action=installed ;;
 /*) action=search; [ $1 = '/' ] || { package=${1#/}; shift; set -- 0 $package $@; } ;;  # allow /<pattern> short form (no action separator)
 f ) action=file ;;

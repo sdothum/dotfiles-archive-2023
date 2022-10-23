@@ -1,4 +1,4 @@
-* { word-break: break-all !important; }
+* { word-break: break-word !important; }
 
 c-wiz * { max-width: 576px !important; }  /* google chat input field */
 

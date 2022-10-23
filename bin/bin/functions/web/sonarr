@@ -6,10 +6,13 @@
 
 # ....................................................................... Sonarr
 
-BROWSER=/usr/bin/surf
-SONARR=http://$SERVER:8989/calendar
+# Usage: sonarr [video], of 'anime' or 'series'
 
-$BROWSER $SONARR &
+BROWSER=/usr/bin/surf
+SONARR=http://$SERVER:8989
+
+[ $1 ] && page=$(dirname $1 | tr '[:upper:]' '[:lower:]' | sed -r 's/.*(anime|series)/series/; s/[.]/-/g') || page=calendar
+$BROWSER $SONARR/$page &
 pwait "$BROWSER.*$SONARR"  # see dmenu media [series]
 
 # vim: set ft=sh: #

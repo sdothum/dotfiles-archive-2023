@@ -623,11 +623,11 @@ fi
 [ $q_hook       ] && fforge q_hook $family                    # hyperlegible font mod for better q
 [ $Q_hook       ] && fforge Q_hook $family                    # hooked capital Q
 [ $Q_horizontal ] && fforge Q_horizontal ${shape#*=} $family  # open horizontal capital Q
-[ $Q_custom      ] && fforge Q_custom    ${shape#*=} $family  # custom capital Q
+[ $Q_custom     ] && fforge Q_custom     ${shape#*=} $family  # custom capital Q
 
 [ $ebook ] && [ $spacing != 'quasi-proportional' ] && { fforge punctuation ${emdash:-2} $family; unset width; }  # wide cell emdash and double width ellipsis
 
-[ $ebook ] && fforge ligature $width ${shape#*=} $family      # ae width character adjustment
+[ $ebook ] && [ $spacing != 'quasi-proportional' ] && fforge ligature $width ${shape#*=} $family                 # ae width character adjustment
 
 [ $space ] && fforge dyslexic $space $family                  # lengthen space character cell width
 
