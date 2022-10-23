@@ -148,17 +148,17 @@ e_ink() {
 myfonts() {
   ditto myfonts $Q
   language=${language:-fluent}
-  # e_ink idyslexic   ${cap:-cap extended}                                 $dQ ${space:-space 2}
-  # e_ink dyslexic    ${cap:-cap extended}            I-serifless          $dQ ${space:-space 2}
-  # e_ink igrotesk    ${cap:-cap extended} f-extended                      $gQ ${space:-space 1.3333}
-  # e_ink grotesk     ${cap:-cap extended} f-extended I-serifless          $gQ ${space:-space 1.3333}
-  # e_ink ielementary ${cap:-cap extended} a-single                    $eG $eQ ${space:-space 1.3333}
-  # e_ink elementary  ${cap:-cap extended} a-single   I-serifless      $eG $eQ ${space:-space 1.3333}
-  e_ink eloquent    ${cap:-cap extended} a-single   I-serifless open     $eQ ${space:-space 1.3333}
+  e_ink idyslexic   ${cap:-cap extended}                                 $dQ ${space:-space 2}
+  e_ink dyslexic    ${cap:-cap extended}            I-serifless          $dQ ${space:-space 2}
+  e_ink igrotesk    ${cap:-cap extended} f-extended                      $gQ ${space:-space 1.3333}
+  e_ink grotesk     ${cap:-cap extended} f-extended I-serifless          $gQ ${space:-space 1.3333}
+  e_ink ielementary ${cap:-cap extended} a-single                    $eG $eQ ${space:-space 1.3333}
+  e_ink elementary  ${cap:-cap extended} a-single   I-serifless      $eG $eQ ${space:-space 1.3333}
+  e_ink eloquence   ${cap:-cap extended} a-single   I-serifless open     $eQ ${space:-space 1.3333}
 }
 
 dfont() { iosevka expanded at-tall Q-bar $(options $@) q-hook; }
-wfont() { iosevka english          Q-bar $(options $@) q-hook asterisk-high; }  # override dyslexic "asterisk-low"
+wfont() { iosevka english  open    Q-bar $(options $@) q-hook asterisk-high; }  # override dyslexic "asterisk-low"
 efont() { iosevka $language              $(options $@) q-hook; }
 
 if [ $family ] ;then                      # custom e-ink font (non-published)
@@ -195,10 +195,10 @@ elif [ $ebook ] ;then                     # e-reader fonts
 elif [ $web ] ;then                       # www fonts
   unset cap
   version $latest
-  wfont heading  quasi-extension    kobo webfont
-  wfont dyslexic quasi-extension    f-extended cap extended space 1.5 kobo webfont
-  wfont dyslexic quasi-proportional space 1.25 kobo webfont
-  dfont ${cap:-cap extended} family wIosevka
+  wfont heading  quasi-extension                                       kobo webfont
+  wfont dyslexic quasi-extension    f-extended cap extended space M    kobo webfont
+  wfont dyslexic quasi-proportional                         space 1.15 kobo webfont
+  # dfont ${cap:-cap extended} family wIosevka
 
 else                                      # desktop fonts
   version $latest
