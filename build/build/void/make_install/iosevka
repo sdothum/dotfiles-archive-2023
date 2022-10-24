@@ -10,7 +10,7 @@ usage() {
                             [book+regular | latin+greek | cyrillic | fluent]
                             [quasi-extension | space <parm>]
                             [myfonts [Q] | altmono | elementary | grotesk | open ]
-                            [ D-serifless | [e]G-[hookless|toothless|default] | I-serifless | J-descending | j-serifed | [d|e|g]Q-[bar|horizontal|open|straight|default] | Q-[bar|crossing|detached|hook|straight|custom] | a-single | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat ]
+                            [ D-serifless | [a|e]G-[hookless[+]|toothless|default] | I-serifless | J-descending | j-serifed | [d|e|g]Q-[bar|horizontal|open|straight|default] | Q-[bar|crossing|detached|hook|straight|custom] | a-single | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat ]
                             [ascender <parm> | cap <parm>]
                             [[version 10x | 16x] -- <opions>*]"
   exit 1
@@ -41,6 +41,7 @@ dyslexic=true    # default e-reader dyslexic font families
 gQ=Q-bar         # capital Q default for Unolexic/grotesk
 eQ=Q-straight    # capital Q default for elementary
 eG=G-toothless   # capital G default for elementary
+aG=G-hookless+   # capital G default for articulate
 latest=16x       # lastest version
 
 touch $MAKE_INSTALL
@@ -103,7 +104,7 @@ while [ $1 ] ;do
   elementary       ) style=$1 ;;
   grotesk          ) style=$1 ;;
   open             ) open=$1 ;;
-  altmono          ) altmono='a-single open cap extended' ;;                    # alternate "monospace" coding font
+  altmono          ) altmono='a-single G-hookless+ cap extended' ;;                    # alternate "monospace" coding font
   kindle           ) ereader=$1 ;;
   kobo             ) ereader=$1; q=q-hook ;;
   family           ) [ $ereader ] && [ $2 ] && { family=$2; shift; } || usage ;;
@@ -148,13 +149,16 @@ e_ink() {
 myfonts() {
   ditto myfonts $Q
   language=${language:-fluent}
+  # personal ereader fonts
+  e_ink articulate  ${cap:-cap extended} a-single   j-serifed        $aG $eQ ${space:-space 1.3333}
+  e_ink eloquence   ${cap:-cap extended} a-single   I-serifless open     $eQ ${space:-space 1.3333}
+  # atkinson variants
   e_ink idyslexic   ${cap:-cap extended}                                 $dQ ${space:-space 2}
   e_ink dyslexic    ${cap:-cap extended}            I-serifless          $dQ ${space:-space 2}
   e_ink igrotesk    ${cap:-cap extended} f-extended                      $gQ ${space:-space 1.3333}
   e_ink grotesk     ${cap:-cap extended} f-extended I-serifless          $gQ ${space:-space 1.3333}
   e_ink ielementary ${cap:-cap extended} a-single                    $eG $eQ ${space:-space 1.3333}
   e_ink elementary  ${cap:-cap extended} a-single   I-serifless      $eG $eQ ${space:-space 1.3333}
-  e_ink eloquence   ${cap:-cap extended} a-single   I-serifless open     $eQ ${space:-space 1.3333}
 }
 
 dfont() { iosevka expanded at-tall Q-bar $(options $@) q-hook; }
@@ -198,14 +202,14 @@ elif [ $web ] ;then                       # www fonts
   wfont heading  quasi-extension                                       kobo webfont
   wfont dyslexic quasi-extension    f-extended cap extended space M    kobo webfont
   wfont dyslexic quasi-proportional                         space 1.15 kobo webfont
-  # dfont ${cap:-cap extended} family wIosevka
+  dfont ${cap:-cap extended} family wIosevka
 
 else                                      # desktop fonts
   version $latest
   dfont $altmono
   dfont $altmono proof
   dfont $altmono menu
-  dfont dyslexic a-single open quasi-extension cap extended space M family elemental  # panel/dunst/browser font
+  dfont dyslexic a-single G-hookless+ quasi-extension cap extended space M family elemental  # panel/dunst/browser font
 fi
 
 # vim: set ft=sh: #
