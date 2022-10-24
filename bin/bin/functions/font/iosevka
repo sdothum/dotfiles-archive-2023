@@ -28,7 +28,7 @@ usage() {
                [english | latin+greek | cyrillic | fluent | ligature <name>]
 
                [grotesque (default) | atkinson | geometric | jost]
-               [elementary | grotesk | open | a-single | b-corner | D-serifless | d-[tailed|toothless] | f-extended | G-[hookless|toothed|toothless] | g-double | I-serifless | i-serifed | J-descending | j-[serifed|serifless] | l-[hooky|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|open|straight|custom] | q-[hook|tailed] | t-cross | y-straight | asterisk-high | at-tall | 0-split | paren-flat]*
+               [elementary | grotesk | open | a-single | b-corner | D-serifless | d-[tailed|toothless] | f-extended | G-[hookless[+]|toothed|toothless] | g-double | I-serifless | i-serifed | J-descending | j-[serifed|serifless] | l-[hooky|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|open|straight|custom] | q-[hook|tailed] | t-cross | y-straight | asterisk-high | at-tall | 0-split | paren-flat]*
 
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
                [double] [space M|<decimal>] [ emdash <decimal> ]
@@ -153,6 +153,7 @@ variant() {
     d-toothless  ) glyph d=toothless-corner-serifless ;;
     f-extended   ) glyph f=flat-hook-extended-crossbar-at-x-height ;;
     G-hookless   ) glyph capital_g=toothless-corner-serifless-hookless ;;
+    G-hookless+  ) glyph capital_g=toothed-serifless-hookless ;;
     G-toothed    ) glyph capital_g=toothed-serifless-hooked ;;
     G-toothless  ) glyph capital_g=toothless-corner-serifless-hooked ;;
     g-double     ) glyph g=double-storey ;;
@@ -266,7 +267,7 @@ while [ $1 ] ;do
   ligature     ) ligature $2  || usage; shift ;;
   double       ) unset mono ;;
   quasi-pro*   ) spacing quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi$(echo $family | sed -r 's/.*(Hyper|Mono|Quasi)//'); variant I-serifed ;;
-  quasi-ext*   ) spacing quasi-proportional-extension-only ;;
+  quasi-ext*   ) spacing quasi-proportional-extension-only; unset width ;;
   dyslexic     ) shape $expanded;            sb 0.7150; leading 1.5000; space 2; emdash 2; width=135; ebook monolexic ;;
   # glyphs
   a-single     ) variant $1 ;;
@@ -276,6 +277,7 @@ while [ $1 ] ;do
   d-toothless  ) variant $1 p-eared ;;
   f-extended   ) variant $1 ;;                   # unolexic (homage to universal grotesk)
   G-hookless   ) variant $1 ;;
+  G-hookless+  ) variant $1 ;;
   G-toothed    ) variant $1 ;;
   G-toothless  ) variant $1 ;;
   g-double     ) variant $1 ;;
@@ -345,6 +347,7 @@ ditto override "$shape"
 ditto override "$sb"
 [ $space ] && ditto override "space ${space}$([ $space = 'M' ] || echo x)"
 [ $emdash ] && ditto override "emdash ${emdash}x"
+[ $width ] && ditto width "$width"
 [ "$variant" ] && ditto variants "$variant"
 [ $adjust ] && ditto adjust "book+weight"
 
@@ -617,20 +620,20 @@ if [ $ebook ] ;then
   mkdir -p $HOME/.fonts/$family
   cp -v dist/$family/ttf/* $HOME/.fonts/$family
 else
-  nerdfont $mono $family                                      # insert glyphs
+  nerdfont $mono $family                                       # insert glyphs
 fi
 
-[ $q_hook       ] && fforge q_hook $family                    # hyperlegible font mod for better q
-[ $Q_hook       ] && fforge Q_hook $family                    # hooked capital Q
-[ $Q_horizontal ] && fforge Q_horizontal ${shape#*=} $family  # open horizontal capital Q
-[ $Q_custom     ] && fforge Q_custom     ${shape#*=} $family  # custom capital Q
+[ $q_hook       ] && fforge q_hook $family                     # hyperlegible font mod for better q
+[ $Q_hook       ] && fforge Q_hook $family                     # hooked capital Q
+[ $Q_horizontal ] && fforge Q_horizontal ${shape##* } $family  # open horizontal capital Q
+[ $Q_custom     ] && fforge Q_custom     ${shape##* } $family  # custom capital Q
 
-[ $ebook ] && [ $spacing != 'quasi-proportional' ] && { fforge punctuation ${emdash:-2} $family; unset width; }  # wide cell emdash and double width ellipsis
+[ $ebook ] && echo $spacing | grep -vq 'quasi-' && { fforge punctuation ${emdash:-2} $family; unset width; }  # wide cell emdash and double width ellipsis
 
-[ $ebook ] && [ $spacing != 'quasi-proportional' ] && fforge ligature $width ${shape#*=} $family                 # ae width character adjustment
+[ $ebook ] && [ $spacing != 'quasi-proportional' ] && fforge ligature $width ${shape##* } $family             # ae width character adjustment
 
-[ $space ] && fforge dyslexic $space $family                  # lengthen space character cell width
+[ $space ] && fforge dyslexic $space $family                   # lengthen space character cell width
 
-[ $ebook ] && fforge ${regular}weight $adjust $family         # rename weight for e-reader (as regular)
+[ $ebook ] && fforge ${regular}weight $adjust $family          # rename weight for e-reader (as regular)
 
 # vim: set ft=sh: #
