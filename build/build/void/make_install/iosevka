@@ -30,7 +30,7 @@ usage() {
 # current font preferences..
 #        make_install iosevka altmono
 #        make_install iosevka kobo myfonts quasi-ext space 1.3333
-#        make_install iosevka web Q-bar
+#        make_install iosevka web
 
 MAKE_INSTALL=/tmp/iosevka:make_install
 # SRCDIR=$HOME/bin/functions/font
@@ -150,8 +150,8 @@ myfonts() {
   ditto myfonts $Q
   language=${language:-fluent}
   # personal ereader fonts
-  e_ink articulate  ${cap:-cap extended} a-single   j-serifed        $aG $eQ ${space:-space 1.3333}
-  e_ink eloquence   ${cap:-cap extended} a-single   I-serifless open     $eQ ${space:-space 1.3333}
+  e_ink articulate  ${cap:-cap extended} a-single   j-serifed                 $aG $eQ ${space:-space 1.3333}
+  e_ink eloquence   ${cap:-cap extended} a-single   J-descending I-serifless open $eQ ${space:-space 1.3333}
   # atkinson variants
   e_ink idyslexic   ${cap:-cap extended}                                 $dQ ${space:-space 2}
   e_ink dyslexic    ${cap:-cap extended}            I-serifless          $dQ ${space:-space 2}
@@ -161,9 +161,9 @@ myfonts() {
   e_ink elementary  ${cap:-cap extended} a-single   I-serifless      $eG $eQ ${space:-space 1.3333}
 }
 
-dfont() { iosevka expanded at-tall Q-bar $(options $@) q-hook; }
-wfont() { iosevka english  open    Q-bar $(options $@) q-hook asterisk-high; }  # override dyslexic "asterisk-low"
-efont() { iosevka $language              $(options $@) q-hook; }
+dfont() { iosevka expanded at-tall     Q-bar $(options $@) q-hook; }
+wfont() { iosevka english  G-hookless+ Q-bar $(options $@) q-hook asterisk-high; }  # override dyslexic "asterisk-low"
+efont() { iosevka $language                  $(options $@) q-hook; }
 
 if [ $family ] ;then                      # custom e-ink font (non-published)
   e_ink $family
