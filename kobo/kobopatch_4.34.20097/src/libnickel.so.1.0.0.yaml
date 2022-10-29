@@ -157,15 +157,15 @@ Custom left & right margins:
       adjustment slider, as a percentage of screen width.
   - FindBaseAddressString: "\0\0\0\0\x02\0\0\0\x04\0\0\0\x06\0\0\0\x08\0\0\0\x0A\0\0\0\x0C\0\0\0\x0E\0\0\0\x10\0\0\0"
   # 9 values for replacement:
-  - ReplaceInt: {Offset: 0x00, Find:  0, Replace: 1}
-  - ReplaceInt: {Offset: 0x04, Find:  2, Replace: 3}
-  - ReplaceInt: {Offset: 0x08, Find:  4, Replace: 5}
-  - ReplaceInt: {Offset: 0x0C, Find:  6, Replace: 7}
-  - ReplaceInt: {Offset: 0x10, Find:  8, Replace: 9}
-  - ReplaceInt: {Offset: 0x14, Find: 10, Replace: 11}
-  - ReplaceInt: {Offset: 0x18, Find: 12, Replace: 13}
-  - ReplaceInt: {Offset: 0x1C, Find: 14, Replace: 15}
-  - ReplaceInt: {Offset: 0x20, Find: 16, Replace: 17}
+  - ReplaceInt: {Offset: 0x00, Find:  0, Replace: 0}
+  - ReplaceInt: {Offset: 0x04, Find:  2, Replace: 2}
+  - ReplaceInt: {Offset: 0x08, Find:  4, Replace: 4}
+  - ReplaceInt: {Offset: 0x0C, Find:  6, Replace: 6}
+  - ReplaceInt: {Offset: 0x10, Find:  8, Replace: 8}
+  - ReplaceInt: {Offset: 0x14, Find: 10, Replace: 10}
+  - ReplaceInt: {Offset: 0x18, Find: 12, Replace: 12}
+  - ReplaceInt: {Offset: 0x1C, Find: 14, Replace: 14}
+  - ReplaceInt: {Offset: 0x20, Find: 16, Replace: 16}
 
 Custom font sizes:
   - Enabled: no
