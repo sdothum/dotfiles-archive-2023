@@ -38,6 +38,7 @@ usage() {
 
 CACHE=/var/cache/xbps
 BACKUP=/net/depot/
+ITERATE=/tmp/xb:iterate
 XBDIR=$(dirname $0)
 ACTIONS=$XBDIR/.xb_actions  # tuple: <action> <package> -> file: .xb_<action>, see upgrade_check and upgrade_actions 
 [ $1 ] || usage
@@ -65,7 +66,10 @@ upgrade_check() {
 iterate() {
   action=$1
   shift
-  for i in $@ ;do xb $action $i ;done
+  touch $ITERATE  # see hold (below)
+  trap "rm -f $ITERATE" EXIT
+  count=$#
+  for i in $@ ;do count=$(( $count - 1 )); [ $count -eq 0 ] && rm $ITERATE; xb $action $i ;done
   exit
 }
 
@@ -122,10 +126,10 @@ history() {
 }
 
 installed() { file=$(stat -c '%x %n' $CACHE/$1* 2>/dev/null | sort | tail -1); ditto ${file%% *} ${file##* }; }
-version() { sed 's|^.*/||; s/^[a-zA-Z-]*//; s/.x.*//'; }  # trim path*, package name and extension*
-latest()  { package=$(echo $1 | sed 's/-[0-9].*//'); xbps-query -Rs "$package-" | grep " $package-[0-9]" | cut -d' ' -f2 | version; }
-cached()  { package=$(echo $1 | sed 's/-[0-9].*//'); xb h "$package-" | grep "$package-[0-9]" | tail -1 | version; }
-status()  { current=$(echo $1 | version); latest=$(latest $1); cached=$(cached $1); [ "$cached" != "$latest" ] && { [ "$current" = "$cached" ] || echo -n "$NOCOLOR$cached "; echo "$__RED[$latest]"; } || echo "$NOCOLOR$latest"; }
+version()   { sed 's|^.*/||; s/^[a-zA-Z-]*//; s/.x.*//'; }  # trim path*, package name and extension*
+latest()    { package=$(echo $1 | sed 's/-[0-9].*//'); xbps-query -Rs "$package-" | grep " $package-[0-9]" | cut -d' ' -f2 | version; }
+cached()    { package=$(echo $1 | sed 's/-[0-9].*//'); xb h "$package-" | grep "$package-[0-9]" | tail -1 | version; }
+status()    { current=$(echo $1 | version); latest=$(latest $1); cached=$(cached $1); [ "$cached" != "$latest" ] && { [ "$current" = "$cached" ] || echo -n "$NOCOLOR$cached "; echo "$__RED[$latest]"; } || echo "$NOCOLOR$latest"; }
 
 # list of apps that typically fail package check (due to particular install)
 IGNORE='chromium|php-fpm|pinentry|preload'
@@ -140,7 +144,7 @@ file      ) xlocate $package ;;
 force     ) sudo xbps-install -f $yes $options $package ;;
 held      ) for i in $(xbps-query --list-hold-pkgs) ;do ditto held "$i $(status $i)" ;done ;;
 history   ) if [ $package ] ;then  ls -l $CACHE/$package* 2>/dev/null ;else history ;fi ;;
-hold      ) [ $pkgver ] && { sudo xbps-pkgdb -m hold $options $package; ditto hold "$pkgver"; xb C; } ;;
+hold      ) [ $pkgver ] && { sudo xbps-pkgdb -m hold $options $package; ditto hold "$pkgver"; [ -e $ITERATE ] || xb C; } ;;
 installed ) xbps-query -l $options | cut -d' ' -f2- | sed -r "s/^([^ ]*)/${YELLOW}\1${NOCOLOR}/" | grep "$@" && ditto installed "$@" ;;
 query     ) [ $options ] && xbps-query -R $options $package || xbps-query -Rs $options "$package" | a $package ;;
 remove    ) sudo xbps-remove $recursive $options $package ;;
