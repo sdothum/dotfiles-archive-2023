@@ -188,7 +188,7 @@ variant() {
     at-tall      ) glyph at=$(vsn threefold-tall fourfold-solid-inner-tall) ;;
     dollar       ) glyph dollar=open ;;
     number_sign  ) glyph number_sign=slanted ;;
-    paren        ) glyph paren=flat-arc ;;
+    paren-flat   ) glyph paren=flat-arc ;;
     percent      ) glyph percent=rings-continuous-slash ;;
     question     ) glyph question=corner ;;
     0-split      ) glyph zero=reverse-slashed-split ;;
@@ -306,7 +306,7 @@ while [ $1 ] ;do
   asterisk-high) variant $1 ;;
   at-tall      ) variant $1 ;;
   0-split      ) variant $1 ;;
-  paren-flat   ) variant paren ;;
+  paren-flat   ) variant $1 ;;
   elementary   ) variant I-serifless a-single ;;
   grotesk      ) variant I-serifless f-extended ;;
   grotesque    ) grotesque ;;
