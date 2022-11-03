@@ -68,7 +68,7 @@ c*) sudo btrfs scrub cancel $(volume $2) ;;
 I*) sudo rm -f /var/lib/btrfs/*.* ;;
 s*) tail -f $CRON:$2.log ;;
 
-* ) nohup sudo btrfs scrub start -Bd $(volume $1) >/dev/null 2>&1 &
+* ) nohup sudo btrfs scrub start -Bd $(volume $1) >$CRON.log &
     log=$CRON:$1.log
     show $1 >$log &
     if pstat Xorg ;then alacritty --title "$1" -e "tail -f $log" ;else tail -f $log ;fi ;;
