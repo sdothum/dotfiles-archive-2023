@@ -194,6 +194,15 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 
 .ttrss_index .active .title { font-size: 21px !important; font-weight: 500 !important; }
 
+/* expanded mode */
+#headlines-wrap-inner .expanded div.header { border-style: dotted; border-color: rgba(177,37,37,.45); border-width: 1px 0 0; padding-top: 10px !important; }
+
+#headlines-wrap-inner .expanded div.header a.title { font-size: 16px !important; }
+
+#headlines-wrap-inner .expanded div.feed * { display: block; padding-left: 2px !important; text-align: left; }
+
+#headlines-wrap-inner .expanded div.content { padding-bottom: 0 !important; }
+
 /* expanded content */
 .ttrss_index .content-inner { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; }
 
