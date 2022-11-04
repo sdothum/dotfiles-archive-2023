@@ -103,7 +103,7 @@ while [ $1 ] ;do
   myfonts          ) [ "$2" = Q ] && { for_Q=true; shift; }; unset dyslexic ;;  # my elementary and grotesk fonts with tweaked space cell width
   elementary       ) style=$1 ;;
   grotesk          ) style=$1 ;;
-  open             ) open=$1 ;;
+  open             ) open=$1; f=f-extended ;;
   altmono          ) altmono='a-single G-hookless+ j-serifed cap extended' ;;   # alternate "monospace" coding font
   kindle           ) ereader=$1 ;;
   kobo             ) ereader=$1; q=q-hook ;;
@@ -152,7 +152,7 @@ myfonts() {
   # personal ereader fonts
   e_ink articulate  ${cap:-cap extended} a-single   j-serifed    $open        $aG $eQ ${space:-space 1.3333}
   e_ink eloquence   ${cap:-cap extended} a-single   J-descending I-serifless open $eQ ${space:-space 1.3333}
-  # atkinson variants
+  # # atkinson variants
   e_ink idyslexic   ${cap:-cap extended}                                 $dQ ${space:-space 2}
   e_ink dyslexic    ${cap:-cap extended}            I-serifless          $dQ ${space:-space 2}
   e_ink igrotesk    ${cap:-cap extended} f-extended                      $gQ ${space:-space 1.3333}
