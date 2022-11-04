@@ -199,9 +199,28 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 
 #headlines-wrap-inner .expanded div.header a.title { font-size: 16px !important; }
 
-#headlines-wrap-inner .expanded div.feed * { display: block; padding-left: 2px !important; text-align: left; }
+#headlines-wrap-inner .expanded div.feed { display: inline-block; margin-left: 18px !important; max-width: none !important; text-align: left !important; }
+
+#headlines-wrap-inner .expanded div.feed * { text-align: left !important; max-width: none !important; }
 
 #headlines-wrap-inner .expanded div.content { padding-bottom: 0 !important; }
+
+/* starred expanded mode */
+#headlines-wrap-inner .expanded .header .left { display: block !important; top: 12px !important; left: 24px; }
+
+#headlines-wrap-inner .expanded .header .marked-pic { font-size: 20px !important; }
+
+#headlines-wrap-inner .expanded :not(.active) .header .left { display: none !important; }
+
+#headlines-wrap-inner .expanded .active .header .left { display: inline !important; }
+
+#headlines-wrap-inner .expanded .cdm.marked { background-color: transparent !important; }
+
+#headlines-wrap-inner .expanded .cdm.marked .marked-pic { color: rgba(177,37,37,.85) !important; }
+
+#headlines-wrap-inner .expanded .cdm.marked:not(.Unread):not(.active) a.title { color: rgba(177,37,37,.9) !important; }
+
+#headlines-wrap-inner .expanded .cdm.marked
 
 /* expanded content */
 .ttrss_index .content-inner { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; }
