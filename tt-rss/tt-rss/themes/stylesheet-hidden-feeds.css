@@ -205,6 +205,12 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 
 #headlines-wrap-inner .expanded div.content { padding-bottom: 0 !important; }
 
+div.content-inner { font-family: Roboto, sans-serif !important; font-size: 11px !important; }    /* submitted by */
+
+div.content-inner span a { display: none !important; }
+
+div.footer { display: none !important; }
+
 /* starred expanded mode */
 #headlines-wrap-inner .expanded .header .left { display: block !important; top: 12px !important; left: 24px; }
 
@@ -226,6 +232,8 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 .ttrss_index .content-inner { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; }
 
 .ttrss_index .content-inner * { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; border: none !important; }
+
+.ttrss_index .content-inner a { font-family: Roboto, sans-serif !important; font-size: 11px !important; }  /* submitted by */
 
 .ttrss_index .content-inner p { font-family: "Atkinson Hyperlegible",Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13.85px !important; color: rgba(0,0,0,.8) !important; line-height: 1.7em !important; }
 /* .ttrss_index .content-inner p { font-family: eMonolegible,"Atkinson Hyperlegible",Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 12.5px !important; color: rgba(0,0,0,.8) !important; line-height: 2em !important; } */
