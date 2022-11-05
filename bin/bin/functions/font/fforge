@@ -223,6 +223,7 @@ weight() {
     ditto ttf $file
     ttx $file
   done
+  rm -f *.ttx
 
   if [ $adjust ] ;then
   # optically adjust M W w (to regular weight to narrow stroke width for better small font contrast match)
@@ -296,6 +297,7 @@ copy() {
     ditto ttf $i
     ttx $i
   done
+  rm -f *.ttx
 }
 
 # map glyph
@@ -335,5 +337,7 @@ FONT=$HOME/.fonts/${1:-Iosevka}
 cd $FONT || usage
 
 $fforge
+
+rm -f *.ttx
 
 # vim: set ft=sh: #

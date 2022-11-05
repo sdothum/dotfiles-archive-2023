@@ -6,10 +6,10 @@
 
 # ................................................................... Dictionary
 
-usage() { echo "usage: $(basename $0) [[-=]<maxlen> | -] <word>, '-' (exclude phrases)"; exit 1; }
+usage() { echo "usage: $(basename $0) [[-=]<maxlen> | -] <word>, '-' (include phrases)"; exit 1; }
 
 if [ "$1" = '-' ] ;then
-  NOSPACES=true
+  SPACES=true
   shift
 elif [ "${1%${1#?}}" = '-' ] && echo ${1#?} | grep -q '^[0-9][0-9]*$' ;then
   MAXLEN="$(seq -s. 0 ${1#?} | tr -d '[:digit:]')[^ ]"
@@ -29,14 +29,14 @@ while echo "$output" | grep -q '^From.*Dictionary' ;do
   output=$(echo "$output" | grep -B9999 '^From.*Dictionary' | head -n -1)
 done
 
-if [ "$NOSPACES" ] ;then
-  echo "$output" | grep -v " " | column        # words only (no phrases)
-elif [ "$MAXLEN" ] ;then
+if [ "$MAXLEN" ] ;then
   echo "$output" | grep -v "$MAXLEN" | column  # word length cutoff
 elif [ "$LENGTH" ] ;then
   echo "$output" | grep "$LENGTH" | column     # exact word length match
-else
+elif [ "$SPACES" ] ;then
   echo "$output" | column
+else
+  echo "$output" | grep -v " " | column        # words only (no phrases)
 fi
 
 # vim: set ft=sh: #
