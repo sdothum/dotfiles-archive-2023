@@ -6,7 +6,7 @@
 # ........................................................................ Media
 
 CLEAR='clear'
-MENU="$(X $CLEAR)\nblackboard\npulse\nebooks\nreferences\nanimation\nanime\nmovies\nseries\nsonarr\nprime\nnetflix\nkodi\nnzbgeek\nusenet-crawler\nnzbget\ntorrent\npatricia\nthought of you"
+MENU="$(X $CLEAR)\nblackboard\nanimation\nanime\nmovies\nseries\nsonarr\ndust\niai\nnetflix\nkodi\nprime\nnzbgeek\nusenet-crawler\nnzbget\ntorrent\npulse\ncalibre\nebooks\nreferences\nzlibrary\npatricia\nthought of you"
 
 video='play kodi vstream'
 USENET_CRAWLER=https://www.usenet-crawler.com/movies?t=2040
@@ -29,6 +29,9 @@ while : ;do
   animation     ) dmenu movies animation ;;
   anime         ) dmenu series anime ;;
   blackboard    ) exec blackboard ;;
+  calibre       ) calibre; exit ;;
+  dust          ) vstream dust ;;
+  iai           ) vstream iai ;;
   ebooks        ) dmenu ebooks; unset root; break ;;
   kodi          ) videomode on; kodi; videomode off ;;
   movies        ) dmenu movies ;;
@@ -46,6 +49,7 @@ while : ;do
   thought*      ) play -q /net/media/patricia/Thought\ of\ You/Thought\ of\ You.mkv ;;
   torrent       ) toggle term 'torrent' rtorrent; unset root; break ;;
   usenet-crawler) $BROWSER $USENET_CRAWLER; pwait "$BROWSER.*$USENET_CRAWLER"; unset root ;;
+  zlibrary      ) torbrowser-launcher; exit ;;
   esac
 done
 

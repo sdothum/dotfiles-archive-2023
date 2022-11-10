@@ -6,7 +6,7 @@
 
 # ...................................................................... Browser
 
-usage() { echo "usage: $(basename $0)  netflix | prime"; exit 0; }
+usage() { echo "usage: $(basename $0)  dust | netflix | prime"; exit 0; }
 
 BROWSER=firefox
 BROWSER=chromium
@@ -14,8 +14,10 @@ options='-s statusbar.hide true'  # see web/qutebrowser
 delay=1
 
 case $1 in
+  dust   ) SERVICE='https://www.youtube.com/c/watchdust/videos' ;;
+  iai    ) SERVICE='https://www.youtube.com/c/TheInstituteOfArtAndIdeas/videos' ;;
   netflix) SERVICE='http://www.netflix.com/ca' ;;
-  prime* ) SERVICE='primevideo.com' ;;
+  prime  ) SERVICE='primevideo.com' ;;
   *      ) usage ;;
 esac
 
