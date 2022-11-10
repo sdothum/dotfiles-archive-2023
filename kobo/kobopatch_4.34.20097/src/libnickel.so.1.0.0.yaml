@@ -110,14 +110,14 @@ My 24 line spacing values:
     # 24 replacement line spacing values: change these replace_float values to suit
     # your device and preferences:
   - BaseAddress:  {Sym: "ReadingSettings::lineHeightScalars() const", Rel: 112} # beginning of new table from above
-  - ReplaceFloat: {Offset:   0, Find: 1.0, Replace: 1.0}
-  - ReplaceFloat: {Offset:   8, Find: 1.0, Replace: 1.1}
-  - ReplaceFloat: {Offset:  16, Find: 1.0, Replace: 1.2}
-  - ReplaceFloat: {Offset:  24, Find: 1.0, Replace: 1.25}
-  - ReplaceFloat: {Offset:  32, Find: 1.0, Replace: 1.3}
-  - ReplaceFloat: {Offset:  40, Find: 1.0, Replace: 1.35}
-  - ReplaceFloat: {Offset:  48, Find: 1.0, Replace: 1.4}
-  - ReplaceFloat: {Offset:  56, Find: 1.0, Replace: 1.45}
+  - ReplaceFloat: {Offset:   0, Find: 1.0, Replace: 1.233}
+  - ReplaceFloat: {Offset:   8, Find: 1.0, Replace: 1.266}
+  - ReplaceFloat: {Offset:  16, Find: 1.0, Replace: 1.3}
+  - ReplaceFloat: {Offset:  24, Find: 1.0, Replace: 1.333}
+  - ReplaceFloat: {Offset:  32, Find: 1.0, Replace: 1.366}
+  - ReplaceFloat: {Offset:  40, Find: 1.0, Replace: 1.4}
+  - ReplaceFloat: {Offset:  48, Find: 1.0, Replace: 1.433}
+  - ReplaceFloat: {Offset:  56, Find: 1.0, Replace: 1.466}
   - ReplaceFloat: {Offset:  64, Find: 1.0, Replace: 1.5}
   - ReplaceFloat: {Offset:  72, Find: 1.0, Replace: 1.533}
   - ReplaceFloat: {Offset:  80, Find: 1.0, Replace: 1.566}
