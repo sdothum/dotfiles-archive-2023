@@ -48,7 +48,8 @@ touch $MAKE_INSTALL
 trap "rm -f $MAKE_INSTALL; pkill -f iosevka" EXIT INT
 shift
 
-glyph() { unset b d p; eval $1=$2; GLYPH=$2; }
+glyph()   { unset b d p; eval $1=$2; GLYPH=$2; }
+altmono() { altmono='a-single f-extended G-hookless+ j-serifed cap extended'; }
 
 version() {
   [ -L $DEPOT/Iosevka ]  && rm -f $DEPOT/Iosevka
@@ -104,7 +105,7 @@ while [ $1 ] ;do
   elementary       ) style=$1 ;;
   grotesk          ) style=$1 ;;
   open             ) open=$1; f=f-extended ;;
-  altmono          ) altmono='a-single G-hookless+ j-serifed cap extended' ;;   # alternate "monospace" coding font
+  altmono          ) altmono ;;   # alternate "monospace" coding font
   kindle           ) ereader=$1 ;;
   kobo             ) ereader=$1; q=q-hook ;;
   family           ) [ $ereader ] && [ $2 ] && { family=$2; shift; } || usage ;;
@@ -210,7 +211,8 @@ else                                      # desktop fonts
   dfont $altmono
   dfont $altmono proof
   dfont $altmono menu
-  dfont dyslexic a-single G-hookless+ j-serifed quasi-extension cap extended space M family elemental  # panel/dunst/browser font
+  altmono  # set..
+  dfont dyslexic $altmono quasi-extension space M family monograffic  # panel/dunst/browser font
 fi
 
 # vim: set ft=sh: #

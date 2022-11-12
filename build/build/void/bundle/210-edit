@@ -16,6 +16,11 @@ d texlive-bin
   ctags
 
 
+= keyboard macros
+= ═══════════════
+m quikey
+
+
 = version control
 = ═══════════════
   git

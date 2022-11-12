@@ -69,6 +69,7 @@ d s perl-HTML-Strip
   python3-numexpr     # optimization
   python3-pandas      # kb-layout-evaluation dependency
   python3-pip
+  python3-tkinter     # quikey dependency
   python3-wheel
   python-sip          # amphetype dependency
 d s python-PyQt4      # amphetype dependency
