@@ -24,6 +24,7 @@ J:jump-refresh
 m:mount
 p:preview-tui
 r:rox
+u:umount
 "
 
 # expand key:value pairs into ";" delimited list
