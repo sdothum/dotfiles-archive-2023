@@ -107,9 +107,9 @@ abbr R 'ranger'
 
 # ....................................................................... Search
 
-abbr fd 'find -type d'
-abbr ff 'find -type f'
-abbr f 'find -iname'
+abbr fd 'sudo find -type d'
+abbr ff 'sudo find -type f'
+abbr f 'sudo find -iname'
 abbr g 'ugrep --ignore-case'
 abbr locate 'sudo locate'
 abbr mgrep 'pcregrep -r -M'
