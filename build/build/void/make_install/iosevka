@@ -152,7 +152,7 @@ myfonts() {
   language=${language:-fluent}
   # personal ereader fonts
   e_ink eloquence   ${cap:-cap extended} a-single   J-descending I-serifless open      $eQ ${space:-space 1.3333}
-  e_ink articulate  ${cap:-cap extended} a-single   j-serifed                $open $aG $eQ ${space:-space 1.3333}
+  e_ink articulate  ${cap:-cap extended}            j-serifed                $open $aG $eQ ${space:-space 1.3333}
   e_ink typograffic ${cap:-cap extended} a-single   j-serifed    f-extended  open  $aG $eQ ${space:-space 1.3333}
   # # atkinson variants
   e_ink idyslexic   ${cap:-cap extended}                                 $dQ ${space:-space 2}
