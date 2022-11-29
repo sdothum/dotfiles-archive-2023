@@ -10,7 +10,7 @@ usage() {
                             [book+regular | latin+greek | cyrillic | fluent]
                             [quasi-extension | space <parm>]
                             [myfonts [Q] | altmono | elementary | grotesk | open ]
-                            [ D-serifless | [a|e]G-[hookless[+]|toothless|default] | I-serifless | J-descending | j-serifed | [d|e|g]Q-[bar|horizontal|open|straight|default] | Q-[bar|crossing|detached|hook|straight|custom] | a-single | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat ]
+                            [ D-serifless | [a|e]G-[hookless[+]|toothless|default] | [t]I-[serifless|descending] | J-descending | j-serifed | [d|e|g]Q-[bar|horizontal|open|straight|default] | Q-[bar|crossing|detached|hook|straight|custom] | a-single | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat ]
                             [ascender <parm> | cap <parm>]
                             [[version 10x | 16x] -- <opions>*]"
   exit 1
@@ -42,6 +42,7 @@ gQ=Q-bar         # capital Q default for Unolexic/grotesk
 eQ=Q-straight    # capital Q default for elementary
 eG=G-toothless   # capital G default for elementary
 aG=G-hookless+   # capital G default for articulate
+tI=I-descending  # capital G default for graffite (short-serifed)
 latest=16x       # lastest version
 
 touch $MAKE_INSTALL
@@ -63,17 +64,20 @@ while [ $1 ] ;do
   D-serifless      ) D=$1 ;;
   [e]G-hookless    ) eval ${1%G*}G=${1#?} ;;
   [e]G-toothless   ) eval ${1%G*}G=${1#?} ;;
-  [e]G-*           ) unset ${1%G*}G  ;;
+  [e]G-*           ) unset ${1%G*}G       ;;
   G-hookless       ) G=$1 ;;
   G-toothless      ) G=$1 ;;
   I-serifless      ) I=$1 ;;                  # source code variant
+  [t]I-descending  ) eval ${1%I*}I=${1#?} ;;  # typograffic font variation
+  [t]I-serifless   ) eval ${1%I*}I=${1#?} ;;  # typograffic font variation
+  [t]I-*           ) unset ${1%I*}I       ;;
   J-descending     ) J=$1 ;;
   j-serifed        ) j=$1 ;;
   [deg]Q-bar       ) eval ${1%Q*}Q=${1#?} ;;  # elementary/Geolexic font variation
   [deg]Q-horizontal) eval ${1%Q*}Q=${1#?} ;;  # elementary/Geolexic font variation
   [deg]Q-straight  ) eval ${1%Q*}Q=${1#?} ;;  # elementary/Geolexic font variation
   [deg]Q-custom    ) eval ${1%Q*}Q=${1#?} ;;  # elementary/Geolexic font variation
-  [deg]Q-*         ) unset ${1%Q*}Q  ;;
+  [deg]Q-*         ) unset ${1%Q*}Q       ;;
   Q-bar            ) Q=$1 ;;
   Q-crossing       ) Q=$1 ;;
   Q-detached       ) Q=$1 ;;
@@ -151,16 +155,17 @@ myfonts() {
   ditto myfonts $Q
   language=${language:-fluent}
   # personal ereader fonts
-  e_ink eloquence   ${cap:-cap extended} a-single   J-descending I-serifless open      $eQ ${space:-space 1.3333}
-  e_ink articulate  ${cap:-cap extended}            j-serifed                $open $aG $eQ ${space:-space 1.3333}
-  e_ink typograffic ${cap:-cap extended} a-single   j-serifed    f-extended  open  $aG $eQ ${space:-space 1.3333}
+  # e_ink eloquence   ${cap:-cap extended} a-single   J-descending I-serifless open          $eQ ${space:-space 1.3333}
+  # e_ink articulate  ${cap:-cap extended}            j-serifed                $open $aG     $eQ ${space:-space 1.3333}
+  # e_ink typograffic ${cap:-cap extended} a-single   j-serifed    f-extended  open  $aG     $eQ ${space:-space 1.3333}
+  e_ink graffite    ${cap:-cap extended} a-single   j-serifed    f-extended  open  $aG $tI $eQ ${space:-space 1.3333}
   # # atkinson variants
-  e_ink idyslexic   ${cap:-cap extended}                                 $dQ ${space:-space 2}
-  e_ink dyslexic    ${cap:-cap extended}            I-serifless          $dQ ${space:-space 2}
-  e_ink igrotesk    ${cap:-cap extended} f-extended                      $gQ ${space:-space 1.3333}
-  e_ink grotesk     ${cap:-cap extended} f-extended I-serifless          $gQ ${space:-space 1.3333}
-  e_ink ielementary ${cap:-cap extended} a-single                    $eG $eQ ${space:-space 1.3333}
-  e_ink elementary  ${cap:-cap extended} a-single   I-serifless      $eG $eQ ${space:-space 1.3333}
+  # e_ink idyslexic   ${cap:-cap extended}                                 $dQ ${space:-space 2}
+  # e_ink dyslexic    ${cap:-cap extended}            I-serifless          $dQ ${space:-space 2}
+  # e_ink igrotesk    ${cap:-cap extended} f-extended                      $gQ ${space:-space 1.3333}
+  # e_ink grotesk     ${cap:-cap extended} f-extended I-serifless          $gQ ${space:-space 1.3333}
+  # e_ink ielementary ${cap:-cap extended} a-single                    $eG $eQ ${space:-space 1.3333}
+  # e_ink elementary  ${cap:-cap extended} a-single   I-serifless      $eG $eQ ${space:-space 1.3333}
 }
 
 dfont() { iosevka expanded at-tall     Q-bar $(options $@) q-hook; }
