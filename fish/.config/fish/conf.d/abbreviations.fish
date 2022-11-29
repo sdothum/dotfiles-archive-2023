@@ -83,15 +83,17 @@ abbr t 'tail -f'
 
 # .................................................................... Directory
 
+set -l HUMAN h
+
 abbr dus "/usr/bin/du -hs * | sort -h"
 abbr l 'ls -A'
 abbr l1 'ls -1'
-abbr ldot 'ls -lAd .*'
-abbr ll 'ls -lA'
-abbr llr 'ls -lAR'
-abbr lr 'ls -LAR'
-abbr ls 'll -S'
-abbr lt 'll -t'
+abbr ldot "ls -lAd$HUMAN .*"
+abbr ll "ls -lA$HUMAN"
+abbr llr "ls -lAR$HUMAN"
+abbr lr "ls -LAR"
+abbr ls "ll -S$HUMAN"
+abbr lt "ll -t$HUMAN"
 abbr path 'echo $PATH'
 abbr pp 'pwd'
 abbr tree 'sudo tree -aCF'
