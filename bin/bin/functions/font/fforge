@@ -29,6 +29,22 @@ Paste();
 "
 }
 
+# descending serifless capital I
+I_descending() {
+  echo "
+Open(\$1);
+$(replace 0u0049 0u007c)
+Transform(100,0,0,105,0,0);
+Move(0,-55);
+Generate(\$1);
+" >/tmp/fontforge.script
+
+  for i in *ttf ;do
+    ditto I_descending $i
+    fontforge --script /tmp/fontforge.script $i
+  done
+}
+
 # substitute curly tail q
 q_hook() {
   # copy char 0u024b and paste to char 0u0071
@@ -318,6 +334,7 @@ Generate(\$1);
 # main, see iosevka
 fforge=$1
 case $1 in
+I_descending) ;;
 q_hook      ) ;;
 Q_hook      ) ;;
 Q_horizontal) shape=$2; shift ;;

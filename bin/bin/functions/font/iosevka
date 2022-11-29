@@ -28,7 +28,7 @@ usage() {
                [english | latin+greek | cyrillic | fluent | ligature <name>]
 
                [grotesque (default) | atkinson | geometric | jost]
-               [elementary | grotesk | open | a-single | b-corner | D-serifless | d-[tailed|toothless] | f-extended | G-[hookless[+]|toothed|toothless] | g-double | I-serifless | i-serifed | J-descending | j-[serifed|serifless] | l-[hooky|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|open|straight|custom] | q-[hook|tailed] | t-cross | y-straight | asterisk-high | at-tall | 0-split | paren-flat]*
+               [elementary | grotesk | open | a-single | b-corner | D-serifless | d-[tailed|toothless] | f-extended | G-[hookless[+]|toothed|toothless] | g-double | I-[serifless|descending] | i-serifed | J-descending | j-[serifed|serifless] | l-[hooky|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|open|straight|custom] | q-[hook|tailed] | t-cross | y-straight | asterisk-high | at-tall | 0-split | paren-flat]*
 
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
                [double] [space M|<decimal>] [ emdash <decimal> ]
@@ -281,6 +281,7 @@ while [ $1 ] ;do
   G-toothed    ) variant $1 ;;
   G-toothless  ) variant $1 ;;
   g-double     ) variant $1 ;;
+  I-descending ) variant 'I=DESCENDING'; I_descending=true ;;
   I-serifless  ) variant $1; initial ;;          # combined minimal stroke glyphs
   i-serifed    ) variant $1 ;;
   J-descending ) variant $1 ;;
@@ -627,6 +628,7 @@ fi
 [ $Q_hook       ] && fforge Q_hook $family                     # hooked capital Q
 [ $Q_horizontal ] && fforge Q_horizontal ${shape##* } $family  # open horizontal capital Q
 [ $Q_custom     ] && fforge Q_custom     ${shape##* } $family  # custom capital Q
+[ $I_descending ] && fforge I_descending $family               # font mod for descending serifless capital I
 
 [ $ebook ] && echo $spacing | grep -vq 'quasi-' && { fforge punctuation ${emdash:-2} $family; unset width; }  # wide cell emdash and double width ellipsis
 
