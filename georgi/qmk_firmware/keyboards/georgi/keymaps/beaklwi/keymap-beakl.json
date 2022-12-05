@@ -199,10 +199,10 @@
           "type": "chord_set",
           "set": "rows",
           "keycodes": [
-            " ", " ", " ", " ", " ", " ",        "*",    "[",   "^",    "]", " ", " ",
-            " ", " ", " ", " ", " ", " ",        "?", "LPRN",   "$", "RPRN", " ", " ",
-            " ", " ", " ", " ", " ", " ",        "|",    "{",   "#",    "}", " ", " ",
-                           " ", " ", " ",        " ",   "\\", "DEL"
+            " ",            " ", " ", " ", " ", " ",        "*",    "[",   "^",    "]", " ", " ",
+            " ",            " ", " ", " ", " ", " ",        "?", "LPRN",   "$", "RPRN", " ", " ",
+            " ", "MO(QUICKEYS)", " ", " ", " ", " ",        "|",    "{",   "#",    "}", " ", " ",
+                                      " ", " ", " ",        " ",   "\\", "DEL"
           ]
         },
         {
@@ -252,10 +252,10 @@
           "type": "chord_set",
           "set": "rows",
           "keycodes": [
-            " ", " ", ".", "*", "&",  "+",        "*",    "[",   "^",    "]", " ", "M(hexpad, 0, 0)",
-            " ", " ", "`", "~", "/",  "|",        "?", "LPRN",   "$", "RPRN", " ",               " ",
-            " ", " ", "<", ">", "%",  "@",        "|",    "{",   "#",    "}", " ",               " ",
-             "M(hexpad, 0, 0)", "=", "\\",        " ",  "SPC", "DEL"
+            " ",            " ", ".", "*", "&",  "+",        "*",    "[",   "^",    "]", " ", "M(hexpad, 0, 0)",
+            " ",            " ", "`", "~", "/",  "|",        "?", "LPRN",   "$", "RPRN", " ",               " ",
+            " ", "MO(QUICKEYS)", "<", ">", "%",  "@",        "|",    "{",   "#",    "}", " ",               " ",
+                        "M(hexpad, 0, 0)", "=", "\\",        " ",  "SPC", "DEL"
           ]
         },
         {
@@ -283,10 +283,10 @@
           "type": "chord_set",
           "set": "rows",
           "keycodes": [
-            " ",    " ",               "A",               "B",               "C", " ",        "/" , "4", "5", "9", "*", "M(hexpad, 0, 1)",
-            " ", "LGUI",     "KK(D, LCTL)",     "KK(E, LALT)",     "KK(F, LSFT)", " ",        "." , "1", "2", "3", "-", "M(hexpad, 0, 3)",
-            " ",    " ", "M(hexpad, 2, 1)", "M(hexpad, 2, 2)", "M(hexpad, 1, 0)", " ",        "," , "8", "6", "7", "+", "M(hexpad, 0, 2)",
-                                            "M(hexpad, 0, 0)",               " ", " ",        "\\", "0", "="
+            " ",            " ",               "A",               "B",               "C", " ",        "/" , "4", "5", "9", "*", "M(hexpad, 0, 1)",
+            " ",         "LGUI",     "KK(D, LCTL)",     "KK(E, LALT)",     "KK(F, LSFT)", " ",        "." , "1", "2", "3", "-", "M(hexpad, 0, 3)",
+            " ", "MO(QUICKEYS)", "M(hexpad, 2, 1)", "M(hexpad, 2, 2)", "M(hexpad, 1, 0)", " ",        "," , "8", "6", "7", "+", "M(hexpad, 0, 2)",
+                                                    "M(hexpad, 0, 0)",               " ", " ",        "\\", "0", "="
           ]
         },
         {
@@ -302,6 +302,28 @@
           "keys": ["BOT5", "THU5"],
           "dictionary": [
             ["X", "X", "STR(0x)"]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "QUICKEYS",
+      "chords": [
+        {
+          "type": "chord_set",
+          "set": "rows",
+          "keycodes": [
+            " ", " ", " ", " ", " ", " ",        " ",                 "HOME",    " ",                   "END", " ", " ",
+            " ", " ", " ", " ", " ", " ",        " ", "MK(KC_LCTL, KC_LEFT)",    " ", "MK(KC_LCTL, KC_RIGHT)", " ", " ",
+            " ", " ", " ", " ", " ", " ",        " ",                 "LEFT",    " ",                 "RIGHT", " ", " ",
+                           " ", " ", " ",        " ",                  "SPC", "BSPC"
+          ]
+        },
+        {
+          "type": "visual_array",
+          "keys": ["THU5", "THU6"],
+          "dictionary": [
+            ["X", "X", "DEL"]
           ]
         }
       ]
@@ -328,10 +350,10 @@
           "type": "chord_set",
           "set": "rows",
           "keycodes": [
-            " ",                 " ",                 " ", "MK(KC_LCTL, KC_LSFT, KC_C)", "MK(KC_LCTL, KC_LSFT, KC_V)",    " ",        " ", "HOME",   "UP",   "END", "PGUP",               " ",
-            " ",              "LGUI",              "LCTL",                       "LALT",                       "LSFT",    " ",        " ",    " ",    " ",     " ",    " ", "M(hexpad, 0, 0)",
-            " ", "MK(KC_LCTL, KC_Z)", "MK(KC_LCTL, KC_X)",          "MK(KC_LCTL, KC_C)",          "MK(KC_LCTL, KC_V)",    " ",        " ", "LEFT", "DOWN", "RIGHT", "PGDN",               " ",
-                                                                      "M(hexpad, 0, 0)",                          " ",    " ",        " ",    " ",    " "
+            " ",                 " ",                 " ", "MK(KC_LCTL, KC_LSFT, KC_C)", "MK(KC_LCTL, KC_LSFT, KC_V)",    " ",        " ",                 "HOME",   "UP",                   "END", "PGUP",               " ",
+            " ",              "LGUI",              "LCTL",                       "LALT",                       "LSFT",    " ",        " ", "MK(KC_LCTL, KC_LEFT)",    " ", "MK(KC_LCTL, KC_RIGHT)",    " ", "M(hexpad, 0, 0)",
+            " ", "MK(KC_LCTL, KC_Z)", "MK(KC_LCTL, KC_X)",          "MK(KC_LCTL, KC_C)",          "MK(KC_LCTL, KC_V)",    " ",        " ",                 "LEFT", "DOWN",                 "RIGHT", "PGDN",               " ",
+                                                                      "M(hexpad, 0, 0)",                          " ",    " ",        " ",                   " ",    " "
           ]
         },
         {
