@@ -30,12 +30,17 @@ Paste();
 }
 
 # descending serifless capital I
+# vertical alignment adjustment priority
+# -90 : large header caps alignment
+# -55 : small body text alignment
+Ivertical=-55
+
 I_descending() {
   echo "
 Open(\$1);
 $(replace 0u0049 0u007c)
 Transform(100,0,0,105.75,0,0);
-Move(0,-55);
+Move(0,$Ivertical);
 Generate(\$1);
 " >/tmp/fontforge.script
 
