@@ -9,7 +9,7 @@ usage() {
   echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [family <name>]
                             [book+regular | latin+greek | cyrillic | fluent]
                             [quasi-extension | space <parm>]
-                            [myfonts [Q] | altmono | elementary | grotesk | open ]
+                            [myfonts [Q] | altmono | dysmono | elementary | grotesk | open ]
                             [ D-serifless | [a|e]G-[hookless[+]|toothless|default] | [t]I-[serifless|descending] | J-descending | j-serifed | [d|e|g]Q-[bar|horizontal|open|straight|default] | Q-[bar|crossing|detached|hook|straight|custom] | a-single | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat ]
                             [ascender <parm> | cap <parm>]
                             [[version 10x | 16x] -- <opions>*]"
@@ -28,7 +28,7 @@ usage() {
 #        make_install iosevka version 10x -- dyslexic kobo english I-serifless f-extended q-hook cap extended family Grotesk  # single custom ebook font with extended cap height
 #
 # current font preferences..
-#        make_install iosevka altmono
+#        make_install iosevka altmono I-descending
 #        make_install iosevka kobo myfonts quasi-ext space M open
 #        make_install iosevka web
 
@@ -50,7 +50,8 @@ trap "rm -f $MAKE_INSTALL; pkill -f iosevka" EXIT INT
 shift
 
 glyph()   { unset b d p; eval $1=$2; GLYPH=$2; }
-altmono() { altmono='a-single f-extended G-hookless+ j-serifed cap extended'; }
+altmono() { altmono='a-single f-extended G-hookless+ cap extended'; }
+dysmono() { altmono='G-toothless cap extended'; }
 
 version() {
   [ -L $DEPOT/Iosevka ]  && rm -f $DEPOT/Iosevka
@@ -110,6 +111,7 @@ while [ $1 ] ;do
   grotesk          ) style=$1 ;;
   open             ) open=$1; f=f-extended ;;
   altmono          ) altmono ;;   # alternate "monospace" coding font
+  dysmono          ) dysmono ;;   # alternate "monospace" coding font
   kindle           ) ereader=$1 ;;
   kobo             ) ereader=$1; q=q-hook ;;
   family           ) [ $ereader ] && [ $2 ] && { family=$2; shift; } || usage ;;
@@ -158,7 +160,7 @@ myfonts() {
   e_ink eloquence   ${cap:-cap extended} a-single   J-descending I-serifless open          $eQ ${space:-space 1.3333}
   e_ink articulate  ${cap:-cap extended}            j-serifed                $open $aG     $eQ ${space:-space 1.3333}
   e_ink typograffic ${cap:-cap extended} a-single   j-serifed    f-extended  open  $aG     $eQ ${space:-space 1.3333}
-  e_ink isograffic  ${cap:-cap extended} a-single   j-serifed    f-extended  open  $aG $tI $eQ ${space:-space 1.3333}
+  e_ink calligraffi ${cap:-cap extended} a-single   j-serifed    f-extended  open  $aG $tI $eQ ${space:-space 1.3333}
   # # atkinson variants
   e_ink idyslexic   ${cap:-cap extended}                                 $dQ ${space:-space 2}
   e_ink dyslexic    ${cap:-cap extended}            I-serifless          $dQ ${space:-space 2}
@@ -168,7 +170,7 @@ myfonts() {
   e_ink elementary  ${cap:-cap extended} a-single   I-serifless      $eG $eQ ${space:-space 1.3333}
 }
 
-dfont() { iosevka expanded at-tall     Q-bar $(options $@) q-hook; }
+dfont() { iosevka expanded j-serifed   Q-bar $(options $@) q-hook at-tall; }
 wfont() { iosevka english  G-hookless+ Q-bar $(options $@) q-hook asterisk-high; }  # override dyslexic "asterisk-low"
 efont() { iosevka $language                  $(options $@) q-hook; }
 
@@ -217,7 +219,7 @@ else                                      # desktop fonts
   dfont $altmono proof
   dfont $altmono menu
   altmono  # set..
-  dfont dyslexic $altmono quasi-extension space M family monograffic  # panel/dunst/browser font
+  dfont dyslexic $altmono I-descending quasi-extension space M family monograffic  # panel/dunst/browser font
 fi
 
 # vim: set ft=sh: #
