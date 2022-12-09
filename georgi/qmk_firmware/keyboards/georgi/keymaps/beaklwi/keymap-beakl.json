@@ -283,7 +283,7 @@
           "type": "chord_set",
           "set": "rows",
           "keycodes": [
-            " ",            " ",               "A",               "B",               "C", " ",        "/" , "4", "5", "9", "*", "M(hexpad, 0, 1)",
+            " ",            " ",               "A",               "B",     s      "AS(C)", " ",        "/" , "4", "5", "9", "*", "M(hexpad, 0, 1)",
             " ",         "LGUI",     "KK(D, LCTL)",     "KK(E, LALT)",     "KK(F, LSFT)", " ",        "." , "1", "2", "3", "-", "M(hexpad, 0, 3)",
             " ", "MO(QUICKEYS)", "M(hexpad, 2, 1)", "M(hexpad, 2, 2)", "M(hexpad, 1, 0)", " ",        "," , "8", "6", "7", "+", "M(hexpad, 0, 2)",
                                                     "M(hexpad, 0, 0)",               " ", " ",        "\\", "0", "="
