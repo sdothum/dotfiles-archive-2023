@@ -7,12 +7,13 @@
 
 # ebook library
 library=${LIBRARY:-/net/media/ebooks/${1:-references}}
+cd $library
 
 # open file
-while book=$(ls -1 $library | grep '.pdf$' | sed 's/.pdf$//' | mhistory references | rmenu 'Document') || exit ;do
+while book=$(ls -1 | egrep '\.(epub|pdf)$' | sed -r 's/\.(epub|pdf)$//' | mhistory references | rmenu 'Document') || exit ;do
   mhistory references "$book"
   [ $focus ] || { focus frame; focus=true; }
-  zathura "$library/$book.pdf" 2>/dev/null
+  zathura "$book".* 2>/dev/null
 done
 
 # vim: set ft=sh: #

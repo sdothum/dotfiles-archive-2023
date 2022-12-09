@@ -36,15 +36,18 @@ ditto yaml $RULES
 ditto diff $RULES.new ../kobopatch/kobopatch.yaml.new
 diff $RULES.new ../kobopatch/kobopatch.yaml.new
 
-ifno "ln $(pwd)" && exit
+ifyes "vimdiff $(pwd)" || exit
 vim -g -d --role=gvimdiff -f $RULES ../kobopatch/kobopatch.yaml
 for i in src/*.yaml ;do vim -g -d --role=gvimdiff -f $i ../kobopatch/$i ;done
 DIR=$(pwd)
 cd ..
+ifyes "ln $(pwd)" || exit
 rm -f kobopatch
 ln -svf $DIR kobopatch
 
-ditto fonts /usr/local/Qt-5.2.1-arm/lib/fonts
-ditto rm Caecilia* Malabor* OpenDyslexic* Rakuten*
+ditto update "./kobopatch.sh"
+ditto telnet "kobo device"
+ditto cd "/usr/local/Qt-5.2.1-arm/lib/fonts"
+ditto rm  "Caecilia* Malabor* OpenDyslexic* Rakuten*"
 
 # vim: set ft=sh: #
