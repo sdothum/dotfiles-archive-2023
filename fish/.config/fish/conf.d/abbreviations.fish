@@ -116,7 +116,7 @@ abbr g 'ugrep --ignore-case'
 abbr locate 'sudo locate'
 abbr mgrep 'pcregrep -r -M'
 abbr w 'which'
-function W; cd (dirname (which $argv 2>/dev/null) 2>/dev/null); test $HOME = (pwd) && begin ditto "$argv" 'not found'; cd -; end; end  # no 755 in $HOME
+function ww; cd (dirname (which $argv 2>/dev/null) 2>/dev/null); test $HOME = (pwd) && begin ditto "$argv" 'not found'; cd -; end; end  # no 755 in $HOME
 
 # ...................................................................... Desktop
 
@@ -180,4 +180,5 @@ abbr ss 'sc-im'
 abbr td 'td -i'
 # abbr todo 'rlwrap todo-screen'
 abbr uterm 'urxvt -sh 1'
+abbr W 'words'
 abbr wl 'wc -l'
