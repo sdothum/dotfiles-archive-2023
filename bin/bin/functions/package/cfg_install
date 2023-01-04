@@ -18,7 +18,7 @@ esac
 [ $1 ] || usage
 [ $# -eq 2 ] && host=.$2
 FILE=${1##*/}
-DIR=${1%/*}
+DIR=${1%/*}/
 [ $DIR = $FILE ] && DIR=$PWD/
 
 [ $test ] && { [ -e $ROOT$DIR$FILE$host ] || return 1; }

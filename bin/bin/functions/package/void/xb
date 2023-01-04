@@ -30,8 +30,8 @@ usage() {
   echo "        / .. search (package and description)"
   echo "        f .. find (file)"
   echo "        d .. dependencies"
-  echo "       -d .. required by"
   echo "        h .. history"
+  echo "        r .. required by"
   echo "          .. query"
   exit 1
 }
@@ -90,9 +90,9 @@ SS) [ $2 ] && { action=force; yes='-y'; } ;;
  Q) action=installed ;;
 /*) action=search; [ $1 = '/' ] || { package=${1#/}; shift; set -- 0 $package $@; } ;;  # allow /<pattern> short form (no action separator)
 f ) action=file ;;
- d) action=dependency ;;
--d) action=requiredby ;;
+d ) action=dependency ;;
 h ) action=history ;;
+r ) action=requiredby ;;
 ? ) usage ;;
 * ) action=query; set -- 0 $@ ;;  # preserve argv stack
 esac
