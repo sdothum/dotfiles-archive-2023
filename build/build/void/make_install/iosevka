@@ -210,9 +210,10 @@ elif [ $ebook ] ;then                     # e-reader fonts
 elif [ $web ] ;then                       # www fonts
   unset cap
   version $latest
-  wfont heading  quasi-extension                                       kobo webfont
-  wfont dyslexic quasi-extension    f-extended cap extended space M    kobo webfont
-  wfont dyslexic quasi-proportional                         space 1.15 kobo webfont
+  wfont heading  quasi-extension                                                    kobo webfont
+  wfont dyslexic quasi-extension    f-extended I-descending cap extended space M    kobo webfont
+  wfont dyslexic quasi-extension    f-extended              cap extended space M    kobo webfont family wCaps
+  wfont dyslexic quasi-proportional                                      space 1.15 kobo webfont
   dfont ${cap:-cap extended} family wIosevka
 
 else                                      # desktop fonts
