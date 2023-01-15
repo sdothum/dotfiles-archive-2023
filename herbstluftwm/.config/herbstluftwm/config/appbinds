@@ -57,7 +57,8 @@ hc keybind Super-$Mod-p               spawn pulse restart
 hc keybind Super-q                    spawn dmenu halt
 hc keybind Super-r                    spawn dmenu clipboard
 # hc keybind Super-s                  spawn dmenu systemd
-hc keybind Super-s                    spawn dmenu system
+hc keybind Super-s                    spawn dmenu notes supernote
+hc keybind Super-Control-s            spawn dmenu system
 hc keybind Super-t                    spawn conky clock
 hc keybind Super-Control-t            spawn qclocktwo
 hc keybind Super-$Mod-t               spawn dmenu alarm
