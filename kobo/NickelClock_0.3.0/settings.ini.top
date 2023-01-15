@@ -4,11 +4,11 @@ Margin=64
 [Battery]
 BatteryType=Level
 Enabled=true
-Placement=Footer
+Placement=Header
 Position=Right
 LevelTemplate=%1% BAT
 
 [Clock]
 Enabled=true
 Placement=Header
-Position=Right
+Position=Left
