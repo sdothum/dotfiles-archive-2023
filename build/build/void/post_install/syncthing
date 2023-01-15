@@ -5,9 +5,9 @@
 
 # .................................................................... syncthing
 
-# sudo chown -c $USER:users $HOME/.config/syncthing/config.xml
-# original $HOME/.config/syncthing/config.xml
-# sed -i 's/127.0.0.1/0.0.0.0/' $HOME/.config/syncthing/config.xml
+# sudo chown -c $USER:users $XDG_CONFIG_HOME/syncthing/config.xml
+# original $XDG_CONFIG_HOME/syncthing/config.xml
+# sed -i 's/127.0.0.1/0.0.0.0/' $XDG_CONFIG_HOME/syncthing/config.xml
 echo "fs.inotify.max_user_watches=204800" | sudo tee -a /etc/sysctl.conf >/dev/null
 sudo sysctl -w fs.inotify.max_user_watches=204800
 

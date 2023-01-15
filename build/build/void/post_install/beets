@@ -5,7 +5,7 @@
 
 # .......................................................................... mpd
 
-if [ ! -f $HOME/.config/beets/config.yaml ] ;then
+if [ ! -f $XDG_CONFIG_HOME/beets/config.yaml ] ;then
   sed -e '/^directory:/cdirectory: /net/media/music' \
       -e '/^plugins:/cplugins: [mpdupdate]' \
       -e '/^ui:/i\
@@ -13,7 +13,7 @@ mpd:\
     host: localhost\
     port: 6600\
     password:\
-' /usr/lib/python2.7/site-packages/beets/config_default.yaml >$HOME/.config/beets/config.yaml
+' /usr/lib/python2.7/site-packages/beets/config_default.yaml >$XDG_CONFIG_HOME/beets/config.yaml
 fi
 
 # vim: set ft=sh: #
