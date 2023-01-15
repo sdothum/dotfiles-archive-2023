@@ -71,7 +71,7 @@ symbols() {
   question=smooth
 }
 
-# atkinson hyperlegible typeface
+# dyslexic adjusted atkinson hyperlegible typeface
 grotesque() {
   capital_b=standard-serifless
   capital_d=more-rounded-serifless
@@ -103,7 +103,7 @@ grotesque() {
   cyrl_ka=symmetric-touching-serifless
 }
 
-# jost* typeface
+# futura/jost* typeface
 geometric() {
   unset q_hook
   capital_b=standard-serifless
@@ -266,7 +266,7 @@ while [ $1 ] ;do
   fluent       ) fluent; ditto char_set "$1" ;;
   ligature     ) ligature $2  || usage; shift ;;
   double       ) unset mono ;;
-  uasi-pro*   ) spacing quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi$(echo $family | sed -r 's/.*(Hyper|Mono|Quasi)//'); variant I-serifed ;;
+  quasi-pro*   ) spacing quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi$(echo $family | sed -r 's/.*(Hyper|Mono|Quasi)//'); variant I-serifed ;;
   quasi-ext*   ) spacing quasi-proportional-extension-only; unset width ;;
   dyslexic     ) shape $expanded;            sb 0.7150; leading 1.5000; space 2; emdash 2; width=135; ebook monolexic ;;
   # glyphs
