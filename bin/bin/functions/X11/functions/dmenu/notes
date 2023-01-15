@@ -1,0 +1,142 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ Notes
+
+# Usage: dmenu notes [<extension>] [<path>]
+
+NEW='new'
+EDIT='file manager'
+PURGE='purge'
+
+TOPMENU='view\nedit'
+DELETE='\ndelete'
+PRINT='\nprint'
+
+while : ;do
+  case $1 in
+  '' ) break ;;
+  */*) FOLDER=$1; shift ;;
+  *  ) ext=$1; shift ;;
+  esac
+done
+
+# housekeeping
+[ $ext ] || ext=note
+if [ -z $FOLDER ] ;then
+  case $ext in
+  note     ) FOLDER=$HOME/notes  ;;
+  draft    ) FOLDER=$HOME/drafts ;;
+  poem     ) FOLDER=$HOME/poems; TOPMENU='edit\nview' ;;
+  supernote) FOLDER=$HOME/Dropbox/Supernote/EXPORT; ext=txt; unset DELETE; PRINT='\npaste'; TOPMENU="$TOPMENU\ncolophon" ;;
+  *        ) FOLDER=$HOME/tmp    ;;
+  esac
+fi
+
+# no archive needed for Dropbox
+if [ $ext != txt ] ;then
+  ARCHIVE=$FOLDER/archive
+  catlg=$FOLDER/.${ext}s
+  mkdir -p $FOLDER || exit 1
+fi
+
+NOTES=/tmp/dmenu:notes:$ext
+trap "rm -f $NOTES" EXIT
+
+if [ $ext = draft ] ;then
+  purge=$(X $PURGE)
+  PROMPT="$(X $NEW)\n$(X $EDIT)\n$(X $PURGE)"
+  offset=2
+elif [ $ext = txt ] ;then
+  purge=$(X 'nop')
+  PROMPT="$(X $EDIT)"
+else
+  # must set purge to avoid case statement match, see below
+  purge=$(X 'nop')
+  PROMPT="$(X $NEW)\n$(X $EDIT)"
+  offset=1
+fi
+
+# first descriptive line of file, mail subject line special case
+hint() {
+  hint=$(grep '^Subject:' $1)
+  [ "$hint" ] || hint=$(grep '[[:alpha:]]' $1 | head -1)
+  echo "$hint"
+}
+
+# list of files
+cache() {
+  find -L $FOLDER -maxdepth 1 -type f -size 0c -exec rm {} \;
+  files=$(find -L $FOLDER -maxdepth 1 -name "*.$ext")
+  rm -f $NOTES
+  notify low "Updating ${ext}s cache" 'Please be patient..'
+  if [ "$files" ] ;then
+    for i in $files ;do
+      [ "$search" ] && { egrep -iq "$search" $i || continue; }
+      echo "$i^$(stat -c '%y' $i | cut -d. -f1) ^$SEP $(hint $i)"
+    done | sort -k2 -t^ -r >>$NOTES
+  else
+    # empty folder
+    >$NOTES
+  fi
+}
+
+cache
+
+# item row
+highlight() {
+  file=$(previous $catlg)
+  # file=$mhistory
+  cat $NOTES | grep -qn "$file" && echo $(( $(cat $NOTES | grep -n "$file" | cut -d: -f1) + $offset )) || echo 0
+}
+
+notes() { cat $NOTES | cut -d^ -f2- | column -s^ -t | sed "1i$PROMPT"; }
+wiki()  { echo "$HOME/vimwiki/$1/$(head -1 $file | sed 's/#//g; s/^ *//; s/  */ /g').wiki"; }
+
+# to present grep'd file list enter:
+#   /regex to filter
+#   //     to clear filter
+search=''
+while note=$(notes | rmenu "$(echo $ext | sed -r 's/./\u&/') [/search]" $(highlight)) || exit ;do
+  case ${note#$(X)} in
+  /*      ) search="${note#*/}"; continue ;;
+  "$EDIT" ) term $FOLDER MAX STACK WAIT ranger $FOLDER ;;
+  "$NEW"  ) file=$(mktemp -p $FOLDER --suffix=.$ext); update=true; action=edit ;;
+
+  "$purge") [ -f $NOTES ] && find -L $FOLDER -maxdepth 1 -name "*.$ext" -exec notify low "Archiving $ext" {} \; -exec mv -f {} $ARCHIVE \;
+            search=''; cache; continue ;;
+
+  *       ) file=$(cat $NOTES | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f1)
+            content=$(cat $NOTES | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f3)
+            while action=$(echo "${TOPMENU}$PRINT\nclipboard$DELETE" | rmenu "${content#* }" -no-custom) ;do
+              [ $action = view ] || break
+              term "$file" MAX STACK WAIT less $file
+            done ;;
+  esac
+
+  [ $ext != txt ] && mhistory $catlg $file  # no need for supernote history
+  # mhistory=$file
+  
+  case $action in
+  edit     ) vim -g -f -c 'set filetype=markdown' -c 'set modifiable' $file
+             update=true ;;
+
+  paste    ) cat $file; exit ;;
+  print    ) hardcopy wiki $file ;;
+  colophon ) cp $file "$(wiki colophon)"; v "$(wiki colophon)"; exit ;;
+
+  delete   ) mv $file /tmp
+             update=true
+             sed -i "\,$file,s,$,  (DELETED)," $NOTES ;;  # file contains /'s
+
+  clipboard) clipboard "$file"
+             notify 'Ctrl-Alt-V' "$file"
+             exit ;;
+  esac
+
+  [ $update ] && { cache; unset update; }
+done
+
+# vim: set ft=sh: #
