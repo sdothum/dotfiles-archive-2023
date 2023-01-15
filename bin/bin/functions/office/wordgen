@@ -138,7 +138,7 @@ shuf $paragraphs >$typefile
 
 ditto $typefile
 head $typefile
-gpaste-client add $typefile
+gpaste-client file $typefile
 notify low 'Amphetype import' "$typefile"
 
 # vim: set ft=sh: #

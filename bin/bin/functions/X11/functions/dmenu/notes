@@ -30,7 +30,7 @@ if [ -z $FOLDER ] ;then
   note     ) FOLDER=$HOME/notes  ;;
   draft    ) FOLDER=$HOME/drafts ;;
   poem     ) FOLDER=$HOME/poems; TOPMENU='edit\nview' ;;
-  supernote) FOLDER=$HOME/Dropbox/Supernote/EXPORT; ext=txt; unset DELETE; PRINT='\npaste'; TOPMENU="$TOPMENU\ncolophon" ;;
+  supernote) FOLDER=$HOME/Dropbox/Supernote/EXPORT; ext=txt; unset DELETE PRINT; TOPMENU="$TOPMENU\ncolophon" ;;
   *        ) FOLDER=$HOME/tmp    ;;
   esac
 fi
@@ -123,7 +123,6 @@ while note=$(notes | rmenu "$(echo $ext | sed -r 's/./\u&/') [/search]" $(highli
   edit     ) vim -g -f -c 'set filetype=markdown' -c 'set modifiable' $file
              update=true ;;
 
-  paste    ) cat $file; exit ;;
   print    ) hardcopy wiki $file ;;
   colophon ) cp $file "$(wiki colophon)"; v "$(wiki colophon)"; exit ;;
 
@@ -132,7 +131,7 @@ while note=$(notes | rmenu "$(echo $ext | sed -r 's/./\u&/') [/search]" $(highli
              sed -i "\,$file,s,$,  (DELETED)," $NOTES ;;  # file contains /'s
 
   clipboard) clipboard "$file"
-             notify 'Ctrl-Alt-V' "$file"
+             notify 'To Paste' 'Gvim:    F2\nTerminal: F5 (Ctrl-Alt-V)'
              exit ;;
   esac
 
