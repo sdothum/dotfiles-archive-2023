@@ -7,6 +7,7 @@
 # ................................................................... Draw panel
 
 # Usage: draw panel <fifo>, see restore panel
+# NOTE:  adjustments made to accomodate alpine linux differences
 
 [ -e $SPANEL ] || exit  # no panel
 which lemonbar >/dev/null 2>&1 || exit
@@ -33,6 +34,8 @@ OCCUPIED='■'
 FREE='□'
 TAG_PAD='    '          # tag bar separator (visual spacing)
 STATPAD=${TAG_PAD% }
+[ $(query displaywidth) -lt 1920 ] && scaledown=true
+[ $scaledown ] && { TAG_PAD='  '; LSEP=${LSEP# }; LSEP=${LSEP% }; RSEP=${RSEP# }; RSEP=${RSEP% }; STATPAD=$TAG_PAD; }
 
 # panel theme
 DEFAULT_BG='#00000000'  # alpha channel for panel transparency with picom
@@ -58,6 +61,7 @@ for i in $(herbstclient monitor_rect $monitor) ;do
 done
 
 fontsize=$(fontsize)
+[ $scaledown ] && fontsize=$(( fontsize - 1 ))
 mid_point=$(( $monitorW / ($fontsize - 3) / 2 ))  # kludgey column width calculation for title trim below
 
 # frame=$(herbstclient attr settings.frame_gap)
@@ -171,8 +175,10 @@ active_window() {
       else
         title="${title}${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}$name%{F$DEFAULT_FG}"
       fi
-      desc=$(asciititle ${line#?})
-      [ "$desc" ] && title="${title}${LSEP}${desc}%{B-}%{F-}"
+      echo $line | grep -q '.*_changed' || {  # neven caught this in void.. dunno why!
+        desc=$(asciititle ${line#?})
+        [ "$desc" ] && title="${title}${LSEP}${desc}%{B-}%{F-}"
+      }
     fi
   fi
 }
@@ -233,7 +239,7 @@ bar() {
 tape() {
   tic=${line#*|}
   tic=${tic%|*}
-  if [ ${tic%%:*} -lt 10 ] ;then
+  if [ "${tic%%:*}" -lt 10 ] ;then
     # hours 0 - 9, cycle aligns on ten second intervals
     len=11
     pos=${tic##*:}
@@ -264,6 +270,7 @@ cpu_temp=$(cat $STAT:temp)
 mem_usage=$(cat $STAT:mem)
 
 currently() {
+  line=$(echo "$line" | sed -r 's/#[{]/%{/g; s/(AM|PM)/\L\1/')  # recover lemonbar format strings, see clock below
   unset clock
   if [ $TIC ] ;then
     case $TIC in
@@ -299,6 +306,10 @@ currently() {
 
 # ............................................................... FIFO read loop
 
+# void musl currently has a mkfifo bug that limits the buffer to the last feed, see panel() for adjustment
+musl && MUSL=true || GLIBC=true
+alpine && { GLIBC=true; unset MUSL; }
+
 panel() {
   while read -r line ;do
     case $line in
@@ -328,33 +339,31 @@ panel() {
 
 # ......................................................................... FIFO
 
-# void musl currently has a mkfifo bug that limits the buffer to the last feed, see panel() for adjustment
-musl && MUSL=true || GLIBC=true
-
 # initialize fifo
 [ -e $PANEL_FIFO:$fifo ] && rm -f $PANEL_FIFO:$fifo
 mkfifo $PANEL_FIFO:$fifo
 echo $PANEL_FIFO:$fifo >$PANEL_FIFO
 
 # note physical linebreaks for each format specification (to accomodate slow processors, notably arm)
+# NOTE: lemonbar %{F..} changed to #{F..} for alpine "clock" (fails on % char, see function currently)
 case $TIC in
-se*) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}| %-I:%M %S%P|%{F-}${RSEP}%a %-d %b '%y" >$PANEL_FIFO:$fifo & ;;
-t* ) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}| %-I:%M:%S%P|%{F-}${RSEP}%a %-d %b '%y" >$PANEL_FIFO:$fifo & ;;
-*  ) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}%-I:%M%{F-} %P|%S|${RSEP}%a %-d %b '%y"  >$PANEL_FIFO:$fifo & ;;
+se*) clock -i 1 -sf "S^${RSEP}#{F$ACTIVE_FG}| %-I:%M %S%p|#{F-}${RSEP}%a %-d %b '%y" >$PANEL_FIFO:$fifo & ;;
+t* ) clock -i 1 -sf "S^${RSEP}#{F$ACTIVE_FG}| %-I:%M:%S%p|#{F-}${RSEP}%a %-d %b '%y" >$PANEL_FIFO:$fifo & ;;
+*  ) clock -i 1 -sf "S^${RSEP}#{F$ACTIVE_FG}%-I:%M#{F-} %p|%S|${RSEP}%a %-d %b '%y"  >$PANEL_FIFO:$fifo & ;;
 esac
 
 # event driven panel update
 if [ $GLIBC ] ;then
   herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
-  xtitle -sf 'X%s\n' >$PANEL_FIFO:$fifo 2>/dev/null &  # see emit_hook
+  xtitle -sf 'X%s\n'               >$PANEL_FIFO:$fifo 2>/dev/null &  # see emit_hook
   draw border &  # non-panel related redundancy check for latent frame handling, see emit_hook
 fi
 
 # cpu usage, cpu temperature, memory usage stats
 if [ -e $STAT ] ;then
-  while : ;do sar -u --dec=0 1 1 | tail -1 | awk '{ printf "C%3d%%\n", $3 }' > $PANEL_FIFO:$fifo; done &  # cycle >~ 1 second
-  while : ;do echo "T$(cpu_temp)°" > $PANEL_FIFO:$fifo; sleep 2; done &
-  while : ;do free -h | grep 'Mem:' | sed -r 's/^[^ ]* *[^ ]* *([0-9.]*)Mi.*/\1⠍/; s/^[^ ]* *[^ ]* *([0-9.]*)Gi.*/\1⠛/; s/^/M/' > $PANEL_FIFO:$fifo; sleep 3; done &
+  while : ;do sar -u --dec=0 1 1 | tail -1 | awk '{ printf "C%3d%%\n", $3 }'                                                    >$PANEL_FIFO:$fifo;          done &  # cycle >~ 1 second
+  while : ;do echo "T$(cpu_temp)°"                                                                                              >$PANEL_FIFO:$fifo; sleep 2; done &
+  while : ;do free -h | grep 'Mem:' | sed -r 's/^[^ ]* *[^ ]* *([0-9.]*)Mi.*/\1⠍/; s/^[^ ]* *[^ ]* *([0-9.]*)Gi.*/\1⠛/; s/^/M/' >$PANEL_FIFO:$fifo; sleep 3; done &
 fi
 
 cat $PANEL_FIFO:$fifo | panel | lemonbar -d -n "lemonbar:$fifo" \

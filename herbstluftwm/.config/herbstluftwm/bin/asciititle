@@ -12,10 +12,11 @@
 # convert and cleanup title string, see draw panel and focus hlwm
 echo $@ | 
     iconv -c -f utf-8 -t ascii |
-    sed -re '/\(.*\).*VIM/s,(.*) \(.*/([^/]*/[^()]*)\).*,\2/\1,' \
-        -e 's/[(][^)]*[)] //' \
-        -e 's/[[][^]]*[]] //' \
-        -e 's,https*://.*/(.*)([?].[=].*)+,\1,' \
+    sed -re 's/^focus_changed *0x[^ ]* *//'                     \
+        -e '/\(.*\).*VIM/s,(.*) \(.*/([^/]*/[^()]*)\).*,\2/\1,' \
+        -e 's/[(][^)]*[)] //'                                   \
+        -e 's/[[][^]]*[]] //'                                   \
+        -e 's,https*://.*/(.*)([?].[=].*)+,\1,'                 \
         -e 's/ at .*//'
 
 # vim: set ft=sh: #

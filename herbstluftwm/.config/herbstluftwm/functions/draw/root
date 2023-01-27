@@ -18,6 +18,8 @@
 #        draw root wallpaper, draw background
 
 [ -e $BLACKBOARD ] && exit
+exists setroot && XSETROOT=setroot || XSETROOT=xwallpaper  # alpine
+
 # cpu arm && exit
 SETBLUR=$HLWM:setblur
 SHUFFLE=$HLWM:shuffle
@@ -37,9 +39,9 @@ pick_image() { /usr/bin/feh -B black --scale-down -r --start-at $(lname $WALLPAP
 # occupied or empty desktop, setroot record structure: 1: occupied (blurred image) 0: empty (raw image)
 root() {
   if [ ! -e $NOBLUR ] && is nonempty $(herbstclient attr monitors.$1.tag) ;then
-    echo "1: --on $1 --blur $blur --brighten $brighten --zoom $WALLPAPER"
+    [ $XSETROOT = xwallpaper ] && echo "1: --screen $1 --zoom $WALLPAPER" || echo "1: --on $1 --blur $blur --brighten $brighten --zoom $WALLPAPER"
   else
-    echo "0: --on $1 --zoom $WALLPAPER"
+    [ $XSETROOT = xwallpaper ] && echo "0: --screen $1 --zoom $WALLPAPER" || echo "0: --on $1 --zoom $WALLPAPER"
   fi
 }
 
@@ -129,7 +131,7 @@ esac
 # .................................................................. Apply theme
 
 setblur >$SETBLUR
-[ $blackboard ] || [ -e $COLOR ] || setroot ${primary#?:} ${secondary#?:} &
+[ $blackboard ] || [ -e $COLOR ] || $XSETROOT ${primary#?:} ${secondary#?:} &
 
 # apply rice conky to .conkyrc, $THEME unset above if new background
 if [ ! -e $COLOR ] && [ -z $blackboard ]  ;then
