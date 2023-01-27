@@ -7,11 +7,14 @@
 
 # create public key
 ditto INFO 'regenerate gpg key if required and refresh .pass tree'
+
+error() { ditto pinentry "make sure /usr/bin/pinetry is linked to appropriate binary"; exit 1; }
+
 # server || exit
 if [ -d $HOME/.gnupg ] ;then
-  ifno 'regenerate key pair' || gpg2 --full-gen-key
+  ifno 'regenerate key pair' || gpg2 --full-gen-key || error
 else
-  gpg2 --full-gen-key
+  gpg2 --full-gen-key || error
 fi
 
 echo RELOADAGENT | gpg-connect-agent

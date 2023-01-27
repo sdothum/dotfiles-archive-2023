@@ -18,6 +18,12 @@
   # system-config-printer [server]
 
 
+= database management
+= ═══════════════════
+  sqlite
+  sqlitebrowser
+
+
 = package management
 = ══════════════════
   flatpak

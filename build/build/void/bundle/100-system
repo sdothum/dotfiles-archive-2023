@@ -25,9 +25,9 @@
 
 = power
 = ═════
-# acpi     [laptop]
-# cpupower [laptop]
-# tlp      [laptop]
+# acpi          [laptop]
+# cpupower      [laptop]
+# tlp           [laptop]
 # xfce4-power-manager
 
 
@@ -37,7 +37,8 @@
   gnome-keyring
   gnupg2
 d pass
-d pinentry-gtk  # for x11 desktop passphrase
+# d pinentry-gtk
+d pinentry-qt   # for x11 desktop passphrase
 # polkit-gnome
 
 
@@ -53,7 +54,7 @@ d pinentry-gtk  # for x11 desktop passphrase
   pulseaudio-equalizer-ladspa
 # pipewire
 # alsa-pipewire
-# rtkit  # pipewire run dependency, in addition to dbus
+# rtkit         # pipewire run dependency, in addition to dbus
 
 
 = system utility
@@ -65,7 +66,7 @@ d pinentry-gtk  # for x11 desktop passphrase
   psmisc
   rlwrap
   runit-swap
-  udevil  # no-config automount (less involved setup than udiskie) 
+  udevil        # no-config automount (less involved setup than udiskie) 
   udiskie
 
 

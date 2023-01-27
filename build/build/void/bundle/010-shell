@@ -16,8 +16,8 @@
 = ════════════
   ncdu
   nnn
-# ranger     # for scope with nnn
-  trash-cli  # trash can for nnn
+d m nnn    # with icons
+# ranger   # for scope with nnn
 # vifm
 
 
@@ -41,11 +41,11 @@
   fzf
   pcre
 # pv
-  ripgrep
+  ripgrep  # required by vim-fzf
 m shell-functools
 # shellcheck
   the_silver_searcher
-  ugrep
+# ugrep
 
 
 = terminal multiplexor

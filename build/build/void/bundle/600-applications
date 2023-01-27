@@ -28,16 +28,16 @@
 
 = ebook
 = ═════
-  calibre     [server]
+  calibre      [server]
 
 
 = font editor
 = ═══════════
-  fontforge   [server]
-  fonttools   [server]
-  nodejs      [server]
-  otfcc       [server]
-  ttfautohint [server]
+  fontforge    [server]
+  fonttools    [server]
+  nodejs       [server]
+  otfcc        [server]
+  ttfautohint  [server]
 
 
 = font manager
@@ -48,13 +48,13 @@ d m fontmatrix
 
 = game
 = ════
-# steam       [server]
+# steam        [server]
 
 
 = keyboard
 = ════════
-d m amphetype
-# m amphetype2
+d m amphetype  [server]
+# m amphetype2 [server]
 
 
 = productivity
@@ -62,6 +62,8 @@ d m amphetype
   abiword
   calc
   gnumeric
+  tk           # tkremind
+  tcllib       # tkremind
   remind
 # sc-im
   speedcrunch
@@ -69,11 +71,11 @@ d m amphetype
 
 = viewer
 = ══════
-  bat         # syntax highlighting for nnn preview-tui
-  catimg      # image viewer for nnn preview-tui
-  nsxiv       # image viewer for nnn imgview
-  epdfview    [server]
-  fbreader    [server]
+  bat          # syntax highlighting for nnn preview-tui
+  catimg       # image viewer for nnn preview-tui
+  nsxiv        # image viewer for nnn imgview
+  epdfview     [server]
+  fbreader     [server]
   feh
   zathura
   zathura-ps

@@ -22,17 +22,17 @@
 
 = window utilities
 = ════════════════
-  wmutils
-  sxhkd
+  wmutils                [server]
+  sxhkd                  [server]
 
 
 = 2bwm
 = ════
-  libxcb-devel
-  xcb-util-keysyms-devel
-  xcb-util-wm-devel
-  xcb-util-xrm-devel
-m 2bwm
+  libxcb-devel           [server]
+  xcb-util-keysyms-devel [server]
+  xcb-util-wm-devel      [server]
+  xcb-util-xrm-devel     [server]
+m 2bwm                   [server]
 
 
 # vim: set ft=conf: #

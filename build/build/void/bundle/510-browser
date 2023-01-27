@@ -8,12 +8,12 @@
 = ═══════
   chromium
   firefox
-  lynx
+  lynx                [server]
   qutebrowser
-# surf
-  torbrowser-launcher
-  vimb
-  w3m-img
+  surf
+  torbrowser-launcher [server]
+  vimb                [server]
+  w3m-img             [server]
 
 
 = browser addon

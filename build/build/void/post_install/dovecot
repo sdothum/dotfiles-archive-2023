@@ -38,7 +38,7 @@ original /etc/dovecot/conf.d/10-mail.conf
 sudo sed -i "/#mail_location =/cmail_location = maildir:$HOME/Maildir:LAYOUT=fs" \
          /etc/dovecot/conf.d/10-mail.conf
 
-[ -e /etc/dovecot/dh.pem ] && sudo rm /etc/dovecot/dh.pem
+sudo rm /etc/dovecot/dh.pem
 openssl dhparam 2048 | sudo tee /etc/dovecot/dh.pem  # generate DH parameters
 original /etc/dovecot/conf.d/10-ssl.conf
 if grep -qv '^ssl_dh =' /etc/dovecot/conf.d/10-ssl.conf ;then

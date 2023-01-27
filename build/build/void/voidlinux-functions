@@ -8,9 +8,9 @@ partition() {
     fdisk -l $device | tail -$(fdisk -l -o Name $device | tac | grep -n $1 | cut -d: -f1) | head -1 | cut -d' ' -f1 
   else
     case $1 in
-    boot) fdisk -l $device | grep '[*].*Linux$' | cut -d' ' -f1 ;;
+    boot) fdisk -l $device | grep 'EFI' | cut -d' ' -f1 ;;
     swap) fdisk -l $device | grep 'swap' | cut -d' ' -f1 ;;
-    root) fdisk -l $device | grep 'Linux$' | grep -v '[*]' | cut -d' ' -f1 ;;
+    root) fdisk -l $device | grep 'Linux' | grep -v '[*]' | cut -d' ' -f1 ;;
     esac
   fi
 }
@@ -64,8 +64,8 @@ connect() {
 }
 
 cfg_install() {
-  if [ -e /media/home/$user/build/cfg/$1 ] ;then
-    echo '-> copying '$(cp -v --no-preserve=mode,ownership /media/home/$user/build/cfg/$1 $1)
+  if find /media/home/$user -regex ".*$1" >/dev/null ;then
+    echo '-> copying '$(cp -v --no-preserve=mode,ownership $(find /media/home/$user -regex ".*$1") $1)
   elif [ -e /home/$user/build/cfg/$1 ] ;then
     echo '-> copying '$(cp -v --no-preserve=mode,ownership /home/$user/build/cfg/$1 $1)
   else
