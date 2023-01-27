@@ -56,6 +56,7 @@ set -x PROOF $HOME/.proof
 
 # main server
 set -x SERVER luna
+set -x SELF_URL_PATH http://$SERVER:8000/tt-rss/
 
 # ..................................................................... Internet
 
