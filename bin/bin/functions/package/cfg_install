@@ -29,9 +29,11 @@ if [ $link ] ;then
   ditto link "$(sudo ln -sfv $ROOT$1$host $1)"
 elif [ -d $ROOT$1$host ] ;then
   sudo mkdir -pv $1
-  ditto copy "$(sudo cp -rv --preserve=mode --no-preserve=ownership $ROOT$1$host/* $1)"
+  alpine && ditto copy "$(sudo cp -rv -p $ROOT$1$host/* $1)" ||
+            ditto copy "$(sudo cp -rv --preserve=mode --no-preserve=ownership $ROOT$1$host/* $1)"
 else
-  ditto copy "$(sudo cp -v --preserve=mode --no-preserve=ownership $ROOT$DIR$FILE$host $1)"
+  alpine && ditto copy "$(sudo cp -v -p $ROOT$DIR$FILE$host $1)" ||
+            ditto copy "$(sudo cp -v --preserve=mode --no-preserve=ownership $ROOT$DIR$FILE$host $1)"
 fi
 
 [ "${1##$HOME/}" = $1 ] || sudo chown -R $USER:users $1  # user config

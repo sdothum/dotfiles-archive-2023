@@ -6,6 +6,31 @@
 
 # ......................................................... Init service wrapper
 
+openrc() {
+  usage() {
+    echo "usage: $(basename $0) [add | delete | show | start | stop | restart | status | list] <service> [runlevel]"
+    exit 1
+  }
+
+  sv() { eval doas rc-update  $1 $2 $3; }
+  rc() { eval doas rc-service $1 $2 $3; }
+
+  # configure openrc daemon
+  case $1 in
+  ''     ) sv show; usage   ;;
+  add    ) sv add $2 $3     ;;
+  delete ) sv delete $2 $3  ;;
+  show   ) sv show          ;;
+  start  ) rc $2 start      ;;
+  restart) rc $2 restart    ;;
+  stop   ) rc $2 stop       ;;
+  status ) rc $2 status     ;;
+  list   ) rc --list; usage ;;
+  *      ) [ $2 ] && usage || rc $1 status || usage ;;
+  esac
+  exit
+}
+
 runit() {
   usage() {
     echo "usage: $(basename $0) [UP | [status | disable | enable | up | down | restart | mask] <service>]"
@@ -108,6 +133,6 @@ systemd() {
   exit
 }
 
-exists runit && runit $@ || exists systemctl && systemd $@ || s6 $@
+exists openrc && openrc $@ || exists runit && runit $@ || exists s6 && s6 $@ || systemd $@
 
 # vim: set ft=sh: #

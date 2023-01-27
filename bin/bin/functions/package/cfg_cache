@@ -19,10 +19,12 @@ DIR=${1%/*}
 if [ -d $1 ] ;then
   mkdir -p $ROOT$1$host || exit 1
   rm -rf $ROOT$1$host/* 2>/dev/null
-  ditto copy "$(sudo cp -rvf --preserve=mode --no-preserve=ownership $1/* $ROOT$1$host)"
+  alpine && ditto copy "$(sudo cp -rvf -p $1/* $ROOT$1$host)" ||
+            ditto copy "$(sudo cp -rvf --preserve=mode --no-preserve=ownership $1/* $ROOT$1$host)"
 else
   mkdir -p $ROOT$DIR || exit 1
-  ditto copy "$(sudo cp -vf --preserve=mode --no-preserve=ownership $1 $ROOT$DIR/$FILE$host)"
+  alpine && ditto copy "$(sudo cp -vf -p $1 $ROOT$DIR/$FILE$host)" ||
+            ditto copy "$(sudo cp -vf --preserve=mode --no-preserve=ownership $1 $ROOT$DIR/$FILE$host)"
 fi
 
 # avoid unnecessary dotfile updates

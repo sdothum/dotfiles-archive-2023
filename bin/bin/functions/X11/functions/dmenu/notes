@@ -30,7 +30,7 @@ if [ -z $FOLDER ] ;then
   note     ) FOLDER=$HOME/notes  ;;
   draft    ) FOLDER=$HOME/drafts ;;
   poem     ) FOLDER=$HOME/poems; TOPMENU='edit\nview' ;;
-  supernote) FOLDER=$HOME/Dropbox/Supernote/EXPORT; ext=txt; unset DELETE PRINT; TOPMENU="$TOPMENU\ncolophon" ;;
+  supernote) FOLDER=$HOME/Dropbox/Supernote/EXPORT; ext=txt; unset DELETE PRINT; TOPMENU="$TOPMENU\nwiki"; supernote=true ;;
   *        ) FOLDER=$HOME/tmp    ;;
   esac
 fi
@@ -43,20 +43,21 @@ if [ $ext != txt ] ;then
 fi
 
 NOTES=/tmp/dmenu:notes:$ext
-trap "rm -f $NOTES" EXIT
+trap "rm -f $NOTES*" EXIT
 
 if [ $ext = draft ] ;then
   purge=$(X $PURGE)
   PROMPT="$(X $NEW)\n$(X $EDIT)\n$(X $PURGE)"
-  offset=2
+  offset=3
 elif [ $ext = txt ] ;then
   purge=$(X 'nop')
   PROMPT="$(X $EDIT)"
+  offset=1
 else
   # must set purge to avoid case statement match, see below
   purge=$(X 'nop')
   PROMPT="$(X $NEW)\n$(X $EDIT)"
-  offset=1
+  offset=2
 fi
 
 # first descriptive line of file, mail subject line special case
@@ -87,13 +88,26 @@ cache
 
 # item row
 highlight() {
+  echo $offset
+  return
   file=$(previous $catlg)
   # file=$mhistory
   cat $NOTES | grep -qn "$file" && echo $(( $(cat $NOTES | grep -n "$file" | cut -d: -f1) + $offset )) || echo 0
 }
 
-notes() { cat $NOTES | cut -d^ -f2- | column -s^ -t | sed "1i$PROMPT"; }
-wiki()  { echo "$HOME/vimwiki/$1/$(head -1 $file | sed 's/#//g; s/^ *//; s/  */ /g').wiki"; }
+notes()   { cat $NOTES | cut -d^ -f2- | column -s^ -t | sed "1i$PROMPT"; }
+# supernote OCR does not recognize blank lines: convert single line '@' to linefeed (paragraph)
+mdbreak() { sed 's/^@ *$//' $file; }
+
+WIKIS="$HOME/vimwiki"
+
+wiki() { 
+  wiki=$(find -L $WIKIS -maxdepth 2 -type d | exclude 'mail|templates|xref' | sed "s,$WIKIS/,,; 1d" | rmenu wiki)
+  [ "$wiki" ] || return
+  WIKI="$WIKIS/$wiki/$(head -1 $file | sed 's/#//g; s/^ *//; s/  */ /g').wiki";
+  mdbreak >"$WIKI"
+  vim -g "$WIKI"
+}
 
 # to present grep'd file list enter:
 #   /regex to filter
@@ -124,13 +138,14 @@ while note=$(notes | rmenu "$(echo $ext | sed -r 's/./\u&/') [/search]" $(highli
              update=true ;;
 
   print    ) hardcopy wiki $file ;;
-  colophon ) cp $file "$(wiki colophon)"; v "$(wiki colophon)"; exit ;;
+  wiki     ) wiki; exit ;;
 
   delete   ) mv $file /tmp
              update=true
              sed -i "\,$file,s,$,  (DELETED)," $NOTES ;;  # file contains /'s
 
-  clipboard) clipboard "$file"
+  clipboard) [ $supernote ] && mdbreak | mdcat --nocolor --columns=55 >$NOTES || unset NOTES  # convert markdown for email text, see wiki comment above
+             clipboard "${NOTES:-$file}"
              notify 'To Paste' 'Gvim:    F2\nTerminal: F5 (Ctrl-Alt-V)'
              exit ;;
   esac

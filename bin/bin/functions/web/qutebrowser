@@ -14,6 +14,8 @@ STARTPAGE=$SESSION/startpage
 pong $SERVER && TTRSS=$SERVER || TTRSS=localhost
 size="$(fontsize)pt monospace"
 
+export SELF_URL_PATH=http://$TTRSS:8000/tt-rss/
+
 [ $1 ] && startpage="$@" || { [ -e $STARTPAGE ] && startpage=$(cat $STARTPAGE) || startpage="http://$TTRSS:8000/tt-rss/"; }
 startpage=$(escape $startpage)  # must \escape '&' in url
 

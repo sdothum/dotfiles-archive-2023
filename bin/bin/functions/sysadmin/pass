@@ -6,7 +6,7 @@
 
 # ..................................................................... Password
 
-usage() { echo "usage: $(basename $0) <name> | a'dd <name> <password> | eX'port | G|g'enerate <name> | I'nitialize | i'mport | [l|L]'ist <search> | m'v <name> <'name> | R'm <name>"; exit 1; }
+usage() { echo "usage: $(basename $0) <name> | a'dd <name> <password> | eX'port [<passphrase>] | G|g'enerate <name> | I'nitialize | i'mport | [l|L]'ist <search> | m'v <name> <'name> | R'm <name>"; exit 1; }
 
 PASSWORD_STORE_DIR=${PASSWORD_STORE_DIR:-$HOME/.password-store}
 PASS=/usr/bin/pass
@@ -14,8 +14,8 @@ PINENTRY=/usr/bin/pinentry
 XDIR=$HOME/sandbox
 image=$(basename $0).sh
 
-# force desktop passphrase ui
-ls -l $PINENTRY 2>/dev/null | grep -q 'pinentry-gtk-2' || sudo ln -sf /usr/bin/pinentry-gtk-2 /usr/bin/pinentry
+# set appropriate pinentry UI
+.pinentry >/dev/null
 
 init() {
   ifno 'initialize password store' && exit 1
@@ -38,8 +38,10 @@ password() {
 }
 
 xport() {
+  echo $@ | grep -q ' ' && { ditto export 'passphrase may not contain blanks'; exit 1; }
   cd $XDIR
-  rm -fv ${image%.sh}.zip
+  # rm -fv ${image%.sh}.zip
+  rm -fv ${image%.sh}.7z
   echo "#!/usr/bin/dash
 pass I || exit" >$image
   names=$(find $PASSWORD_STORE_DIR -name '*.gpg' | sed "s,$PASSWORD_STORE_DIR/,,g; s/.gpg$//")
@@ -50,7 +52,8 @@ pass I || exit" >$image
   done
   echo "rm -f $image" >>$image
   chmod -c 700 $image
-  zip -mP "$(passphrase pass/master)" ${image%.sh} $image
+  # zip -m -P "$(passphrase pass/master)" ${image%.sh} $image
+  7zip a -p$1 ${image%.sh} $image
 }
 
 # list() { tree -f $PASSWORD_STORE_DIR | grep '.gpg$' | sed  "s|.*$PASSWORD_STORE_DIR/||; s/.gpg$//" | tr '/' ' '; }
@@ -67,7 +70,7 @@ l )  shift && { [ "$1" ] && list | a " .*$1.*" || list; exit; } ;;
 L )  shift && { [ "$1" ] && list | a "^[^ ]*$1.*[ ]" || list | cut -d' ' -f1 | sort -u; exit; } ;;
 m ) [ $# -eq 3 ] && { $PASS mv --force $2 $3; exec pass $3; } ;;
 R ) [ $# -eq 2 ] && { exec $PASS rm --recursive --force $2; } ;;
-X ) xport; exit ;;
+X ) shift; xport "$@"; exit ;;  # passphrase should not contain blanks
 * ) password $@ ;;
 esac
 

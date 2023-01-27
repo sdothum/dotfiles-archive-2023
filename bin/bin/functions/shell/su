@@ -8,6 +8,6 @@
 
 # manually pass ssh env to su session (see prompt shum)
 [ "$SSH_CLIENT" ] && echo $SSH_CLIENT >/tmp/.ssh_client
-sudo rlwrap /usr/bin/su $@
+/usr/bin/su $@
 
 # vim: set ft=sh: #

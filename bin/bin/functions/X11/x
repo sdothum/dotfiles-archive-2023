@@ -84,7 +84,7 @@ if console ;then
   wm=$(cat $WM)
   [ ${#wm} -le 12 ] && extra=' '  # emboss spacing
   [ $font = emboss ] && seat=$(echo $wm | sed -r "s/(.)/\1 $extra/g; s/ *$//") || seat=$wm
-  void && toilet -F gay -f $font "$seat" || toilet -F rainbow -f $font "$seat"
+  void && toilet -F gay -f $font "$seat" || { echo $__BLACK; figlet -t -m0 -S -f lean "${seat%m}"; echo $NOCOLOR; }
   echo
   sleep 1
   [ $wm = shell ] && exit  # escape to shell prompt

@@ -6,6 +6,11 @@
 
 # ................................................................. Distribution
 
-arch && echo arch || echo void
+# using package managers..
+if   alpine ;then echo alpine
+elif void   ;then echo void
+elif arch   ;then echo arch
+else              echo unknown  # new distro lacking test/distro
+fi
 
 # vim: set ft=sh: #

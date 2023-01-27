@@ -16,10 +16,10 @@ case $1 in
 # f*) ack '^From:' $unknown/* | sed -r 's/.*From: *(.*)/\1/' | sort | less ;;
 # s*) ack '^Subject:.*\[.*\]' $unknown/* | sed -r 's/.*Subject: *(.*)/\1/' | sort | less ;;
 # t*) ack '^To:' $unknown/* | sed -r 's/.*To: *(.*)/\1/' | sort | less ;;
-c*) /usr/bin/rg --ignore-case '^Cc:' $unknown/* | sed -r 's/.*C[Cc]: *(.*)/\1/' | sort | less ;;
-f*) /usr/bin/rg --ignore-case '^From:' $unknown/* | sed -r 's/.*From: *(.*)/\1/' | sort | less ;;
-s*) /usr/bin/rg --ignore-case '^Subject:.*\[.*\]' $unknown/* | sed -r 's/.*Subject: *(.*)/\1/' | sort | less ;;
-t*) /usr/bin/rg --ignore-case '^To:' $unknown/* | sed -r 's/.*To: *(.*)/\1/' | sort | less ;;
+c*) /usr/bin/ag --ignore-case '^Cc:' $unknown/* | sed -r 's/.*C[Cc]: *(.*)/\1/' | sort | less ;;
+f*) /usr/bin/ag --ignore-case '^From:' $unknown/* | sed -r 's/.*From: *(.*)/\1/' | sort | less ;;
+s*) /usr/bin/ag --ignore-case '^Subject:.*\[.*\]' $unknown/* | sed -r 's/.*Subject: *(.*)/\1/' | sort | less ;;
+t*) /usr/bin/ag --ignore-case '^To:' $unknown/* | sed -r 's/.*To: *(.*)/\1/' | sort | less ;;
 * ) usage ;;
 esac
 

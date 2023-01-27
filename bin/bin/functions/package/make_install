@@ -6,9 +6,14 @@
 
 # ......................................................... Distribution install
 
+BUILDIR=$HOME/build/$(dist)
+DEPENDENCIES=$BUILDIR/bundle/deps:$1
+
 heading : $1
+
+[ -e $DEPENDENCIES ] && sudo xbps-install -y $(cat $DEPENDENCIES)  # dependencies
 cd /tmp
-. $HOME/build/$(dist)/make_install/$1
+. $BUILDIR/make_install/$1
 
 post_install $1
 

@@ -27,7 +27,7 @@ while : ;do
   mhistory configs "$(echo $file | sed "s/ *$SEP/^$SEP/")"
   # why do people put spaces in filenames, especially config files!
   file=$(echo $file | sed -r "s,^(.*)  *${SEP}  *(.*),\2/\1,; s/ /\\\\\\\\ /; s,^~,$HOME,")
-  exec v $file
+  exec vim -g $file
 done
 
 # vim: set ft=sh: #

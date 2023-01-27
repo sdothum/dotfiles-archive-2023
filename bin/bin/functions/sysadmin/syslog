@@ -9,7 +9,7 @@
 if void ;then
   [ $1 ] && cat /var/log/socklog/everything/current | ack $@ | less -MRX || less -MRX /var/log/socklog/everything/current 
 else
-  [ $1 ] && sudo journalctl -b | rg --color 'always' --regexp "\"$@\"" | less -MRX || sudo journalctl -b
+  [ $1 ] && sudo journalctl -b | ag --regexp "\"$@\"" | less -MRX || sudo journalctl -b
 fi
 
 # vim: set ft=sh: #
