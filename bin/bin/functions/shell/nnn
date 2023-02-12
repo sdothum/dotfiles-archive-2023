@@ -37,7 +37,7 @@ plugs="$(list $plugs)"
 # nnn config
 # export NNN_FIFO=/tmp/nnn:fifo  # NNN_OPTS 'a' option
 # export NNN_OPENER=$XDG_CONFIG_HOME/nnn/plugins/nuke
-export NNN_TRASH=1               # trash-cli
+exists trash-cli && export NNN_TRASH=1 || export NNN_TRASH=0
 export NNN_OPENER=xdg-open
 export NNN_PLUG="$plugs"
 export NNN_BMS="$bookmarks"
@@ -47,12 +47,14 @@ export LS_COLORS='di=01;38;5;221:ex=00;38;5;40:ln=00;38;5;51'  # match nnn color
 export NNN_OPTS=aefHoQux
 
 # sloppy mtp automount
-mtp mount && NDIR=$(mtp)
-[ $1 != TMUX ] && trap 'mtp umount' EXIT  # must manually eject if mounted during toggle tmux session, see herbstluftwm appbinds
+if ! alpine ;then
+  mtp mount && NDIR=$(mtp)
+  [ $1 != TMUX ] && trap 'mtp umount' EXIT  # must manually eject if mounted during toggle tmux session, see herbstluftwm appbinds
+fi
 
 case $1 in
-TMUX) tmux_session 'nnn' $NNN $PREVIEW $TDIR ;;
-*   ) $NNN "${NDIR:-$@}" $PREVIEW ;;
+TMUX) tmux_session 'nnn' $NNN $PREVIEW $TDIR 2>/tmp/nnn.log ;;
+*   ) $NNN "${NDIR:-$@}" $PREVIEW            2>/tmp/nnn.log ;;
 esac
 
 # vim: set ft=sh: #

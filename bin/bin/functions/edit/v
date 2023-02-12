@@ -58,7 +58,9 @@ console || { gui=-g; [ -e $DYNAMIC ] && focus frame; }
 session="vim $gui $role $fg $cmd $file"
 eval $sudo $session 2>>$LOG
 
-cpu arm && sleep 5  # prevent premature startup termination on slower processors
-(pwait "vim.*$file" && vhg $QUEUE) &
+if exists hg ;then
+  cpu arm && sleep 5  # prevent premature startup termination on slower processors
+  (pwait "vim.*$file" && vhg $QUEUE) &
+fi
 
 # vim: set ft=sh: #

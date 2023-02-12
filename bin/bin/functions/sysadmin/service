@@ -17,15 +17,15 @@ openrc() {
 
   # configure openrc daemon
   case $1 in
-  ''     ) sv show; usage   ;;
-  add    ) sv add $2 $3     ;;
-  delete ) sv delete $2 $3  ;;
-  show   ) sv show          ;;
-  start  ) rc $2 start      ;;
-  restart) rc $2 restart    ;;
-  stop   ) rc $2 stop       ;;
-  status ) rc $2 status     ;;
-  list   ) rc --list; usage ;;
+  ''     ) sv show; usage                 ;;
+  add    ) sv add $2 $3                   ;;
+  delete ) sv delete $2 $3                ;;
+  show   ) sv show                        ;;
+  start  ) rc $2 start                    ;;
+  restart) rc $2 stop; doas killall -q $2; rc $2 start ;; 
+  stop   ) rc $2 stop; doas killall -q $2 ;;  # kill dangling daemons
+  status ) rc $2 status                   ;;
+  list   ) rc --list | column; usage      ;;
   *      ) [ $2 ] && usage || rc $1 status || usage ;;
   esac
   exit

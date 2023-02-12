@@ -51,6 +51,6 @@ rm -f $HOME/.vim/undo/%tmp%*
 rm -f $HOME/.vim/undo/*%drafts%alot.*
 # avoid nfs mounted Maildir (and unnecessary processing)
 server && find $HOME/Maildir -name '.viminf*.tmp' -exec rm {} \;
-# cpu arm && rsync $STOW/.hg $SERVER:$STOW/ >/dev/null 2>&1
+# cpu arm && rsync -av $STOW/.hg $SERVER:$STOW/ >/dev/null 2>&1
 
 # vim: set ft=sh: #

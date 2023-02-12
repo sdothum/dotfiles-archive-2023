@@ -6,7 +6,7 @@
 
 # ......................................................... Distribution install
 
-# Usage: bundle_install [check | init | list] <bundle>*
+# Usage: bundle_install [alpine | check | init | list] <bundle>*
 #
 # format: [<action>] <package> [<condition>] [#<comment>] 
 #         # comment
@@ -46,9 +46,10 @@ else
 fi
 
 case $1 in
-check) check=true; gems=$(gem list | cut -d' ' -f1); shift ;;
-list ) list=true;                                    shift ;;
-init ) init=--init;                                  shift ;;
+alpine) check=true; alpine=true;                      shift ;;
+check ) check=true; gems=$(gem list | cut -d' ' -f1); shift ;;
+list  ) list=true;                                    shift ;;
+init  ) init=--init;                                  shift ;;
 esac
 
 echo $1 | grep -q '/' && BDIR=${1%/*} || BDIR=.
@@ -56,7 +57,7 @@ deferred=$BDIR/900-deferred
 missing=$BDIR/910-missing
 [ $check ] && rm -f $missing
 echo $@ | grep -q 900-deferred && unset deferred || {
-  [ $list ] || { [ -e $deferred ] && { ifno 'clear last defer bundle' || rm $deferred; } }
+  [ $list ] || [ $alpine ] || { [ -e $deferred ] && { ifno 'clear last defer bundle' || rm $deferred; } }
 }
 
 rule() { echo "$@" | sed 's/\[//; s/\]//' || echo true; }
@@ -83,9 +84,16 @@ parse() {
 }
 
 check() {
-  unset installed
   # check deferred actions
-  [ $action = d ] && unset action 
+  [ $action = d ] && [ "${package#?}" = '' ] && { action=$package; package=${condition%% *}; condition=${condition#* }; }
+  unset installed
+  if [ $alpine ] ;then
+    package=$(echo $package | sed 's/^python3-/py3-/; s/-devel$/-dev/')  # prefix/suffix name mapping
+    curl --silent "https://pkgs.alpinelinux.org/packages?name=$package&branch=edge&repo=main&arch=x86_64&maintainer=" 2>/dev/null | grep -q "No item found..." && 
+    curl --silent "https://pkgs.alpinelinux.org/packages?name=$package&branch=edge&repo=community&arch=x86_64&maintainer=" 2>/dev/null | grep -q "No item found..." && 
+    ditto ERROR "${RED}!match" $package || ditto alpine $package
+    return
+  fi
   set -- $action $package $condition
   action=$1;              shift
   package=$1; [ "$1" ] && shift
@@ -120,7 +128,7 @@ for i in $@ ;do
     parse || continue
 
     [ $list ] && { echo "$action $package $condition" | sed -r '/^d "/d; s/^([-?*@"adgm] )*//; s/ *([^ ]*).*/\1/'; continue; }
-    eval $rule || continue
+    [ $alpine ] || { eval $rule || continue; }
     [ $check ] && { check; continue; }
 
     # package management
@@ -139,7 +147,7 @@ for i in $@ ;do
   done 3< $i
 done
 
-[ $list ] && exit
+[ $list ] || [ $alpine ] && exit
 if [ $check ] && [ -e $missing ] ;then
   # sort -u -o $missing $missing
   sed -i 's/^d //' $missing

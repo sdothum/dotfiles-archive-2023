@@ -74,7 +74,7 @@ b='{color1}'            # conky color dim
 
 # debug output to terminal
 if [ -e $DEBUG ] ;then
-  Q=$__YELLOW; [ $setx ] && q=$NOCOLOR || q=$__BLACK
+  Q=$YELLOW; [ $setx ] && q=$NOCOLOR || q=$BLACK
   unset offset; unset voffset
   DELAY=$(cat $DEBUG); DELAY=${DELAY:-2}
 fi

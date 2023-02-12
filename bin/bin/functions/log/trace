@@ -21,12 +21,12 @@ fi
 [ $# -eq 2 ] && { msg=$1; detail=$2; } || msg=$@ 
 
 message() {
-  [ $# -eq 2 ] && [ -n "$2" ] && { echo -n "${__YELLOW}$1 ${YELLOW}"; shift; } || color=${__YELLOW}
+  [ $# -eq 2 ] && [ -n "$2" ] && { echo -n "${YELLOW}$1 ${_YELLOW_}"; shift; } || color=${YELLOW}
   echo "$color$@"
 }
 
 log -n "$(timestamp)"
-[ $level ] && log -n " ${__RED}$level>"
+[ $level ] && log -n " ${RED}$level>"
 log "${NOCOLOR}$(message "$msg" "$detail")${NOCOLOR}"  # message passed may contain colors
 
 # vim: set ft=sh: #

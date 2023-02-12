@@ -7,7 +7,7 @@ keep=3  # last n kernels
 prune() {
   cpu atom && sudo vkpurge rm '5.*' # has 4.x and 5.x versions updates but runs 4.x only
   kernels=$(vkpurge list | sort -V | head -n -$keep)
-  [ "$kernels" ] || return && { echo ${__YELLOW}$kernels; ifyes 'prune kernels' || return; }
+  [ "$kernels" ] || return && { echo ${YELLOW}$kernels; ifyes 'prune kernels' || return; }
   sudo vkpurge rm $kernels
 }
 

@@ -13,7 +13,7 @@
 REMINDERS=${REMINDERS:-$HOME/.reminders}
 
 # import user path
-. $HOME/bin/functions/shell/user_path
+# . $HOME/bin/functions/shell/user_path
 
 list() {
   # ignore daily reminders

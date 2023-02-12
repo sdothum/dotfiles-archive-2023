@@ -1,17 +1,18 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Sysadmin
+# Dev
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ................................................................... Df wrapper
+# ......................................................................... diff
 
-/usr/bin/df -h
-if [ -e /usr/bin/btrfs ] && server ;then
-  echo
-  sudo btrfs filesystem df /
-  echo
-  sudo btrfs filesystem du -s '/home /opt /usr /var'
-fi
+while [ $1 ] ;do
+  [ -e $1 ] && break
+  opts="$opts $1"
+  shift
+done
+
+# 2 column ouptut if any diff..
+[ $2 ] && cmp $1 $2 || /usr/bin/diff -y --color $opts $1 $2
 
 # vim: set ft=sh: #

@@ -11,7 +11,7 @@
 # standardized terminal prompt
 [ $1 ] && cue="$@" || cue="to continue"
 echo
-echo "${__YELLOW}━━━━━━━━━  Press [enter] $cue  ━━━━━━━━━${NOCOLOR}\n"
+echo "${YELLOW}━━━━━━━━━  Press [enter] $cue  ━━━━━━━━━${NOCOLOR}\n"
 read CONTINUE
 
 # vim: set ft=sh: #

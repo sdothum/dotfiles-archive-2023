@@ -51,7 +51,7 @@ pending() {
     [ $action = remove ] && info=INFO || unset info
     ditto $info $action "$(echo $pending | cut -d' ' -f2-)"
   done
-  printf "commit? [Abort]/comment.. : ${__WHITE}"
+  printf "commit? [Abort]/comment.. : ${WHITE}"
   read DESC
   printf "${NOCOLOR}"
   [ "$DESC" ] || exit 1

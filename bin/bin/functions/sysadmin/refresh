@@ -6,10 +6,11 @@
 
 # ................................................................ Rsync wrapper
 
-usage() { echo "usage: $(basename $0) [--list-only] [<option>] arm | backup | depot | dotfiles | home | pi | server | stow | ttrss | usb [hostname] | vps | wiki | xbps | [--delete] <command>"; exit 1; }
+usage() { echo "usage: $(basename $0) [--list-only] [<option>] alpine | arm | backup | depot | dotfiles | home | pi | server | stow | ttrss | usb [hostname] | vps | wiki | xbps | [--delete] <command>"; exit 1; }
 
 EXCLUDE=$(dirname $0)/.rsync_exclude
 PLEX=/opt/plexmediaserver/Library/Application\ Support
+ALPINE=motu  # test alpine host
 
 # import user path
 . $HOME/bin/functions/shell/user_path colors  # bash shell required for cron colors
@@ -174,8 +175,17 @@ wiki () {
   rsync -r --delete thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/vimwiki $HOME/
 }
 
+alpinelinux() {
+  if alpine ;then
+    rsync --exclude='lost+found' --exclude='sync-conflict' --exclude='*.AppImage' --exclude='.deprecated' --exclude='.git' --exclude='.hg' $USER@$SERVER:$HOME/stow $HOME
+  else
+    rsync --exclude='lost+found' --exclude='sync-conflict' --exclude='*.AppImage' --exclude='.deprecated' --exclude='.git' --exclude='.hg' $HOME/stow $USER@$ALPINE:$HOME
+  fi
+}
+
 case $1 in
 ''      ) usage ;;
+alpine  ) alpinelinux ;;
 arm     ) cpu arm && rsync -r --delete --exclude='*sync-conflict*' $USER@$SERVER:$STOW $HOME/ ;;
 backup  ) home; server && ifyes 'backup /net to /backup' && backup ;;
 BACKUP  ) backup ;;   # cron command only

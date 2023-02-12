@@ -10,7 +10,11 @@ delay=3  # reboot delay window
 
 ifno 'reboot kernel' && exit
 ditto reboot "in $delay seconds.."
-(sleep $delay; sudo rm -f /tmp/login:console; sudo /bin/reboot) &
-pkill -f "sshd: $USER" 2>/dev/null  # close remote ssh session connect
+# (sleep $delay; sudo rm -f /tmp/login:console; sudo /sbin/reboot) &  # will not reboot in ssh subshell in alpine
+# pkill -f "sshd: $USER" 2>/dev/null  # close remote ssh session connect
+sleep $delay
+sudo rm -f /tmp/login:console
+(sleep 0.1; pkill -f "sshd: $USER" 2>/dev/null) &  # close remote ssh session connect
+exec sudo /sbin/reboot
 
 # vim: set ft=sh: #

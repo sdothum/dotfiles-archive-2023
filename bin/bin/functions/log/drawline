@@ -10,7 +10,7 @@
 
 # line break
 [ "$1" ] && linechar=$1 || linechar='─'
-[ $2 ] && color=$2 || color=${RED}
+[ $2 ] && color=$2 || color=${_RED_}
 width=$(tput cols)
 
 line=$(head -c $width </dev/zero | tr '\0' 'X')

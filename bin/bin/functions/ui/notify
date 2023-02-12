@@ -12,8 +12,8 @@ usage() { echo "usage: $(basename $0) [time=<seconds> | <seconds> | console | X 
 
 SESSION=${SESSION:-$HOME/.session}
 LOG=/tmp/notify.log
-color1=${__YELLOW}
-color2=${__BLUE}
+color1=${YELLOW}
+color2=${BLUE}
 
 # enable cron notifications, see .xinitrc
 [ -r $HOME/.dbus/Xdbus ] && . $HOME/.dbus/Xdbus >/dev/null

@@ -7,7 +7,7 @@
 # ................................................................ Console login
 
 PIXELSERV=$SESSION/pixelserv
-RSYNC=$SESSION/rsync
+REFRESH=$SESSION/refresh
 WMAIL=$SESSION/wmail
 BOOTWM=$SESSION/boot:wm
 
@@ -56,17 +56,17 @@ if [ $USER != root ] ;then
     if cpu arm ;then
       nohup arm_clock >/dev/null 2>&1 &
       # in case pi is offline during development on main server
-      if [ -e $RSYNC ] ;then
-        nohup rsync -q arm >/dev/null 2>&1 &
+      if [ -e $REFRESH ] ;then
+        nohup refresh -q arm >/dev/null 2>&1 &
         sleep 1
-        pstat 'rsync arm' || notify critical 'Failed to update stow' "Check nfs share & rerun 'rsync arm'"
+        pstat 'refresh arm' || notify critical 'Failed to update stow' "Check nfs share & rerun 'refresh arm'"
       else
         wsync -v
       fi
     fi
 
     # wm startup
-    [ $DELAY ] && echo $DELAY >$BOOTWM
+    [ $DELAY ] && [ -d $SESSION ] && echo $DELAY >$BOOTWM
   fi
 
   # reset keyboard layout
