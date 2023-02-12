@@ -8,13 +8,15 @@
 = ════
 d dovecot
   imapfilter
-d offlineimap
+  isync
+# offlineimap
   python3-keyrings-alt
 
 
 = mail client
 = ═══════════
-  alot
+  aerc
+# alot
 d notmuch
 
 

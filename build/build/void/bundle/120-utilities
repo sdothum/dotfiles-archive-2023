@@ -38,11 +38,11 @@
 = system monitor
 = ══════════════
   btop
-# glances
+  glances
   gsmartcontrol [server]
   htop
   iotop
-  psensor       [sarver]
+  psensor       [server]
 # smartmontools
   socklog-void  
   sysstat
