@@ -17,8 +17,8 @@ if console ;then
   find $HOME -iname '*sync-conflict*' -exec rm -v {} \;  # purge syncthing conflicts
   echo
   # delayed startup of default wm for remote computers
-  if [ -s $BOOTWM ] ;then  # see console_login
-    (sleep $(cat $BOOTWM); pgrep startx >/dev/null || startx -- 2>/tmp/startx:reboot.log) &  # not as clean as "x" (?).. do not autostart if already manually launched
+  if [ -s $BOOTWM ] ;then   # see console_login
+    exec x -$(cat $BOOTWM)  # will not spawn otherwise (alpine requires delay in x)
   fi
 elif [ -e $FORTUNE:term ] ;then
   if [ ! -e $FORTUNE ] ;then

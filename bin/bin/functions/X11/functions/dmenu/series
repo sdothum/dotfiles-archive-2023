@@ -28,7 +28,7 @@ PASSPORT="/run/media/$USER/My Passport/$category"
 catlg=$CACHEDIR/dmenu:$category
 [ -d "$PASSPORT" ] && { library=$PASSPORT; usb=true; } || library=${LIBRARY:-/net/media/videos/$category}
 preprocess=$(dirname $0)/functions/dmenu/.preproc/$category
-retitle="$library"/.retitle
+RETITLE="$library"/.retitle
 cd $library
 
 # exclude directory kludge of .anime links in main series folder
@@ -61,7 +61,7 @@ cache() {
   notify low 'Series' 'Caching library..'
   rm -f $catlg
   [ -e $preprocess ] && . $preprocess  # special title format clean up
-  retitle "$library" >>$retitle
+  retitle "$library" >>$RETITLE
   for i in $(ls -1$T "$library" | grep -v ' ') ;do [ -L $i ] || echo $i | sed 's/\./ /g' >>$catlg; done
   [ $1 ] || unset show
 }

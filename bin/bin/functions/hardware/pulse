@@ -9,20 +9,30 @@
 # import user path
 . $HOME/bin/functions/shell/user_path
 
-hdmi() { pacmd list-sinks | grep -q hdmi; }
+hdmi() { 
+  if exists pacmd ;then
+    pacmd list-sinks | grep -q hdmi
+  else
+    true
+  fi
+}
 
 restart() {
-  service restart alsa
+  sv restart alsa 2>/dev/null
   # pulseaudio -k
   # manually restore audio device
   killall pulseaudio 2>/dev/null
   killall pavucontrol 2>/dev/null
-  killall pulseaudio-equalizer 2>/dev/null
-  killall pulseaudio-equalizer-gtk 2>/dev/null
+  exists pulseaudio-equalizer-gtk && {
+    killall pulseaudio-equalizer 2>/dev/null
+    killall pulseaudio-equalizer-gtk 2>/dev/null
+  }
   pulseaudio --start --log-target=syslog
   pavucontrol &
-  pulseaudio-equalizer enable >/dev/null
-  pulseaudio-equalizer-gtk >/dev/null &
+  exists pulseaudio-equalizer-gtk && {
+    pulseaudio-equalizer enable >/dev/null
+    pulseaudio-equalizer-gtk >/dev/null &
+  }
 }
 
 pulse() {

@@ -136,7 +136,7 @@ IGNORE='chromium|php-fpm|pinentry|preload'
 
 case $action in
 backup    ) rsync -av $CACHE $BACKUP ;;
-check     ) ditto xbps 'checking database..'; sudo xbps-pkgdb -a 2> >(egrep -v "ERROR: ($IGNORE):") ;;  # suppress hash mismatch (bash redirect syntax)
+check     ) ditto xbps 'checking database..'; sudo xbps-pkgdb -a 2> >(grep -E -v "ERROR: ($IGNORE):") ;;  # suppress hash mismatch (bash redirect syntax)
 count     ) ditto installed "$(xbps-query -l $options | wc -l) packages" ;;
 dependency) for i in $(xbps-query -x $package | sed 's/>=.*//; s/-[0-9].*/-/') ;do installed $i ;done | sort ;;
 downgrade ) sudo xdowngrade $@ ;;  # downgrade must include package dependencies

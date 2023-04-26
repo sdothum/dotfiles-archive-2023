@@ -1,18 +1,18 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Dev
+# Sysadmin
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ......................................................................... diff
+# ......................................................................... puma
 
-while [ $1 ] ;do
-  [ -e $1 ] && break
-  opts="$opts $1"
-  shift
-done
+delay=1.5  # restart delay window
 
-# 2 column ouptut if any diff..
-[ $2 ] && cmp $1 $2 || /usr/bin/diff -y --color $opts $1 $2
+# import user path
+. $HOME/bin/functions/shell/user_path colors  # bash shell required for cron colors
+
+sv stop puma
+sleep $delay
+sv start puma
 
 # vim: set ft=sh: #

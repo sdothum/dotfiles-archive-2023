@@ -36,7 +36,7 @@ if [ $debug ] ;then
   read input
 fi
 
-CURRENT=$(echo $WEATHER | awk '/Current Conditions:/ { gsub(/.*Current Conditions: */, "", $0); gsub(/&.*$/, "", $0); print }')
+CURRENT=$(echo $WEATHER | awk '/Current Conditions:/ { gsub(/.*Current Conditions: */, "", $0); gsub(/[&°].*$/, "", $0); print }')
 if [ $debug ] ;then
   echo Current .. $CURRENT
   echo
@@ -54,11 +54,31 @@ if [ $debug ] ;then
   read input
 fi
 
-FEELSLIKE=$(echo $WEATHER | awk '/(Wind Chill|Humidex):/ { gsub(/.*(Wind Chill|Humidex):[^ ]* /, "", $0); gsub(/ .*$/, "", $0); print }')
-if [ $debug ] ;then
-  echo Feels like .. \"$FEELSLIKE\"
-  echo
-  read input
+# condense weather for monocle layout
+if [ ! -e $MONOCLE ] ;then
+  FEELSLIKE=$(echo $WEATHER | awk '/(Wind Chill|Humidex):/ { gsub(/.*(Wind Chill|Humidex):[^ ]* /, "", $0); gsub(/[ <].*$/, "", $0); print }')
+  if [ $debug ] ;then
+    echo Feels like .. \"$FEELSLIKE\"
+    echo
+    read input
+  fi
+
+  WIND=$(echo $WEATHER | awk '/Wind:/ { gsub(/.*Wind:[^0-9]* /, "", $0); gsub(/ km.*$/, "", $0); print }')
+  if [ $debug ] ;then
+    echo Wind .. \"$WIND\"
+    echo
+    read input
+  fi
+
+  GUST=$(echo $WEATHER | awk '/Wind:.*gust / { gsub(/.*Wind:.*gust /, "", $0); gsub(/ km.*$/, "", $0); print }')
+  if [ $debug ] ;then
+    echo Gust .. \"$GUST\"
+    echo
+    read input
+  fi
+
+  [ -n "$GUST" ] && WIND="$WIND-$GUST"
+  [ -n "$WIND" ] && CURRENT="${CURRENT}Wind $WIND km/h"
 fi
 
 if [ -z $FEELSLIKE ] ;then [ -n "$CURRENT" ] && echo "${CURRENT%, }$sep${TEMPERATURE}°"                     || echo "${TEMPERATURE}°"

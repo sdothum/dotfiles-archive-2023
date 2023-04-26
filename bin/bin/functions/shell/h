@@ -20,8 +20,8 @@ esac
 # purge from history
 filter() {
   history=$(mktemp)
-  egrep "$1" $2
-  egrep -v "$1" $2 >$history
+  grep -E "$1" $2
+  grep -E -v "$1" $2 >$history
   mv $history $2
 }
 
@@ -52,7 +52,7 @@ week=$(date '+%W')
 weekof() {
   # calculation assumes history size does not span more than one calendar year
   awk "{ if (\$2<=$week) \$2=($week - \$2); else \$2=(53 - \$2 + $week); print \$0 }" | grep '^[0-9]* ' |
-      sort -k 3 | uniq -f 2 | sort -n $1 | sed -r 's/^[0-9]* ([0-9]*) /\1w   /g' | egrep -v "$filter"
+      sort -k 3 | uniq -f 2 | sort -n $1 | sed -r 's/^[0-9]* ([0-9]*) /\1w   /g' | grep -E -v "$filter"
 }
 
 fish_history() { fish -c "history --show-time='%s %W '"; }
@@ -78,7 +78,7 @@ history() {
 }
 
 case $shell in
-bash | sh) echo history | sh -i | sed 's/^ *//; s/  */ /g' | egrep -v "$filter" | tac ;;
+bash | sh) echo history | sh -i | sed 's/^ *//; s/  */ /g' | grep -E -v "$filter" | tac ;;
 dash     ) history $shell $@ ;;
 fish     ) history fish $@ ;;
 zsh      ) history zsh $@ ;;

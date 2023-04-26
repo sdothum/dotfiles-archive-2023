@@ -75,7 +75,7 @@ cache() {
   notify low "Updating ${ext}s cache" 'Please be patient..'
   if [ "$files" ] ;then
     for i in $files ;do
-      [ "$search" ] && { egrep -iq "$search" $i || continue; }
+      [ "$search" ] && { grep -E -iq "$search" $i || continue; }
       echo "$i^$(stat -c '%y' $i | cut -d. -f1) ^$SEP $(hint $i)"
     done | sort -k2 -t^ -r >>$NOTES
   else

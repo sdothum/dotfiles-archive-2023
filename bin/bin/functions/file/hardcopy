@@ -120,8 +120,8 @@ EOF
 filter() {
   # reduce mail header to essential contact information
   sed -nr '/^(Date|From|To|Cc|Subject): /,$p' | pcregrep -vM 'X-SG-EID: (\n|.)*?[=]' |
-      egrep -vEi '^(Accept-Language|AMQ-Delivery-Message-Id.*|authentication-results|Content-.*|Importance|In-Reply-To|List-.*|Message-ID|MIME-Version|PP-Correlation-Id.*|received-spf|References|Reply-To|Return-Path|Sender|Thread-Topic|User-Agent|Thread-Index|X-.*|Tags):' |
-      egrep -vE '^ *(boundary=.*|charset=.*|(dkim|spf|dmarc)=pass .*|\(UTC\)|\[[0-9]*\] (https*|mailto):.*)$' |
+      grep -E -vi '^(Accept-Language|AMQ-Delivery-Message-Id.*|authentication-results|Content-.*|Importance|In-Reply-To|List-.*|Message-ID|MIME-Version|PP-Correlation-Id.*|received-spf|References|Reply-To|Return-Path|Sender|Thread-Topic|User-Agent|Thread-Index|X-.*|Tags):' |
+      grep -E -v '^ *(boundary=.*|charset=.*|(dkim|spf|dmarc)=pass .*|\(UTC\)|\[[0-9]*\] (https*|mailto):.*)$' |
       sed -r '/(\n|^ )<[^<>]*>$/d'
 }
 

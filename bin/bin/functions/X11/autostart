@@ -34,14 +34,15 @@ rm -f $HOME/.msmtpqueue/.lock
 rm -f /tmp/setroot
 rm -f /srv/http/tt-rss/lock/*
 
-exists gnome-keyring-daemon && gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg &
+# exists gnome-keyring-daemon && gnome-keyring-daemon --replace --daemonize --components=pkcs11,secrets,ssh,gpg &
+exists gnome-keyring-daemon && gnome-keyring-daemon --replace --components=pkcs11,secrets,ssh,gpg &
 # laptop && synclient VertEdgeScroll=1 &
 # laptop && synclient TapButton1=1 &
 pstat gpg-agent || gpg-agent --homedir $HOME/.gnupg --use-standard-socket --daemon 2>/tmp/gpg-agent.log &
 server && ipfilter &
 xrdb -merge $HOME/.Xresources &
 
-if xinput list --name-only | egrep -q 'Georgi|Splitography' ;then
+if xinput list --name-only | grep -E -q 'Georgi|Splitography' ;then
   if [ -e $PLOVER ] ;then
     switch tag $ADMIN
     plover &
@@ -52,8 +53,10 @@ fi
 # force hdmi audio functionality
 if [ -e $PULSEAUDIO ] ;then
   pavucontrol 2>/dev/null &               # suppress gtk warnings
-  pulseaudio-equalizer enable
-  pulseaudio-equalizer-gtk 2>/dev/null &  # suppress config file access errors
+  exists pulseaudio-equalizer-gtk && {
+    pulseaudio-equalizer enable
+    pulseaudio-equalizer-gtk 2>/dev/null &  # suppress config file access errors
+  }
 fi
 
 # ........................................................... Daemons and caches

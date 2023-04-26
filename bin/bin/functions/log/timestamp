@@ -11,7 +11,9 @@
 # tod() { [ $(date '+%p') = PM ] && cat || tr '[:upper:]' '[:lower:]'; }  # (am) day (PM) DAY
 # common date string for consistent script logging
 # ditto @ "$(date "+%a" | tod) $(date "+%-I°%M'%S\"")"
+# ditto @ "$(date "+%a" | tr '[:upper:]' '[:lower:]') $(date "+%-H°%M'%S\"")"
 
-ditto @ "$(date "+%a" | tr '[:upper:]' '[:lower:]') $(date "+%-H°%M'%S\"")"
+# ditto @ "$(date "+%a" | tr '[:lower:]' '[:upper:]' | cut -c1-2) $(date "+%-H°%M'%S\"")"
+ditto @ "$(date "+%a" | cut -c1-2) $(date "+%-H°%M'%S\"")"
 
 # vim: set ft=sh: #

@@ -27,7 +27,7 @@ while cmd=$(actions | rmenu 'Session' $cmd -no-custom) || exit ;do
   logout  ) sudo kill -TERM X ;;
   suspend ) [ -e /sbin/systemctl ] && sudo systemctl suspend || sudo pm-suspend ;;
   reboot  ) disconnect; [ -e /sbin/systemctl ] && sudo systemctl reboot || sudo /bin/reboot ;;
-  shutdown) disconnect; [ -e /sbin/systemctl ] && sudo systemctl poweroff || sudo shutdown -h now ;;
+  shutdown) disconnect; [ -e /sbin/systemctl ] && sudo systemctl poweroff || { [ -e /sbin/poweroff ] && sudo poweroff || sudo shutdown -h now; } ;;
   esac
   break
 done

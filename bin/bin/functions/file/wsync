@@ -42,9 +42,9 @@ archive() {
 }
 
 case $1 in
-'') cpu arm && pstat syncthing && service stop syncthing@$USER; watchd $ROOT $NAME $CMD & ;;
+'') cpu arm && pstat syncthing && sv stop syncthing@$USER; watchd $ROOT $NAME $CMD & ;;
 -a) archive & ;;
--s) archive && (watchman watch-del $ROOT; watchman shutdown-server; pkill -f "watchd $ROOT $NAME $CMD"; pstat syncthing || service start syncthing@$USER &) ;;
+-s) archive && (watchman watch-del $ROOT; watchman shutdown-server; pkill -f "watchd $ROOT $NAME $CMD"; pstat syncthing || sv start syncthing@$USER &) ;;
 -v) pstat syncthing || watch & ;;
 * ) watchq d $ROOT $NAME $@; archive & ;;
 esac

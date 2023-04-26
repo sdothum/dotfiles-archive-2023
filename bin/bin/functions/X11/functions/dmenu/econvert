@@ -94,6 +94,7 @@ find /tmp -maxdepth 1 -name "*$format" -exec rm {} \;
 # cloudconvert -f azw3 -o /tmp "$file" >/tmp/cloudconvert.log 2>&1
 # use calibre conversion module
 output="/tmp/${file##*/}"
+output=ebook-convert:ebook  # flatpak ebook-convert cannot not output to path(?)
 [ $option ] || option=$(echo -n "default (ragged-right)\nnoindent\njustify\nall" | rmenu 'export options' -no-custom) || break
 justify=left
 em_linespace=${em_linespace%,*}
@@ -109,19 +110,21 @@ ditto $format "$file"
 
 # ebook-convert "$file" "${output%.*}.epub"  # test image
 # convert even .azw3 to inject folder title and author
-eval ebook-convert \"$file\" \"${output%.*}.$format\"                                           \
-                   $([ $reformat ] && echo || echo "--title=\"$title\" --authors=\"$author\"")  \
-                   --change-justification=\"$justify\"                                          \
-                   --remove-paragraph-spacing --remove-paragraph-spacing-indent-size=$em_indent \
-                   --insert-blank-line --insert-blank-line-size=$em_linespace                   \
-                   --filter-css=\'font-family, float\'                                          \
-                   >/tmp/ebook-convert.log 2>/dev/null || exit  # suppress plugin initialization warnings
+alpine && EBOOK_CONVERT='flatpak run --command="ebook-convert" --user com.calibre_ebook.calibre' || EBOOK_CONVERT=ebook-convert
+eval $EBOOK_CONVERT \"$file\" \"${output%.*}.$format\"                                           \
+                    $([ $reformat ] && echo || echo "--title=\"$title\" --authors=\"$author\"")  \
+                    --change-justification=\"$justify\"                                          \
+                    --remove-paragraph-spacing --remove-paragraph-spacing-indent-size=$em_indent \
+                    --insert-blank-line --insert-blank-line-size=$em_linespace                   \
+                    --filter-css=\'font-family, float\'                                          \
+                    >/tmp/ebook-convert.log 2>/dev/null || exit  # suppress plugin initialization warnings
 
 # ........................................................................ Write
 
 # usb, cloud or library update?
 if [ $library ] ;then
-  find /tmp -maxdepth 1 -name "*$format" -exec mv -f "{}" "$folder" \;
+  # find /tmp -maxdepth 1 -name "*$format" -exec mv -f "{}" "$folder" \;
+  mv -f "${output%.*}.$format" "${file%.*}.$format"  # alpine flatpak
   notify low "$title" "$folder"
 elif [ -d $KINDLE ] ;then
   find $KINDLE -maxdepth 1 -wholename "${file% - *}*.sdr" -exec rm -rf "{}" \;  # cleanup dangling sdr files

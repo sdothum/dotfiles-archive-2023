@@ -14,7 +14,7 @@ REBUILD='rebuild address book'
 EDIT='edit contacts'
 
 # select email contact addresses for insert into sup query
-maildir=${MAILDIR:-$HOME/Maildir}
+maildir=${MAILDIR:-$HOME/Mail}
 cache=$maildir/addressbook
 # additional contacts
 # - name <address>

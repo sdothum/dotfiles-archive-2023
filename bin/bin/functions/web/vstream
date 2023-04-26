@@ -16,8 +16,8 @@ delay=1
 case $1 in
   dust   ) SERVICE='https://www.youtube.com/c/watchdust/videos' ;;
   iai    ) SERVICE='https://www.youtube.com/c/TheInstituteOfArtAndIdeas/videos' ;;
-  netflix) SERVICE='http://www.netflix.com/ca' ;;
-  prime  ) SERVICE='primevideo.com' ;;
+  netflix) SERVICE='http://www.netflix.com/ca'; BROWSER=google-chrome ;;
+  prime  ) SERVICE='primevideo.com'; BROWSER=google-chrome ;;
   *      ) usage ;;
 esac
 
@@ -27,9 +27,9 @@ void && pulse
 videomode on
 # is display -1920 && draw layout max || { is display -=2560 && draw layout 2:3 || draw layout spread; }
 
-if [ $BROWSER = chromium ] ;then
+if [ $BROWSER = chromium ] || [ $BROWSER = google-chrome ] ;then
   RUNOPT=$options $BROWSER $SERVICE &
-  xdotool search --sync --onlyvisible --name 'Chromium'
+  xdotool search --sync --onlyvisible --class "$BROWSER"
   xdotool key Alt+Shift+s  # set right full "window"
   sleep $delay
   xdotool key F11

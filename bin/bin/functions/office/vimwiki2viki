@@ -18,11 +18,11 @@ W='[a-zA-Z0-9]'
 ifno "convert $dir" && check=true
 wikis=$(mktemp)
 trap "rm -f $wikis" EXIT
-[ $check ] && find -L $dir -name '*wiki' | egrep -v '\.deprecated|diary' >$wikis ||
+[ $check ] && find -L $dir -name '*wiki' | grep -E -v '\.deprecated|diary' >$wikis ||
   find -L $dir -name '*wiki' | grep -v '\.deprecated' >$wikis
 
 gs() {
-  action=$(egrep "$(echo "$1" | sed -r 's,.*s/([^/]*)/.*,\1,')" "$wiki" | sed -r "$1")
+  action=$(grep -E "$(echo "$1" | sed -r 's,.*s/([^/]*)/.*,\1,')" "$wiki" | sed -r "$1")
   [ "$action" ] || return
   ditto -- "$1"
   echo "$action"

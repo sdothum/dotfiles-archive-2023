@@ -5,8 +5,11 @@
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ...................................................................... Android
+#
+# doas adb kill-server
+# doas adb start-server
 
-adb devices | grep -q 'device$' || { notify critical 'Connect phone to USB-C'; exit; }
+doas adb devices | grep -q 'device$' || { notify critical 'Connect phone to USB-C'; exit; }
 term 'android' scrcpy
 
 # vim: set ft=sh: #

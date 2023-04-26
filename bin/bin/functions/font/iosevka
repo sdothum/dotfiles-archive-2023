@@ -28,7 +28,7 @@ usage() {
                [english | latin+greek | cyrillic | fluent | ligature <name>]
 
                [grotesque (default) | atkinson | geometric | jost]
-               [elementary | grotesk | open | a-single | b-corner | D-serifless | d-[tailed|toothless] | f-extended | G-[hookless[+]|toothed|toothless] | g-double | I-[serifed|serifless|descending] | i-serifed | J-descending | j-[serifed|serifless] | l-[hooky|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|open|straight|custom] | q-[hook|tailed] | t-cross | y-straight | asterisk-high | at-tall | 0-split | paren-flat]*
+               [elementary | grotesk | descenders | open | a-single | b-corner | D-serifless | d-[tailed|toothless] | f-extended | G-[hookless[+]|rounded|toothed|toothless] | g-double | I-[serifed|serifless|descending] | i-serifed | J-[descending|flat] | j-[serifed|serifless] | l-[hooky|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|open|straight|custom] | q-[hook|tailed] | T-descending | t-cross | y-straight | asterisk-high | at-tall | 0-split | paren-flat]*
 
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
                [double] [space M|<decimal>] [ emdash <decimal> ]
@@ -154,6 +154,7 @@ variant() {
     f-extended   ) glyph f=flat-hook-extended-crossbar-at-x-height ;;
     G-hookless   ) glyph capital_g=toothless-corner-serifless-hookless ;;
     G-hookless+  ) glyph capital_g=toothed-serifless-hookless ;;
+    G-rounded    ) glyph capital_g=toothless-rounded-serifless-hooked ;;
     G-toothed    ) glyph capital_g=toothed-serifless-hooked ;;
     G-toothless  ) glyph capital_g=toothless-corner-serifless-hooked ;;
     g-double     ) glyph g=double-storey ;;
@@ -161,6 +162,7 @@ variant() {
     I-serifless  ) glyph capital_i=serifless ;;
     i-serifed    ) glyph i=serifed ;;
     J-descending ) glyph capital_j=descending-serifless ;;
+    J-flat       ) glyph capital_j=flat-hook-serifless ;;
     J-serifless  ) glyph capital_j=serifless ;;
     j-serifed    ) glyph j=flat-hook-serifed ;;
     j-serifless  ) glyph j=serifless ;;
@@ -278,6 +280,7 @@ while [ $1 ] ;do
   f-extended   ) variant $1 ;;                   # unolexic (homage to universal grotesk)
   G-hookless   ) variant $1 ;;
   G-hookless+  ) variant $1 ;;
+  G-rounded    ) variant $1 ;;
   G-toothed    ) variant $1 ;;
   G-toothless  ) variant $1 ;;
   g-double     ) variant $1 ;;
@@ -286,6 +289,8 @@ while [ $1 ] ;do
   I-serifless  ) variant $1; initial ;;          # combined minimal stroke glyphs
   i-serifed    ) variant $1 ;;
   J-descending ) variant $1 ;;
+  J-flat       ) variant $1 ;;
+  J-serifless  ) variant $1 ;;
   j-serifed    ) variant $1 ;;
   j-serifless  ) variant $1 ;;
   l-hooky      ) variant $1 ;;
@@ -303,6 +308,7 @@ while [ $1 ] ;do
   Q-custom     ) variant 'Q=CUSTOM';      Q_custom=true ;;
   q-hook       ) variant 'q=HOOK-TAILED'; q_hook=true ;;
   q-tailed     ) variant $1; unset q_hook ;;
+  T-descending ) variant 'T=DESCENDING'; T_descending=true ;;
   t-cross      ) variant $1 ;;
   y-straight   ) variant $1 ;;
   asterisk-high) variant $1 ;;
@@ -312,6 +318,7 @@ while [ $1 ] ;do
   elementary   ) variant I-serifless a-single ;;
   grotesk      ) variant I-serifless f-extended ;;
   grotesque    ) grotesque ;;
+  descenders   ) variant 'FP=DESCENDING'; FP_descending=true ;;
   open         ) variant B-open P-open R-open G-hookless ;;
   atkinson     ) grotesque; ebook hyperlegible; variant b-toothed G-toothed J-serifless p-eared Q-crossing q-tailed u-toothed ampersand at number_sign percent ;;
   geometric    ) geometric; cap extended; build=-jost ;;
@@ -625,11 +632,13 @@ else
   nerdfont $mono $family                                       # insert glyphs
 fi
 
-[ $q_hook       ] && fforge q_hook $family                     # hyperlegible font mod for better q
-[ $Q_hook       ] && fforge Q_hook $family                     # hooked capital Q
-[ $Q_horizontal ] && fforge Q_horizontal ${shape##* } $family  # open horizontal capital Q
-[ $Q_custom     ] && fforge Q_custom     ${shape##* } $family  # custom capital Q
-[ $I_descending ] && fforge I_descending $family               # font mod for descending serifless capital I
+[ $q_hook        ] && fforge q_hook $family                      # hyperlegible font mod for better q
+[ $Q_hook        ] && fforge Q_hook $family                      # hooked capital Q
+[ $Q_horizontal  ] && fforge Q_horizontal  ${shape##* } $family  # open horizontal capital Q
+[ $Q_custom      ] && fforge Q_custom      ${shape##* } $family  # custom capital Q
+[ $I_descending  ] && fforge I_descending  $family               # font mod for descending serifless capital I
+[ $T_descending  ] && fforge T_descending  $family               # font mod for descending capital T
+[ $FP_descending ] && fforge FP_descending $family               # decending caps (experimental)
 
 [ $ebook ] && echo $spacing | grep -vq 'quasi-' && { fforge punctuation ${emdash:-2} $family; unset width; }  # wide cell emdash and double width ellipsis
 

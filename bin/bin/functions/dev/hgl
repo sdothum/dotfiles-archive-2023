@@ -10,7 +10,7 @@
 
 REPO=${REPO:-$STOW}
 
-log() { hg --color=always log --cwd $REPO | egrep -v '^(user|date|tag|parent)' | tac; }
+log() { hg --color=always log --cwd $REPO | grep -E -v '^(user|date|tag|parent)' | tac; }
 
 if [ "$1" ] ;then
   # sed remove trailing blank line

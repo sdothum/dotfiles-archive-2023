@@ -15,9 +15,9 @@ IGNORE=$HOME/.agignore
 ansi='\[\([0-9]{1,2}\(;[0-9]{1,2}\)?\)?[m|K]'
 
 # directory exclusions
-ignore=$(egrep -v '^#|^ *$' $IGNORE | sed -e 's/^\./\\./g; s/\*/.*/g' | tr '\n' '|')
+ignore=$(grep -E -v '^#|^ *$' $IGNORE | sed -e 's/^\./\\./g; s/\*/.*/g' | tr '\n' '|')
 
 # <regex> restricts exclude to filename portion of input list, see a and al
-[ $1 ] && egrep -v "\($ansi\)?.*\($ignore\)" | egrep -v "$1" || egrep -v "\($ansi\)?.*\($ignore\)"
+[ $1 ] && grep -E -v "\($ansi\)?.*\($ignore\)" | grep -E -v "$1" || grep -E -v "\($ansi\)?.*\($ignore\)"
 
 # vim: set ft=sh: #

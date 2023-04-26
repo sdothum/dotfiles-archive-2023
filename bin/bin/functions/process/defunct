@@ -13,9 +13,9 @@ pids=$(defunct | /usr/bin/awk '{ print $3 }' | sort -u)
 pids=$(echo $pids | sed 's/ /|/g')
 
 if [ "$pids" ] ;then
-  defunct | egrep --color "$pids"
+  defunct | grep -E --color "$pids"
   underline
-  defunct -v | egrep --color "$pids"
+  defunct -v | grep -E --color "$pids"
 fi
 
 # vim: set ft=sh: #

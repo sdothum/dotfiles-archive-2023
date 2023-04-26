@@ -18,9 +18,9 @@ vsn=$(psql --version | cut -d' ' -f3)
 dump() { [ -e /var/lib/postgres/dump.sql-$vsn ] || echo "pg_dumpall >dump.sql-$vsn" | su - postgres; }
 
 pre() {
-  service start postgresql
+  sv start postgresql
   dump
-  service stop postgresql
+  sv stop postgresql
   if [ ! -e /var/lib/postgres/data-$vsn ] ;then
     echo "mv data data-$vsn" | su - postgres
     echo 'mkdir data' | su - postgres
@@ -29,7 +29,7 @@ pre() {
 
   sudo pacman -S --noconfirm postgresql postgresql-libs
   echo 'initdb --locale en_US.UTF-8 -D /var/lib/postgres/data' | su - postgres
-  service start postgresql
+  sv start postgresql
   sudo systemctl daemon-reload
   echo "psql < dump.sql-$vsn" | su - postgres
   ifno "remove /var/lib/postgres/dump.sql-$vsn" || sudo rm -f /var/lib/postgres/dump.sql-$vsn
@@ -37,7 +37,7 @@ pre() {
 }
 
 post() {
-  service stop postgresql
+  sv stop postgresql
   sudo pacman -S --needed postgresql-old-upgrade
 
   # sudo chown -c postgres:postgres /var/lib/postgres/
@@ -48,7 +48,7 @@ post() {
   echo "pg_upgrade -b /opt/pgsql-$1/bin/ -B /usr/bin/ -d /var/lib/postgres/data-$1 -D /var/lib/postgres/data" | su - postgres
 
   sudo pacman -R postgresql-old-upgrade
-  service start postgresql
+  sv start postgresql
   ifno "remove /var/lib/postgres/data-$1" || sudo rm -rf /var/lib/postgres/data-$1
 }
 

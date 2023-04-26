@@ -19,7 +19,7 @@ FONT=$HOME/.fonts/${1:-iosevka}
 family=${FONT##*/}
 
 # install nerd-font patcher
-xb_check fontforge nodejs otfcc ttfautohint
+void && xb_check fontforge nodejs otfcc ttfautohint
 ditto warning 'nerd-fonts v2.x may break ligatures'
 if [ -d $REPO ] ;then
   cd $REPO

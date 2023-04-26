@@ -9,6 +9,6 @@
 usage() { echo "usage: $(basename $0) -[-]<option>"; exit 1; }
 
 [ $# -gt 0 ] || usage
-echo "$1" | egrep -q "^[-][-]?[[:alnum:]|-]*$"
+echo "$1" | grep -E -q "^[-][-]?[[:alnum:]|-]*$"
 
 # vim: set ft=sh: #

@@ -51,10 +51,11 @@ EOF
     notmuch tag +sent folder:$maildir -- from:sdothum@gmail.com
 
     # not all folders qualify +new tag
-    if echo $folder | egrep -qv 'admin|alerts|bodyshamanics|browsers|clients|comments|community|dailies|eagles|family|mail|notices|phconsulting|personal|powerpath|private|providers|ravens|rescue|services|software|store|webmaster|x11' ;then
-      notmuch tag --remove-all -new folder:$maildir -- tag:unread
+    if echo $folder | grep -E -qv 'admin|alerts|bodyshamanics|browsers|clients|comments|community|dailies|eagles|family|mail|notices|phconsulting|personal|powerpath|private|providers|ravens|rescue|services|software|store|webmaster|x11' ;then
+      # notmuch tag --remove-all -new folder:$maildir -- tag:unread
+      notmuch tag -new folder:$maildir -- tag:unread
     fi
-    if echo $folder | egrep -q 'alerts|clients|community|eagles|family|notices|phconsulting|personal|powerpath|providers|ravens|rescue|services|store' ;then
+    if echo $folder | grep -E -q 'alerts|clients|community|eagles|family|notices|phconsulting|personal|powerpath|providers|ravens|rescue|services|store' ;then
       notmuch tag +attn folder:$maildir -- tag:new
     fi
   done
@@ -64,7 +65,7 @@ one_pass() {
   trace 'Starting mbsync..'
   rm -f $MAILDIR/.notmuch/xapian/flintlock
   mkdir -p $MAILDIR/$(grep 'Inbox' $HOME/.mbsyncrc | cut -d/ -f3)  # mbsync requires existence of mail account folder!
-  find $MAILDIR -type f -size 0 -exec rm -fv {} \;                  # purge empty messages
+  find $MAILDIR -type f -size 0 -exec rm -fv {} \;                 # purge empty messages
   mbsync -a --verbose >>/tmp/mbsync.log 2>&1
 
   trace 'Starting imapfilter..'

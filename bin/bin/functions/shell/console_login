@@ -10,8 +10,9 @@ PIXELSERV=$SESSION/pixelserv
 REFRESH=$SESSION/refresh
 WMAIL=$SESSION/wmail
 BOOTWM=$SESSION/boot:wm
+SEAT=/tmp/console:width
 
-DELAY=120  # unattended wm startup if set
+DELAY=180  # unattended wm startup if set
 
 # bootstrap SSD scheduler
 if [ $USER != root ] ;then
@@ -38,12 +39,12 @@ if [ $USER != root ] ;then
           echo "/dev/$ssd [deadline]" >/tmp/ssd:scheduler
         fi
       fi
-      [ -e /tmp/adblock ] || adblock &
+      [ -e /var/tmp/adblock ] || adblock &
       nohup hg serve --cwd $STOW --port 8213 >/tmp/hg:server.log 2>&1 &
     fi
 
     [ -e $PIXELSERV ] && post_install pixelserv >/dev/null &
-    service start ntpd >/dev/null 2>&1 &
+    # sv start ntpd >/dev/null 2>&1 &
 
     # pre-initialize arm fuzzy searches
     nohup fcache + $HOME >/dev/null 2>&1
@@ -66,6 +67,7 @@ if [ $USER != root ] ;then
     fi
 
     # wm startup
+    stty size | cut -d' ' -f2 >$SEAT
     [ $DELAY ] && [ -d $SESSION ] && echo $DELAY >$BOOTWM
   fi
 

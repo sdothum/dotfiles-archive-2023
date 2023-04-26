@@ -37,7 +37,8 @@ D | R) if [ $2 ] ;then   # delete/restore a singleton
 *    ) while [ $1 ] ;do  # link a list
          cd $(dir $1) 2>/dev/null || usage
          [ -d $(pkg $1) ]         || usage
-         /usr/bin/stow -v -t $HOME -S --ignore=.deprecated $(pkg $1)
+         ls -1 $(pkg $1) | grep -E -q 'etc|opt|root|usr|var' && { target=/; super=doas; } || target=$HOME
+         $super /usr/bin/stow -v -t $target -S --ignore=.deprecated $(pkg $1)
          shift
        done ;;
 esac

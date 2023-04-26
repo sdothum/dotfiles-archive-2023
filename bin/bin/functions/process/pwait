@@ -15,8 +15,8 @@ cycle=0.05  # loop window
 
 # Note: must filter complete script path
 # wait for uniquely named window to process to startup
-until pgrep -af "$@" | egrep -qv "$0|/term " ;do sleep $cycle ;done
+until pgrep -af "$@" | grep -E -qv "$0|/term " ;do sleep $cycle ;done
 # wait for uniquely named window to close before proceeding
-while pgrep -af "$@" | egrep -qv "$0|/term " ;do sleep $cycle ;done
+while pgrep -af "$@" | grep -E -qv "$0|/term " ;do sleep $cycle ;done
 
 # vim: set ft=sh: #

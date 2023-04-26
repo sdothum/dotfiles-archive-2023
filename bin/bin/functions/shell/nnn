@@ -18,6 +18,7 @@ TDIR=/net/downloads/http  # default tmux directory
 bookmarks="$(eval echo $(cat $(dirname $0)/.nnn:bookmarks))"  # hide server structure
 plugs="d:jump-dotfiles
 e:eject
+f:foliate
 i:imgview
 j:jump
 J:jump-refresh
@@ -36,9 +37,9 @@ plugs="$(list $plugs)"
 
 # nnn config
 # export NNN_FIFO=/tmp/nnn:fifo  # NNN_OPTS 'a' option
-# export NNN_OPENER=$XDG_CONFIG_HOME/nnn/plugins/nuke
+export NNN_OPENER=$HOME/.config/nnn/plugins/nuke  # use of $XDG_CONFIG_HOME causes env dump console login(?)
 exists trash-cli && export NNN_TRASH=1 || export NNN_TRASH=0
-export NNN_OPENER=xdg-open
+# export NNN_OPENER=xdg-open
 export NNN_PLUG="$plugs"
 export NNN_BMS="$bookmarks"
 #      NNN_FCOLORS 'c1e2272e006033f7c6d6abc4'                  # change dir/exe colors

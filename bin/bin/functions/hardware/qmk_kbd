@@ -4,7 +4,7 @@
 # Hardware
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ............................................................... QMK collection
+# ................................................................. QMK firmware
 
 usage() { echo "usage: $(basename $0) <keyboard> <keymap> [steno [nomouse]] [<string> [<string>]] [flash]"; exit 1; }
 
@@ -16,6 +16,7 @@ shift 2
 case $model in
 chimera) KBD=chimera_ergo_42 ;;
 corne  ) KBD=crkbd ;;
+georgi ) KBD='gboards/georgi' ;;
 *      ) KBD=$model ;;
 esac
 
@@ -28,7 +29,7 @@ JSON=$KEYBOARD/keymaps/$keymap/*.json
 CONFIG=$KEYMAP/config.h
 MAKEFILE=$KEYMAP/rules.mk
 SOURCE=$STOW/$model/${KEYMAP#$ROOT/}
-chording_engine=${SOURCE}/*.json
+[ $(find $SOURCE -name '*.json' | wc -l) -gt 0 ] && chording_engine=/home/shum/stow/georgi/qmk_firmware/users/sdothum/chording_engine
 
 [ -d $SOURCE ] || { ditto $keymap 'keymap not found'; usage; }
 ditto "$KEYBOARD" "$keymap"
@@ -36,12 +37,13 @@ ifno 'sync qmk_firmware repo' || { cd $QMK; rm -rf $KEYBOARD; git pull origin ma
 
 # update keymap from stow repo
 mkdir -p $KEYMAP 2>/dev/null
-rsync -avq -KL --exclude .deprecated $SOURCE $KEYBOARD/keymaps
-# splitography is not in official repo
-[ $KBD = splitography ] && rsync -avq --no-r -KL ${SOURCE%/keymaps/*}/* $KEYBOARD
+rsync -av -KL --exclude .deprecated $SOURCE $KEYBOARD/keymaps/
+# not in official repo..
+# [ ${KBD#*/} = georgi ] && rsync -avq --no-r -KL ${SOURCE%/keymaps/*}/* $KEYBOARD
+# [ $KBD = splitography ] && rsync -avq --no-r -KL ${SOURCE%/keymaps/*}/* $KEYBOARD
 
 # chording engine? generate keymap.c from json
-if [ -e $chording_engine ] ;then
+if [ $chording_engine ] ;then
   case $1 in
   '' | flash) ;;
   *         ) sed -i "s/STR(SECRET)/STR($1)/" $JSON; shift ;;
@@ -50,10 +52,11 @@ if [ -e $chording_engine ] ;then
   '' | flash) sed -i "s/STR(PUBLIC)/STR($(cat $HOME/.forward))/" $JSON ;;
   *         ) sed -i "s/STR(PUBLIC)/STR($1)/" $JSON; shift ;;
   esac
-  cd $QMK/users/dennytom/chording_engine
+
+  cd $chording_engine
   python *parser.py $JSON ${JSON%/*}/keymap.c  # most recent parser from https://github.com/DennyTom/qmk_firmware/tree/feature/buttery_engine_paired
   # parsing patch
-  grep -q '#define HASH_TYPE uint64_t' ${JSON%/*}/keymap.c && sed -i 's/uint32_t keycodes_hash;/uint64_t keycodes_hash;/; /bool contains_first_keycode/s/uint32_t/HASH_TYPE/' ${JSON%/*}/keymap.c
+  # grep -q '#define HASH_TYPE uint64_t' ${JSON%/*}/keymap.c && sed -i 's/uint32_t keycodes_hash;/uint64_t keycodes_hash;/; /bool contains_first_keycode/s/uint32_t/HASH_TYPE/' ${JSON%/*}/keymap.c
 else
   # steno (mouse may need to be disabled in config.h)
   if [ "$1" = steno ] ;then
@@ -79,12 +82,13 @@ else
 fi
 
 cd $QMK
-[ -e $KEYMAP/common ] && export CPATH=$KEYMAP/common || export CPATH=$KEYMAP
-make $KBD:$keymap:clean
+[ -d $KEYMAP/common ] && export CPATH=$KEYMAP/common || export CPATH=$KEYMAP
+# make $KBD:$keymap:clean
 echo CPATH=$CPATH
 case $model in
 chimera) [ "$1" = flash ] && CPATH=$CPATH make $KBD:$keymap:avrdude  || make $KBD:$keymap ;;
 corne  ) [ "$1" = flash ] && CPATH=$CPATH make $KBD:$keymap:avrdude  || make $KBD:$keymap ;;
+splito*) [ "$1" = flash ] && CPATH=$CPATH make $KBD:$keymap:dfu      || make $KBD:$keymap ;;
 planck ) [ "$1" = flash ] && CPATH=$CPATH make $KBD/rev1:$keymap:dfu || make $KBD/rev1:$keymap ;;  # rev1 board
 *      ) [ "$1" = flash ] && CPATH=$CPATH make $KBD:$keymap:dfu      || make $KBD:$keymap ;;
 esac

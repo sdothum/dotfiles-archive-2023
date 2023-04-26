@@ -14,7 +14,7 @@ prune() {
 # trim branches of older kernels
 trim() {
   cd /boot
-  for i in $(xbps-query -l | cut -d' ' -f2 | grep '^linux' | egrep -v 'headers|firmware|linux-' | sort -V | head -n -1 ) ;do
+  for i in $(xbps-query -l | cut -d' ' -f2 | grep '^linux' | grep -E -v 'headers|firmware|linux-' | sort -V | head -n -1 ) ;do
     version=${i#linux*-}
     leaves=$(ls -1 *${version%.*}.* | grep -v $version)
     [ "$leaves" ] && sudo rm -v $leaves

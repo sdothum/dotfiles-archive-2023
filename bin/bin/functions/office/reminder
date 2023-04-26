@@ -10,10 +10,10 @@
 #        reminder [<weeks>], (default) 4 weeks (0) current month
 #        reminder alarms
 
-REMINDERS=${REMINDERS:-$HOME/.reminders}
+REMINDERS=${REMINDERS:-$HOME/.reminders}  # required by cron (root invocaion)
 
 # import user path
-# . $HOME/bin/functions/shell/user_path
+. $HOME/bin/functions/shell/user_path
 
 list() {
   # ignore daily reminders
@@ -37,7 +37,7 @@ reminders() {
   # Note: cannot substitute $@ in date --date
   day=$@
   date --date "$day" >/dev/null 2>&1 || day=tomorrow
-  echo $day | egrep -q ':|[ap]m' && M=%M || M=00
+  echo $day | grep -E -q ':|[ap]m' && M=%M || M=00
   sed --follow-symlinks -i "$ aREM $(date "+%b %d %Y AT %H:$M" --date "$day") DURATION 1:00 MSG " $REMINDERS
   v -f -c 'normal|G' $REMINDERS
 }

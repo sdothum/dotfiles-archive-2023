@@ -8,15 +8,18 @@
 
 # ............................................................... Window manager
 
-usage() { echo "usage: $(basename $0) 'start | 2bwm | awesome | bspwm | budgie | cinnamon | dwm | gnome | goomwwm | guile | herbstluftwm | i3 | kde | lxde | lxqt | notion | openbox | ratpoison | razor-qt | spectrwm | stumpwm | subtle | shell | windowchef | wmii | wmutils | wtftw | xfce4 | xmonad"; rm -f $BOOTWM; exit 1; }
+usage() { echo "usage: $(basename $0) 'start [-<delay>] | 2bwm | awesome | bspwm | budgie | cinnamon | dwm | gnome | goomwwm | guile | herbstluftwm | i3 | kde | lxde | lxqt | notion | openbox | ratpoison | razor-qt | spectrwm | stumpwm | subtle | shell | windowchef | wmii | wmutils | wtftw | xfce4 | xmonad"; rm -f $BOOTWM; exit 1; }
 
 BOOTWM=$SESSION/boot:wm  # see console_login, user_login
 WM=$HOME/.windowmanager
+SEAT=/tmp/console:width  # see console_login
 
 # sh -c 'cd /usr/share/figlet; for i in *tlf ;do toilet -F gay -f $i $(cat $WM); echo $i; read prompt ;done'
 font=pagga
 font=future
 font=emboss
+
+[ "${1#-}" != "${1}" ] && { sleep ${1#-}; shift; }  # see user_login for delayed launch
 
 # see .xinitrc
 case $1 in
@@ -84,7 +87,7 @@ if console ;then
   wm=$(cat $WM)
   [ ${#wm} -le 12 ] && extra=' '  # emboss spacing
   [ $font = emboss ] && seat=$(echo $wm | sed -r "s/(.)/\1 $extra/g; s/ *$//") || seat=$wm
-  [ $(stty size | cut -d' ' -f2) -lt 240 ] && seat="$(echo $seat | cut -c -24)"  # assumes display width jump from 1920 to 1366
+  [ $(cat $SEAT) -lt 240 ] && seat="$(echo $seat | cut -c -24)"  # assumes display width jump from 1920 to 1366
   void && toilet -F gay -f $font "$seat" || { echo $BLACK; figlet -t -S -f lean "$seat"; echo $NOCOLOR; }
   [ $wm = shell ] && exit  # escape to shell prompt
 

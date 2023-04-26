@@ -8,7 +8,8 @@
 
 usage() { echo "usage: $(basename $0) [-b] [-d <date>] <source> [<target>] [<regex>]"; exit 1; }
 
-ignore='backups|debian|\.history|makepkg|nixos|plugged-custom|qmk_firmware|root|snippets|undo|vps'
+# ignore='backups|debian|\.history|makepkg|nixos|plugged-custom|qmk_firmware|root|snippets|undo|vps'
+ignore='backups|debian|\.history|makepkg|nixos|plugged-custom|root|snippets|undo|vps'
 
 DIRDIFF=/tmp/dirdiff
 FILES=$DIRDIFF:files
@@ -37,7 +38,7 @@ source=$(pwd)
 [ "$regex"  ] || regex='.*'
 
 # to handle filenames containing spaces
-find -L ./ -type f | exclude | egrep -v $ignore | grep "$regex" >$FILES
+find -L ./ -type f | exclude | grep -E -v $ignore | grep "$regex" >$FILES
 [ -s $FILES ] || usage
 src=${source#$HOME/stow/*/}
 src=\~/${src#$HOME/}
