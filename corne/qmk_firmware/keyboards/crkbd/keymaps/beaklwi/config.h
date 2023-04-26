@@ -26,7 +26,7 @@
 #define PUBLIC_STRING ""
 
 // language tap dance operators
-#define HASKELL
+// #define HASKELL
 #define UNIX
 
 // rolling home row modifiers (replaces LSFT_T, LGUI_T, LCTL_T, LALT_T qmk macros)

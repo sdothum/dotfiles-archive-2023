@@ -1,6 +1,6 @@
 // sdothum - 2016 (c) wtfpl
 
-#define STATE qk_tap_dance_state_t *state
+#define STATE tap_dance_state_t *state
 
 void asterisk(STATE, void *user_data);
 void asterisk_reset(STATE, void *user_data);
