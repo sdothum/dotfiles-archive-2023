@@ -38,11 +38,16 @@ DEPOT=/net/depot
 GLYPH=b-rounded
 language=fluent  # default e-reader glyph set
 dyslexic=true    # default e-reader dyslexic font families
+aQ=Q-crossing    # capital Q default for articulate
 gQ=Q-bar         # capital Q default for Unolexic/grotesk
-eQ=Q-straight    # capital Q default for elementary
 eG=G-toothless   # capital G default for elementary
-aG=G-hookless+   # capital G default for articulate
-tI=I-descending  # capital G default for isograffic (short-serifed)
+eQ=Q-straight    # capital Q default for elementary
+tG=G-rounded     # capital G default for typograffic
+tI=I-serifless   # capital I default for typograffic
+tQ=Q-straight    # capital Q default fon typograffic
+iG=G-hookless+   # capital G default for iota
+iI=I-descending  # capital I default for iota
+iQ=Q-straight    # capital Q default fon iota
 latest=16x       # lastest version
 
 touch $MAKE_INSTALL
@@ -159,17 +164,17 @@ myfonts() {
   ditto myfonts $Q
   language=${language:-fluent}
   # personal ereader fonts
-  e_ink eloquence   ${cap:-cap extended} a-single   J-descending I-serifless open          $eQ ${space:-space 1.3333}
-  e_ink articulate  ${cap:-cap extended}            j-serifed                $open $aG     $eQ ${space:-space 1.3333}
-  e_ink typograffic ${cap:-cap extended} a-single   j-serifed    f-extended  open  $aG     $eQ ${space:-space 1.3333}
-  e_ink Iota        ${cap:-cap extended} a-single   j-serifed    f-extended  open  $aG $tI $eQ ${space:-space 1.3333}
+  # e_ink eloquence   ${cap:-cap extended} a-single    J-descending I-serifless open          $eQ ${space:-space 1.3333}
+  # e_ink articulate  ${cap:-cap extended} G-toothed              J-serifless  j-serifed   $open         $aQ ${space:-space 1.3333}
+  e_ink typograffic ${cap:-cap extended} a-single    f-extended J-flat       j-serifed   $open $tG $tI $tQ ${space:-space 1.3333}
+  # e_ink Iota        ${cap:-cap extended} a-single    f-extended              j-serifed   open  $iG $iI $iQ ${space:-space 1.3333}
   # atkinson variants
-  e_ink idyslexic   ${cap:-cap extended}                                 $dQ ${space:-space 2}
-  e_ink dyslexic    ${cap:-cap extended}            I-serifless          $dQ ${space:-space 2}
-  e_ink igrotesk    ${cap:-cap extended} f-extended                      $gQ ${space:-space 1.3333}
-  e_ink grotesk     ${cap:-cap extended} f-extended I-serifless          $gQ ${space:-space 1.3333}
-  e_ink ielementary ${cap:-cap extended} a-single                    $eG $eQ ${space:-space 1.3333}
-  e_ink elementary  ${cap:-cap extended} a-single   I-serifless      $eG $eQ ${space:-space 1.3333}
+  # e_ink idyslexic   ${cap:-cap extended}                                 $dQ ${space:-space 2}
+  # e_ink dyslexic    ${cap:-cap extended}            I-serifless          $dQ ${space:-space 2}
+  # e_ink igrotesk    ${cap:-cap extended} f-extended                      $gQ ${space:-space 1.3333}
+  # e_ink grotesk     ${cap:-cap extended} f-extended I-serifless          $gQ ${space:-space 1.3333}
+  # e_ink ielementary ${cap:-cap extended} a-single                    $eG $eQ ${space:-space 1.3333}
+  # e_ink elementary  ${cap:-cap extended} a-single   I-serifless      $eG $eQ ${space:-space 1.3333}
 }
 
 dfont() { iosevka expanded j-serifed             Q-bar $(options $@) q-hook at-tall; }
