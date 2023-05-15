@@ -27,12 +27,12 @@ CRON=/tmp/scrub                               # see crontab -l
 # butterfs maintenance
 volume() {
   case $1 in
-  boot  ) echo /boot   ;;
-  root  ) echo /boot   ;;
-  net   ) echo /net    ;;
-  share ) echo /net    ;;
-  backup) echo /backup ;;
-  *     ) ;;
+    boot  ) echo /boot   ;;
+    root  ) echo /boot   ;;
+    net   ) echo /net    ;;
+    share ) echo /net    ;;
+    backup) echo /backup ;;
+    *     ) ;;
   esac
 }
 
@@ -62,16 +62,16 @@ if [ "$1" = '-' ] ;then
 fi
 
 case $1 in
-'') [ -e $CRON ] && { ditto "$CRON" $(cat $CRON); ifno "cancel scrub?" || rm $CRON; true; } || usage ;;  # assumes scrub:<fs>.log crontab file naming
-a*) scrub boot; scrub share; scrub backup ;;
-c*) sudo btrfs scrub cancel $(volume $2) ;;
-I*) sudo rm -f /var/lib/btrfs/*.* ;;
-s*) tail -f $CRON:$2.log ;;
-
-* ) nohup sudo btrfs scrub start -Bd $(volume $1) >$CRON.log &
-    log=$CRON:$1.log
-    show $1 >$log &
-    if pstat Xorg ;then alacritty --title "$1" -e "tail -f $log" ;else tail -f $log ;fi ;;
+  '') [ -e $CRON ] && { ditto "$CRON" $(cat $CRON); ifno "cancel scrub?" || rm $CRON; true; } || usage ;;  # assumes scrub:<fs>.log crontab file naming
+  a*) scrub boot; scrub share; scrub backup ;;
+  c*) sudo btrfs scrub cancel $(volume $2) ;;
+  I*) sudo rm -f /var/lib/btrfs/*.* ;;
+  s*) tail -f $CRON:$2.log ;;
+  
+  * ) nohup sudo btrfs scrub start -Bd $(volume $1) >$CRON.log &
+      log=$CRON:$1.log
+      show $1 >$log &
+      if pstat Xorg ;then alacritty --title "$1" -e "tail -f $log" ;else tail -f $log ;fi ;;
 esac
 
 # vim: set ft=sh: #

@@ -25,15 +25,15 @@ MSGCOLOR=${YELLOW}
 
 while [ "$1" ] ;do
   case $1 in
-  ERR*) MSGCOLOR=${RED}   ;;
-  WAR*) MSGCOLOR=${BLACK} ;;
-  INF*) MSGCOLOR=${_WHITE_} ;;
-  @   ) [ "$2" ] || usage; desc=$2; message=' ';     shift ;;
-  @*  ) [ "$2" ] && usage; desc=${1#@}; message=' '        ;;
-  -t  ) timestamp="$(date "+%-H %M'%S\" ")"                ;;
-  ..  ) [ "$2" ] || usage; justify=true; message=$2; shift ;;
-  --  ) separator=true ;;
-  *   ) [ "$message" ] && desc=$message; message=$1 ;;
+    ERR*) MSGCOLOR=${RED}   ;;
+    WAR*) MSGCOLOR=${BLACK} ;;
+    INF*) MSGCOLOR=${_WHITE_} ;;
+    @   ) [ "$2" ] || usage; desc=$2; message=' ';     shift ;;
+    @*  ) [ "$2" ] && usage; desc=${1#@}; message=' '        ;;
+    -t  ) timestamp="$(date "+%-H %M'%S\" ")"                ;;
+    ..  ) [ "$2" ] || usage; justify=true; message=$2; shift ;;
+    --  ) separator=true ;;
+    *   ) [ "$message" ] && desc=$message; message=$1 ;;
   esac
   shift
 done

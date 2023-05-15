@@ -14,10 +14,10 @@ keymap=$2
 shift 2
 
 case $model in
-chimera) KBD=chimera_ergo_42 ;;
-corne  ) KBD=crkbd ;;
-georgi ) KBD='gboards/georgi' ;;
-*      ) KBD=$model ;;
+  chimera) KBD=chimera_ergo_42 ;;
+  corne  ) KBD=crkbd ;;
+  georgi ) KBD='gboards/georgi' ;;
+  *      ) KBD=$model ;;
 esac
 
 # ROOT=/net/depot
@@ -45,12 +45,12 @@ rsync -av -KL --exclude .deprecated $SOURCE $KEYBOARD/keymaps/
 # chording engine? generate keymap.c from json
 if [ $chording_engine ] ;then
   case $1 in
-  '' | flash) ;;
-  *         ) sed -i "s/STR(SECRET)/STR($1)/" $JSON; shift ;;
+    '' | flash) ;;
+    *         ) sed -i "s/STR(SECRET)/STR($1)/" $JSON; shift ;;
   esac
   case $1 in
-  '' | flash) sed -i "s/STR(PUBLIC)/STR($(cat $HOME/.forward))/" $JSON ;;
-  *         ) sed -i "s/STR(PUBLIC)/STR($1)/" $JSON; shift ;;
+    '' | flash) sed -i "s/STR(PUBLIC)/STR($(cat $HOME/.forward))/" $JSON ;;
+    *         ) sed -i "s/STR(PUBLIC)/STR($1)/" $JSON; shift ;;
   esac
 
   cd $chording_engine
@@ -72,12 +72,12 @@ else
   grep -q PUBLIC_STRING $CONFIG || sed -i '$a#define PUBLIC_STRING ""' $CONFIG
 
   case $1 in
-  '' | flash) sed -i "/#define PRIVATE_STRING/c#define PRIVATE_STRING \"\"" $CONFIG ;;
-  *         ) sed -i "/#define PRIVATE_STRING/c#define PRIVATE_STRING \"$1\"" $CONFIG; shift ;;
+    '' | flash) sed -i "/#define PRIVATE_STRING/c#define PRIVATE_STRING \"\"" $CONFIG ;;
+    *         ) sed -i "/#define PRIVATE_STRING/c#define PRIVATE_STRING \"$1\"" $CONFIG; shift ;;
   esac
   case $1 in
-  '' | flash) sed -i "/#define PUBLIC_STRING/c#define PUBLIC_STRING \"$(cat $HOME/.forward)\"" $CONFIG ;;
-  *         ) sed -i "/#define PUBLIC_STRING/c#define PUBLIC_STRING \"$1\"" $CONFIG; shift ;;
+    '' | flash) sed -i "/#define PUBLIC_STRING/c#define PUBLIC_STRING \"$(cat $HOME/.forward)\"" $CONFIG ;;
+    *         ) sed -i "/#define PUBLIC_STRING/c#define PUBLIC_STRING \"$1\"" $CONFIG; shift ;;
   esac
 fi
 
@@ -86,11 +86,11 @@ cd $QMK
 # make $KBD:$keymap:clean
 echo CPATH=$CPATH
 case $model in
-chimera) [ "$1" = flash ] && CPATH=$CPATH make $KBD:$keymap:avrdude  || make $KBD:$keymap ;;
-corne  ) [ "$1" = flash ] && CPATH=$CPATH make $KBD:$keymap:avrdude  || make $KBD:$keymap ;;
-splito*) [ "$1" = flash ] && CPATH=$CPATH make $KBD:$keymap:dfu      || make $KBD:$keymap ;;
-planck ) [ "$1" = flash ] && CPATH=$CPATH make $KBD/rev1:$keymap:dfu || make $KBD/rev1:$keymap ;;  # rev1 board
-*      ) [ "$1" = flash ] && CPATH=$CPATH make $KBD:$keymap:dfu      || make $KBD:$keymap ;;
+  chimera) [ "$1" = flash ] && CPATH=$CPATH make $KBD:$keymap:avrdude  || make $KBD:$keymap ;;
+  corne  ) [ "$1" = flash ] && CPATH=$CPATH make $KBD:$keymap:avrdude  || make $KBD:$keymap ;;
+  splito*) [ "$1" = flash ] && CPATH=$CPATH make $KBD:$keymap:dfu      || make $KBD:$keymap ;;
+  planck ) [ "$1" = flash ] && CPATH=$CPATH make $KBD/rev1:$keymap:dfu || make $KBD/rev1:$keymap ;;  # rev1 board
+  *      ) [ "$1" = flash ] && CPATH=$CPATH make $KBD:$keymap:dfu      || make $KBD:$keymap ;;
 esac
 sudo chown -R $USER:users $QMK
 

@@ -15,10 +15,10 @@ delay=${delay:-1}
 
 if server ;then
   case $@ in
-  l* | *0) opts='-s 1680x1050 -i :0.0' ;;
-  r* | *1) opts='-s 2560x1600 -i :0.0+1680,0' ;;
-  a*     ) opts='-s 4240x1600 -i :0.0' ;;
-  *      ) usage ;;
+    l* | *0) opts='-s 1680x1050 -i :0.0' ;;
+    r* | *1) opts='-s 2560x1600 -i :0.0+1680,0' ;;
+    a*     ) opts='-s 4240x1600 -i :0.0' ;;
+    *      ) usage ;;
   esac
 else
   set -- $(query display)

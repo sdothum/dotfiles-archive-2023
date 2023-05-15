@@ -13,9 +13,9 @@ dict() { /usr/bin/dict $1 | sed '/^.*Moby Thesaurus/,$d' | grep -v 'Moby Thesaur
 alpine && exec /usr/local/bin/dict $@
 
 case $1 in
-'') usage ;;
--t) [ $2 ] && { dict $2; ditto thesaurus "$2"; th $2; } || usage ;;
-* ) dict $1 ;;  # chop thesaurus
+  '') usage ;;
+  -t) [ $2 ] && { dict $2; ditto thesaurus "$2"; th $2; } || usage ;;
+  * ) dict $1 ;;  # chop thesaurus
 esac
 
 # vim: set ft=sh: #

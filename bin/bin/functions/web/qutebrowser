@@ -42,4 +42,8 @@ else
   eval $QUTEBROWSER $RUNOPT $font $startpage 2>/dev/null & 
 fi
 
+# pin tab to prevent last page close
+sleep 2
+xdotool key Control+p
+
 # vim: set ft=sh: #

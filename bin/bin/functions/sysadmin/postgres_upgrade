@@ -54,10 +54,10 @@ post() {
 
 # upgrade postgresql database
 case $1 in
-dump) dump ;;
-pre ) pre ;;
-post) post ;;
-*   ) usage ;;
+  dump) dump ;;
+  pre ) pre ;;
+  post) post ;;
+  *   ) usage ;;
 esac
 
 # vim: set ft=sh: #

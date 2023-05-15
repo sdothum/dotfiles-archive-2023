@@ -62,40 +62,40 @@ log() {
 
 # offlineimap / imapfilter actions
 case $1 in
-'') if !p 'python.*offlineimap.*offlineimaprc' ;then
-      nohup offlineimap -c $OFFLINEIMAPRC -u basic >>/tmp/offlineimap.log 2>&1 &
-      ditto 'offlineimap running'
-    fi
-    ifyes '.. watch offlineimap log' && imap l ;;
-
-1*) if [ $2 ] ;then
-      nohup offlineimap -c $OFFLINEIMAPRC.$2 -o -u basic >>/tmp/offlineimap.log 2>&1 &
-    else
-      nohup offlineimap -c $OFFLINEIMAPRC -o -u basic >>/tmp/offlineimap.log 2>&1 &
-    fi
-    imap l ;;
-
-C*) rm -f $IMAPFILTER/certificates; imap f ;;
-f*) filter ${2:-dovecot} ;;
-I*) init $2 ;;
-L*) log imapfilter $IMAPFILTER/$filter ;;
-l*) log offlineimap $OFFLINEIMAPRC ;;
-
-Q*) !p 'python.*offlineimap.*offlineimaprc' || exit
-    nohup offlineimap -c $OFFLINEIMAPRC -u quiet >>/tmp/imapfilter.log 2>&1 & ;;
-
-q*) killall imapfilter 2>/dev/null
-    kill -TERM $(p 'python.*offlineimap.*offlineimaprc' | awk '{ print $2 }') 2>/dev/null ;;
-
-r*) imap q; imap ;;
-
-t*) if [ -e $OFFLINEIMAPFILTER ] ;then
-      sudo rm -r $OFFLINEIMAPFILTER; ditto 'imapfilter processing off'
-    else
-      touch $OFFLINEIMAPFILTER; ditto 'imapfilter processing on'
-    fi ;;
-
-* ) usage ;;
+  '') if !p 'python.*offlineimap.*offlineimaprc' ;then
+        nohup offlineimap -c $OFFLINEIMAPRC -u basic >>/tmp/offlineimap.log 2>&1 &
+        ditto 'offlineimap running'
+      fi
+      ifyes '.. watch offlineimap log' && imap l ;;
+  
+  1*) if [ $2 ] ;then
+        nohup offlineimap -c $OFFLINEIMAPRC.$2 -o -u basic >>/tmp/offlineimap.log 2>&1 &
+      else
+        nohup offlineimap -c $OFFLINEIMAPRC -o -u basic >>/tmp/offlineimap.log 2>&1 &
+      fi
+      imap l ;;
+  
+  C*) rm -f $IMAPFILTER/certificates; imap f ;;
+  f*) filter ${2:-dovecot} ;;
+  I*) init $2 ;;
+  L*) log imapfilter $IMAPFILTER/$filter ;;
+  l*) log offlineimap $OFFLINEIMAPRC ;;
+  
+  Q*) !p 'python.*offlineimap.*offlineimaprc' || exit
+      nohup offlineimap -c $OFFLINEIMAPRC -u quiet >>/tmp/imapfilter.log 2>&1 & ;;
+  
+  q*) killall imapfilter 2>/dev/null
+      kill -TERM $(p 'python.*offlineimap.*offlineimaprc' | awk '{ print $2 }') 2>/dev/null ;;
+  
+  r*) imap q; imap ;;
+  
+  t*) if [ -e $OFFLINEIMAPFILTER ] ;then
+        sudo rm -r $OFFLINEIMAPFILTER; ditto 'imapfilter processing off'
+      else
+        touch $OFFLINEIMAPFILTER; ditto 'imapfilter processing on'
+      fi ;;
+  
+  * ) usage ;;
 esac
 
 # vim: set ft=sh: #

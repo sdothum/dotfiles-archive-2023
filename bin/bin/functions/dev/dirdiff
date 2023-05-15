@@ -17,9 +17,9 @@ LOG=$DIRDIFF.log
 
 while [ "$1" ] ;do
   case $1 in
-  -b) w=-w; diffopt='set diffopt+=iwhite' ;;                   # ignore whitespace
-  -d) FILTER=$DIRDIFF:filter; touch -d "$2" $FILTER; shift ;;  # timestamp filter
-  * ) break ;;
+    -b) w=-w; diffopt='set diffopt+=iwhite' ;;                   # ignore whitespace
+    -d) FILTER=$DIRDIFF:filter; touch -d "$2" $FILTER; shift ;;  # timestamp filter
+    * ) break ;;
   esac
   shift
 done

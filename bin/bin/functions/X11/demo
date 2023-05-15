@@ -22,9 +22,9 @@ demo() {
     [ $TRACE ] && echo $line
     set -- $(echo $line)
     case $1 in
-    '#') continue ;;
-    '!') shift; $@ ;;
-    *  ) [ "$line" ] && xdotool key --delay 5 $line ;;
+      '#') continue ;;
+      '!') shift; $@ ;;
+      *  ) [ "$line" ] && xdotool key --delay 5 $line ;;
     esac
     sleep $DELAY
   done

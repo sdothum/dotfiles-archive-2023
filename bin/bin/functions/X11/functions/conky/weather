@@ -11,21 +11,21 @@ connect || exit
 
 # http://www.weatheroffice.gc.ca/business/index_e.html for city codes
 case $1 in
-calgary  ) city=ab-52; shift ;;
-halifax  ) city=ns-19; shift ;;
-kingston ) city=on-69; shift ;;
-nanaimo  ) city=bc-20; shift ;;
-nelson   ) city=bc-37; shift ;;
-vancouver) city=bc-74; shift ;;
-victoria ) city=bc-85; shift ;;
-ottawa   ) city=on-52; shift ;;
-*        ) city=on-52 ;;
+  calgary  ) city=ab-52; shift ;;
+  halifax  ) city=ns-19; shift ;;
+  kingston ) city=on-69; shift ;;
+  nanaimo  ) city=bc-20; shift ;;
+  nelson   ) city=bc-37; shift ;;
+  vancouver) city=bc-74; shift ;;
+  victoria ) city=bc-85; shift ;;
+  ottawa   ) city=on-52; shift ;;
+  *        ) city=on-52 ;;
 esac
 
 sep=', '
 case $1 in
-debug) debug=true ;;
-panel) sep=$RSEP ;;
+  debug) debug=true ;;
+  panel) sep=$RSEP ;;
 esac
 
 # scrape weather synopsis

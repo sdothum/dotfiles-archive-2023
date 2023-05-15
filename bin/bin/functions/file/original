@@ -11,10 +11,10 @@ usage() { echo "usage: $(basename $0) [-f | -q]* <file>"; exit 1; }
 V=-v
 while : ;do
   case "$1" in
-  -f) eval sudo rm -rf "\$$#.original"; shift; continue ;;
-  -q) unset V;                          shift; continue ;;
-  '') usage ;;
-  * ) break ;;
+    -f) eval sudo rm -rf "\$$#.original"; shift; continue ;;
+    -q) unset V;                          shift; continue ;;
+    '') usage ;;
+    * ) break ;;
   esac
 done
 

@@ -85,22 +85,22 @@ playback() {
     video=$(find "$library" -maxdepth 1 -type d -regex ".*/${title}.*")
 
     case $action in
-    play  ) if [ $(echo "$video" | wc -l) -gt 1 ] ;then
-              notify 3 critical "$movie" "Duplicate movie files found"
-              term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger "$library"
-            fi
-            mhistory "$playlist" "$movie"
-            play "$video" "$movie"
-            cache  # update deletes
-            break ;;
-
-    copy  ) cp -rf "$video" $passport; break ;;
-    mrqe  ) surf "http://www.mrqe.com/search?q=$movie"; pwait "surf http://www.mrqe.com/search?q=$movie" ;;
-    imdb  ) surf "http://www.imdb.com/find?s=all&q=$movie"; pwait "surf http://www.imdb.com/find?s=all&q=$movie" ;;
-    manage) term 'movies' WAIT nnn "$video" || term 'movies' WAIT nnn "$library"; cache; break ;;
-    delete) rm -rf "$video"; cache; break ;;
-    mark  ) mhistory "$playlist" "$movie"; cache; break ;;
-    exit  ) exit ;;
+      play  ) if [ $(echo "$video" | wc -l) -gt 1 ] ;then
+                notify 3 critical "$movie" "Duplicate movie files found"
+                term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger "$library"
+              fi
+              mhistory "$playlist" "$movie"
+              play "$video" "$movie"
+              cache  # update deletes
+              break ;;
+  
+      copy  ) cp -rf "$video" $passport; break ;;
+      mrqe  ) surf "http://www.mrqe.com/search?q=$movie"; pwait "surf http://www.mrqe.com/search?q=$movie" ;;
+      imdb  ) surf "http://www.imdb.com/find?s=all&q=$movie"; pwait "surf http://www.imdb.com/find?s=all&q=$movie" ;;
+      manage) term 'movies' WAIT nnn "$video" || term 'movies' WAIT nnn "$library"; cache; break ;;
+      delete) rm -rf "$video"; cache; break ;;
+      mark  ) mhistory "$playlist" "$movie"; cache; break ;;
+      exit  ) exit ;;
     esac
   done
 }
@@ -116,14 +116,14 @@ while : ;do
 
   [ "$movie" = "$(X $LAST)" ] && movie=$(grep '^[a-zA-Z0-9]' $playlist | head -1)
   case ${movie#$(X)} in
-  "$NAME"     ) unset T; cache ;;
-  "$DATE"     ) T=t; cache ;;
-  "$TOGGLE"   ) [ $R ] && unset R || R=r; cache ;;
-  "$USENET"   ) nzbgeek; unset movie ;;
-  # "$FILE"   ) killall 'ROX-Filer'; rox $nzb; rox "$library"; pwait "ROX-Filer"; cache ;;
-  "$FILE"     ) killall 'nnn' 2>/dev/null; term 'movies' WAIT nnn -s movies; cache; continue ;;
-  "$CATALOGUE") catalogue; cache; movie=4; continue ;;  # highlight added movie
-  *           ) movie=$(echo "$movie" | sed "s/^$SEP //"); playback ;;
+    "$NAME"     ) unset T; cache ;;
+    "$DATE"     ) T=t; cache ;;
+    "$TOGGLE"   ) [ $R ] && unset R || R=r; cache ;;
+    "$USENET"   ) nzbgeek; unset movie ;;
+    # "$FILE"   ) killall 'ROX-Filer'; rox $nzb; rox "$library"; pwait "ROX-Filer"; cache ;;
+    "$FILE"     ) killall 'nnn' 2>/dev/null; term 'movies' WAIT nnn -s movies; cache; continue ;;
+    "$CATALOGUE") catalogue; cache; movie=4; continue ;;  # highlight added movie
+    *           ) movie=$(echo "$movie" | sed "s/^$SEP //"); playback ;;
   esac
 done
 

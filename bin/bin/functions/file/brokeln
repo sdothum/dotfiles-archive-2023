@@ -9,8 +9,8 @@
 usage() { echo "usage: $(basename $0) [rm] [<path>]"; exit 1; }
 
 case $1 in
-rm) [ -d ${2:-$HOME} ] && find ${2:-$HOME} -xtype l -exec rm -v {} \; || usage ;;
-* ) [ -d ${1:-$HOME} ] && find ${1:-$HOME} -xtype l -exec ls -l {} \;; usage ;;
+  rm) [ -d ${2:-$HOME} ] && find ${2:-$HOME} -xtype l -exec rm -v {} \; || usage ;;
+  * ) [ -d ${1:-$HOME} ] && find ${1:-$HOME} -xtype l -exec ls -l {} \;; usage ;;
 esac
 
 # vim: set ft=sh: #

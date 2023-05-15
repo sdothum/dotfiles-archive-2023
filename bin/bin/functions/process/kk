@@ -9,8 +9,8 @@
 usage() { echo "usage: $(basename $0) [sig=<signal>] <name>.."; exit 1; }
 
 case $1 in
-sig=*) eval $1; shift ;;
-    *) sig=${sig:--TERM} ;;
+  sig=*) eval $1; shift ;;
+      *) sig=${sig:--TERM} ;;
 esac
 
 # quick kill processes by name

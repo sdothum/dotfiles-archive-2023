@@ -22,31 +22,31 @@ em_linespace=0,1.25
 
 # override device/cloud transfer and create kindle/kobo file
 case $1 in
-azw3    ) format=$1; option=${option:-default}; em_indent=${em_indent#*,}; library=true; shift ;;  # library update
-epub    ) format=$1; option=${option:-default}; em_indent=${em_indent%,*}; library=true; shift ;;  # epub output hack
-reformat) format=$1; option=${option:-default}; em_indent=${em_indent%,*}; library=true; shift ;;  # epub output hack
+  azw3    ) format=$1; option=${option:-default}; em_indent=${em_indent#*,}; library=true; shift ;;  # library update
+  epub    ) format=$1; option=${option:-default}; em_indent=${em_indent%,*}; library=true; shift ;;  # epub output hack
+  reformat) format=$1; option=${option:-default}; em_indent=${em_indent%,*}; library=true; shift ;;  # epub output hack
 esac
 
 # override left justification
 case "$1" in
-''      ) ;;
-default ) option=default;  shift ;;
-justify ) option=justify;  shift ;;
-noindent) option=noindent; shift ;;  # retain poetry formatting
-poetry  ) option=noindent; shift ;;  # retain poetry formatting
-all     ) option=all;      shift ;;
-*       ) [ -e "$1" ] || { find . -iname "$1" | grep -q '[.]' || usage; } ;;
+  ''      ) ;;
+  default ) option=default;  shift ;;
+  justify ) option=justify;  shift ;;
+  noindent) option=noindent; shift ;;  # retain poetry formatting
+  poetry  ) option=noindent; shift ;;  # retain poetry formatting
+  all     ) option=all;      shift ;;
+  *       ) [ -e "$1" ] || { find . -iname "$1" | grep -q '[.]' || usage; } ;;
 esac
 
 # <regex> autoconvert epubs to awz3
 case "$format" in
-azw3    ) [ "$1"    ] || { find . -iname '*epub'             -exec dmenu econvert azw3 $option {} \; ; exit; }
-          [ -e "$1" ] || { find . -iname "$1"                -exec dmenu econvert azw3 $option {} \; ; exit; } ;;
-epub    ) [ "$1"    ] || { find . -iname '*azw3'             -exec dmenu econvert epub $option {} \; ; exit; }
-          [ -e "$1" ] || { find . -iname "$1"                -exec dmenu econvert epub $option {} \; ; exit; } ;;
-reformat) [ "$1"    ] || { find . -iregex '.*\(azw3\|epub\)' -exec dmenu econvert reformat $option {} \; ; exit; }
-          [ -e "$1" ] || { find . -iname "$1"                -exec dmenu econvert reformat $option {} \; ; exit; }
-          format=${1##*\.}; reformat=true ;;  # for re-tweaking converted ebooks
+  azw3    ) [ "$1"    ] || { find . -iname '*epub'             -exec dmenu econvert azw3 $option {} \; ; exit; }
+            [ -e "$1" ] || { find . -iname "$1"                -exec dmenu econvert azw3 $option {} \; ; exit; } ;;
+  epub    ) [ "$1"    ] || { find . -iname '*azw3'             -exec dmenu econvert epub $option {} \; ; exit; }
+            [ -e "$1" ] || { find . -iname "$1"                -exec dmenu econvert epub $option {} \; ; exit; } ;;
+  reformat) [ "$1"    ] || { find . -iregex '.*\(azw3\|epub\)' -exec dmenu econvert reformat $option {} \; ; exit; }
+            [ -e "$1" ] || { find . -iname "$1"                -exec dmenu econvert reformat $option {} \; ; exit; }
+            format=${1##*\.}; reformat=true ;;  # for re-tweaking converted ebooks
 esac
 
 file=$1
@@ -99,10 +99,10 @@ output=ebook-convert:ebook  # flatpak ebook-convert cannot not output to path(?)
 justify=left
 em_linespace=${em_linespace%,*}
 case $option in
-default ) ;;
-noindent) em_indent=0; em_linespace=${em_linespace#*,} ;;
-justify ) justify=justify ;;
-all     ) unset indent; em_linespace=${em_linespace#*,}; justify=justify ;;
+  default ) ;;
+  noindent) em_indent=0; em_linespace=${em_linespace#*,} ;;
+  justify ) justify=justify ;;
+  all     ) unset indent; em_linespace=${em_linespace#*,}; justify=justify ;;
 esac
 
 notify low "$title" "Converting to $format..\n--change-justification="$justify" $indent"

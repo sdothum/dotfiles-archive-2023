@@ -44,9 +44,9 @@ mail() {
 pretty() { sed '/[{}]/d; s/^ *//g; s/"//g; s/,$//;' | sed ':a;N;$!ba;s/\[\n//g' | sed ':a;N;$!ba;s/\n\]//g'; }
 
 case $1 in
-'') pgrep -f "watchman watch-project $ROOT" >/dev/null && watchman watch-list $ROOT | pretty || watchd $ROOT $NAME $CMD & ;;
--s) watchman watch-del $ROOT | pretty; watchman shutdown-server | pretty; pkill -f "watchd $ROOT $NAME $CMD" ;;
-* ) watchq f $ROOT $NAME $@; [ $(pgrep -cf "watchq f $ROOT $NAME") -eq 1 ] && mail & ;;  # delay for imap processing latencies
+  '') pgrep -f "watchman watch-project $ROOT" >/dev/null && watchman watch-list $ROOT | pretty || watchd $ROOT $NAME $CMD & ;;
+  -s) watchman watch-del $ROOT | pretty; watchman shutdown-server | pretty; pkill -f "watchd $ROOT $NAME $CMD" ;;
+  * ) watchq f $ROOT $NAME $@; [ $(pgrep -cf "watchq f $ROOT $NAME") -eq 1 ] && mail & ;;  # delay for imap processing latencies
 esac
 
 # vim: set ft=sh: #

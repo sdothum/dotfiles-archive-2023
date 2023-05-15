@@ -25,10 +25,10 @@ walk() {
 
 # v by directory depth or name
 case $1 in
-''   ) walk ;;
-help ) usage ;;
-[1-4]) find -L -maxdepth ${1:-1} -type f | v0 ;;
-*    ) find -L -type f -name "$1" | v0 ;;
+  ''   ) walk ;;
+  help ) usage ;;
+  [1-4]) find -L -maxdepth ${1:-1} -type f | v0 ;;
+  *    ) find -L -type f -name "$1" | v0 ;;
 esac
 
 # vim: set ft=sh: #

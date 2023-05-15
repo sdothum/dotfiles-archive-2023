@@ -23,24 +23,24 @@ dir() { cd $STOW; echo $1 | grep -q '/' && { [ -d $1 ] && echo $STOW/${1%/*} || 
 pkg() { echo $1 | grep -q '/' && echo ${1#*/} || echo $1; }
 
 case $1 in
-''   ) find $STOW -maxdepth 1 -type d | sed 's|.*/||' | grep -v '^\.' | sort | column; usage ;;
-sync ) link '&& stow' ;;
-clean) link '|| stow D' ;;
-check) link '&& ditto' ;;
-
-D | R) if [ $2 ] ;then   # delete/restore a singleton
-         cd $(dir $2) 2>/dev/null || usage
-         /usr/bin/stow -v -t $HOME -d $STOW -$1 $(pkg $2) 2>&1 | grep -v BUG
-       else usage 
-       fi ;;             # suppress stow path bugs
-
-*    ) while [ $1 ] ;do  # link a list
-         cd $(dir $1) 2>/dev/null || usage
-         [ -d $(pkg $1) ]         || usage
-         ls -1 $(pkg $1) | grep -E -q 'etc|opt|root|usr|var' && { target=/; super=doas; } || target=$HOME
-         $super /usr/bin/stow -v -t $target -S --ignore=.deprecated $(pkg $1)
-         shift
-       done ;;
+  ''   ) find $STOW -maxdepth 1 -type d | sed 's|.*/||' | grep -v '^\.' | sort | column; usage ;;
+  sync ) link '&& stow' ;;
+  clean) link '|| stow D' ;;
+  check) link '&& ditto' ;;
+  
+  D | R) if [ $2 ] ;then   # delete/restore a singleton
+           cd $(dir $2) 2>/dev/null || usage
+           /usr/bin/stow -v -t $HOME -d $STOW -$1 $(pkg $2) 2>&1 | grep -v BUG
+         else usage 
+         fi ;;             # suppress stow path bugs
+  
+  *    ) while [ $1 ] ;do  # link a list
+           cd $(dir $1) 2>/dev/null || usage
+           [ -d $(pkg $1) ]         || usage
+           ls -1 $(pkg $1) | grep -E -q 'etc|opt|root|usr|var' && { target=/; super=doas; } || target=$HOME
+           $super /usr/bin/stow -v -t $target -S --ignore=.deprecated $(pkg $1)
+           shift
+         done ;;
 esac
 
 # vim: set ft=sh: #

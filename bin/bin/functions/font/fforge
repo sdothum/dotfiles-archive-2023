@@ -298,8 +298,8 @@ $(reglarweight 0u0077)
     for i in *${regular}*\#1.ttf ;do
       ditto tweak_MWw $i
       case $i in
-      *italic*) file=*-italic.ttf ;;
-      *       ) file=*regular.ttf ;;
+        *italic*) file=*-italic.ttf ;;
+        *       ) file=*regular.ttf ;;
       esac
       fontforge --script /tmp/fontforge.script $i $file
     done
@@ -379,20 +379,20 @@ Generate(\$1);
 # main, see iosevka
 fforge=$1
 case $1 in
-I_descending ) ;;
-T_descending ) ;;
-FP_descending) ;;
-q_hook       ) ;;
-Q_hook       ) ;;
-Q_horizontal ) shape=$2; shift ;;
-Q_custom     ) shape=$2; shift ;;
-ligature     ) [ $4 ] && { width=$2; shift 2; } || { shape=$2; shift; } ;;               # see iosevka for tricky bits
-punctuation  ) [ $2 ] && { emdash=$2; shift; } || emdash=2 ;;
-*weight      ) regular=${1%weight}; fforge=weight; [ "$2" = 'book+regular' ] && { adjust=true; shift; } ;;
-dyslexic     ) [ $2 ] && { space=$2; shift; } || space=2 ;;
-copy         ) [ $3 ] && { family=$2; alias=$3; shift 2; copy; exit; }      || usage ;;  # pwd commandline only!
-map          ) [ $4 ] && { family=$2; from=$3; to=$4; shift 3; map; exit; } || usage ;;  # pwd commandline only!
-*            ) usage ;;
+  I_descending ) ;;
+  T_descending ) ;;
+  FP_descending) ;;
+  q_hook       ) ;;
+  Q_hook       ) ;;
+  Q_horizontal ) shape=$2; shift ;;
+  Q_custom     ) shape=$2; shift ;;
+  ligature     ) [ $4 ] && { width=$2; shift 2; } || { shape=$2; shift; } ;;               # see iosevka for tricky bits
+  punctuation  ) [ $2 ] && { emdash=$2; shift; } || emdash=2 ;;
+  *weight      ) regular=${1%weight}; fforge=weight; [ "$2" = 'book+regular' ] && { adjust=true; shift; } ;;
+  dyslexic     ) [ $2 ] && { space=$2; shift; } || space=2 ;;
+  copy         ) [ $3 ] && { family=$2; alias=$3; shift 2; copy; exit; }      || usage ;;  # pwd commandline only!
+  map          ) [ $4 ] && { family=$2; from=$3; to=$4; shift 3; map; exit; } || usage ;;  # pwd commandline only!
+  *            ) usage ;;
 esac
 shift
 [ $2 ] && usage

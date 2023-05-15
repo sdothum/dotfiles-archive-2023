@@ -16,8 +16,8 @@ usage() {
 
 while [ $1 ] ;do
   case $1 in
-  '-'       ) refresh=- ;;
-  *         ) CATLG=$CACHEDIR/fcache:$1; [ $refresh ] && rm -f $CATLG 2>/dev/null; shift; break ;;
+    '-'       ) refresh=- ;;
+    *         ) CATLG=$CACHEDIR/fcache:$1; [ $refresh ] && rm -f $CATLG 2>/dev/null; shift; break ;;
   esac
   shift
 done
@@ -34,11 +34,11 @@ if ! [ -e $CATLG ] && [ -d "$1" ] ;then
       unset options
     else
       case $1 in
-      -maxdepth |\
-      -perm     |\
-      -regex    |\
-      -regextype) options="$options $1 $2"; shift ;;
-      *         ) options="$options $1" ;;
+        -maxdepth |\
+        -perm     |\
+        -regex    |\
+        -regextype) options="$options $1 $2"; shift ;;
+        *         ) options="$options $1" ;;
       esac
     fi
     shift

@@ -29,15 +29,15 @@ find $CACHEDIR -name 'fcache:*' -size 0c -exec rm {} \; 2>/dev/null
 
 while [ $1 ] ;do
   case $1 in
-  I*        ) rm -fv $FCACHE*; exit ;;
-  !         ) not=! ;;
-  [bcdflps] ) type=$1 ;;
-  '-'       ) refresh=true ;;
-  -maxdepth ) maxdepth="-maxdepth $2"; shift ;;
-  -perm     ) perm="$not -perm $2"; unset not; shift ;;
-  -regex    ) regex="$regex $not -regex '$2'"; type=f; filter=cat; unset not; shift ;;
-  -regextype) regextype="-regextype $2"; shift ;;
-  *         ) [ -d $1 ] && node=$1 || usage; [ $type ] || type=d ;;
+    I*        ) rm -fv $FCACHE*; exit ;;
+    !         ) not=! ;;
+    [bcdflps] ) type=$1 ;;
+    '-'       ) refresh=true ;;
+    -maxdepth ) maxdepth="-maxdepth $2"; shift ;;
+    -perm     ) perm="$not -perm $2"; unset not; shift ;;
+    -regex    ) regex="$regex $not -regex '$2'"; type=f; filter=cat; unset not; shift ;;
+    -regextype) regextype="-regextype $2"; shift ;;
+    *         ) [ -d $1 ] && node=$1 || usage; [ $type ] || type=d ;;
   esac
   shift
 done

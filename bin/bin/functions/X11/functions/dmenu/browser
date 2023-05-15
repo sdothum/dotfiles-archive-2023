@@ -39,30 +39,30 @@ browsers="
 browser=$default
 while browser=$(apps "$browsers" | sed "$edit" | rmenu 'Browser' $browser -no-custom) || exit ;do
   case ${browser#$(X)} in
-  "$EDIT"      ) vim -g -f -c "/$(echo $1 | sed 's,/,.,g').*" $2; dmenu bookmarks ;;
-
-  brave          |\
-  chromium       |\
-  dwb            |\
-  firefox        |\
-  google-chrome  |\
-  hbro           |\
-  iceweasel      |\
-  jumanji        |\
-  lispkit        |\
-  luakit         |\
-  midori         |\
-  opera          |\
-  surf           |\
-  uzbl           |\
-  vimb           |\
-  vimbt          |\
-  xombrero     ) focus $browser "$1" ;;
-
-  qutebrowser  ) focus qutebrowser --target tab "$1" ;;
-
-  w3m            |\
-  elinks       ) term "$browser" $browser "$1" ;;
+    "$EDIT"      ) vim -g -f -c "/$(echo $1 | sed 's,/,.,g').*" $2; dmenu bookmarks ;;
+  
+    brave          |\
+    chromium       |\
+    dwb            |\
+    firefox        |\
+    google-chrome  |\
+    hbro           |\
+    iceweasel      |\
+    jumanji        |\
+    lispkit        |\
+    luakit         |\
+    midori         |\
+    opera          |\
+    surf           |\
+    uzbl           |\
+    vimb           |\
+    vimbt          |\
+    xombrero     ) focus $browser "$1" ;;
+  
+    qutebrowser  ) focus qutebrowser --target tab "$1" ;;
+  
+    w3m            |\
+    elinks       ) term "$browser" $browser "$1" ;;
   esac
   exit
 done

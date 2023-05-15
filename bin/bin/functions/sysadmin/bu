@@ -7,8 +7,8 @@
 # ................................................................... Du wrapper
 
 case $1 in
-'' | .) dir=$PWD ;;
-*     ) dir=$1 ;;
+  '' | .) dir=$PWD ;;
+  *     ) dir=$1 ;;
 esac
 
 # display du and corrected btrfs du

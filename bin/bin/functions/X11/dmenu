@@ -62,11 +62,11 @@ if [ $(basename $0) = dmenu ] ;then
   console || { is multihead || conky clock off; }
   if [ -f $CONFIG/$msg ] ;then
     case $msg in
-    econvert  |\
-    media     |\
-    scripts   |\
-    projects) ;;
-    *       ) pstat + "dmenu $msg" && { notify 3 critical "> dmenu $msg" 'Already running..'; exit 1; } ;;
+      econvert  |\
+      media     |\
+      scripts   |\
+      projects) ;;
+      *       ) pstat + "dmenu $msg" && { notify 3 critical "> dmenu $msg" 'Already running..'; exit 1; } ;;
     esac
     shift
     . $CONFIG/$msg $@

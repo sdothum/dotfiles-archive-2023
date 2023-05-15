@@ -46,10 +46,10 @@ else
 fi
 
 case $1 in
-alpine) check=true; alpine=true;                      shift ;;
-check ) check=true; gems=$(gem list | cut -d' ' -f1); shift ;;
-list  ) list=true;                                    shift ;;
-init  ) init=--init;                                  shift ;;
+  alpine) check=true; alpine=true;                      shift ;;
+  check ) check=true; gems=$(gem list | cut -d' ' -f1); shift ;;
+  list  ) list=true;                                    shift ;;
+  init  ) init=--init;                                  shift ;;
 esac
 
 echo $1 | grep -q '/' && BDIR=${1%/*} || BDIR=.
@@ -65,20 +65,20 @@ rule() { echo "$@" | sed 's/\[//; s/\]//' || echo true; }
 # bundle file -> [<action>] <package> [<condition>]
 parse() {
   case $action in
-  ''       ) return 1 ;;
-  '#'      ) return 1 ;;
-  '='      ) [ $list ] || { echo $package | grep -q '^[[:alpha:]]' && title "$package $condition"; }; return 1 ;;
-  '"'      ) [ $check ] || ditto "$package $condition";                                               return 1 ;;
-  '!'      ) [ $check ] || $package $condition;                                                       return 1 ;;
-  '+'      ) [ $list ] || { [ -z $check ] && { heading "[ Manual install required.. ]  $package";     return 1; } } ;;
-  d        ) rule=true ;;
-  g        ) version=$condition ;;
-  [-?@amps]) rule=$(rule "$condition") ;;
-
-  *        ) set -- $package $condition
-             package=$action
-             condition=$@
-             rule=$(rule "$condition") ;;
+    ''       ) return 1 ;;
+    '#'      ) return 1 ;;
+    '='      ) [ $list ] || { echo $package | grep -q '^[[:alpha:]]' && title "$package $condition"; }; return 1 ;;
+    '"'      ) [ $check ] || ditto "$package $condition";                                               return 1 ;;
+    '!'      ) [ $check ] || $package $condition;                                                       return 1 ;;
+    '+'      ) [ $list ] || { [ -z $check ] && { heading "[ Manual install required.. ]  $package";     return 1; } } ;;
+    d        ) rule=true ;;
+    g        ) version=$condition ;;
+    [-?@amps]) rule=$(rule "$condition") ;;
+  
+    *        ) set -- $package $condition
+               package=$action
+               condition=$@
+               rule=$(rule "$condition") ;;
   esac
   return 0
 }
@@ -103,11 +103,11 @@ check() {
   [ "$package" = "$condition" ] && unset condition
 
   case $action in
-  '-') return ;;
-  '"') return ;;
-  g  ) echo "$gems" | grep -q "^$package$" && installed=true ;;
-  m  ) ;;  # cannot verify a make_install
-  *  ) $QUERY $package >/dev/null 2>&1 && installed=true ;;
+    '-') return ;;
+    '"') return ;;
+    g  ) echo "$gems" | grep -q "^$package$" && installed=true ;;
+    m  ) ;;  # cannot verify a make_install
+    *  ) $QUERY $package >/dev/null 2>&1 && installed=true ;;
   esac
 
   [ $installed ] && echo $package || { echo $line >>$missing ; ditto ERROR missing "$package"; }
@@ -133,16 +133,16 @@ for i in $@ ;do
 
     # package management
     case $action in
-    '-') heading "--Uninstalling--  $package"; pm R $package ;;
-    '?') $INSTALL --confirm $package ;;
-    '@') aur_install $package ;;
-    a  ) arm_install $package ;;
-    d  ) echo "$package $condition" >>$deferred ;;
-    g  ) gem_install $package $version ;;
-    m  ) make_install $package ;;
-    p  ) pkg_install $package ;;
-    s  ) src_install $package ;;
-    *  ) $INSTALL $init $package ;;
+      '-') heading "--Uninstalling--  $package"; pm R $package ;;
+      '?') $INSTALL --confirm $package ;;
+      '@') aur_install $package ;;
+      a  ) arm_install $package ;;
+      d  ) echo "$package $condition" >>$deferred ;;
+      g  ) gem_install $package $version ;;
+      m  ) make_install $package ;;
+      p  ) pkg_install $package ;;
+      s  ) src_install $package ;;
+      *  ) $INSTALL $init $package ;;
     esac
   done 3< $i
 done

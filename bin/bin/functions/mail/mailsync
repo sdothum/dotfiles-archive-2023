@@ -111,12 +111,12 @@ mail_daemon() {
 }
 
 case $@ in
-'') mail_daemon ;;
-I*) init ;;
-l*) ditto 'tail -f /tmp/mailsync.log'; tail -f /tmp/mailsync.log ;;
-t*) tag_messages ;;
-1*) one_pass ;;
-* ) usage ;;
+  '') mail_daemon ;;
+  I*) init ;;
+  l*) ditto 'tail -f /tmp/mailsync.log'; tail -f /tmp/mailsync.log ;;
+  t*) tag_messages ;;
+  1*) one_pass ;;
+  * ) usage ;;
 esac
 
 # vim: set ft=sh: #

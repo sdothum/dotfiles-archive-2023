@@ -12,6 +12,13 @@
 
 RULES=kobopatch.yaml
 
+# musl diversion
+[ -L bin/kobopatch-linux-64bit ] || {
+  mv -v bin/kobopatch-linux-64bit bin/kobopatch-linux-64bit.glibc
+  cp -v /net/depot/kobopatch/build/kobopatch-linux-64bit.musl bin/
+  ln -s bin/kobopatch-linux-64bit.musl bin/kobopatch-linux-64bit
+}
+
 [ -e $RULES.original ] && { ifno "overwrite $RULES" && exit; } || original $RULES
 [ -e src/nickel.yaml ] || { ditto dir "yaml files not found"; exit 1; }
 dos2unix $RULES.original 2>/dev/null

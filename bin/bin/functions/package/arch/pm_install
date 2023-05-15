@@ -14,8 +14,8 @@ wrappaur=$(aurwrapper)
 options=$(aurwrapper options)
 
 case $1 in
-  --confirm) unset options; shift ;;
-  --init   ) init=true;     shift ;;
+    --confirm) unset options; shift ;;
+    --init   ) init=true;     shift ;;
 esac
 
 if ! pm_query $@ ;then

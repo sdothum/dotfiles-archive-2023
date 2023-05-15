@@ -23,39 +23,39 @@ font=emboss
 
 # see .xinitrc
 case $1 in
-abort | halt | stop ) [ -e $BOOTWM ] && ditto user_login 'canceling startx'; rm -f $BOOTWM; exit ;;  # boot intercept shortcut
-''  ) ;;
-2b* ) echo 2bwm >$WM ;;
-aw* ) echo awesome >$WM ;;
-bs* ) echo bspwm >$WM ;;
-bu* ) echo budgie >$WM ;;
-ci* ) echo cinnamon >$WM ;;
-dw* ) echo dwm >$WM ;;
-gn* ) echo gnome >$WM ;;
-go* ) echo goomwwm >$WM ;;
-gu* ) echo guile >$WM ;;
-he* ) echo herbstluftwm >$WM ;;
-i3  ) echo i3 >$WM ;;
-kde ) echo kde >$WM ;;
-le* ) echo leftwm >$WM ;;
-lxd*) echo lxde >$WM ;;
-lxq*) echo lxqt >$WM ;;
-ma* ) echo mate >$WM ;;
-no* ) echo notion >$WM ;;
-op* ) echo openbox >$WM ;;
-rat*) echo ratpoison >$WM ;;
-raz*) echo razor-qt >$WM ;;
-sp* ) echo spectrwm >$WM ;;
-st* ) echo stumpwm >$WM ;;
-su* ) echo subtle >$WM ;;
-sh* ) echo shell >$WM ;;
-wi* ) echo windowchef >$WM ;;
-wmi*) echo wmii >$WM ;;
-wmu*) echo wmutils >$WM ;;
-wt* ) echo wtftw >$WM ;;
-xf* ) echo xfce4 >$WM ;;
-xm* ) echo xmonad >$WM ;;
-*   ) usage ;;
+  abort | halt | stop ) [ -e $BOOTWM ] && ditto user_login 'canceling startx'; rm -f $BOOTWM; exit ;;  # boot intercept shortcut
+  ''  ) ;;
+  2b* ) echo 2bwm >$WM ;;
+  aw* ) echo awesome >$WM ;;
+  bs* ) echo bspwm >$WM ;;
+  bu* ) echo budgie >$WM ;;
+  ci* ) echo cinnamon >$WM ;;
+  dw* ) echo dwm >$WM ;;
+  gn* ) echo gnome >$WM ;;
+  go* ) echo goomwwm >$WM ;;
+  gu* ) echo guile >$WM ;;
+  he* ) echo herbstluftwm >$WM ;;
+  i3  ) echo i3 >$WM ;;
+  kde ) echo kde >$WM ;;
+  le* ) echo leftwm >$WM ;;
+  lxd*) echo lxde >$WM ;;
+  lxq*) echo lxqt >$WM ;;
+  ma* ) echo mate >$WM ;;
+  no* ) echo notion >$WM ;;
+  op* ) echo openbox >$WM ;;
+  rat*) echo ratpoison >$WM ;;
+  raz*) echo razor-qt >$WM ;;
+  sp* ) echo spectrwm >$WM ;;
+  st* ) echo stumpwm >$WM ;;
+  su* ) echo subtle >$WM ;;
+  sh* ) echo shell >$WM ;;
+  wi* ) echo windowchef >$WM ;;
+  wmi*) echo wmii >$WM ;;
+  wmu*) echo wmutils >$WM ;;
+  wt* ) echo wtftw >$WM ;;
+  xf* ) echo xfce4 >$WM ;;
+  xm* ) echo xmonad >$WM ;;
+  *   ) usage ;;
 esac
 
 # .......................................................................... NFS
@@ -63,14 +63,14 @@ esac
 # for xorg session restricted nfs: $SESSION/nfs
 nfs() {
   case $1 in
-  mount ) if [ ! -d /net/depot/dotfiles ] ;then
-            ditto nfs 'mount..' 
-            grep -q "^$HOME/Maildir" /etc/fstab && sudo mount -v $HOME/Maildir 
-            sudo mount -v /net 
-          fi ;;
-  umount) ditto nfs 'umount..' 
-          sudo umount -v /net 
-          grep -q "^$HOME/Maildir" /etc/fstab && sudo umount -v $HOME/Maildir ;;
+    mount ) if [ ! -d /net/depot/dotfiles ] ;then
+              ditto nfs 'mount..' 
+              grep -q "^$HOME/Maildir" /etc/fstab && sudo mount -v $HOME/Maildir 
+              sudo mount -v /net 
+            fi ;;
+    umount) ditto nfs 'umount..' 
+            sudo umount -v /net 
+            grep -q "^$HOME/Maildir" /etc/fstab && sudo umount -v $HOME/Maildir ;;
   esac
 }
 
@@ -100,36 +100,36 @@ if console ;then
   # session specific clean up
   pkill -KILL $wm
   case $wm in
-  2b* ) ;;
-  aw* ) ;;
-  bs* ) ;;
-  bu* ) ;;
-  ci* ) ;;
-  dw* ) ;;
-  gn* ) ;;
-  go* ) ;;
-  gu* ) ;;
-  he* ) ;;
-  i3  ) ;;
-  kde ) ;;
-  le* ) ;;
-  lxd*) ;;
-  lxq*) ;;
-  ma* ) ;;
-  no* ) ;;
-  op* ) ;;
-  rat*) ;;
-  raz*) ;;
-  sp* ) ;;
-  st* ) ;;
-  su* ) ;;
-  sh* ) ;;
-  wi* ) ;;
-  wmi*) ;;
-  wmu*) ;;
-  wt* ) ;;
-  xf* ) ;;
-  xm* ) ;;
+    2b* ) ;;
+    aw* ) ;;
+    bs* ) ;;
+    bu* ) ;;
+    ci* ) ;;
+    dw* ) ;;
+    gn* ) ;;
+    go* ) ;;
+    gu* ) ;;
+    he* ) ;;
+    i3  ) ;;
+    kde ) ;;
+    le* ) ;;
+    lxd*) ;;
+    lxq*) ;;
+    ma* ) ;;
+    no* ) ;;
+    op* ) ;;
+    rat*) ;;
+    raz*) ;;
+    sp* ) ;;
+    st* ) ;;
+    su* ) ;;
+    sh* ) ;;
+    wi* ) ;;
+    wmi*) ;;
+    wmu*) ;;
+    wt* ) ;;
+    xf* ) ;;
+    xm* ) ;;
   esac
 
   # rare dangling instances..

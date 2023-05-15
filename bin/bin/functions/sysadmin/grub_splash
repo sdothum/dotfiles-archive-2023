@@ -22,11 +22,11 @@ if [ -d "$splash" ] ;then
 
   # my current monitor resolutions
   case $(query displaywidth) in
-  *1024) rez=-1024x600 ;;
-  *1366) rez=-1366x768 ;;
-  *1680) rez=-1680x1050 ;;
-  *1920) rez=-1920x1080 ;;
-  *3440) rez=-1920x1080 ;;
+    *1024) rez=-1024x600 ;;
+    *1366) rez=-1366x768 ;;
+    *1680) rez=-1680x1050 ;;
+    *1920) rez=-1920x1080 ;;
+    *3440) rez=-1920x1080 ;;
   esac
 
   [ -e "$HOME/images/grub/$splash$rez.png" ] && splash="$HOME/images/grub/$splash$rez.png" || splash="$HOME/images/grub/$splash.png"

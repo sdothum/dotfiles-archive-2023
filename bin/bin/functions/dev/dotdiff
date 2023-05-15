@@ -15,14 +15,14 @@ current=$STOW
 
 while : ;do
   case $1 in
-  checkout) cd $dotfiles
-            git pull
-            git checkout $2
-            shift 2
-            nosync=true ;;
-
-  -b      ) w=$1; shift ;;
-  *       ) break ;;
+    checkout) cd $dotfiles
+              git pull
+              git checkout $2
+              shift 2
+              nosync=true ;;
+  
+    -b      ) w=$1; shift ;;
+    *       ) break ;;
   esac
 done
 

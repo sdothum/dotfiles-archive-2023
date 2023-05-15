@@ -19,8 +19,8 @@ socklog() {
 
   mhistory journals $service
   case $mode in
-  View ) [ $service ] && term "$service" less -MRX /var/log/socklog/$service/current ;;
-  Watch) [ $service ] && term "$service" tail -f /var/log/socklog/$service/current ;;
+    View ) [ $service ] && term "$service" less -MRX /var/log/socklog/$service/current ;;
+    Watch) [ $service ] && term "$service" tail -f /var/log/socklog/$service/current ;;
   esac
 }
 
@@ -31,8 +31,8 @@ journal() {
 
   mhistory journals $service
   case $mode in
-  View ) [ $service ] && term "$service" journalctl -u $service.service ;;
-  Watch) [ $service ] && term "$service" journalctl -fu $service.service ;;
+    View ) [ $service ] && term "$service" journalctl -u $service.service ;;
+    Watch) [ $service ] && term "$service" journalctl -fu $service.service ;;
   esac
 }
 

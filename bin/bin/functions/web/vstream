@@ -14,11 +14,11 @@ options='-s statusbar.hide true'  # see web/qutebrowser
 delay=1
 
 case $1 in
-  dust   ) SERVICE='https://www.youtube.com/c/watchdust/videos' ;;
-  iai    ) SERVICE='https://www.youtube.com/c/TheInstituteOfArtAndIdeas/videos' ;;
-  netflix) SERVICE='http://www.netflix.com/ca'; BROWSER=google-chrome ;;
-  prime  ) SERVICE='primevideo.com'; BROWSER=google-chrome ;;
-  *      ) usage ;;
+    dust   ) SERVICE='https://www.youtube.com/c/watchdust/videos' ;;
+    iai    ) SERVICE='https://www.youtube.com/c/TheInstituteOfArtAndIdeas/videos' ;;
+    netflix) SERVICE='http://www.netflix.com/ca'; BROWSER=google-chrome ;;
+    prime  ) SERVICE='primevideo.com'; BROWSER=google-chrome ;;
+    *      ) usage ;;
 esac
 
 pkill -f $BROWSER 2>/dev/null

@@ -40,13 +40,13 @@ if [ "$1" = -- ] ;then  # console debug mode
   shift
   while [ $1 ] ;do
     case "$1 $2" in
-    [0-9]*\ [0-9]* ) H=$1; M=$2; shift ;;
-    clear\ [.0-9]* ) clear=true; echo $2 >$DEBUG; shift ;;
-    clear*         ) clear=true; echo 1 >$DEBUG ;;
-    scroll\ [.0-9]*) echo $2 >$DEBUG; shift ;;
-    scroll*        ) echo 2 >$DEBUG ;;
-    -x*            ) set -x; setx=true; unset clear ;;
-    *              ) usage ;;
+      [0-9]*\ [0-9]* ) H=$1; M=$2; shift ;;
+      clear\ [.0-9]* ) clear=true; echo $2 >$DEBUG; shift ;;
+      clear*         ) clear=true; echo 1 >$DEBUG ;;
+      scroll\ [.0-9]*) echo $2 >$DEBUG; shift ;;
+      scroll*        ) echo 2 >$DEBUG ;;
+      -x*            ) set -x; setx=true; unset clear ;;
+      *              ) usage ;;
     esac
     shift
   done
@@ -92,9 +92,9 @@ _ITIS()   { echo "${b}$(ch 6)${B}I T $(xs)I S"; }
 qclock0() {
   f=qclock0
   case $M5 in
-  0) qclock=$(ITIS)   ;;  # top corner on the hour
-  6) qclock=$(_ITIS)  ;;  # right corner on the half hour
-  *) qclock=$(_ITIS_) ;;  # randomly position 'it is' phrase
+    0) qclock=$(ITIS)   ;;  # top corner on the hour
+    6) qclock=$(_ITIS)  ;;  # right corner on the half hour
+    *) qclock=$(_ITIS_) ;;  # randomly position 'it is' phrase
   esac
 }
 
@@ -104,9 +104,9 @@ quarter()  { shuffle "${b}Q U A R T E R $(nx 4)"; }
 qclock1() {
   f=qclock1
   case $M5 in
-  3) qclock=$(AQUARTER) ;;
-  9) qclock=$(AQUARTER) ;;
-  *) qclock=$(quarter)  ;;
+    3) qclock=$(AQUARTER) ;;
+    9) qclock=$(AQUARTER) ;;
+    *) qclock=$(quarter)  ;;
   esac
 }
 
@@ -118,13 +118,13 @@ twentyfive() { shuffle "${b}T W E N T Y \n${b}F I V E $(nx)"; }
 qclock2() {
   f=qclock2
   case $M5 in
-  1 ) qclock=$(twentyFIVE) ;;
-  11) qclock=$(twentyFIVE) ;;
-  4 ) qclock=$(TWENTYfive) ;;
-  8 ) qclock=$(TWENTYfive) ;;
-  5 ) qclock=$(TWENTYFIVE) ;;
-  7 ) qclock=$(TWENTYFIVE) ;;
-  * ) qclock=$(twentyfive) ;;
+    1 ) qclock=$(twentyFIVE) ;;
+    11) qclock=$(twentyFIVE) ;;
+    4 ) qclock=$(TWENTYfive) ;;
+    8 ) qclock=$(TWENTYfive) ;;
+    5 ) qclock=$(TWENTYFIVE) ;;
+    7 ) qclock=$(TWENTYFIVE) ;;
+    * ) qclock=$(twentyfive) ;;
   esac
 }
 
@@ -137,12 +137,12 @@ halftento() { shuffle "${b}H A L F \n${b}T E N \n${b}T O $(nx 2)"; }
 qclock3() {
   f=qclock3
   case $M5 in
-  2 ) qclock=$(halfTENto) ;;
-  6 ) qclock=$(HALFtento) ;;
-  10) qclock=$(halfTENTO) ;;
-  * ) if [ $M -ge 35 ] ;then qclock=$(halftenTO)
-      else                   qclock=$(halftento)
-      fi ;;
+    2 ) qclock=$(halfTENto) ;;
+    6 ) qclock=$(HALFtento) ;;
+    10) qclock=$(halfTENTO) ;;
+    * ) if [ $M -ge 35 ] ;then qclock=$(halftenTO)
+        else                   qclock=$(halftento)
+        fi ;;
   esac
 }
 
@@ -197,10 +197,10 @@ qclock5() {
   f=qclock5
   if refresh_hour I31 I51 I33 ;then
     case $H in
-    $I31) qclock=$(Q3_5_3) ;;
-    $I51) qclock=$(_3Q5_3) ;;
-    $I33) qclock=$(_3_5Q3) ;;
-    *   ) qclock=$(_3_5_3) ;;
+      $I31) qclock=$(Q3_5_3) ;;
+      $I51) qclock=$(_3Q5_3) ;;
+      $I33) qclock=$(_3_5Q3) ;;
+      *   ) qclock=$(_3_5_3) ;;
     esac
   fi
 }
@@ -214,10 +214,10 @@ qclock6() {
   f=qclock6
   if refresh_hour I32 I41 I42 ;then
     case $H in
-    $I32) qclock=$(Q3_4_4) ;;
-    $I41) qclock=$(_3Q4_4) ;;
-    $I42) qclock=$(_3_4Q4) ;;
-    *   ) qclock=$(_3_4_4) ;;
+      $I32) qclock=$(Q3_4_4) ;;
+      $I41) qclock=$(_3Q4_4) ;;
+      $I42) qclock=$(_3_4Q4) ;;
+      *   ) qclock=$(_3_4_4) ;;
     esac
   fi
 }
@@ -230,9 +230,9 @@ qclock7() {
   f=qclock7
   if refresh_hour I53 I61 ;then
     case $H in
-    $I53) qclock=$(Q5_6) ;;
-    $I61) qclock=$(_5Q6) ;;
-    *   ) qclock=$(_5_6) ;;
+      $I53) qclock=$(Q5_6) ;;
+      $I61) qclock=$(_5Q6) ;;
+      *   ) qclock=$(_5_6) ;;
     esac
   fi
 }
@@ -245,9 +245,9 @@ qclock8() {
   f=qclock8
   if refresh_hour I52 I62 ;then
     case $H in
-    $I52) qclock=$(_6Q5) ;;
-    $I62) qclock=$(Q6_5) ;;
-    *   ) qclock=$(_6_5) ;;
+      $I52) qclock=$(_6Q5) ;;
+      $I62) qclock=$(Q6_5) ;;
+      *   ) qclock=$(_6_5) ;;
     esac
   fi
 }
@@ -262,13 +262,13 @@ qclock9() {
   f=qclock9
   if [ $H = $I34 ] ;then
     case $M5 in
-    0) qclock=$(Q3OCLOCK) ;;  # ten o'clock always touches corner
-    *) qclock=$(Q3clock)  ;;
+      0) qclock=$(Q3OCLOCK) ;;  # ten o'clock always touches corner
+      *) qclock=$(Q3clock)  ;;
     esac
   else 
     case $M5 in
-    0) qclock=$(_3OCLOCK) ;;  # o'clock touches corner, just because
-    *) qclock=$(_3clock)  ;;
+      0) qclock=$(_3OCLOCK) ;;  # o'clock touches corner, just because
+      *) qclock=$(_3clock)  ;;
     esac
   fi
 }
@@ -314,10 +314,10 @@ map() { cat $QCLOCK:$1 | cut -d' ' -f$(( $3 - $2 )); }
 
 line() {
   case $1 in
-  [12] ) cat $QCLOCK:$(map minutes 0 $1)  ;;
-  [34] ) cat $QCLOCK:$(map halfpast 2 $1) ;;
-  [5-8]) cat $QCLOCK:$(map hours 4 $1)    ;;
-  *    ) cat $QCLOCK:$1 ;;
+    [12] ) cat $QCLOCK:$(map minutes 0 $1)  ;;
+    [34] ) cat $QCLOCK:$(map halfpast 2 $1) ;;
+    [5-8]) cat $QCLOCK:$(map hours 4 $1)    ;;
+    *    ) cat $QCLOCK:$1 ;;
   esac
 }
 

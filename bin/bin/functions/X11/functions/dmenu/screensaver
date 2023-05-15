@@ -21,9 +21,9 @@ fi
 screensaver() { xset s on +dpms; pstat xscreensaver || xscreensaver -no-splash &; }
 
 case $toggle in
-off | 0) pstat xscreensaver && killall xscreensaver; xset s off -dpms; notify low 'Screensaver' Off ;;
-on  | 1) screensaver; notify low 'Screensaver' On ;;
-lock   ) screensaver; xscreensaver-command -lock ;;
+  off | 0) pstat xscreensaver && killall xscreensaver; xset s off -dpms; notify low 'Screensaver' Off ;;
+  on  | 1) screensaver; notify low 'Screensaver' On ;;
+  lock   ) screensaver; xscreensaver-command -lock ;;
 esac
 
 # vim: set ft=sh: #

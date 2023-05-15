@@ -29,11 +29,11 @@ if [ $USER != root ] ;then
         if [ $ssd ] ;then
           # virtual block devices must be referenced explicitly
           case $ssd in
-          sda)  echo deadline | sudo tee /sys/block/sda/queue/scheduler >/dev/null ;;
-          sdb)  echo deadline | sudo tee /sys/block/sdb/queue/scheduler >/dev/null ;;
-          sdc)  echo deadline | sudo tee /sys/block/sdc/queue/scheduler >/dev/null ;;
-          sdd)  echo deadline | sudo tee /sys/block/sdd/queue/scheduler >/dev/null ;;
-          sde)  echo deadline | sudo tee /sys/block/sde/queue/scheduler >/dev/null ;;
+            sda)  echo deadline | sudo tee /sys/block/sda/queue/scheduler >/dev/null ;;
+            sdb)  echo deadline | sudo tee /sys/block/sdb/queue/scheduler >/dev/null ;;
+            sdc)  echo deadline | sudo tee /sys/block/sdc/queue/scheduler >/dev/null ;;
+            sdd)  echo deadline | sudo tee /sys/block/sdd/queue/scheduler >/dev/null ;;
+            sde)  echo deadline | sudo tee /sys/block/sde/queue/scheduler >/dev/null ;;
           esac
           notify "Assigned [deadline] scheduler to SSD" "/dev/$ssd"
           echo "/dev/$ssd [deadline]" >/tmp/ssd:scheduler

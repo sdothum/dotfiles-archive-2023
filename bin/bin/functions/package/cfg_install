@@ -11,8 +11,8 @@ usage() { echo "usage: $(basename $0) [-link | -test] <[path/]file> [<hostname>]
 ROOT=$HOME/build/cfg        # restore customizations
 
 case $1 in
--test) test=true; shift ;;  # check only
--link) link=true; shift ;;  # link vs copy
+  -test) test=true; shift ;;  # check only
+  -link) link=true; shift ;;  # link vs copy
 esac
 
 [ $1 ] || usage

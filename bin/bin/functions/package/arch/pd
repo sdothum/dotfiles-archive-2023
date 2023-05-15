@@ -11,11 +11,11 @@ usage() { echo "usage: $(basename $0) n'o dependencies | d'epends on <package> |
 tree=/tmp/pd:r
 
 case $1 in
-'') usage ;;
-n ) pacman -Qet; exit ;;
-d ) echo >$tree; D=D; shift; dep='depends on' ;;
-R ) D=N; shift; dep='required by' ;;
-* ) echo >$tree; exec pd R $@ ;;
+  '') usage ;;
+  n ) pacman -Qet; exit ;;
+  d ) echo >$tree; D=D; shift; dep='depends on' ;;
+  R ) D=N; shift; dep='required by' ;;
+  * ) echo >$tree; exec pd R $@ ;;
 esac
 
 # package dependency

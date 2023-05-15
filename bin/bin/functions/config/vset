@@ -27,23 +27,23 @@ gtk() {
 }
 
 case $1 in
-  c*) touch $CURSORLINE; rm -f $UNDERLINE ;;
- -c*) rm -f $CURSORLINE ;;
-  d*) touch $COLORSCHEME; gtk dark ;;
- -d*) touch $COLORSCHEME; gtk dark; rm -f $VLUX  ;;
-  l*) rm -f $COLORSCHEME; gtk light ;;
- -l*) rm -f $COLORSCHEME; gtk light; rm -f $VLUX ;;
-  r*) touch $READABILITY ;;
- -r*) rm -f $READABILITY ;;
-  t*) touch $TRACE ;;
- -t*) rm -f $TRACE ;;
-  u*) touch $UNDERLINE ;;
- -u*) rm -f $UNDERLINE; rm -f $CURSORLINE ;;
-  v*) touch $VLUX; vlux ;;  # follow the sun, see crontab
- -v*) rm -f $VLUX ;;
--*w*) rm -f $CURSORWORD ;;
- *w*) touch $CURSORWORD ;;
-  * ) usage ;;
+    c*) touch $CURSORLINE; rm -f $UNDERLINE ;;
+   -c*) rm -f $CURSORLINE ;;
+    d*) touch $COLORSCHEME; gtk dark ;;
+   -d*) touch $COLORSCHEME; gtk dark; rm -f $VLUX  ;;
+    l*) rm -f $COLORSCHEME; gtk light ;;
+   -l*) rm -f $COLORSCHEME; gtk light; rm -f $VLUX ;;
+    r*) touch $READABILITY ;;
+   -r*) rm -f $READABILITY ;;
+    t*) touch $TRACE ;;
+   -t*) rm -f $TRACE ;;
+    u*) touch $UNDERLINE ;;
+   -u*) rm -f $UNDERLINE; rm -f $CURSORLINE ;;
+    v*) touch $VLUX; vlux ;;  # follow the sun, see crontab
+   -v*) rm -f $VLUX ;;
+  -*w*) rm -f $CURSORWORD ;;
+   *w*) touch $CURSORWORD ;;
+    * ) usage ;;
 esac
 
 # vim: set ft=sh: #

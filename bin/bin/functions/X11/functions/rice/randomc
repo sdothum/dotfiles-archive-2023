@@ -9,9 +9,9 @@
 usage() { echo "usage: $(basename $0) randomc [-#]"; exit 1; }
 
 case $1 in
-'' ) hash='#' ;;
--\#) ;;
-*  ) usage ;;
+  '' ) hash='#' ;;
+  -\#) ;;
+  *  ) usage ;;
 esac
 
 echo "$hash$(od -An -N3 -x /dev/random | sed 's/ 00//; s/ //')"

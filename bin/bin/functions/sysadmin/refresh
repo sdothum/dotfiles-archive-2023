@@ -184,25 +184,25 @@ alpinelinux() {
 }
 
 case $1 in
-''      ) usage ;;
-alpine  ) alpinelinux ;;
-arm     ) cpu arm && rsync -r --delete --exclude='*sync-conflict*' $USER@$SERVER:$STOW $HOME/ ;;
-backup  ) home; server && ifyes 'backup /net to /backup' && backup ;;
-BACKUP  ) backup ;;   # cron command only
-home    ) home $2 ;;  # cron parm
-depot   ) depot ;;
-dotfiles) dotfiles ;;
-music   ) music ;;
-pi      ) server && rsync -r --delete /usr/share/icons/Paper pi:$HOME/.local/share/icons/ ;;
-server  ) archive ;;
-SERVER  ) restore ;;
-stow    ) stow ;;
-ttrss   ) rsync -r --delete /srv/http/tt-rss/themes/my*.css $target:/srv/http/tt-rss/themes/ ;;
-usb     ) usb; sync ;;
-vps     ) vps ;;
-xbps    ) exec xb C ;;  # backup xbps cache
-wiki    ) wiki ;;
-*       ) if [ $2 ] ;then rsync $@ ;else usage ;fi ;;
+  ''      ) usage ;;
+  alpine  ) alpinelinux ;;
+  arm     ) cpu arm && rsync -r --delete --exclude='*sync-conflict*' $USER@$SERVER:$STOW $HOME/ ;;
+  backup  ) home; server && ifyes 'backup /net to /backup' && backup ;;
+  BACKUP  ) backup ;;   # cron command only
+  home    ) home $2 ;;  # cron parm
+  depot   ) depot ;;
+  dotfiles) dotfiles ;;
+  music   ) music ;;
+  pi      ) server && rsync -r --delete /usr/share/icons/Paper pi:$HOME/.local/share/icons/ ;;
+  server  ) archive ;;
+  SERVER  ) restore ;;
+  stow    ) stow ;;
+  ttrss   ) rsync -r --delete /srv/http/tt-rss/themes/my*.css $target:/srv/http/tt-rss/themes/ ;;
+  usb     ) usb; sync ;;
+  vps     ) vps ;;
+  xbps    ) exec xb C ;;  # backup xbps cache
+  wiki    ) wiki ;;
+  *       ) if [ $2 ] ;then rsync $@ ;else usage ;fi ;;
 esac
 
 trace --  # elapsed time

@@ -23,11 +23,11 @@ diagnostic=$(previous diagnostic)
 while diagnostic=$(apps "$diagnostics" | rmenu 'Diagnostic' $diagnostic -no-custom) || exit ;do
   mhistory diagnostic $diagnostic
   case $diagnostic in
-  iftop        ) term "$diagnostic" $diagnostic $(interface) ;;
-  iotop        ) term "$diagnostic" sudo $diagnostic ;;
-  nethogs      ) term "$diagnostic" sudo $diagnostic $(interface) ;;
-  gsmartcontrol) sudo gsmartcontrol ;;
-  *            ) term "$diagnostic" $diagnostic ;;
+    iftop        ) term "$diagnostic" $diagnostic $(interface) ;;
+    iotop        ) term "$diagnostic" sudo $diagnostic ;;
+    nethogs      ) term "$diagnostic" sudo $diagnostic $(interface) ;;
+    gsmartcontrol) sudo gsmartcontrol ;;
+    *            ) term "$diagnostic" $diagnostic ;;
   esac
   exit
 done

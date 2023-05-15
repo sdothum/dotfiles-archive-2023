@@ -6,8 +6,10 @@
 
 # ........................................................................... su
 
+alpine || SU=/usr
+
 # manually pass ssh env to su session (see prompt shum)
 [ "$SSH_CLIENT" ] && echo $SSH_CLIENT >/tmp/.ssh_client
-/usr/bin/su $@
+$SU/bin/su $@
 
 # vim: set ft=sh: #

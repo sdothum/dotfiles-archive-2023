@@ -35,9 +35,9 @@ reverse() {
 }
 
 case $# in
-1) reverse $1 ;;
-2) swap $1 $2 ;;
-*) usage ;;
+  1) reverse $1 ;;
+  2) swap $1 $2 ;;
+  *) usage ;;
 esac
 
 # vim: set ft=sh: #

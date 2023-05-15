@@ -19,10 +19,10 @@ foreground='#eaeaea'
 
 # tweak window margins by fontsize
 case $size in
-8 ) paddingX=8; paddingY=8; offsetX=0; offsetY=4 ;;
-9 ) paddingX=9; paddingY=9; offsetX=0; offsetY=2 ;;
-11) paddingX=12; paddingY=12; offsetX=0; offsetY=3 ;;
-* ) paddingX=12; paddingY=12; offsetX=0; offsetY=0 ;;
+  8 ) paddingX=8; paddingY=8; offsetX=0; offsetY=4 ;;
+  9 ) paddingX=9; paddingY=9; offsetX=0; offsetY=2 ;;
+  11) paddingX=12; paddingY=12; offsetX=0; offsetY=3 ;;
+  * ) paddingX=12; paddingY=12; offsetX=0; offsetY=0 ;;
 esac
 
 offsetY=$size                  # double line space to write square

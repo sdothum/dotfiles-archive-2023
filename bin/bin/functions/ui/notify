@@ -20,18 +20,18 @@ color2=${BLUE}
 
 while : ;do
   case $1 in
-  # long form required for handling numeric summary field
-  time=*) expire="--expire-time=$(( ${1#time=} * 1000 ))" ;;
-  cons* ) console=true ;;
-  X     ) X=true ;;
-
-  low     |\
-  norm*   |\
-  crit* ) urgency="-u $1" ;;
-
-  blac* ) urgency="-h string:bgcolor:#000000" ;;
-  [0-9]*) echo "$1" | grep -q '[^0-9]' && break || expire="--expire-time=$(( $1 * 1000 ))" ;;
-  *     ) break ;;
+    # long form required for handling numeric summary field
+    time=*) expire="--expire-time=$(( ${1#time=} * 1000 ))" ;;
+    cons* ) console=true ;;
+    X     ) X=true ;;
+  
+    low     |\
+    norm*   |\
+    crit* ) urgency="-u $1" ;;
+  
+    blac* ) urgency="-h string:bgcolor:#000000" ;;
+    [0-9]*) echo "$1" | grep -q '[^0-9]' && break || expire="--expire-time=$(( $1 * 1000 ))" ;;
+    *     ) break ;;
   esac
   shift
 done
@@ -50,17 +50,17 @@ else
   [ -e $SESSION/display ] && DISPLAY=$(cat $SESSION/display)  # allow cron jobs to  display to X
 
   case $# in
-  1) if [ $(echo "$ONE" | wc -l) -eq 1 ] ;then
-       DISPLAY=${DISPLAY:-:0} notify-send $expire $urgency --icon=help-info "$ONE" &
-     else
-       # set first line as heading for a single multiline message
-       heading=$(echo "$ONE" | sed '2,$d')
-       body=$(echo "$ONE" | sed '1d')
-       DISPLAY=${DISPLAY:-:0} notify-send $expire $urgency --icon=help-info "$heading" "$body" &
-     fi ;;
-
-  2) DISPLAY=${DISPLAY:-:0} notify-send $expire $urgency --icon=help-info "$ONE" "$TWO" & ;;
-  *) usage ;;
+    1) if [ $(echo "$ONE" | wc -l) -eq 1 ] ;then
+         DISPLAY=${DISPLAY:-:0} notify-send $expire $urgency --icon=help-info "$ONE" &
+       else
+         # set first line as heading for a single multiline message
+         heading=$(echo "$ONE" | sed '2,$d')
+         body=$(echo "$ONE" | sed '1d')
+         DISPLAY=${DISPLAY:-:0} notify-send $expire $urgency --icon=help-info "$heading" "$body" &
+       fi ;;
+  
+    2) DISPLAY=${DISPLAY:-:0} notify-send $expire $urgency --icon=help-info "$ONE" "$TWO" & ;;
+    *) usage ;;
   esac
 fi
 

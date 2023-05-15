@@ -62,9 +62,9 @@ while : ;do
       sed  "1i$(X $EDIT)$menu" | rmenu "Edit $prompt$error" -no-custom) || exit
 
   case ${file#$(X)} in
-  "$DIARY") exec dmenu wiki diary ;;
-  "$EDIT" ) add ;;
-  *       ) wiki || continue ;;
+    "$DIARY") exec dmenu wiki diary ;;
+    "$EDIT" ) add ;;
+    *       ) wiki || continue ;;
   esac
   break
 done

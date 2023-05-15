@@ -10,9 +10,9 @@ usage() { echo "usage: $(basename $0) [off] [tty<#>]"; exit 1; }
 
 while : ;do
   case $1 in
-  off ) disable=true ;;
-  tty*) tty=$1 ;;
-  *   ) usage ;;
+    off ) disable=true ;;
+    tty*) tty=$1 ;;
+    *   ) usage ;;
   esac
   shift
   [ $# -eq 0 ] && break

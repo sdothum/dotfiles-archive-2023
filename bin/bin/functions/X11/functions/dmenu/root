@@ -39,8 +39,8 @@ save() {
 # rebuild swatches
 while [ $1 ] ;do
   case $1 in
-  cache) root ;;
-  save ) bg=$(cat $COLOR); save; exit ;;
+    cache) root ;;
+    save ) bg=$(cat $COLOR); save; exit ;;
   esac
   shift
 done
@@ -57,28 +57,28 @@ colors() { [ "$menu" ] && echo | mhistory root | sed "1i$menu" || echo | mhistor
 
 while color=$(colors | column -s^ -t | rmenu 'Setroot') || exit ;do
   case ${color#$(X)} in
-  ''        ) break ;;
-  "$PICK"*  ) color=$(grabc 2>/dev/null | cut -d'#' -f2); setroot ;;
-  "$VIEWER"*) exec draw root restore ;;
-  "$COLORS"*) term "colors" trap pastel list; pwait 'trap pastel list' ;;
-  "$UPDATE"*) root ;;
-  "$SAVE"*  ) save; break ;;
-  "$INVERT"*) draw root invert; sleep $delay; menu ;;
-
-  *\ dark*    |\
-  *\ light* ) bg=$(echo $color | cut -d' ' -f1)
-              theme $(echo $color | cut -d' ' -f3)
-              draw root color $bg $0  # $0 suppress luminance setting, see draw root
-              ln -sf $(find $PALETTE -name $bg.png | head -1) $WALLCOLOR
-              ln -sf $WALLCOLOR $BACKGROUND
-              mhistory root "$(echo $color | sed "s/ *$SEP */^$SEP /")"
-              draw conky
-              break ;;
-
-  *         ) color=${color#\'}
-              hex $color || { hue=$color; color=$(pastel format hex $color 2>/dev/null) && color=${color#?}; } || continue
-              setroot
-              sleep $delay ;;
+    ''        ) break ;;
+    "$PICK"*  ) color=$(grabc 2>/dev/null | cut -d'#' -f2); setroot ;;
+    "$VIEWER"*) exec draw root restore ;;
+    "$COLORS"*) term "colors" trap pastel list; pwait 'trap pastel list' ;;
+    "$UPDATE"*) root ;;
+    "$SAVE"*  ) save; break ;;
+    "$INVERT"*) draw root invert; sleep $delay; menu ;;
+  
+    *\ dark*    |\
+    *\ light* ) bg=$(echo $color | cut -d' ' -f1)
+                theme $(echo $color | cut -d' ' -f3)
+                draw root color $bg $0  # $0 suppress luminance setting, see draw root
+                ln -sf $(find $PALETTE -name $bg.png | head -1) $WALLCOLOR
+                ln -sf $WALLCOLOR $BACKGROUND
+                mhistory root "$(echo $color | sed "s/ *$SEP */^$SEP /")"
+                draw conky
+                break ;;
+  
+    *         ) color=${color#\'}
+                hex $color || { hue=$color; color=$(pastel format hex $color 2>/dev/null) && color=${color#?}; } || continue
+                setroot
+                sleep $delay ;;
   esac
 done
 

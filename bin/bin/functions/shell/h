@@ -13,8 +13,8 @@ FISH=$HOME/.local/share/fish/fish_history
 ZSH=$HOME/.zhistory
 
 case $1 in
-shell=*) eval $1; shift ;;
-*      ) shell=fish ;;
+  shell=*) eval $1; shift ;;
+  *      ) shell=fish ;;
 esac
 
 # purge from history
@@ -29,11 +29,11 @@ if [ "$1" = '-' ] ;then
   shift
   [ "$1" ] || usage
   case $shell in
-  bash | sh) filter "$@" $BASH ;;
-  dash     ) ;;
-  fish     ) filter "$@" $FISH ;;
-  zsh      ) filter "$@" $ZSH ;;
-  *        ) ;;
+    bash | sh) filter "$@" $BASH ;;
+    dash     ) ;;
+    fish     ) filter "$@" $FISH ;;
+    zsh      ) filter "$@" $ZSH ;;
+    *        ) ;;
   esac
   exit
 fi
@@ -78,11 +78,11 @@ history() {
 }
 
 case $shell in
-bash | sh) echo history | sh -i | sed 's/^ *//; s/  */ /g' | grep -E -v "$filter" | tac ;;
-dash     ) history $shell $@ ;;
-fish     ) history fish $@ ;;
-zsh      ) history zsh $@ ;;
-*        ) $shell -c history | grep "$@" ;;
+  bash | sh) echo history | sh -i | sed 's/^ *//; s/  */ /g' | grep -E -v "$filter" | tac ;;
+  dash     ) history $shell $@ ;;
+  fish     ) history fish $@ ;;
+  zsh      ) history zsh $@ ;;
+  *        ) $shell -c history | grep "$@" ;;
 esac
 
 # vim: set ft=sh: #

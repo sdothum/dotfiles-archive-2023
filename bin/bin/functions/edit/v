@@ -19,10 +19,10 @@ echo >$LOG
 
 while : ;do
   case $1 in
-  --role) role="--role $2"; shift ;;
-  -f    ) fg=-f ;;
-  -c    ) cmd="-c '$2'";    shift ;;
-   *    ) break ;;
+    --role) role="--role $2"; shift ;;
+    -f    ) fg=-f ;;
+    -c    ) cmd="-c '$2'";    shift ;;
+     *    ) break ;;
   esac
   shift
 done

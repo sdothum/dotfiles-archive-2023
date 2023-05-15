@@ -48,11 +48,11 @@ th() {
 }
 
 case $1 in
--wn ) shift; eval $WORDNET $@ | sed '1,5d' ;;
--th ) shift; th $@ ;;
--uk ) shift; eval $OXFORD  $@ | sed '1d' ;;
--di*) shift; eval $DICT    $@ | sed '1d' ;;
-*   ) $SDCV -c $@ ;;
+  -wn ) shift; eval $WORDNET $@ | sed '1,5d' ;;
+  -th ) shift; th $@ ;;
+  -uk ) shift; eval $OXFORD  $@ | sed '1d' ;;
+  -di*) shift; eval $DICT    $@ | sed '1d' ;;
+  *   ) $SDCV -c $@ ;;
 esac
 
 # vim: set ft=sh: #

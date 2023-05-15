@@ -11,8 +11,8 @@
 # Usage: xb_install [--confirm | --init] <package>
 
 case $1 in
-  --confirm) confirm=true; shift ;;
-  --init   ) init=true;    shift ;;
+    --confirm) confirm=true; shift ;;
+    --init   ) init=true;    shift ;;
 esac
 
 if ! xb_query $@ ;then

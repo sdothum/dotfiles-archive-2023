@@ -17,8 +17,8 @@ file=$(ls *.log | sort | sed 's/.log//' | rmenu "$mode Log" $file -no-custom) ||
 
 mhistory logs $file
 case $mode in
-View ) [ $file ] && term "$file" MAX less $file.log ;;
-Watch) [ $file ] && term "$file" tail -f $file.log ;;
+  View ) [ $file ] && term "$file" MAX less $file.log ;;
+  Watch) [ $file ] && term "$file" tail -f $file.log ;;
 esac
 
 # vim: set ft=sh: #

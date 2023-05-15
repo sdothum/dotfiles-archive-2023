@@ -15,12 +15,12 @@ hint() {
 }
 
 case $1 in
-''    ) ;;
-on    ) pstat qwertickle || qwertickle & ;;
-off   ) killall qwertickle ;;
-toggle) pstat qwertickle && clack off || clack on ;;
-swap  ) sudo swap /usr/share/qwertickle/typewriter-return.mp3 /usr/share/qwertickle/typewriter-return.mp3.swap ;;
-*     ) usage ;;
+  ''    ) ;;
+  on    ) pstat qwertickle || qwertickle & ;;
+  off   ) killall qwertickle ;;
+  toggle) pstat qwertickle && clack off || clack on ;;
+  swap  ) sudo swap /usr/share/qwertickle/typewriter-return.mp3 /usr/share/qwertickle/typewriter-return.mp3.swap ;;
+  *     ) usage ;;
 esac
 
 pstat qwertickle && hint || notify low 'Typewriter Sounds' 'Off'

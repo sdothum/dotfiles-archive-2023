@@ -89,29 +89,29 @@ rm() {
 # $@ substitution within complex expressions is more predictably handled by var substitution
 unset pending
 case $1 in
-help   ) usage ;;
-''     ) for i in $DOTFILES ;do add $i ;done ;;
-add    ) shift; [ "$1" = '-f' ] && { force=-f; shift; }
-         add $@ ;;
-
-amend    |\
-comment) shift; DESC=$@
-         [ "$DESC" ] && git commit --amend --no-edit --message="$DESC" || git commit --amend ;;
-
-edit     |\
-ignore ) vim -g .gitignore ;;
-
-init   ) init ;;
-list   ) git log --pretty=format:"%h - %an, %ar : %s" ;;
-log    ) git log | less ;;
-
-redo     |\
-undo   ) git reset --soft HEAD~
-         dotfiles ;;
-
-reset  ) git reset ;;
-rm     ) shift; rm $@ ;;
-*      ) add $@ ;;
+  help   ) usage ;;
+  ''     ) for i in $DOTFILES ;do add $i ;done ;;
+  add    ) shift; [ "$1" = '-f' ] && { force=-f; shift; }
+           add $@ ;;
+  
+  amend    |\
+  comment) shift; DESC=$@
+           [ "$DESC" ] && git commit --amend --no-edit --message="$DESC" || git commit --amend ;;
+  
+  edit     |\
+  ignore ) vim -g .gitignore ;;
+  
+  init   ) init ;;
+  list   ) git log --pretty=format:"%h - %an, %ar : %s" ;;
+  log    ) git log | less ;;
+  
+  redo     |\
+  undo   ) git reset --soft HEAD~
+           dotfiles ;;
+  
+  reset  ) git reset ;;
+  rm     ) shift; rm $@ ;;
+  *      ) add $@ ;;
 esac
 
 # vim: set ft=sh: #

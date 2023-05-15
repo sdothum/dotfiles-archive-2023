@@ -15,11 +15,11 @@ fi
 
 mhistory shistory $shell
 case $shell in
-bash) ;;
-dash) ditto dash "history not available"; exit ;;
-fish) ;;
-sh  ) ;;
-zsh ) grep -E --text -v '^[^:]|[\]$' $HOME/.zhistory >$HOME/.zhistory.vacuum; mv $HOME/.zhistory.vacuum $HOME/.zhistory ;;
+  bash) ;;
+  dash) ditto dash "history not available"; exit ;;
+  fish) ;;
+  sh  ) ;;
+  zsh ) grep -E --text -v '^[^:]|[\]$' $HOME/.zhistory >$HOME/.zhistory.vacuum; mv $HOME/.zhistory.vacuum $HOME/.zhistory ;;
 esac
 
 cmd=$(h shell=$shell | sed -r "s/^([^ ]*)  */\1 $SEP $UTF/" | column -s$UTF -t | rmenu 'History' -no-custom) || exit

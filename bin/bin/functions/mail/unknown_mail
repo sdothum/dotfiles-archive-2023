@@ -12,15 +12,15 @@ usage() { echo "usage: $(basename $0) c'c | f'rom | s'ubject | t'o"; exit 1; }
 unknown=$HOME/Maildir/$(cat $HOME/.forward | cut -d@ -f1)/unknown
 
 case $1 in
-# c*) ack '^Cc:' $unknown/* | sed -r 's/.*C[Cc]: *(.*)/\1/' | sort | less ;;
-# f*) ack '^From:' $unknown/* | sed -r 's/.*From: *(.*)/\1/' | sort | less ;;
-# s*) ack '^Subject:.*\[.*\]' $unknown/* | sed -r 's/.*Subject: *(.*)/\1/' | sort | less ;;
-# t*) ack '^To:' $unknown/* | sed -r 's/.*To: *(.*)/\1/' | sort | less ;;
+  # c*) ack '^Cc:' $unknown/* | sed -r 's/.*C[Cc]: *(.*)/\1/' | sort | less ;;
+  # f*) ack '^From:' $unknown/* | sed -r 's/.*From: *(.*)/\1/' | sort | less ;;
+  # s*) ack '^Subject:.*\[.*\]' $unknown/* | sed -r 's/.*Subject: *(.*)/\1/' | sort | less ;;
+  # t*) ack '^To:' $unknown/* | sed -r 's/.*To: *(.*)/\1/' | sort | less ;;
 c*) /usr/bin/ag --ignore-case '^Cc:' $unknown/* | sed -r 's/.*C[Cc]: *(.*)/\1/' | sort | less ;;
 f*) /usr/bin/ag --ignore-case '^From:' $unknown/* | sed -r 's/.*From: *(.*)/\1/' | sort | less ;;
 s*) /usr/bin/ag --ignore-case '^Subject:.*\[.*\]' $unknown/* | sed -r 's/.*Subject: *(.*)/\1/' | sort | less ;;
 t*) /usr/bin/ag --ignore-case '^To:' $unknown/* | sed -r 's/.*To: *(.*)/\1/' | sort | less ;;
-* ) usage ;;
+  * ) usage ;;
 esac
 
 # vim: set ft=sh: #

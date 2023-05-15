@@ -60,12 +60,12 @@ while : ;do
   book=$(catlg | mhistory ebooks | column -s^ -t | sed "1i$(X $EDIT)\n$(X $SWITCH)" | rmenu "E-book" -filter \"$author\" -no-custom)
 
   case ${book#$(X)} in
-  # "$EDIT") killall 'ROX-Filer'; rox "$CATLG"; pwait 'ROX-Filer'; catlg; continue ;;
-  "$EDIT"  ) killall 'nnn' 2>/dev/null; term 'ebooks' WAIT nnn -s ebooks; continue ;;
-
-  "$SWITCH") library=$(ls -1 $LIBRARY | grep -E -v "$EXCLUDE" | rmenu "Catalogue" -no-custom)
-             [ "$library" ] && { CATLG=$LIBRARY/$library; }
-             continue ;;
+    # "$EDIT") killall 'ROX-Filer'; rox "$CATLG"; pwait 'ROX-Filer'; catlg; continue ;;
+    "$EDIT"  ) killall 'nnn' 2>/dev/null; term 'ebooks' WAIT nnn -s ebooks; continue ;;
+  
+    "$SWITCH") library=$(ls -1 $LIBRARY | grep -E -v "$EXCLUDE" | rmenu "Catalogue" -no-custom)
+               [ "$library" ] && { CATLG=$LIBRARY/$library; }
+               continue ;;
   esac
 
   # return loop filtered by author, allow escape to clear filter!
@@ -87,9 +87,9 @@ while : ;do
   while action=$(echo "$options" | rmenu "$title" $action -no-custom) || break ;do
     mhistory ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
     case $action in
-    read  ) [ $focus ] || { focus frame; focus=true; }; FBReader "$file" ;;
-    edit  ) edit; ebooks ;;
-    kindle) dmenu econvert "$file" ;;
+      read  ) [ $focus ] || { focus frame; focus=true; }; FBReader "$file" ;;
+      edit  ) edit; ebooks ;;
+      kindle) dmenu econvert "$file" ;;
     esac
     break
   done

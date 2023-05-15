@@ -14,26 +14,26 @@ CONKYRC=$HOME/.conkyrc.qclocktwo
 clock() { pstat "conky -c $CONKYRC"; }
 
 case $1 in
-auto) xset s off -dpms
-      pstat xautolock && exit
-      xautolock -time 10 -locker 'conky clock on' &
-      notify low 'Que Clock Two' 'Auto' ;;
-
-stop) xset s on -dpms
-      pstat xautolock || exit
-      killall xautolock
-      notify low 'Que Clock Two' 'Stopped' ;;
-
-on  ) clock && exit
-      /usr/bin/conky -c $CONKYRC 2>/dev/null &
-      rm -rf /tmp/qclocktwo ;;  # clear qclock buffers
-
-off ) clock || exit
-      pkill -f "conky -c $CONKYRC"
-      [ -e $SPANEL ] || weather ;;
-
-''  ) if clock ;then conky clock off ;else conky clock on ;fi ;;
-*   ) usage ;;
+  auto) xset s off -dpms
+        pstat xautolock && exit
+        xautolock -time 10 -locker 'conky clock on' &
+        notify low 'Que Clock Two' 'Auto' ;;
+  
+  stop) xset s on -dpms
+        pstat xautolock || exit
+        killall xautolock
+        notify low 'Que Clock Two' 'Stopped' ;;
+  
+  on  ) clock && exit
+        /usr/bin/conky -c $CONKYRC 2>/dev/null &
+        rm -rf /tmp/qclocktwo ;;  # clear qclock buffers
+  
+  off ) clock || exit
+        pkill -f "conky -c $CONKYRC"
+        [ -e $SPANEL ] || weather ;;
+  
+  ''  ) if clock ;then conky clock off ;else conky clock on ;fi ;;
+  *   ) usage ;;
 esac
 
 # vim: set ft=sh: #

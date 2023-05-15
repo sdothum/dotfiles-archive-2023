@@ -17,9 +17,9 @@ PRINT='\nprint'
 
 while : ;do
   case $1 in
-  '' ) break ;;
-  */*) FOLDER=$1; shift ;;
-  *  ) ext=$1; shift ;;
+    '' ) break ;;
+    */*) FOLDER=$1; shift ;;
+    *  ) ext=$1; shift ;;
   esac
 done
 
@@ -27,11 +27,11 @@ done
 [ $ext ] || ext=note
 if [ -z $FOLDER ] ;then
   case $ext in
-  note     ) FOLDER=$HOME/notes  ;;
-  draft    ) FOLDER=$HOME/drafts ;;
-  poem     ) FOLDER=$HOME/poems; TOPMENU='edit\nview' ;;
-  supernote) FOLDER=$HOME/Dropbox/Supernote/EXPORT; ext=txt; unset DELETE PRINT; TOPMENU="$TOPMENU\nwiki"; supernote=true ;;
-  *        ) FOLDER=$HOME/tmp    ;;
+    note     ) FOLDER=$HOME/notes  ;;
+    draft    ) FOLDER=$HOME/drafts ;;
+    poem     ) FOLDER=$HOME/poems; TOPMENU='edit\nview' ;;
+    supernote) FOLDER=$HOME/Dropbox/Supernote/EXPORT; ext=txt; unset DELETE PRINT; TOPMENU="$TOPMENU\nwiki"; supernote=true ;;
+    *        ) FOLDER=$HOME/tmp    ;;
   esac
 fi
 
@@ -115,39 +115,39 @@ wiki() {
 search=''
 while note=$(notes | rmenu "$(echo $ext | sed -r 's/./\u&/') [/search]" $(highlight)) || exit ;do
   case ${note#$(X)} in
-  /*      ) search="${note#*/}"; continue ;;
-  "$EDIT" ) term $FOLDER MAX STACK WAIT ranger $FOLDER ;;
-  "$NEW"  ) file=$(mktemp -p $FOLDER --suffix=.$ext); update=true; action=edit ;;
-
-  "$purge") [ -f $NOTES ] && find -L $FOLDER -maxdepth 1 -name "*.$ext" -exec notify low "Archiving $ext" {} \; -exec mv -f {} $ARCHIVE \;
-            search=''; cache; continue ;;
-
-  *       ) file=$(cat $NOTES | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f1)
-            content=$(cat $NOTES | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f3)
-            while action=$(echo "${TOPMENU}$PRINT\nclipboard$DELETE" | rmenu "${content#* }" -no-custom) ;do
-              [ $action = view ] || break
-              term "$file" MAX STACK WAIT less $file
-            done ;;
+    /*      ) search="${note#*/}"; continue ;;
+    "$EDIT" ) term $FOLDER MAX STACK WAIT ranger $FOLDER ;;
+    "$NEW"  ) file=$(mktemp -p $FOLDER --suffix=.$ext); update=true; action=edit ;;
+  
+    "$purge") [ -f $NOTES ] && find -L $FOLDER -maxdepth 1 -name "*.$ext" -exec notify low "Archiving $ext" {} \; -exec mv -f {} $ARCHIVE \;
+              search=''; cache; continue ;;
+  
+    *       ) file=$(cat $NOTES | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f1)
+              content=$(cat $NOTES | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f3)
+              while action=$(echo "${TOPMENU}$PRINT\nclipboard$DELETE" | rmenu "${content#* }" -no-custom) ;do
+                [ $action = view ] || break
+                term "$file" MAX STACK WAIT less $file
+              done ;;
   esac
 
   [ $ext != txt ] && mhistory $catlg $file  # no need for supernote history
   # mhistory=$file
   
   case $action in
-  edit     ) vim -g -f -c 'set filetype=markdown' -c 'set modifiable' $file
-             update=true ;;
-
-  print    ) hardcopy wiki $file ;;
-  wiki     ) wiki; exit ;;
-
-  delete   ) mv $file /tmp
-             update=true
-             sed -i "\,$file,s,$,  (DELETED)," $NOTES ;;  # file contains /'s
-
-  clipboard) [ $supernote ] && mdbreak | mdcat --nocolor --columns=55 >$NOTES || unset NOTES  # convert markdown for email text, see wiki comment above
-             clipboard "${NOTES:-$file}"
-             notify 'To Paste' 'Gvim:    F2\nTerminal: F5 (Ctrl-Alt-V)'
-             exit ;;
+    edit     ) vim -g -f -c 'set filetype=markdown' -c 'set modifiable' $file
+               update=true ;;
+  
+    print    ) hardcopy wiki $file ;;
+    wiki     ) wiki; exit ;;
+  
+    delete   ) mv $file /tmp
+               update=true
+               sed -i "\,$file,s,$,  (DELETED)," $NOTES ;;  # file contains /'s
+  
+    clipboard) [ $supernote ] && mdbreak | mdcat --nocolor --columns=55 >$NOTES || unset NOTES  # convert markdown for email text, see wiki comment above
+               clipboard "${NOTES:-$file}"
+               notify 'To Paste' 'Gvim:    F2\nTerminal: F5 (Ctrl-Alt-V)'
+               exit ;;
   esac
 
   [ $update ] && { cache; unset update; }

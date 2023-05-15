@@ -92,16 +92,16 @@ while : ;do
   show=$(cat "$catlg" | sed "1i$(X $SONARR)\n$(X $FILE)$CATLG" | sed "1i$(X $(sortlist $T))" | rmenu 'Series' "$show" -no-custom) || break
   # force dmenu focus (continue within do loop doesn't guarantee focus)
   case "${show#$(X)}" in
-  "$NAME"     ) unset T; cache; continue ;;
-  "$DATE"     ) T=t; cache; continue ;;
-  "$SONARR"   ) sonarr; unset show; continue ;;
-  # "$FILE"   ) killall 'ROX-Filer'; rox "$library"; pwait "ROX-Filer"; cache; continue ;;
-  "$FILE"     ) killall 'nnn' 2>/dev/null; term 'series' WAIT nnn "$library"; cache; continue ;;
-  "$CATALOGUE") catalogue; cache; continue ;;
-
-  *           ) series=""$library"/$(echo $show | sed 's/ /./g')"
-                playlist="$series/.playlist"
-                [ -e "$playlist" ] || echo >"$playlist" ;;
+    "$NAME"     ) unset T; cache; continue ;;
+    "$DATE"     ) T=t; cache; continue ;;
+    "$SONARR"   ) sonarr; unset show; continue ;;
+    # "$FILE"   ) killall 'ROX-Filer'; rox "$library"; pwait "ROX-Filer"; cache; continue ;;
+    "$FILE"     ) killall 'nnn' 2>/dev/null; term 'series' WAIT nnn "$library"; cache; continue ;;
+    "$CATALOGUE") catalogue; cache; continue ;;
+  
+    *           ) series=""$library"/$(echo $show | sed 's/ /./g')"
+                  playlist="$series/.playlist"
+                  [ -e "$playlist" ] || echo >"$playlist" ;;
   esac
 
   while : ;do
