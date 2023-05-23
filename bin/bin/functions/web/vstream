@@ -9,7 +9,7 @@
 usage() { echo "usage: $(basename $0)  dust | netflix | prime"; exit 0; }
 
 BROWSER=firefox
-BROWSER=chromium
+BROWSER=chromium-browser          # alpine
 options='-s statusbar.hide true'  # see web/qutebrowser
 delay=1
 

@@ -1,0 +1,14 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# $USER PATH
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................... Update .profile PATH
+#
+# Usage: addpath <path>
+
+# add conditional path to .profile
+echo $PATH | grep -q "$1" || sed -i "1i[ -e $1 ] && export PATH=\"$1:\$PATH\"" $HOME/.profile
+
+# vim: set ft=sh: #
