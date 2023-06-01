@@ -1,0 +1,19 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... pastel
+
+cd /net/depot
+[ -d pastel ] && { cd pastel; git pull; cd ..; } || git clone --depth 1 https://github.com/sharkdp/pastel.git
+
+doas apk add rust
+
+cd pastel
+make clean
+make
+doas make install
+
+# vim: set ft=sh: #
+

@@ -1,0 +1,32 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................... imapfilter
+
+COMMIT=cc5a648
+
+cd /net/depot
+doas apk del openssl1.1-compat-dev  # required by ruby 2.x install
+doas apk add openssl-dev
+
+# [ -d imapfilter ] && { cd imapfilter; git pull; cd ..; } || git clone --depth 1 https://github.com/lefcha/imapfilter.git
+if [ $COMMIT ] ;then
+  [ -d imapfilter ] || git clone https://github.com/lefcha/imapfilter.git
+  cd imapfilter
+  git checkout $COMMIT
+  doas apk add pcre pcre-dev
+else
+  [ -d imapfilter ] && { cd imapfilter; git pull; } || { git clone --depth 1 https://github.com/lefcha/imapfilter.git; cd imapfilter; }
+  doas apk add pcre2 pcre2-dev
+fi
+
+# cd imapfilter
+make clean
+make
+sed -i '/chmod.*(LUA)/s/\$(LUA)/*.lua/' src/Makefile  # fix statement expansion error
+doas make install
+
+# vim: set ft=sh: #
+

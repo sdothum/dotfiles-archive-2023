@@ -1,0 +1,17 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................... rar binary
+
+VSN=621
+
+wget -P /tmp https://www.rarlab.com/rar/rarlinux-x64-${VSN}.tar.gz
+
+tar xvf /tmp/rarlinux-x64-${VSN}.tar.gz
+cd /tmp/rar
+doas make install
+
+
+# vim: set ft=sh: #

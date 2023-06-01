@@ -1,0 +1,31 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... ruby 2.x
+
+VSN=2.7.7
+export TMPDIR=$HOME/tmp     # avoid insufficient vps tmpfs space
+
+# mandatory openssl 1.1
+doas apk update
+doas apk upgrade
+doas apk del openssl-dev curl-dev
+# libcrypto1.1 and libssl1.1 are dependencies of openssl1.1-compat-dev but need
+# to remain when openssl1.1-compat-dev is replaced with openssl-dev
+doas apk add libcrypto1.1 libssl1.1 openssl1.1-compat-dev
+doas apk add zlib zlib-dev  # gem install dependency
+doas apk add libffi-dev     # headers needed on dell nvidia install(?)
+
+frum install $VSN
+frum global $VSN
+# for ruby scripts..
+[ -e /usr/bin/ruby ] || doas ln -s $(find $HOME/.frum -regex ".*/${VSN}/bin/ruby") /usr/bin/
+# ln -s $(find $HOME/.frum -regex ".*/${VSN}/bin/irb" /usr/bin/
+
+[ -e $HOME/.gemrc ] || echo 'gem: --no-document' >$HOME/.gemrc
+[ -e /root/.gemrc ] || echo 'gem: --no-document' | doas tee /root/.gemrc
+
+# vim: set ft=sh: #
+

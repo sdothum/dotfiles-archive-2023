@@ -1,0 +1,41 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .......................................................................... qmk
+
+doas apk add gcc-arm-none-eabi newlib-arm-none-eabi
+doas apk add gcc-avr avr-libc
+doas apk add avrdude binutils-avr
+apk_edge -t dfu-programmer dfu-util
+doas addgroup shum dialout
+ditto /dev/ttyACM "reboot required for $USER group pemission to access device"
+
+# install dennytom chording engine first 'cause util/qmk_install.sh fails (alpine unsupported OS)
+cd /net/depot
+rm -rf qmk_firmware
+git clone https://github.com/DennyTom/qmk_firmware.git
+cd qmk_firmware
+git checkout 8ed3fce
+cd ..
+mv qmk_firmware qmk_firmware.dennytom
+
+# manual qmk install required for alpine
+
+cd $HOME
+git clone https://github.com/qmk/qmk_firmware.git
+cd qmk_firmware
+
+python3 -m pip install --user qmk
+
+doas cp -v $USER/qmk_firmware/util/udev/50-qmk.rules /etc/udev/rules.d/
+qmk setup
+
+# chording keybaard
+ditto dennytom "use latest chording engine for georgi keybaard"
+mv -v qmk_firmware/users/dennytom qmk_firmware/users/dennytom.original
+cp -rv /net/depot/qmk_firmware.dennytom/users/dennytom qmk_firmware/users/dennytom
+
+# vim: set ft=sh: #
+

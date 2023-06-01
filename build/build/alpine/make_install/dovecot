@@ -1,0 +1,32 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... dovecot
+
+doas apk add dovecot
+stow sandbox
+rsync -av --delete /etc/dovecot $HOME/sandbox  # hold original confs
+
+doas sed -i -e '/#C=/cC=CA' \
+        -e '/#ST=/cST=Ontario' \
+        -e '/#L=/cL=Ottawa' \
+        -e '/#O=/cO=thedarnedestthing' \
+        -e '/emailAddress=/cemailAddress=sdothum@gmail.com' /etc/dovecot/dovecot-openssl.cnf
+sh -c "eval echo '$USER:{PLAIN}\${DOVECOT:-dovecot}:$(id -u $USER):$(id -g $USER)::$HOME'" | doas tee /etc/dovecot/users
+doas sed -i "/#mail_location =/cmail_location = maildir:$MAILDIR:LAYOUT=fs" /etc/dovecot/conf.d/10-mail.conf
+
+openssl dhparam 2048 | doas tee /etc/dovecot/dh.pem
+doas sed -i 's/^#ssl_dh =/ssl_dh =/' /etc/dovecot/conf.d/10-ssl.conf
+
+# test imap server
+mailcot localhost  # better test after importing mail
+
+doas rc-update add dovecot
+# doas rc-service dovecot start
+
+# vim: set ft=sh: #
+
+
+

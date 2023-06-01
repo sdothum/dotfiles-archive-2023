@@ -1,0 +1,22 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... toilet
+
+cd /net/depot
+[ -d toilet ] && { cd toilet; git pull; cd ..; } || git clone --depth 1 https://github.com/cacalabs/toilet.git
+
+doas apk add libcaca libcaca-dev
+
+cd toilet
+./bootstrap
+./configure
+make clean
+make
+doas make install
+
+# vim: set ft=sh: #
+
+

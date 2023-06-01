@@ -1,0 +1,15 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................... kobopatch
+
+cd /net/depot
+[ -d kobopatch ] && { cd kobopatch; git pull; cd ..; } || git clone --depth 1 https://github.com/pgaskin/kobopatch.git
+
+# create go/musl binary for alpine
+cd kobopatch
+CGO_ENABLED=1 go build -ldflags "-s -w -linkmode external -X main.version=$(git describe --tags --always)" -o build/kobopatch-linux-64bit.musl ./kobopatch
+
+# vim: set ft=sh: #

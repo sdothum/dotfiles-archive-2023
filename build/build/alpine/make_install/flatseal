@@ -1,0 +1,29 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... flatseal
+
+ditto install 'answer Y to prompts..'
+flatpak install --user flathub com.github.tchx84.Flatseal 2>/dev/null  # suppress URI errors
+
+# link binary
+mkdir -p $HOME/.local/bin
+echo "#!/bin/sh
+flatpak run --user com.github.tchx84.Flatseal" >$HOME/.local/bin/flatseal
+chmod 755 $HOME/.local/bin/flatseal
+
+# theme flatpak env
+# mkdir -p $HOME/.icons $HOME/.themes
+# ln -s /usr/share/icons/Paper $HOME/.icons
+# ln -s /usr/share/icons/Paper-Mono-Dark $HOME/.icons
+# ln -s /usr/share/themes/Arc-Dark $HOME/.themes
+#
+# doas flatpak override --filesystem=$HOME/.icons
+# doas flatpak override --filesystem=$HOME/.themes
+# doas flatpak override --env=ICON_THEME=Paper-Mono-Dark
+# doas flatpak override --env=GTK_THEME=Arc-Dark
+
+# vim: set ft=sh: #
+

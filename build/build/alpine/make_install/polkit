@@ -1,0 +1,32 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... polkit
+
+doas apk add polkit
+# doas apk add udevil
+doas apk add udiskie
+
+echo "polkit.addRule(function(action, subject) {
+  var YES = polkit.Result.YES;
+  // NOTE: there must be a comma at the end of each line except for the last:
+  var permission = {
+    "org.freedesktop.udisks2.filesystem-mount": YES,
+    "org.freedesktop.udisks2.encrypted-unlock": YES,
+    "org.freedesktop.udisks2.eject-media": YES,
+    "org.freedesktop.udisks2.power-off-drive": YES
+  };
+  if (subject.isInGroup("plugdev")) {
+    return permission[action.id];
+  }
+});" | doas tee /etc/polkit-1/rules.d/50-udiskie.rules
+
+doas addgroup $USER plugdev
+
+# vim: set ft=sh: #
+
+
+
+

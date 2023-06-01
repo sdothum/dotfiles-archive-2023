@@ -1,0 +1,49 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... calibre
+
+wget -P /tmp https://dl.flathub.org/repo/appstream/com.calibre_ebook.calibre.flatpakref 
+
+ditto install 'answer Y to prompts..'
+flatpak install --user /tmp/com.calibre_ebook.calibre.flatpakref 2>/dev/null  # suppress URI errors
+
+# link binary
+ditto calibre "library located at /net/media/ebooks/calibre"
+mkdir -p $HOME/.local/bin
+echo "#!/bin/sh
+flatpak run --user com.calibre_ebook.calibre" >$HOME/.local/bin/calibre
+chmod 755 $HOME/.local/bin/calibre
+
+# udiskie.. doesn't hurt but at the moment does not fix automount
+doas addgroup flatpak plugdev
+
+# quote conversion parms..
+echo "#!/usr/bin/dash
+eval flatpak run --command=\"ebook-convert\" --user com.calibre_ebook.calibre \$(while [ \"\$1\" ]; do echo \"\\\"\$1\\\"\"; shift; done)
+" >$HOME/.local/bin/ebook-convert
+chmod 755 $HOME/.local/bin/ebook-convert
+
+stow calibre
+ditto columns "#finished \"{:'cmp(field('#koboreadpct'),100,'','Finished','Finished')'}\""
+ditto columns '#kobolastread "date"'
+ditto columns '#koborating "integers"'
+ditto columns '#koboreadloc "text"'
+ditto columns '#koboreadpct "integers"'
+ditto columns '#pages "integers"'
+ditto columns '#subtitle "{#pages} pp."'
+ditto columns '#words "integers"'
+ditto kobotouchextended 'file ftemplate to "books/{authors}/{title} - {authors}"'
+ditto kobotouchextended 'collections columns to "tags"'
+ditto kobotouchextended 'metadata subtitle to "{#subtitle)"'
+ditto koboutilities 'device profile for "*Any Device"'
+ditto koboutilities 'current reading column to "#koboreadloc"'
+ditto koboutilities 'percent read column to "#koboreadpct"'
+ditto koboutilities 'rating column to "#koborating"'
+ditto koboutilities 'last read column to "#kobolastread"'
+ditto koboutilities 'store current bookmarks on connect'
+
+# vim: set ft=sh: #
+

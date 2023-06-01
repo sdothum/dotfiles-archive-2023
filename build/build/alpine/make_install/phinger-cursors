@@ -1,0 +1,16 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .............................................................. phinger-cursors
+
+wget -P /tmp https://github.com/phisch/phinger-cursors/releases/latest/download/phinger-cursors-variants.tar.bz2
+
+mkdir -p $HOME/.icons
+cd $HOME/.icons
+
+tar xfj /tmp/phinger-cursors-variants.tar.bz2
+
+
+# vim: set ft=sh: #

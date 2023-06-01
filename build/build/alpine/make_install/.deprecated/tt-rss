@@ -1,0 +1,119 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... tt-rss
+
+# COMMIT=467bc4fe0  # version 17.4 for sal theme (deprecated)
+COMMIT=c8243b03c    # more recent releases plagued with spurious warnings
+
+TTRSS=/srv/http/tt-rss
+DB=postgres
+DB=mysql
+V=81  # php version
+
+[ $DB = mysql ] && DBMODULE=pdo_mysql || DBMODULE=pdo_pgsql
+
+cd /net/depot
+if [ ! -d tt-rss ] ;then
+  if [ $COMMIT ] ;then
+    git clone https://git.tt-rss.org/fox/tt-rss.git
+    cd tt-rss
+    git checkout $COMMIT
+  else
+    git clone --depth 1 https://git.tt-rss.org/fox/tt-rss.git
+  fi
+fi
+
+doas apk add php${V} php${V}-curl php${V}-dom php${V}-fileinfo php${V}-fpm php${V}-intl php${V}-mbstring php${V}-openssl php${V}-$DBMODULE
+if [ $DB = mysql ] ;then
+  doas apk add mysql mysql-client
+else
+  doas apk add postgresql15 postgresql15-client postgresql15-contrib
+fi
+
+doas sed -i -r -e '/max_execution_time/s/=.*/= 300/'   \
+         -e '/max_execution_time/s/;//'                \
+         -e '/date.timezone/s|=.*|= "Canada/Eastern"|' \
+         -e '/date.timezone/s/;//'                     \
+         -e '/display_errors *=/s/Off/On/'             \
+         /etc/php${V}/php.ini
+
+doas sed -i -e '/process_control_timeout/s/=.*/= 300/' \
+         -e '/process_control_timeout/s/;//'           \
+         /etc/php${V}/php-fpm.conf
+
+doas sed -i -re '/;listen\.(owner|group|mode)/s/;//'                           \
+         -e "/listen = 127.0.0.1:9000/clisten = /run/php${V}-fpm/php-fpm.sock" \
+         /etc/php${V}/php-fpm.d/www.conf
+doas mkdir /run/php${V}-fpm
+
+doas addgroup -S http
+doas adduser -S -h /srv/http -g http -s /sbin/nologin http http
+
+doas rc-update add php-fpm${V}
+
+[ -d $TTRSS ] && rm -rf $TTRSS/* || { doas mkdir -pv $TTRSS; doas chown $USER:$USER $TTRSS; }
+ditto tt-rss "rsync in progress"
+rsync -a --exclude='.git*' /net/depot/tt-rss/ $TTRSS
+
+chmod -R 777 $TTRSS/cache/images 2>/dev/null
+chmod -R 777 $TTRSS/cache/upload 2>/dev/null
+chmod -R 777 $TTRSS/cache/export 2>/dev/null
+chmod -R 777 $TTRSS/cache/js 2>/dev/null
+chmod -R 777 $TTRSS/feed-icons 2>/dev/null
+chmod -R 777 $TTRSS/lock 2>/dev/null
+cp $TTRSS/config.php-dist $TTRSS/config.php
+mkdir $TTRSS/logs
+
+# original $TTRSS/install/index.php
+# sed -i '/if (!function_exists("iconv"))/s/!//' $TTRSS/install/index.php  # iconv check fails with latest php (?)
+
+echo "#!/sbin/openrc-run
+
+USERNAME=http
+
+name=\"tt-rss\"
+pidfile=\"/run/tt-rss.pid\"
+directory=\"/srv/http/tt-rss\"
+command=\"/srv/http/tt-rss/update.php\"
+command_args=\"--daemon --quiet --feeds --force-update\"
+command_background=true
+command_user=\"\$USERNAME\"
+
+depend() {
+    need net
+}" | doas tee /etc/init.d/tt-rss
+
+doas chmod 755 /etc/init.d/tt-rss
+doas rc-update add tt-rss
+
+if [ $DB = mysql ] ;then
+  doas /etc/init.d/mariadb setup
+  # doas rc-update add mariadb
+  doas rc-service mariadb start
+  echo "
+create user 'ttrss'@'localhost' identified by 'ttrss';
+create database ttrss;
+grant all privileges on ttrss.* to 'ttrss'@'localhost';
+" >/tmp/tt-rss:mysql
+  doas -u mysql mysql </tmp/tt-rss:mysql
+else
+  doas rc-update add postgresql
+  doas rc-service postgresql start
+  echo "
+create user ttrss with password 'ttrss';
+alter user ttrss set work_mem='64MB';
+create database ttrss;
+grant all privileges on database ttrss to ttrss;
+\connect ttrss;
+create extension pg_trgm;
+" >/tmp/tt-rss:postgres
+  grep -q 'export PGDATA=' $HOME/.profile || sed -i "1iexport PGDATA=/var/lib/postgresql/15/data" $HOME/.profile
+  doas -u postgres psql </tmp/tt-rss:postgres
+  doas sed -i '/^local *all *all *trust/s/trust/md5/' /var/lib/postgresql/15/data/pg_hba.conf
+  doas rc-service postgresql restart
+fi
+
+# vim: set ft=sh: #

@@ -1,0 +1,17 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... premake
+
+cd /net/depot
+[ -d premake-core ] && { cd premake-core; git pull; cd ..; } || git clone --depth 1 https://github.com/premake/premake-core.git
+
+cd premake-core
+make -f Bootstrap.mak linux
+doas cp -v bin/release/premake5 /usr/bin
+
+
+# vim: set ft=sh: #
+

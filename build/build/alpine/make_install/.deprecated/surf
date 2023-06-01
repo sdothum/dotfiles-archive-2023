@@ -1,0 +1,12 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... surf
+
+doas apk add -U --upgrade --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing surf
+
+# vim: set ft=sh: #
+
+

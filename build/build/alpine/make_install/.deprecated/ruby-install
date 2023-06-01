@@ -1,0 +1,18 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................. ruby-install
+
+cd /net/depot
+[ -d ruby-install ] && { cd ruby-install; git pull; cd ..; } || git clone --depth 1 https://github.com/postmodern/ruby-install.git
+
+doas apk add outils-md5 outils-sha1 outils-sha256 outils-sha512 patch xz
+
+cd ruby-install
+make clean
+make
+doas make install
+
+# vim: set ft=sh: #

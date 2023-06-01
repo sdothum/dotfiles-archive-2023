@@ -1,0 +1,18 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... sudo
+
+# remove pseudo links
+[ -L  /usr/bin/sudo ] && doas rm /usr/bin/sudo
+[ -L  /usr/bin/su   ] && doas rm /usr/bin/su
+
+doas apk add sudo
+doas chmod 640 /etc/sudoers
+doas sed -i '/^#.*wheel.*NOPASSWD/s/^# *//' /etc/sudoers
+doas chmod 440 /etc/sudoers
+
+# vim: set ft=sh: #
+

@@ -1,0 +1,51 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... miniflux
+
+doas apk add miniflux miniflux-doc
+doas apk add postgresql15 postgresql15-client postgresql15-contrib
+
+doas rc-update add postgresql
+doas rc-service postgresql start
+
+echo "
+create user miniflux with password 'miniflux';
+-- alter user miniflux set work_mem='64MB';
+create database miniflux;
+grant all privileges on database miniflux to miniflux;
+\connect miniflux;
+create extension hstore;
+" >/tmp/miniflux:postgres
+
+grep -q 'export PGDATA=' $HOME/.profile || sed -i "1iexport PGDATA=/var/lib/postgresql/15/data" $HOME/.profile
+doas -u postgres psql </tmp/miniflux:postgres
+# doas sed -i '/^local *all *all *trust/s/trust/md5/' /var/lib/postgresql/15/data/pg_hba.conf
+doas rc-service postgresql restart
+
+echo "
+LOG_DATE_TIME=yes
+LISTEN_ADDR=127.0.0.1:8080
+DATABASE_URL=user=postgres password=secret dbname=miniflux sslmode=disable
+WORKER_POOL_SIZE=10
+POLLING_FREQUENCY=5
+POLLING_PARSING_ERROR_LIMIT=0
+BATCH_SIZE=25
+CLEANUP_FREQUENCY_HOURS=1
+CLEANUP_ARCHIVE_UNREAD_DAYS=7
+CLEANUP_ARCHIVE_READ_DAYS=7
+" | doas tee /etc/miniflux.conf
+
+doas miniflux -c /etc/miniflux.conf -migrate
+doas miniflux -c /etc/miniflux.conf -create-admin
+
+doas rm /etc/nginx/http.d/miniflux.*
+stow nginx/miniflux
+doas rc-service nginx restart
+doas rc-update add miniflux
+doas rc-service miniflux start
+
+# vim: set ft=sh: #
+

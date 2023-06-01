@@ -1,0 +1,32 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... nzbget
+
+doas apk add -U --upgrade --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing nzbget
+
+echo "#!/sbin/openrc-run
+
+USERNAME=$USER
+
+name=\"nzbget\"
+pidfile=\"/run/nzbget.pid\"
+directory=\"/usr/bin\"
+command=\"/usr/bin/nzbget\"
+command_args=\"--server --option OutputMode=loggable -c /home/\$USERNAME/.nzbget\"
+command_background=true
+command_user=\"\$USERNAME\"
+
+depend() {
+    need net
+}" | doas tee /etc/init.d/nzbget
+
+doas chmod 755 /etc/init.d/nzbget
+doas rc-update add nzbget
+stow nzbget
+
+# vim: set ft=sh: #
+
+

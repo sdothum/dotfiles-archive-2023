@@ -1,0 +1,19 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... sutils
+
+cd /net/depot
+[ -d sutils ] && { cd sutils; git pull; cd ..; } || git clone --depth 1 https://github.com/baskerville/sutils.git
+
+doas apk add alsa-lib-dev musl-locales
+
+cd sutils
+make clean
+make
+doas make install
+
+# vim: set ft=sh: #
+

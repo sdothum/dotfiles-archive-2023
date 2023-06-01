@@ -1,0 +1,27 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ rbenv
+
+cd /net/depot
+[ -d rbenv ] && { cd rbenv; git pull; cd ..; } || git clone --depth 1 https://github.com/rbenv/rbenv.git
+
+cd rbenv
+make clean
+make
+doas make install
+
+cd /net/depot
+[ -d ruby-build ] && { cd ruby-build; git pull; cd ..; } || git clone --depth 1 https://github.com/rbenv/ruby-build.git
+
+doas apk add patch 
+
+cd ruby-build
+make clean
+make
+doas make install
+
+# vim: set ft=sh: #
+

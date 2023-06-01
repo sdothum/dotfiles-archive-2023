@@ -1,0 +1,45 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .......................................................................... mox
+
+if [ ! -d /home/mox ] ;then
+  doas delgroup mox 2>/dev/null
+  doas deluser mox 2>/dev/null
+  doas adduser -h /home/mox -D mox
+  doas addgroup $USER mox  # add USER to complete install -- daas install leaves residual go subdirectories(?) -- requires logout
+  doas chmod 775 /home/mox
+  ditto mox "you must log out and back in to rerun 'make_install mox' to complete install"
+else
+  doas apk add go
+  cd /home/mox
+  GOBIN=$PWD CGO_ENABLED=0 go install github.com/mjl-/mox@latest
+
+  doas chown -R mox:mox /home/mox
+  doas -u mox ./mox quickstart mox@$(hostname)
+  doas sed -i '/CheckUpdates:/s/^#//' config/mox.conf
+
+  doas ./mox quickstart -existing-webserver comment@thedarnedestthing.com | doas tee quickstart.log
+  chmod 400 quickstart.log
+
+  ditto certificate "CA"
+  ditto certificate "Ontario"
+  ditto certificate "Ottawa"
+  ditto certificate "Parallel Systems Inc"
+  ditto certificate "thedarnedestthing.com"
+  ditto certificate "sdothum@gmail.com"
+  doas openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx.key -out /etc/ssl/certs/nginx.crt
+  doas openssl dhparam -out /etc/nginx/dhparam.pem 4096
+
+  stow openrc/mox
+  doas mkdir -p /etc/nginx/http.d /etc/nginx/snippets
+  stow nginx/mox
+  doas rc-update add mox
+  doas rc-service mox start
+  doas rc-service nginx restart
+fi
+
+# vim: set ft=sh: #
+
