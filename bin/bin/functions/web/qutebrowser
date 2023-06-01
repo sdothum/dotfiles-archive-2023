@@ -44,6 +44,7 @@ fi
 
 # pin tab to prevent last page close
 sleep 2
-xdotool key Control+p
+xdotool type ':tab-pin'
+xdotool key 'Return'
 
 # vim: set ft=sh: #

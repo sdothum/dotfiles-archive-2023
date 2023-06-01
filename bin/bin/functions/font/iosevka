@@ -640,7 +640,8 @@ fi
 [ $T_descending  ] && fforge T_descending  $family               # font mod for descending capital T
 [ $FP_descending ] && fforge FP_descending $family               # decending caps (experimental)
 
-[ $ebook ] && echo $spacing | grep -vq 'quasi-' && { fforge punctuation ${emdash:-2} $family; unset width; }  # wide cell emdash and double width ellipsis
+# [ $ebook ] && echo $spacing | grep -vq 'quasi-' && { fforge punctuation ${emdash:-2} $family; unset width; }  # wide cell emdash and double width ellipsis
+[ $ebook ] && { fforge punctuation ${emdash:-2} $family; unset width; }  # wide cell emdash and double width ellipsis
 
 [ $ebook ] && [ $spacing != 'quasi-proportional' ] && fforge ligature $width ${shape##* } $family             # ae width character adjustment
 

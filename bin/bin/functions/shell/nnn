@@ -45,7 +45,7 @@ export NNN_BMS="$bookmarks"
 #      NNN_FCOLORS 'c1e2272e006033f7c6d6abc4'                  # change dir/exe colors
 export NNN_FCOLORS='c1e2de28006033f7c627abc4'
 export LS_COLORS='di=01;38;5;221:ex=00;38;5;40:ln=00;38;5;51'  # match nnn colors!
-export NNN_OPTS=aefHoQux
+exists cpg && export NNN_OPTS=aefHoQrux || export NNN_OPTS=aefHoQux
 
 # sloppy mtp automount
 mtp mount && NDIR=$(mtp)
