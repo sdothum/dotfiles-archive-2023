@@ -214,9 +214,11 @@ stage_3() {
   doas apk add the_silver_searcher
   stow ag
   doas apk add tree
+  doas apk add ugrep
 
   # compression
   doas apk add 7zip
+  doas apk add zip
   # doas apk add par2cmdline
   make_install unrar      # for nzbget
 

@@ -179,8 +179,8 @@ myfonts() {
   e_ink Iota        ${cap:-cap extended} a-single   I-descending f-extended  open  j-serifed    $iG     $iQ ${space:-space 1.3333}
 
   # experimental descenders
-  # e_ink Theta       ${cap:-cap extended} a-single   I-descending f-extended  open  T-descending $iG     $iQ ${space:-space 1.3333}
-  # e_ink Fluent      ${cap:-cap extended} a-single   I-descending f-extended  open  descenders   $iG     $iQ ${space:-space 1.3333}
+  e_ink Tao         ${cap:-cap extended} a-single   I-descending f-extended  open  j-serifed    $iG     $iQ ${space:-space 1.3333} T-descending 
+  # e_ink Fluent      ${cap:-cap extended} a-single   I-descending f-extended  open  j-serifed    $iG     $iQ ${space:-space 1.3333} descenders   
 }
 
 dfont() { iosevka expanded j-serifed             Q-bar $(options $@) q-hook at-tall; }
