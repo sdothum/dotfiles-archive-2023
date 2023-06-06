@@ -308,7 +308,7 @@ while [ $1 ] ;do
     Q-custom     ) variant 'Q=CUSTOM';      Q_custom=true ;;
     q-hook       ) variant 'q=HOOK-TAILED'; q_hook=true ;;
     q-tailed     ) variant $1; unset q_hook ;;
-    T-descending ) variant 'T=DESCENDING'; T_descending=true ;;
+    T-descending ) variant 'T=DESCENDING I=DESCENDING'; T_descending=true; I_descending=true ;;
     t-cross      ) variant $1 ;;
     y-straight   ) variant $1 ;;
     asterisk-high) variant $1 ;;

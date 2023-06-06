@@ -190,7 +190,7 @@ descending() {
 Select(0u007c);
 CopyReference();
 Select($1);
-PasteWithOffset($2,-47);
+PasteWithOffset($2,-48);
 "
 }
 
@@ -212,9 +212,11 @@ Generate(\$1);
 
 T_descending() {
   confirm 'T descending'
+  # move T up a smidgen for small fontsize font (engine) rendering alignment
   echo "
 Open(\$1);
 $(descending 0u0054 0)
+Move(0,32);
 Generate(\$1);
 " >/tmp/fontforge.script
 

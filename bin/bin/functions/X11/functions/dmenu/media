@@ -6,7 +6,7 @@
 # ........................................................................ Media
 
 CLEAR='clear'
-MENU="$(X $CLEAR)\nblackboard\nanimation\nanime\nmovies\nseries\nsonarr\ndust\niai\nnetflix\nkodi\nprime\nnzbgeek\nusenet-crawler\nnzbget\ntorrent\npulse\ncalibre\nebooks\nreferences\nzlibrary\npatricia\nthought of you"
+MENU="$(X $CLEAR)\nblackboard\nanimation\nanime\nmovies\nseries\nsonarr\ndust\niai\nnetflix\nkodi\nprime\nnzbgeek\nusenet-crawler\nnzbget\ntorrent\npulse\ncalibre\nebooks\nreferences\nzlibrary\npatricia\nthought of you\nfamily\ hum"
 
 video='play kodi vstream'
 USENET_CRAWLER=https://www.usenet-crawler.com/movies?t=2040
@@ -31,8 +31,9 @@ while : ;do
     blackboard    ) exec blackboard ;;
     calibre       ) calibre; exit ;;
     dust          ) vstream dust ;;
-    iai           ) vstream iai ;;
     ebooks        ) dmenu ebooks; unset root; break ;;
+    family*       ) play -q /net/media/patricia/Family\ Hum.mov ;;
+    iai           ) vstream iai ;;
     kodi          ) videomode on; kodi; videomode off ;;
     movies        ) dmenu movies ;;
     netflix       ) vstream netflix ;;
