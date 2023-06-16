@@ -6,7 +6,7 @@
 
 # ............................................................... Word frequency
 
-usage() { echo "usage: [GT=<count>] $(basename $0) [list | ls | <length>] [<regex>]"; exit 1; }
+usage() { echo "usage: [GT=<count>] $(basename $0) [list | ls | <[-]length>] [<regex>]"; exit 1; }
 
 # WORDS=${WORDS:-$HOME/.config/Amphetype/100K-word.database}
 WORDS=${WORDS:-$HOME/.config/Amphetype/google-books-common-words.txt}
@@ -20,7 +20,7 @@ double='ss ee tt ff ll mm oo rr nn pp'
 
 [ $1 ] || usage
 [ $2 ] && [ "$1" = list ] || [ "$1" = ls ] && { shift; list=true; }
-[ $2 ] && { length=$1; shift; list=true; }  # print all words <= length
+[ $2 ] && { length="${1#-}";  [ "$1" = ${1#-} ] || le=true; shift; list=true; }  # print all words <= length
 [ $length ] && length=$(( $length - 1 ))
 
 frequency() {
@@ -58,7 +58,8 @@ corpus() {
 list() {
   for i in $@ ;do
     underline
-    [ $length ] && ugrep -i $i $WORDS | awk '{ print $1 }' | grep -Eow "\b\w{1,$length}\b" | sed 's/$/ /' | sort | column -c$(tput cols) ||  # add space to widen column separator
+    [ $length ] && [ $le ] && ugrep -i $i $WORDS | awk '{ print $1 }' | grep -Eow "\b\w{1,$length}\b"       | sed 's/$/ /' | sort | column -c$(tput cols) ||  # add space to widen column separator
+      [ $length ] &&          ugrep -i $i $WORDS | awk '{ print $1 }' | grep -Eow "\b\w{$length,$length}\b" | sed 's/$/ /' | sort | column -c$(tput cols) ||
       ugrep -i $i $WORDS | awk '{ print $1 }' | sort | column -c$(tput cols)
     echo
   done

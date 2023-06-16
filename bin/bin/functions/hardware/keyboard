@@ -1,0 +1,20 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Hardware
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... Keyboard
+
+usage() { echo "usage: $(basename $0) off | on"; exit 1; }
+
+# set to Georgi usb
+kbdid () { xinput list | grep 'Georgi' | cut -f2 | cut -d'=' -f2; }
+
+case $1 in
+  off) for i in $(kbdid) ;do xinput float    $i   ;done ;;
+  on ) for i in $(kbdid) ;do xinput reattach $i 3 ;done ;;
+  *  ) usage ;;
+esac
+
+# vim: set ft=sh: #

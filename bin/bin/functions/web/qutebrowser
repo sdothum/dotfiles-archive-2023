@@ -43,8 +43,10 @@ else
 fi
 
 # pin tab to prevent last page close
-sleep 2
+keyboard off  # disable keyboard to prevent disrupting following :command
+sleep 2       # pause long enough for window focus
 xdotool type ':tab-pin'
-xdotool key 'Return'
+xdotool key  'Return'
+keyboard on   # enable keyboard
 
 # vim: set ft=sh: #

@@ -49,7 +49,7 @@ exists cpg && export NNN_OPTS=aefHoQrux || export NNN_OPTS=aefHoQux
 
 # sloppy mtp automount
 mtp mount && NDIR=$(mtp)
-[ $1 != TMUX ] && trap 'mtp umount' EXIT  # must manually eject if mounted during toggle tmux session, see herbstluftwm appbinds
+[ "$1" != TMUX ] && trap 'mtp umount' EXIT  # must manually eject if mounted during toggle tmux session, see herbstluftwm appbinds
 
 case $1 in
   TMUX) tmux_session 'nnn' $NNN $PREVIEW $TDIR 2>/tmp/nnn.log ;;

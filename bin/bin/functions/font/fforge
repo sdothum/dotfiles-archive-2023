@@ -8,7 +8,16 @@
 # see make_install iosevka
 
 usage() { 
-  echo "usage: $(basename $0) Q_hook | Q_custom | q_hook | punctuation [<emdash>] | ligature [quasi-proportional] | bookweight [book+regular] | dyslexic [<space>]  [family]
+  echo "usage: $(basename $0) Q_hook | q_hook | I_descending
+       $(basename $0) Q_custom <shape>
+       $(basename $0) Q_horizontal <shape>
+       $(basename $0) T_descending <shape> [-]
+       $(basename $0) Y_descending <shape> [-]
+       $(basename $0) FP_descending <shape>
+       $(basename $0) punctuation <emdash> <shape>
+       $(basename $0) ligature <width> <shape>
+       $(basename $0) dyslexic <space>
+       $(basename $0) bookweight [book+regular]
        $(basename $0) copy <family> <name>, font alias via commandline only
        $(basename $0) map  <family> <glyph> <glyph>, map U+<glyph> via commandline only"
   exit 1
@@ -16,9 +25,12 @@ usage() {
 
 MAKE_INSTALL=/tmp/iosevka:make_install
 REPO=/net/depot/Iosevka
+ANGLE=-9  # iosevka italic angle (verify with fontforge)
 
 confirm() { [ -e $MAKE_INSTALL ] && ditto "$(basename $0)" "$1" || { ifyes "$1" || exit; }; }
 percent() { echo "$1 * 100" | bc | cut -d. -f1; }
+regular() { ls -1 | grep -Ev 'italic|oblique'; }
+italic()  { ls -1 | grep -E  'italic'; ln -sf ${FONT##*/}-regular.ttf ${FONT##*/}-.ttf; }
 
 replace() {
   echo "
@@ -112,10 +124,11 @@ Generate(\$1);
   done
 }
 
-# wide cell width punctuation
+# wide cell width punctuation emdash and ellipsis
 punctuation() {
   width=$(percent $emdash)
   confirm "${emdash}x width emdash"
+  
   echo "
 Open(\$1);
 Select(0u2012);
@@ -124,9 +137,11 @@ Select(0u2014);
 Paste();
 Transform($width,0,0,100,0,0);
 Select(0u2026);
-Transform(200,0,0,200,0,0);
-ChangeWeight(-100);
-Move(0,-40);
+# Transform(200,0,0,200,0,0);
+# ChangeWeight(-165);
+# Move(0,-70);
+SetWidth($HAlF,1);
+Move($HAlF,0);
 Generate(\$1);
 " >/tmp/fontforge.script
 
@@ -184,30 +199,46 @@ Generate(\$1);
   done
 }
 
+# descending capitals
+
 # overlay descending I
 descending() {
   echo "
-Select(0u007c);
+Select(0u0049);
 CopyReference();
 Select($1);
-PasteWithOffset($2,-48);
+PasteWithOffset($2,-40);
 "
 }
 
-# descenders for capitals F and P
-FP_descending() {
-  confirm 'FP descenders'
+move()  { [ $noshift ] || echo 'Move(0,32);'; }
+
+morph() {
+  # create regular descender
+  for i in $(regular) ;do
+    ditto $1 $i
+    fontforge --script /tmp/fontforge.script $i
+  done
+
+  # italicize descender from regular glyph and shift to left of cell
   echo "
+Open(\$2);
+Select($2);
+Italic($ANGLE);
+Copy();
 Open(\$1);
-$(descending 0u0046 -162)
-$(descending 0u0050 -178)
+Select($2);
+Paste();
+Move($3,0);
+SetWidth($shape);
 Generate(\$1);
 " >/tmp/fontforge.script
 
-  for i in *.ttf ;do
-    ditto "FP descenders" $i
-    fontforge --script /tmp/fontforge.script $i
+  for i in $(italic) ;do
+    ditto $1 $i
+    fontforge --script /tmp/fontforge.script $i ${i%italic*}.ttf
   done
+  rm ${FONT##*/}-.ttf  # regular symlink
 }
 
 T_descending() {
@@ -216,14 +247,56 @@ T_descending() {
   echo "
 Open(\$1);
 $(descending 0u0054 0)
-Move(0,32);
+$(move)
 Generate(\$1);
 " >/tmp/fontforge.script
 
-  for i in *.ttf ;do
-    ditto T_descending $i
-    fontforge --script /tmp/fontforge.script $i
-  done
+  morph T_descending '0u0054' -30
+}
+
+Y_descending() {
+  confirm 'Y descending'
+  # move Y up a smidgen for small fontsize font (engine) rendering alignment
+  echo "
+Open(\$1);
+Select(0u007c);
+CopyReference();
+Select(0u0001);
+Paste();
+Select(0u0001);
+CopyReference();
+Transform(100,0,0,50,0,0);
+Select(0u0059);
+PasteWithOffset(0,-174);
+$(move)
+Select(0u0001);
+Clear();
+Generate(\$1);
+" >/tmp/fontforge.script
+
+  morph Y_descending '0u0059' -40
+}
+
+# descenders for capitals F and P
+FP_descending() {
+  confirm 'FP descenders'
+  echo "
+Open(\$1);
+$(descending 0u0046 -162)
+$(move)
+Generate(\$1);
+" >/tmp/fontforge.script
+
+  morph F_descending '0u0046' 0  # left adjustment untested
+
+  echo "
+Open(\$1);
+$(descending 0u0050 -178)
+$(move)
+Generate(\$1);
+" >/tmp/fontforge.script
+
+  morph P_descending '0u0050' 0  # left adjustment untested
 }
 
 Q_horizontal() {
@@ -382,14 +455,15 @@ Generate(\$1);
 fforge=$1
 case $1 in
   I_descending ) ;;
-  T_descending ) ;;
-  FP_descending) ;;
+  T_descending ) shape=$2; [ $3 = '-' ] && { noshift=true; shift; }; shift ;;
+  Y_descending ) shape=$2; [ $3 = '-' ] && { noshift=true; shift; }; shift ;;
+  FP_descending) shape=$2; shift; ;;
   q_hook       ) ;;
   Q_hook       ) ;;
   Q_horizontal ) shape=$2; shift ;;
   Q_custom     ) shape=$2; shift ;;
   ligature     ) [ $4 ] && { width=$2; shift 2; } || { shape=$2; shift; } ;;               # see iosevka for tricky bits
-  punctuation  ) [ $2 ] && { emdash=$2; shift; } || emdash=2 ;;
+  punctuation  ) emdash=$2; shape=$3; shift 2 ;;
   *weight      ) regular=${1%weight}; fforge=weight; [ "$2" = 'book+regular' ] && { adjust=true; shift; } ;;
   dyslexic     ) [ $2 ] && { space=$2; shift; } || space=2 ;;
   copy         ) [ $3 ] && { family=$2; alias=$3; shift 2; copy; exit; }      || usage ;;  # pwd commandline only!
@@ -400,6 +474,7 @@ shift
 [ $2 ] && usage
 
 FONT=$HOME/.fonts/${1:-Iosevka}
+[ $shape ] && HAlF=$(( $shape / 2 ))  # half cell width (see punctuation)
 cd $FONT || usage
 
 $fforge

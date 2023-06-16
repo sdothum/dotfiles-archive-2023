@@ -28,7 +28,7 @@ usage() {
                [english | latin+greek | cyrillic | fluent | ligature <name>]
 
                [grotesque (default) | atkinson | geometric | jost]
-               [elementary | grotesk | descenders | open | a-single | b-corner | D-serifless | d-[tailed|toothless] | f-extended | G-[hookless[+]|rounded|toothed|toothless] | g-double | I-[serifed|serifless|descending] | i-serifed | J-[descending|flat] | j-[serifed|serifless] | l-[hooky|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|open|straight|custom] | q-[hook|tailed] | T-descending | t-cross | y-straight | asterisk-high | at-tall | 0-split | paren-flat]*
+               [elementary | grotesk | descenders | open | a-single | b-corner | D-serifless | d-[tailed|toothless] | f-extended | G-[hookless[+]|rounded|toothed|toothless] | g-double | I-[serifed|serifless|descending] | i-serifed | J-[descending|flat] | j-[serifed|serifless] | l-[hooky|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|open|straight|custom] | q-[hook|tailed] | T-descending [noshift] | t-cross | Y-descending [noshift] | y-straight | asterisk-high | at-tall | 0-split | paren-flat]*
 
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
                [double] [space M|<decimal>] [ emdash <decimal> ]
@@ -310,7 +310,9 @@ while [ $1 ] ;do
     q-tailed     ) variant $1; unset q_hook ;;
     T-descending ) variant 'T=DESCENDING I=DESCENDING'; T_descending=true; I_descending=true ;;
     t-cross      ) variant $1 ;;
+    Y-descending ) variant 'Y=DESCENDING T=DESCENDING I=DESCENDING'; Y_descending=true; T_descending=true; I_descending=true ;;
     y-straight   ) variant $1 ;;
+    noshift      ) variant 'NOSHIFT'; noshift=- ;;
     asterisk-high) variant $1 ;;
     at-tall      ) variant $1 ;;
     0-split      ) variant $1 ;;
@@ -629,24 +631,25 @@ if [ $ebook ] ;then
   mkdir -p $HOME/.fonts/$family
   cp -v dist/$family/ttf/* $HOME/.fonts/$family
 else
-  nerdfont $mono $family                                       # insert glyphs
+  nerdfont $mono $family  # insert glyphs
 fi
 
-[ $q_hook        ] && fforge q_hook $family                      # hyperlegible font mod for better q
-[ $Q_hook        ] && fforge Q_hook $family                      # hooked capital Q
-[ $Q_horizontal  ] && fforge Q_horizontal  ${shape##* } $family  # open horizontal capital Q
-[ $Q_custom      ] && fforge Q_custom      ${shape##* } $family  # custom capital Q
-[ $I_descending  ] && fforge I_descending  $family               # font mod for descending serifless capital I
-[ $T_descending  ] && fforge T_descending  $family               # font mod for descending capital T
-[ $FP_descending ] && fforge FP_descending $family               # decending caps (experimental)
+[ $q_hook        ] && fforge q_hook                              $family  # hyperlegible font mod for better q
+[ $Q_hook        ] && fforge Q_hook                              $family  # hooked capital Q
+[ $Q_horizontal  ] && fforge Q_horizontal  ${shape##* }          $family  # open horizontal capital Q
+[ $Q_custom      ] && fforge Q_custom      ${shape##* }          $family  # custom capital Q
+[ $I_descending  ] && fforge I_descending                        $family  # font mod for descending serifless capital I
+[ $T_descending  ] && fforge T_descending  ${shape##* } $noshift $family  # font mod for descending capital T
+[ $Y_descending  ] && fforge Y_descending  ${shape##* } $noshift $family  # font mod for descending capital Y
+[ $FP_descending ] && fforge FP_descending ${shape##* }          $family  # decending caps (experimental)
 
 # [ $ebook ] && echo $spacing | grep -vq 'quasi-' && { fforge punctuation ${emdash:-2} $family; unset width; }  # wide cell emdash and double width ellipsis
-[ $ebook ] && { fforge punctuation ${emdash:-2} $family; unset width; }  # wide cell emdash and double width ellipsis
+[ $ebook ] && { fforge punctuation ${emdash:-2} ${shape##* } $family; unset width; }               # wide cell emdash and double width ellipsis
 
-[ $ebook ] && [ $spacing != 'quasi-proportional' ] && fforge ligature $width ${shape##* } $family             # ae width character adjustment
+[ $ebook ] && [ $spacing != 'quasi-proportional' ] && fforge ligature $width ${shape##* } $family  # ae width character adjustment
 
-[ $space ] && fforge dyslexic $space $family                   # lengthen space character cell width
+[ $space ] && fforge dyslexic $space $family           # lengthen space character cell width
 
-[ $ebook ] && fforge ${regular}weight $adjust $family          # rename weight for e-reader (as regular)
+[ $ebook ] && fforge ${regular}weight $adjust $family  # rename weight for e-reader (as regular)
 
 # vim: set ft=sh: #

@@ -1,0 +1,14 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................. Mail Client
+
+# compose directory for temporary eml files
+export TMPDIR=~/drafts  # override /tmp (because dir is not persistent in alpine)
+
+/usr/bin/aerc
+
+# vim: set ft=sh: #
