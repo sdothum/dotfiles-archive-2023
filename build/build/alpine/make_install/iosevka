@@ -50,6 +50,7 @@ iQ=Q-straight    # capital Q default for Iota
 iG=G-hookless+
 latest=16x       # lastest version
 emdash=2.25      # lengthened emdash (for quasimono = M * 1.35 = shape 1350) visual tweak for " -- " spacing (so emdash > space)
+ecopy=true       # copy typeface to device folder
 
 touch $MAKE_INSTALL
 trap "rm -f $MAKE_INSTALL; pkill -f iosevka" EXIT INT
@@ -144,10 +145,12 @@ update() {
     fforge map $i 2e22 300c  # add corner bracket punctuation
     fforge map $i 2e25 300d
     # e-reader font folders
-    file=$i.ttf
-    FOLDER=$STOW/$ereader/fonts/$1
-    mkdir -p $FOLDER
-    cp -v $file $FOLDER/
+    if [ $ecopy ] ;then
+      file=$i.ttf
+      FOLDER=$STOW/$ereader/fonts/$1
+      mkdir -p $FOLDER
+      cp -v $file $FOLDER/
+    fi
   done
 }
 
@@ -173,14 +176,14 @@ myfonts() {
   # e_ink elementary  ${cap:-cap extended} a-single   I-serifless          $eG $eQ ${space:-space 1.3333}
   # e_ink eloquence   ${cap:-cap extended} a-single   I-serifless J-descending $eQ ${space:-space 1.3333} open
 
-  # font-trio fonts
-  e_ink articulate  ${cap:-cap extended}            J-serifless              $open              $aG     $aQ ${space:-space 1.3333}
-  e_ink typograffic ${cap:-cap extended}            J-flat       f-extended  $open              $tG $tI $tQ ${space:-space 1.3333}
-  e_ink Iota        ${cap:-cap extended} a-single   I-descending f-extended  open  j-serifed    $iG     $iQ ${space:-space 1.3333}
+  # experimental descenders I T Y .. F P
+  e_ink Ypsilon     ${cap:-cap extended} a-single   Y-descending f-extended  open  j-serifed    $iG     $iQ ${space:-space 1.3333}
+  # e_ink Fluent    ${cap:-cap extended} a-single   Y-descending f-extended  open  j-serifed    $iG     $iQ ${space:-space 1.3333} descenders   
 
-  # experimental descenders
-  e_ink Tao         ${cap:-cap extended} a-single   I-descending f-extended  open  j-serifed    $iG     $iQ ${space:-space 1.3333} T-descending 
-  # e_ink Fluent      ${cap:-cap extended} a-single   I-descending f-extended  open  j-serifed    $iG     $iQ ${space:-space 1.3333} descenders   
+  # font-trio fonts
+  # e_ink articulate  ${cap:-cap extended}            J-serifless              $open              $aG     $aQ ${space:-space 1.3333}
+  # e_ink typograffic ${cap:-cap extended}            J-flat       f-extended  $open              $tG $tI $tQ ${space:-space 1.3333}
+  # e_ink Iota        ${cap:-cap extended} a-single   I-descending f-extended  open  j-serifed    $iG     $iQ ${space:-space 1.3333}
 }
 
 dfont() { iosevka expanded j-serifed             Q-bar $(options $@) q-hook at-tall; }
@@ -230,13 +233,16 @@ elif [ $web ] ;then                       # www fonts
 
 else                                      # desktop fonts
   version $latest
-  EYE=$I; unset I
-  dfont $altmono $leading I-serifed       # override I-descending
-  I=$EYE                                  # restore glyph
-  dfont $altmono proof
-  dfont $altmono menu
+  # EYE=$I; unset I
+  # dfont $altmono $leading I-serifed       # override I-descending
+  # I=$EYE                                  # restore glyph
+  # dfont $altmono proof
+  # dfont $altmono menu
   altmono  # set..
-  dfont dyslexic $altmono I-descending quasi-extension space M family monograffic  # panel/dunst/browser font
+  # dfont dyslexic $altmono I-descending quasi-extension space M family monograffic  # panel/dunst/browser font
+  # experimental miniflux font
+  ereader=kobo; q=q-hook; quasi=quasi-extension; unset ecopy
+  e_ink miniflux ${cap:-cap extended} a-single Y-descending noshift f-extended open j-serifed $iG $iQ space M
 fi
 
 # vim: set ft=sh: #

@@ -37,7 +37,7 @@ info() { echo "${HILIGHT}$@${NOCOLOR}"; }
 vga()  { lspci | grep VGA | grep -q "$1"; }
 
 migrate() {
-  EXCLUDE="--exclude='lost+found' --exclude='sync-conflict' --exclude='*.AppImage' --exclude='.deprecated' --exclude='.git' --exclude='.hg' --exclude='arch' --exclude='debian' --exclude='nixos' --exclude='obarun' --exclude='void'"
+  EXCLUDE="--exclude='lost+found' --exclude='sync-conflict' --exclude='.deprecated' --exclude='.git' --exclude='.hg' --exclude='arch' --exclude='debian' --exclude='nixos' --exclude='obarun' --exclude='void'"
   case $1 in
   pull) source="${SERVER}:"; mkdir -p $HOME/stow/ ;;
   push) target="${ALPINE}:" ;;
@@ -46,7 +46,7 @@ migrate() {
   shift
   list=$(echo " $@" | sed "s|  *| ${source}$HOME/stow/|g")
   info "rsync of ... $@ ... in progress"
-  rsync -a $EXCLUDE $list ${target}$HOME/stow/
+  rsync --info=progress2 -a $EXCLUDE $list ${target}$HOME/stow
 }
 
 stage_0() {
@@ -57,7 +57,7 @@ stage_0() {
   info "run> mkdir .ssh stow"
   info "run> doas apk add rsync"
   info "from remote host.."
-  info "run> [env..] ./$(basename $0) 1 [vps]"
+  info "run> [ALPINE=<hostname>] ./$(basename $0) 1 [vps]"
 }
 
 stage_1() {
@@ -77,7 +77,7 @@ stage_1() {
   migrate push ag bash bin build colordiff fish logrotate mime nnn ssh
 
   info "from alpine host.."
-  info "run> [env..] ./$(basename $0) 2 [edge]"
+  info "run> [ALPINE=<hostname>] ./$(basename $0) 2 [edge]"
   exec ssh $ALPINE    # to complete alpine install below
 }
 
@@ -154,7 +154,7 @@ stage_2() {
   info "rebooting.."
   info "from remote host.."
   info "run> ssh $ALPINE"
-  info "run> [env..] ./$(basename $0) 3 [vps | vpstest] >>alpine-build.log &; tail -f alpine-build.log"
+  info "run> [ALPINE=<hostname>] ./$(basename $0) 3 [vps | vpstest] >>alpine-build.log &; tail -f alpine-build.log"
   exec doas reboot
 }
 
@@ -313,9 +313,6 @@ stage_33() {
   doas apk add lua lua-dev
   make_install julia
   make_install premake
-
-  info .......................................................... mpu programmer
-  make_install qmk
 
   info ................................................................ printing
   make_install cups
@@ -537,20 +534,6 @@ stage_33() {
 
   # make_install syncthing  # causes 502 bad gateway
 
-  info ................................................................... tools
-  # android
-  doas apk add android-tools
-  # doas apk add file-roller
-  doas apk add scrcpy
-
-  # fonts
-  doas apk add fontforge fontforge-gui py3-fontforge
-  make_install fontmatrix
-  doas apk add nodejs npm
-  doas apk add py3-fonttools
-  make_install otfcc
-  make_install ttfautohint
-
   info ................................................................ browsers
   doas apk add chromium
   doas ln -s /usr/bin/chromium-browser /usr/bin/chromium
@@ -561,14 +544,6 @@ stage_33() {
   apk_edge -t surf
   doas apk add youtube-dl
   make_install google-chrome
-
-  info ................................................................... media
-  doas apk add imagemagick
-  doas apk add kodi
-  doas apk add maim
-  doas apk add mpv
-  doas apk add qbittorrent
-  make_install sonarr
 
   # codec
   # doas apk add gst-libav
@@ -589,11 +564,11 @@ stage_33() {
   doas apk add zathura zathura-ps zathura-pdf-mupdf
 
   info ................................................................. chatgpt
-  cargo instal aichat   # conversation and roles
+  cargo install aichat  # conversation and roles
   make_install chatgpt  # conversation oriented
 
   info "from alpine host.."
-  info "run> [env..] ./$(basename $0) 4  # do not redirect stdout"
+  info "run> [ALPINE=<hostname>] ./$(basename $0) 4  # do not redirect stdout"
 }
 
 stage_4() {
@@ -613,7 +588,38 @@ stage_4() {
   info "rebooting.."
   info "from alpine host, start x session.."
   info "run> x"
+  info "run> [ALPINE=<hostname>] ./$(basename $0) 5  # do not redirect stdout"
   exec doas reboot
+}
+
+stage_5() {
+  doas apk update
+  doas apk upgrade
+
+  info ................................................................... tools
+  # android
+  doas apk add android-tools
+  # doas apk add file-roller
+  doas apk add scrcpy
+
+  # fonts
+  doas apk add fontforge fontforge-gui py3-fontforge
+  make_install fontmatrix
+  doas apk add nodejs npm
+  doas apk add py3-fonttools
+  make_install otfcc
+  make_install ttfautohint
+
+  info .......................................................... mpu programmer
+  make_install qmk
+
+  info ................................................................... media
+  doas apk add imagemagick
+  doas apk add kodi
+  doas apk add maim
+  doas apk add mpv
+  doas apk add qbittorrent
+  make_install sonarr
 }
 
 # install package group
@@ -624,7 +630,7 @@ if [ $stage = 3 ] ;then
   [ $VPS ] && exit
   if [ $VPSTEST ] ;then
     info "to resume full desktop build after framework build and testing.."
-    info "run> [env..] ./$(basename $0) $stage$stage >>alpine-build.log &; tail -f alpine-build.log"
+    info "run> [ALPINE=<hostname>] ./$(basename $0) $stage$stage >>alpine-build.log &; tail -f alpine-build.log"
   else
     stage_$stage$stage
   fi
