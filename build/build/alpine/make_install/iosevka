@@ -178,16 +178,17 @@ myfonts() {
 
   # experimental descenders I T Y .. F P
   e_ink Ypsilon     ${cap:-cap extended} a-single   Y-descending f-extended  open  j-serifed    $iG     $iQ ${space:-space 1.3333}
-  # e_ink Fluent    ${cap:-cap extended} a-single   Y-descending f-extended  open  j-serifed    $iG     $iQ ${space:-space 1.3333} descenders   
+  # e_ink Psi       ${cap:-cap extended} a-single   Y-descending f-extended  open  j-serifed    $iG     $iQ ${space:-space 1.3333} descenders
 
   # font-trio fonts
-  # e_ink articulate  ${cap:-cap extended}            J-serifless              $open              $aG     $aQ ${space:-space 1.3333}
-  # e_ink typograffic ${cap:-cap extended}            J-flat       f-extended  $open              $tG $tI $tQ ${space:-space 1.3333}
-  # e_ink Iota        ${cap:-cap extended} a-single   I-descending f-extended  open  j-serifed    $iG     $iQ ${space:-space 1.3333}
+  e_ink articulate  ${cap:-cap extended}            J-serifless              $open              $aG     $aQ ${space:-space 1.3333}
+  e_ink typograffic ${cap:-cap extended}            J-flat       f-extended  $open              $tG $tI $tQ ${space:-space 1.3333}
+  e_ink Iota        ${cap:-cap extended} a-single   I-descending f-extended  open  j-serifed    $iG     $iQ ${space:-space 1.3333}
 }
 
 dfont() { iosevka expanded j-serifed             Q-bar $(options $@) q-hook at-tall; }
-wfont() { iosevka english  j-serifed G-hookless+ Q-bar $(options $@) q-hook asterisk-high; }  # override dyslexic "asterisk-low"
+# wfont() { iosevka english  j-serifed G-hookless+ Q-bar $(options $@) q-hook asterisk-high; }  # override dyslexic "asterisk-low"
+wfont() { iosevka english a-single  j-serifed G-hookless+ $iQ   $(options $@) q-hook asterisk-high; }  # override dyslexic "asterisk-low"
 efont() { iosevka $language                            $(options $@) q-hook; }
 
 if [ $family ] ;then                      # custom e-ink font (non-published)
@@ -224,11 +225,15 @@ elif [ $ebook ] ;then                     # e-reader fonts
 elif [ $web ] ;then                       # www fonts
   unset cap
   version $latest
-  wfont heading  quasi-extension                                                    kobo webfont
-  wfont dyslexic quasi-extension    f-extended I-descending cap extended space M    kobo webfont
-  wfont dyslexic quasi-extension    f-extended J-flat       cap extended space M    kobo webfont family wCaps
-  wfont dyslexic quasi-proportional                                      space 1.15 kobo webfont
-  dfont ${cap:-cap extended} family wIosevka
+  # wfont heading  quasi-extension                                                    kobo webfont
+  # wfont dyslexic quasi-extension    f-extended I-descending cap extended space M    kobo webfont
+  # wfont dyslexic quasi-extension    f-extended J-flat       cap extended space M    kobo webfont family wCaps
+  # wfont dyslexic quasi-proportional                                      space 1.15 kobo webfont
+  # wfont heading  quasi-extension                                                 space M    kobo webfont
+  wfont dyslexic quasi-extension    f-extended Y-descending noshift cap extended space M    kobo webfont
+  # wfont dyslexic quasi-extension    f-extended J-flat               cap extended space M    kobo webfont family wCaps
+  # wfont dyslexic quasi-proportional                                              space 1.15 kobo webfont
+  # dfont ${cap:-cap extended} family wIosevka
 
 
 else                                      # desktop fonts
@@ -242,7 +247,7 @@ else                                      # desktop fonts
   # dfont dyslexic $altmono I-descending quasi-extension space M family monograffic  # panel/dunst/browser font
   # experimental miniflux font
   ereader=kobo; q=q-hook; quasi=quasi-extension; unset ecopy
-  e_ink miniflux ${cap:-cap extended} a-single Y-descending noshift f-extended open j-serifed $iG $iQ space M
+  e_ink Ypsilon ${cap:-cap extended} a-single Y-descending noshift f-extended open j-serifed $iG $iQ space M
 fi
 
 # vim: set ft=sh: #
