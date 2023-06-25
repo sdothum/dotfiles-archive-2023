@@ -59,7 +59,7 @@ wiki() {
 
 while : ;do
   file=$(files | sed "s,$WIKIS/,," | sed -r "s,(.*)/([^/]*)$,\2^$SEP \1," | sort | mhistory wiki$1 | column -s^ -t |
-      sed  "1i$(X $EDIT)$menu" | rmenu "Edit $prompt$error" -no-custom) || exit
+      sed  "2i$(X $EDIT)$menu" | rmenu "Edit $prompt$error" -no-custom) || exit
 
   case ${file#$(X)} in
     "$DIARY") exec dmenu wiki diary ;;

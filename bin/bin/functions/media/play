@@ -12,8 +12,9 @@
 
 fontsize=36
 ext='avi|Avi|divx|Divx|m4v|M4v|mkv|Mkv|mp4|Mp4|wmv|Wmv'
+pgrep -f 'dmenu series' && next='next\n'
 
-youtube=/net/downloads/http/youtube-dl
+YOUTUBE=/net/downloads/http/youtube-dl
 # cleanup accidental screenshots and youtube-dl
 trap "rm -f $HOME/mpv-shot*.jpg" EXIT
 
@@ -24,17 +25,17 @@ trap "rm -f $HOME/mpv-shot*.jpg" EXIT
 if cpu arm ;then
   # youtube playback on raspberry pi architecture is unsupported
   if echo $1 | grep -q http ;then
-    rm -f $youtube*
+    rm -f $YOUTUBE*
     # leverage cpu power of network server for download and media conversion
-    term youtube-dl FLOAT SHELL "ditto youtube-dl "$1" && ssh $SERVER youtube-dl -o $youtube "$1""
-    pwait "$youtube"
-    title=$youtube
-    video=$(find ${youtube%/youtube-dl} -name 'youtube-dl*')
-    if [ ${video##*.} = webm ] ;then
-      term youtube-dl FLOAT SHELL "ditto youtube-dl "$1" && ssh $SERVER ffmpeg -y -i "$video" "${video%.*}.mp4""
-      ssh $SERVER ffmpeg -i "$video" "${video%.*}.mp4"
-      pwait "${video%.*}.mp4"
-      video="${video%.*}.mp4"
+    term youtube-dl FLOAT SHELL "ditto youtube-dl "$1" && ssh $SERVER youtube-dl -o $YOUTUBE "$1""
+    pwait "$YOUTUBE"
+    title=$YOUTUBE
+    VIDEO=$(find ${YOUTUBE%/youtube-dl} -name 'youtube-dl*')
+    if [ ${VIDEO##*.} = webm ] ;then
+      term youtube-dl FLOAT SHELL "ditto youtube-dl "$1" && ssh $SERVER ffmpeg -y -i "$VIDEO" "${VIDEO%.*}.mp4""
+      ssh $SERVER ffmpeg -i "$VIDEO" "${VIDEO%.*}.mp4"
+      pwait "${VIDEO%.*}.mp4"
+      VIDEO="${VIDEO%.*}.mp4"
     fi
   fi
 
@@ -42,15 +43,15 @@ if cpu arm ;then
 fi
 
 # check for attached usb drive
-if [ -z $video ] ;then
+if [ -z $VIDEO ] ;then
   [ -d "$1" ] && path=$1 || path=${1%/*}
   # attached usb drive?
   libext=$(find /run/media/$USER -maxdepth 3 -type d -name "$(basename $(dirname "$path"))" 2>/dev/null)
   if [ -n "$libext" ] ;then
-    video=$(find "$libext" -maxdepth 1 -type d -name "${path##*/}")
-    video=$(find "$video" -regextype posix-extended -regex ".*($ext)" | grep -v sample)
+    VIDEO=$(find "$libext" -maxdepth 1 -type d -name "${path##*/}")
+    VIDEO=$(find "$VIDEO" -regextype posix-extended -regex ".*($ext)" | grep -v sample)
   else
-    video=$1
+    VIDEO=$1
   fi
 fi
 
@@ -63,11 +64,11 @@ while : ;do
     # sv stop syncthing@$USER
 
     # omxplayer keyboard shortcuts only available through terminal emulator
-    # eval term 'omxplay' BLACKBOARD omxplayer $geometry --subtitles "${video%.*}.srt" --align center "$video"
+    # eval term 'omxplay' BLACKBOARD omxplayer $geometry --subtitles "${VIDEO%.*}.srt" --align center "$VIDEO"
     # media filenames with embedded blanks are messy to handle, use symbolic link instead!
-    ln -sf "$video" /tmp/play:link
+    ln -sf "$VIDEO" /tmp/play:link
     eval term 'omxplay' BLACKBOARD omxplayer $geometry --align center /tmp/play:link
-    echo "$title -> $video" >>/tmp/omxplay.log
+    echo "$title -> $VIDEO" >>/tmp/omxplay.log
     # accomodate arm term omxplayer lag time variance
     sleep 1
     pwait /tmp/play:link
@@ -79,7 +80,7 @@ while : ;do
   else
     notify 0 blackboard "$title" "$(printf '1/2^Contrast\n3/4^Brightness\n5/6^Gamma\n7/8^Saturation\n9/0^Volume^m^Mute\n-/+^Audio Delay^ #^Language\nj/J^Subtitles^ v^Toggle\nx/z^Subtitle Delay' | column -s^ -t)"
     focus frame
-    mpv --vf=eq "$video" --sub-font-size=$fontsize >/dev/null 2>&1 &
+    mpv --vf=eq "$VIDEO" --sub-font-size=$fontsize >/dev/null 2>&1 &
     # clear notification
     pwait "mpv --vf=eq"
     xdotool key Ctrl+space
@@ -88,16 +89,19 @@ while : ;do
   echo "$1" | grep -q http && break
   [ $quiet ] && break
   # only purges server files (arm redirected usb files remain untouched)
-  action=$(echo 'quit\nskip\nreplay\ndelete\nsonarr' | rmenu "$title" -no-custom)
+  action=$(echo "${next}quit\nskip\nreplay\ndelete\nsonarr" | rmenu "$title" -no-custom)
   case $action in
     delete) [ "$(echo 'no\nyes' | rmenu "Delete $title" -no-custom)" = yes ] || break
             mhistory play:delete "$title $1"
             rm -rf "$1"
             break ;;
   
+    next  ) (sleep 0.5; xdotool key Down; xdotool key Return;) &  # key presses for episodes menu
+            break ;;
+
     quit  ) pkill -f 'dmenu'; blackboard; videomode off; exit ;;  # restore dynamic windows
     replay) pulse; continue ;;
-    sonarr) sonarr $video; break ;;
+    sonarr) sonarr $VIDEO; break ;;
     *     ) break ;;
   esac
 done

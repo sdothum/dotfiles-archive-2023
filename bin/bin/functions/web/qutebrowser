@@ -9,10 +9,12 @@
 # Usage: [RUNOPT='-s <option> <value> ..'] qutebrowser <url>
 
 QUTEBROWSER='/usr/bin/qutebrowser --target tab --override-restore'
+FONT=Ypsilon
 
 STARTPAGE=$SESSION/startpage
 pong $SERVER && TTRSS=$SERVER || TTRSS=localhost
-size="$(fontsize)pt monospace"
+FONT=${FONT:-monospace}
+size="$(fontsize)pt $FONT"
 
 export SELF_URL_PATH=http://$TTRSS:8000/tt-rss/
 
@@ -22,7 +24,9 @@ startpage=$(escape $startpage)  # must \escape '&' in url
 font="
   -s fonts.completion.category '$size'
   -s fonts.completion.entry '$size'
+  -s fonts.contextmenu '$size'
   -s fonts.debug_console '$size'
+  -s fonts.default_family '$size'
   -s fonts.downloads '$size'
   -s fonts.hints '$size'
   -s fonts.keyhint '$size'
@@ -33,6 +37,10 @@ font="
   -s fonts.statusbar '$size'
   -s fonts.tabs.selected '$size'
   -s fonts.tabs.unselected '$size'
+  -s fonts.web.family.fixed 'Iosevka'
+  -s fonts.web.family.sans_serif '$FONT'
+  -s fonts.web.family.serif '$FONT'
+  -s fonts.web.family.standard '$FONT'
 "
 
 # void && pulse  # browser doesn't autostart pulseaudio

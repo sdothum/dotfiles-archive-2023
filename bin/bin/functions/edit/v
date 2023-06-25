@@ -37,7 +37,11 @@ else
   elif [ -w "$1" ] ;then
     unset sudo
   else
-    sudo='sudo -s'
+    [ -L /root/.vim ] && sudo='sudo -Es' || {
+      doas test -L /root/stow || doas ln -sv $HOME/stow /root
+      ditto root "stow session/$(hostname)"
+      ditto root "stow vim"
+    }
   fi
 fi
 

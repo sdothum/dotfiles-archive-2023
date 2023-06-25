@@ -638,7 +638,7 @@ fi
 [ $Q_hook        ] && fforge Q_hook                              $family  # hooked capital Q
 [ $Q_horizontal  ] && fforge Q_horizontal  ${shape##* }          $family  # open horizontal capital Q
 [ $Q_custom      ] && fforge Q_custom      ${shape##* }          $family  # custom capital Q
-[ $I_descending  ] && fforge I_descending                        $family  # font mod for descending serifless capital I
+[ $I_descending  ] && fforge I_descending               $noshift $family  # font mod for descending serifless capital I
 [ $T_descending  ] && fforge T_descending  ${shape##* } $noshift $family  # font mod for descending capital T
 [ $Y_descending  ] && fforge Y_descending  ${shape##* } $noshift $family  # font mod for descending capital Y
 [ $FP_descending ] && fforge FP_descending ${shape##* }          $family  # decending caps (experimental)
