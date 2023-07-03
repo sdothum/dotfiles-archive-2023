@@ -44,12 +44,12 @@ show() {
   pgrep -f "btrfs scrub start -Bd $V" >/dev/null || in_progress=$@
   while : ;do
     trace "$@"
-    sudo btrfs scrub status $V
+    btrfs scrub status $V
     pgrep -f "btrfs scrub start -Bd $V" >/dev/null || break
     sleep $interval
   done
   [ $in_progress ] || press_enter
-  notify X critical "btrfs scrub $V" "$(sudo btrfs scrub status $V | grep summary | sed -r 's/.*: *//g; s/^(.)/\u\1/')"
+  notify X critical "btrfs scrub $V" "$(btrfs scrub status $V | grep summary | sed -r 's/.*: *//g; s/^(.)/\u\1/')"
   rm -f $CRON  # remove triggered cron scrub, see crontab -l
 }
 
@@ -64,14 +64,14 @@ fi
 case $1 in
   '') [ -e $CRON ] && { ditto "$CRON" $(cat $CRON); ifno "cancel scrub?" || rm $CRON; true; } || usage ;;  # assumes scrub:<fs>.log crontab file naming
   a*) scrub boot; scrub share; scrub backup ;;
-  c*) sudo btrfs scrub cancel $(volume $2) ;;
+  c*) btrfs scrub cancel $(volume $2) ;;
   I*) sudo rm -f /var/lib/btrfs/*.* ;;
   s*) tail -f $CRON:$2.log ;;
   
-  * ) nohup sudo btrfs scrub start -Bd $(volume $1) >$CRON.log &
+  * ) nohup btrfs scrub start -Bd $(volume $1) >$CRON.log &
       log=$CRON:$1.log
       show $1 >$log &
-      if pstat Xorg ;then alacritty --title "$1" -e "tail -f $log" ;else tail -f $log ;fi ;;
+      pstat Xorg && alacritty --title "$1" -e "tail -f $log" || tail -f $log ;;
 esac
 
 # vim: set ft=sh: #

@@ -8,15 +8,17 @@
 
 usage() { echo "usage: $(basename $0) balance | <command>"; exit 1; }
 
+rootbtrfs() { grep -Pq '[ \t]/[ \t].*btrfs' /etc/fstab; }  # Perl-style regex for tab char
+
 # butterfs :-)
 case $@ in
-  ''     ) sudo /usr/bin/btrfs filesystem show --all-devices
-           sudo /usr/bin/btrfs subvolume list -p /
+  ''     ) sudo /sbin/btrfs filesystem show --all-devices
+           rootbtrfs && sudo /sbin/btrfs subvolume list -p /
            echo
            usage ;;
   
-  balance) sudo /usr/bin/btrfs balance start -v -dusage=55 / ;;
-  *      ) sudo /usr/bin/btrfs $@ ;;
+  balance) rootbtrfs && sudo /sbin/btrfs balance start -v -dusage=55 / || ditto root "not applicable" ;;
+  *      ) sudo /sbin/btrfs $@ ;;
 esac
 
 # vim: set ft=sh: #

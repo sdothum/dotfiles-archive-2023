@@ -28,7 +28,7 @@ usage() {
                [english | latin+greek | cyrillic | fluent | ligature <name>]
 
                [grotesque (default) | atkinson | geometric | jost]
-               [elementary | grotesk | descenders | open | a-single | b-corner | D-serifless | d-[tailed|toothless] | f-extended | G-[hookless[+]|rounded|toothed|toothless] | g-double | I-[serifed|serifless|descending] | i-serifed | J-[descending|flat] | j-[serifed|serifless] | l-[hooky|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|open|straight|custom] | q-[hook|tailed] | T-descending [noshift] | t-cross | Y-descending [noshift] | y-straight | asterisk-high | at-tall | 0-split | paren-flat]*
+               [elementary | grotesk | descenders | open | a-single | b-corner | D-serifless | d-[tailed|toothless] | FP-descending [raw] | f-extended | G-[hookless[+]|rounded|toothed|toothless] | g-double | I-[serifed|serifless|descending] | i-serifed | J-[descending|flat] | j-[serifed|serifless] | l-[hooky|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|open|straight|custom] | q-[hook|tailed] | T-descending [raw] | t-[cross | descending] | Y-descending [raw] | y-straight | asterisk-high | at-tall | 0-split | paren-flat]*
 
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
                [double] [space M|<decimal>] [ emdash <decimal> ]
@@ -284,7 +284,7 @@ while [ $1 ] ;do
     G-toothed    ) variant $1 ;;
     G-toothless  ) variant $1 ;;
     g-double     ) variant $1 ;;
-    I-descending ) variant 'I=DESCENDING'; I_descending=true ;;
+    I-descending ) variant I-serifless 'DESCENDING'; I_descending=true ;;
     I-serifed    ) variant $1 ;;
     I-serifless  ) variant $1; initial ;;          # combined minimal stroke glyphs
     i-serifed    ) variant $1 ;;
@@ -310,9 +310,10 @@ while [ $1 ] ;do
     q-tailed     ) variant $1; unset q_hook ;;
     T-descending ) variant 'T=DESCENDING I=DESCENDING'; T_descending=true; I_descending=true ;;
     t-cross      ) variant $1 ;;
-    Y-descending ) variant 'Y=DESCENDING T=DESCENDING I=DESCENDING'; Y_descending=true; T_descending=true; I_descending=true ;;
+    t-descending ) variant t-cross 'DESCENDING'; t_descending=true ;;
+    Y-descending ) variant variant I-serifless 'DESCENDING T=DESCENDING Y=DESCENDING'; I_descending=true; T_descending=true; Y_descending=true ;;
     y-straight   ) variant $1 ;;
-    noshift      ) variant 'NOSHIFT'; noshift=- ;;
+    raw          ) variant 'RAW'; raw=raw ;;
     asterisk-high) variant $1 ;;
     at-tall      ) variant $1 ;;
     0-split      ) variant $1 ;;
@@ -634,14 +635,15 @@ else
   nerdfont $mono $family  # insert glyphs
 fi
 
-[ $q_hook        ] && fforge q_hook                              $family  # hyperlegible font mod for better q
-[ $Q_hook        ] && fforge Q_hook                              $family  # hooked capital Q
-[ $Q_horizontal  ] && fforge Q_horizontal  ${shape##* }          $family  # open horizontal capital Q
-[ $Q_custom      ] && fforge Q_custom      ${shape##* }          $family  # custom capital Q
-[ $I_descending  ] && fforge I_descending               $noshift $family  # font mod for descending serifless capital I
-[ $T_descending  ] && fforge T_descending  ${shape##* } $noshift $family  # font mod for descending capital T
-[ $Y_descending  ] && fforge Y_descending  ${shape##* } $noshift $family  # font mod for descending capital Y
-[ $FP_descending ] && fforge FP_descending ${shape##* }          $family  # decending caps (experimental)
+[ $q_hook        ] && fforge q_hook                          $family  # hyperlegible font mod for better q
+[ $Q_hook        ] && fforge Q_hook                          $family  # hooked capital Q
+[ $Q_horizontal  ] && fforge Q_horizontal  ${shape##* }      $family  # open horizontal capital Q
+[ $Q_custom      ] && fforge Q_custom      ${shape##* }      $family  # custom capital Q
+[ $I_descending  ] && fforge I_descending  ${shape##* } $raw $family  # font mod for descending serifless capital I
+[ $T_descending  ] && fforge T_descending  ${shape##* } $raw $family  # font mod for descending capital T
+[ $t_descending  ] && fforge t_descending  ${shape##* }      $family  # font mod for descending t
+[ $Y_descending  ] && fforge Y_descending  ${shape##* } $raw $family  # font mod for descending capital Y
+[ $FP_descending ] && fforge FP_descending ${shape##* } $raw $family  # decending caps (experimental)
 
 # [ $ebook ] && echo $spacing | grep -vq 'quasi-' && { fforge punctuation ${emdash:-2} $family; unset width; }  # wide cell emdash and double width ellipsis
 [ $ebook ] && { fforge punctuation ${emdash:-2} ${shape##* } $family; unset width; }               # wide cell emdash and double width ellipsis

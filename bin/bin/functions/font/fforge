@@ -8,11 +8,12 @@
 # see make_install iosevka
 
 usage() { 
-  echo "usage: $(basename $0) Q_hook | q_hook | I_descending
+  echo "usage: $(basename $0) Q_hook | q_hook | I_descending <shape> [raw]
        $(basename $0) Q_custom <shape>
        $(basename $0) Q_horizontal <shape>
-       $(basename $0) T_descending <shape> [-]
-       $(basename $0) Y_descending <shape> [-]
+       $(basename $0) T_descending <shape> [raw]
+       $(basename $0) t_descending <shape>
+       $(basename $0) Y_descending <shape> [raw]
        $(basename $0) FP_descending <shape>
        $(basename $0) punctuation <emdash> <shape>
        $(basename $0) ligature <width> <shape>
@@ -25,13 +26,14 @@ usage() {
 
 MAKE_INSTALL=/tmp/iosevka:make_install
 REPO=/net/depot/Iosevka
-ANGLE=-9      # iosevka italic angle (verify with fontforge)
-IBEARING=-40  # italic descending capital left side bearing kiss
+ANGLE=-9     # iosevka italic angle (verify with fontforge)
+Xshift=-40   # italic descending capital left side bearing shift
+Yshift=-174  # default descending capital elongation
 
 confirm() { [ -e $MAKE_INSTALL ] && ditto "$(basename $0)" "$1" || { ifyes "$1" || exit; }; }
 percent() { echo "$1 * 100" | bc | cut -d. -f1; }
-regular() { ls -1 | grep -Ev 'italic|oblique'; }
-italic()  { ls -1 | grep -E  'italic'; ln -sf ${FONT##*/}-regular.ttf ${FONT##*/}-.ttf; }
+regular() { ls -1 | grep -Ev 'italic|oblique|extended'; }
+italic()  { ls -1 | grep -E  'italic'; }
 
 replace() {
   echo "
@@ -40,28 +42,6 @@ Copy();
 Select($1);
 Paste();
 "
-}
-
-# descending serifless capital I
-# vertical alignment adjustment priority
-# -90 : large header caps alignment
-# -55 : small body text alignment
-Ivertical=-55
-
-I_descending() {
-  [ $noshift ] && Ivertical=-95 || Ivertical=-55
-  echo "
-Open(\$1);
-$(replace 0u0049 0u007c)
-Transform(100,0,0,105.75,0,0);
-Move(0,$Ivertical);
-Generate(\$1);
-" >/tmp/fontforge.script
-
-  for i in *ttf ;do
-    ditto I_descending $i
-    fontforge --script /tmp/fontforge.script $i
-  done
 }
 
 # substitute curly tail q
@@ -207,23 +187,30 @@ Generate(\$1);
   done
 }
 
-# descending capitals
+# descending glyphs
 
-# overlay descending I
-descending() {
-  [ $noshift ] && Ivertical=0 || Ivertical=-40
-  echo "
-Select(0u0049);
-CopyReference();
-Select($1);
-PasteWithOffset($2,$Ivertical);
-"
-}
+move_up()   { [ $raw ]  || echo 'Move(0,32);'; }  # visual alignment at small fontsizes
 
-move()  { [ $noshift ] || echo 'Move(0,32);'; }
-
-morph() {
+elongate() {
   # create regular descender
+  confirm "$1"
+  echo "
+Open(\$1);
+Select(0u007c);
+CopyReference();
+Select(0u0001);  # temporary cell to avoid modifying original glyph
+Paste();
+Select(0u0001);
+CopyReference();
+Transform(100,0,0,50,0,0);
+Select($2);
+PasteWithOffset($3,$4);
+$(move_up)  # move up a smidgen for small fontsize font (engine) rendering alignment
+Select(0u0001);
+Clear();
+Generate(\$1);
+" >/tmp/fontforge.script
+
   for i in $(regular) ;do
     ditto $1 $i
     fontforge --script /tmp/fontforge.script $i
@@ -238,74 +225,37 @@ Copy();
 Open(\$1);
 Select($2);
 Paste();
-Move($IBEARING,0);
+Move($Xshift,0);  # adjust for italic side bearing shift towards left 
 SetWidth($shape);
 Generate(\$1);
 " >/tmp/fontforge.script
 
   for i in $(italic) ;do
     ditto $1 $i
-    fontforge --script /tmp/fontforge.script $i ${i%italic*}.ttf
+    echo $i | grep -q '[-]italic.ttf' && regular=${i%italic*}regular.ttf || regular=${i%italic*}.ttf
+    fontforge --script /tmp/fontforge.script $i $regular
   done
-  rm ${FONT##*/}-.ttf  # regular symlink
+}
+
+I_descending() {
+  elongate I_descending '0u0049' 0 $Yshift
 }
 
 T_descending() {
-  confirm 'T descending'
-  # move T up a smidgen for small fontsize font (engine) rendering alignment
-  echo "
-Open(\$1);
-$(descending 0u0054 0)
-$(move)
-Generate(\$1);
-" >/tmp/fontforge.script
+  elongate T_descending '0u0054' 0 $Yshift
+}
 
-  morph T_descending '0u0054'
+t_descending() {
+  elongate t_descending '0u0074' 0 -140
 }
 
 Y_descending() {
-  confirm 'Y descending'
-  # move Y up a smidgen for small fontsize font (engine) rendering alignment
-  echo "
-Open(\$1);
-Select(0u007c);
-CopyReference();
-Select(0u0001);  # temporary cell to avoid modifying original glyph
-Paste();
-Select(0u0001);
-CopyReference();
-Transform(100,0,0,50,0,0);
-Select(0u0059);
-PasteWithOffset(0,-174);
-$(move)
-Select(0u0001);
-Clear();
-Generate(\$1);
-" >/tmp/fontforge.script
-
-  morph Y_descending '0u0059'
+  elongate Y_descending '0u0059' 0 $Yshift
 }
 
-# descenders for capitals F and P
 FP_descending() {
-  confirm 'FP descenders'
-  echo "
-Open(\$1);
-$(descending 0u0046 -162)
-$(move)
-Generate(\$1);
-" >/tmp/fontforge.script
-
-  morph F_descending '0u0046'
-
-  echo "
-Open(\$1);
-$(descending 0u0050 -178)
-$(move)
-Generate(\$1);
-" >/tmp/fontforge.script
-
-  morph P_descending '0u0050'
+  elongate F_descending '0u0046' -162 $Yshift
+  elongate P_descending '0u0050' -176 $Yshift
 }
 
 Q_horizontal() {
@@ -463,9 +413,10 @@ Generate(\$1);
 # main, see iosevka
 fforge=$1
 case $1 in
-  I_descending ) [ $2 = '-' ] && { noshift=true; shift; } ;;
-  T_descending ) shape=$2; [ $3 = '-' ] && { noshift=true; shift; }; shift ;;
-  Y_descending ) shape=$2; [ $3 = '-' ] && { noshift=true; shift; }; shift ;;
+  I_descending ) shape=$2; [ $3 = raw ] && { raw=true; shift; }; shift ;;
+  T_descending ) shape=$2; [ $3 = raw ] && { raw=true; shift; }; shift ;;
+  t_descending ) shape=$2; raw=true; shift ;;
+  Y_descending ) shape=$2; [ $3 = raw ] && { raw=true; shift; }; shift ;;
   FP_descending) shape=$2; shift; ;;
   q_hook       ) ;;
   Q_hook       ) ;;

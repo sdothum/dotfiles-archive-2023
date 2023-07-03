@@ -12,6 +12,8 @@
 
 fontsize=36
 ext='avi|Avi|divx|Divx|m4v|M4v|mkv|Mkv|mp4|Mp4|wmv|Wmv'
+delay=0.65  # for "next" xdotool key sequence
+
 pgrep -f 'dmenu series' && next='next\n'
 
 YOUTUBE=/net/downloads/http/youtube-dl
@@ -96,7 +98,7 @@ while : ;do
             rm -rf "$1"
             break ;;
   
-    next  ) (sleep 0.5; xdotool key Down; xdotool key Return;) &  # key presses for episodes menu
+    next  ) (sleep $delay; xdotool key Down; xdotool key Return;) &  # key presses for episodes menu
             break ;;
 
     quit  ) pkill -f 'dmenu'; blackboard; videomode off; exit ;;  # restore dynamic windows
