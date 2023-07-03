@@ -8,7 +8,7 @@
 usage() { 
   echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [family <name>]
                             [book+regular | latin+greek | cyrillic | fluent]
-                            [quasi-extension | space <parm>]
+                            [quasi-extension | space <parm>] [raw]
                             [myfonts [Q] | altmono | dysmono | elementary | grotesk | open ]
                             [ D-serifless | [a|e]G-[hookless[+]|toothless|default] | [t]I-[serifless|descending] | J-descending | j-serifed | [d|e|g]Q-[bar|horizontal|open|straight|default] | Q-[bar|crossing|detached|hook|straight|custom] | a-single | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat ]
                             [ascender <parm> | cap <parm> | leading <parm>]
@@ -112,6 +112,7 @@ while [ $1 ] ;do
   ascender                                 ) [ $2 ] && { ascender="$1 $2"; shift; } || usage ;;
   cap                                      ) [ $2 ] && { [ $2 = 'off' ] && unset cap || cap="$1 $2"; shift; } || usage ;;
   leading                                  ) [ $2 ] && { leading="$1 $2"; shift; } || usage ;;
+  raw                                      ) raw=raw ;;
   quasi-ext*                               ) quasi=$1; version $latest ;;
   space                                    ) [ $2 ] && { space="$1 $2"; shift; } || usage ;;
   source-only                              ) source_only=true ;;
@@ -154,7 +155,7 @@ update() {
   done
 }
 
-options() { echo $adjust $ascender $cap $quasi $sb $style $D $G $I $J $Q $a $b $d $f $j $p $q $zero $at $paren $@; }  # list
+options() { echo $adjust $ascender $cap $quasi $sb $style $D $G $I $J $Q $a $b $d $f $j $p $q $zero $at $paren $@ $raw; }  # list
 
 # family [options]*
 e_ink() {
@@ -178,11 +179,13 @@ myfonts() {
 
   # experimental descenders I T Y .. F P
   e_ink Ypsilon     ${cap:-cap extended} a-single   Y-descending f-extended  open  j-serifed    $iG     $iQ ${space:-space 1.3333}
+  # e_ink testfont    ${cap:-cap extended} a-single   Y-descending f-extended  open  j-serifed    $iG     $iQ ${space:-space 1.3333}
   # e_ink Psi       ${cap:-cap extended} a-single   Y-descending f-extended  open  j-serifed    $iG     $iQ ${space:-space 1.3333} descenders
+  # e_ink Theta       ${cap:-cap extended} a-single   Y-descending f-extended  open  j-serifed    $iG     $iQ ${space:-space 1.3333} t-descending
 
   # font-trio fonts
-  e_ink articulate  ${cap:-cap extended}            J-serifless              $open              $aG     $aQ ${space:-space 1.3333}
-  e_ink typograffic ${cap:-cap extended}            J-flat       f-extended  $open              $tG $tI $tQ ${space:-space 1.3333}
+  # e_ink articulate  ${cap:-cap extended}            J-serifless              $open              $aG     $aQ ${space:-space 1.3333}
+  # e_ink typograffic ${cap:-cap extended}            J-flat       f-extended  $open              $tG $tI $tQ ${space:-space 1.3333}
   e_ink Iota        ${cap:-cap extended} a-single   I-descending f-extended  open  j-serifed    $iG     $iQ ${space:-space 1.3333}
 }
 
@@ -229,11 +232,11 @@ elif [ $web ] ;then                       # www fonts
   # wfont dyslexic quasi-extension    f-extended I-descending cap extended space M    kobo webfont
   # wfont dyslexic quasi-extension    f-extended J-flat       cap extended space M    kobo webfont family wCaps
   # wfont dyslexic quasi-proportional                                      space 1.15 kobo webfont
-  # wfont heading  quasi-extension                                                 space M    kobo webfont
-  wfont dyslexic quasi-extension    f-extended Y-descending noshift cap extended space M    kobo webfont
-  # wfont dyslexic quasi-extension    f-extended J-flat               cap extended space M    kobo webfont family wCaps
-  # wfont dyslexic quasi-proportional                                              space 1.15 kobo webfont
-  # dfont ${cap:-cap extended} family wIosevka
+  wfont heading  quasi-extension                                         space M    kobo webfont
+  wfont dyslexic quasi-extension    f-extended Y-descending cap extended space M    kobo webfont raw
+  wfont dyslexic quasi-extension    f-extended J-flat       cap extended space M    kobo webfont family wCaps
+  wfont dyslexic quasi-proportional                                      space 1.15 kobo webfont
+  dfont ${cap:-cap extended} family wIosevka
 
 
 else                                      # desktop fonts
@@ -243,11 +246,11 @@ else                                      # desktop fonts
   # I=$EYE                                  # restore glyph
   # dfont $altmono proof
   # dfont $altmono menu
-  altmono  # set..
+  # altmono  # set..
   # dfont dyslexic $altmono I-descending quasi-extension space M family monograffic  # panel/dunst/browser font
   # experimental miniflux font
-  ereader=kobo; q=q-hook; quasi=quasi-extension; unset ecopy
-  e_ink Ypsilon ${cap:-cap extended} a-single Y-descending noshift f-extended open j-serifed $iG $iQ space M
+  altmono; ereader=kobo; q=q-hook; quasi=quasi-extension; unset ecopy
+  e_ink Ypsilon ${cap:-cap extended} a-single Y-descending raw f-extended open j-serifed $iG $iQ space M
 fi
 
 # vim: set ft=sh: #
