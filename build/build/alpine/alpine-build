@@ -602,7 +602,10 @@ stage_5() {
   # doas apk add file-roller
   doas apk add scrcpy
 
-  # fonts
+  # mpu programmer
+  make_install qmk
+
+  info ................................................................... fonts
   doas apk add fontforge fontforge-gui py3-fontforge
   make_install fontmatrix
   doas apk add nodejs npm
@@ -610,8 +613,8 @@ stage_5() {
   make_install otfcc
   make_install ttfautohint
 
-  info .......................................................... mpu programmer
-  make_install qmk
+  info .................................................................. images
+  make_install gimp
 
   info ................................................................... media
   doas apk add imagemagick
