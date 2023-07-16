@@ -12,13 +12,14 @@ QUTEBROWSER='/usr/bin/qutebrowser --target tab --override-restore'
 FONT=Ypsilon
 
 STARTPAGE=$SESSION/startpage
-pong $SERVER && TTRSS=$SERVER || TTRSS=localhost
+# pong $SERVER && TTRSS=$SERVER || TTRSS=localhost
 FONT=${FONT:-monospace}
 size="$(fontsize)pt $FONT"
 
-export SELF_URL_PATH=http://$TTRSS:8000/tt-rss/
+# export SELF_URL_PATH=http://$TTRSS:8000/tt-rss/  # deprecated.. using miniflux now
 
-[ $1 ] && startpage="$@" || { [ -e $STARTPAGE ] && startpage=$(cat $STARTPAGE) || startpage="http://$TTRSS:8000/tt-rss/"; }
+# [ $1 ] && startpage="$@" || { [ -e $STARTPAGE ] && startpage=$(cat $STARTPAGE) || startpage="http://$TTRSS:8000/tt-rss/"; }
+[ $1 ] && startpage="$@" || { [ -e $STARTPAGE ] && startpage=$(cat $STARTPAGE) || startpage="https://kbin.social/"; }
 startpage=$(escape $startpage)  # must \escape '&' in url
 
 font="

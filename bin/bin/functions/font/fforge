@@ -26,9 +26,16 @@ usage() {
 
 MAKE_INSTALL=/tmp/iosevka:make_install
 REPO=/net/depot/Iosevka
-ANGLE=-9     # iosevka italic angle (verify with fontforge)
-Xshift=-40   # italic descending capital left side bearing shift
-Yshift=-174  # default descending capital elongation
+ANGLE=-9       # iosevka italic angle (verify with fontforge)
+Xshift=-40     # italic descending capital left side bearing shift
+Yadjust=32     # caps tweak visual alignment for eink rendering at small fontsizes
+# Yshrink=50   # elongation bar percent
+# Yshift=-174  # descending capital elongation
+# yshift=-140  # lower case t elongation
+# reduced overlap to look better on non-eink screens
+Yshrink=25.5   # elongation bar percent
+Yshift=-210    # descending capital elongation
+yshift=-176    # lower case t elongation
 
 confirm() { [ -e $MAKE_INSTALL ] && ditto "$(basename $0)" "$1" || { ifyes "$1" || exit; }; }
 percent() { echo "$1 * 100" | bc | cut -d. -f1; }
@@ -113,10 +120,10 @@ punctuation() {
   
   echo "
 Open(\$1);
-Select(0u2012);
-Copy();
+# Select(0u2012);                    # emdash with side bearing
+# Copy();
 Select(0u2014);
-Paste();
+# Paste();
 Transform($width,0,0,100,0,0);
 Select(0u2026);
 # Transform(200,0,0,200,0,0);        # double width
@@ -189,7 +196,7 @@ Generate(\$1);
 
 # descending glyphs
 
-move_up()   { [ $raw ]  || echo 'Move(0,32);'; }  # visual alignment at small fontsizes
+move_up()   { [ $raw ]  || echo "Move(0,$Yadjust);"; }  # visual alignment at small fontsizes
 
 elongate() {
   # create regular descender
@@ -202,7 +209,7 @@ Select(0u0001);  # temporary cell to avoid modifying original glyph
 Paste();
 Select(0u0001);
 CopyReference();
-Transform(100,0,0,50,0,0);
+Transform(100,0,0,$Yshrink,0,0);
 Select($2);
 PasteWithOffset($3,$4);
 $(move_up)  # move up a smidgen for small fontsize font (engine) rendering alignment
@@ -246,7 +253,7 @@ T_descending() {
 }
 
 t_descending() {
-  elongate t_descending '0u0074' 0 -140
+  elongate t_descending '0u0074' 0 $yshift  # f descender depth
 }
 
 Y_descending() {

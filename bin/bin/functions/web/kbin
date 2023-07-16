@@ -6,13 +6,6 @@
 
 # ...................................................................... Browser
 
-BROWSER=/usr/bin/surf
-
-if [ "$1" ] ;then
-  $BROWSER "$@" &
-else
-  pong $SERVER && TTRSS=$SERVER || TTRSS=localhost
-  $BROWSER http://$TTRSS:8000/tt-rss/ &
-fi
+qutebrowser 'https://kbin.social/'
 
 # vim: set ft=sh: #

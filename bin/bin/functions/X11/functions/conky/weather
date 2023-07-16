@@ -31,6 +31,7 @@ esac
 # scrape weather synopsis
 WEATHER=$(curl --silent "https://weather.gc.ca/rss/city/${city}_e.xml?source=ignitionfork")
 if [ $debug ] ;then
+  echo $WEATHER >/tmp/weather
   echo Weather .. $WEATHER
   echo
   read input
@@ -63,18 +64,20 @@ if [ ! -e $MONOCLE ] ;then
     read input
   fi
 
-  WIND=$(echo $WEATHER | awk '/Wind:/ { gsub(/.*Wind:[^0-9]* /, "", $0); gsub(/ km.*$/, "", $0); print }')
-  if [ $debug ] ;then
-    echo Wind .. \"$WIND\"
-    echo
-    read input
-  fi
+  if echo $WEATHER | grep -Pq 'Wind:.*[0-9]+ km/h' ;then
+    WIND=$(echo $WEATHER | awk '/Wind:/ { gsub(/.*Wind:[^0-9]* /, "", $0); gsub(/ km.*$/, "", $0); print }')
+    if [ $debug ] ;then
+      echo Wind .. \"$WIND\"
+      echo
+      read input
+    fi
 
-  GUST=$(echo $WEATHER | awk '/Wind:.*gust / { gsub(/.*Wind:.*gust /, "", $0); gsub(/ km.*$/, "", $0); print }')
-  if [ $debug ] ;then
-    echo Gust .. \"$GUST\"
-    echo
-    read input
+    GUST=$(echo $WEATHER | awk '/Wind:.*gust / { gsub(/.*Wind:.*gust /, "", $0); gsub(/ km.*$/, "", $0); print }')
+    if [ $debug ] ;then
+      echo Gust .. \"$GUST\"
+      echo
+      read input
+    fi
   fi
 
   [ -n "$GUST" ] && WIND="$WIND-$GUST"
