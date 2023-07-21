@@ -77,7 +77,7 @@ symbols() {
 grotesque() {
   capital_b=standard-serifless
   capital_d=more-rounded-serifless
-  capital_g=toothless-rounded-serifless-hooked
+  capital_g=toothless-corner-serifless-hooked
   capital_i=short-serifed
   capital_j=descending-flat-hook-serifless
   capital_k=straight-serifless
