@@ -43,6 +43,9 @@ export YELLOW=$(printf "\e[1;93m")
 # 256 color palette, see ditto
 export _TURQUOISE_=$(printf "\e[38;5;031m")
 export TURQUOISE=$(printf "\e[38;5;039m")
+
+export _BROWN_=$(printf "\e[38;5;215m")
+export BROWN=$(printf "\e[1m\e[38;5;221m")
 export _ORANGE_=$(printf "\e[38;5;166m")
 export ORANGE=$(printf "\e[38;5;208m")
 

@@ -30,7 +30,7 @@ usage() {
                [english | latin+greek | cyrillic | fluent | ligature <name>]
 
                [grotesque (default) | atkinson | geometric | jost]
-               [elementary | grotesk | descenders | open | a-single | b-corner | D-serifless | d-[tailed|toothless] | FP-descending [raw] | f-extended | G-[hookless[+]|rounded|toothed|toothless] | g-double | I-[serifed|serifless|descending] | i-serifed | J-[descending|flat] | j-[serifed|serifless] | l-[hooky|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|open|straight|custom] | q-[hook|tailed] | T-descending [raw] | t-[cross | descending] | u-toothed | Y-descending [raw] | y-straight | asterisk-high | at-tall | 0-split | 4-open | paren-flat]*
+               [elementary | grotesk | descenders | open | a-single | b-corner | D-serifless | d-[tailed|toothless] | FP-descending [raw] | f-extended | G-[corner|hookless[+]|rounded|toothed|toothless] | g-double | I-[serifed|serifless|descending] | i-serifed | J-[descending|flat] | j-[serifed|serifless] | l-[hooky|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|open|straight|custom] | q-[hook|tailed] | T-descending [raw] | t-[cross | descending] | u-toothed | Y-descending [raw] | y-straight | asterisk-high | at-tall | 0-split | 4-open | paren-flat]*
 
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
                [double] [space M|<decimal>] [ emdash <decimal> ]
@@ -73,16 +73,16 @@ symbols() {
   question=smooth
 }
 
-# dyslexic adjusted atkinson hyperlegible typeface
+# dyslexic adjusted Atkinson/grotesk typeface
 grotesque() {
   capital_b=standard-serifless
   capital_d=more-rounded-serifless
-  capital_g=toothless-corner-serifless-hooked
+  capital_g=toothless-rounded-serifless-hooked
   capital_i=short-serifed
   capital_j=descending-flat-hook-serifless
   capital_k=straight-serifless
   capital_p=closed-serifless
-  capital_q=detached-bend-tailed
+  capital_q=straight
   capital_r=straight-serifless
   a=double-storey-serifless
   b=toothless-rounded-serifless
@@ -107,7 +107,7 @@ grotesque() {
   cyrl_ka=symmetric-touching-serifless
 }
 
-# futura/jost* typeface
+# bauhaus/geometric typeface
 geometric() {
   unset q_hook
   capital_b=standard-serifless
@@ -152,6 +152,7 @@ variant() {
       4-open       ) glyph four=semi-open-non-crossing ;;
       B-open       ) glyph capital_b=standard-interrupted-serifless ;;
       D-serifless  ) glyph capital_d=standard-serifless ;;
+      G-corner     ) glyph capital_g=toothless-corner-serifless-hooked ;;
       G-hookless   ) glyph capital_g=toothless-corner-serifless-hookless ;;
       G-hookless+  ) glyph capital_g=toothed-serifless-hookless ;;
       G-rounded    ) glyph capital_g=toothless-rounded-serifless-hooked ;;
@@ -226,7 +227,6 @@ shape()   { shape="shape = $(integer $1)"; }
 leading()  { leading="leading = '$default_leading * $(real $1)'"; }
 sb()       { sb="sb = 'default_sb * $(real $1)'"; }
 ascender() { ascender="ascender = '$default_ascender + $(integer $1)'" && ditto override "$ascender"; }
-# cap()    { [ $1 = extended ] && unset cap || cap=$1; cap="cap = 'default_cap * $(real ${cap:-$capextended})'" && ditto override "$cap"; }
 cap()      { [ $1 = extended ] && unset cap || cap=$1; cap="cap = 'default_cap + $(integer ${cap:-$capextended})'" && ditto override "$cap"; }
 xheight()  { xheight="xHeight = '$default_xheight + $(integer $1)'" && ditto override "$xheight"; }
 
@@ -289,6 +289,7 @@ while [ $1 ] ;do
     d-tailed     ) variant $1 b-corner p-eared ;;  # alternate b d p dyslexic glyphs
     d-toothless  ) variant $1 p-eared ;;
     f-extended   ) variant $1 ;;                   # unolexic (homage to universal grotesk)
+    G-corner     ) variant $1 ;;
     G-hookless   ) variant $1 ;;
     G-hookless+  ) variant $1 ;;
     G-rounded    ) variant $1 ;;
@@ -548,11 +549,11 @@ shape = 'upright'     # Slope grade used for shape selection.  'upright' | 'obli
 menu  = 'upright'     # Slope grade used for naming.           'upright' | 'oblique' | 'italic'
 css   = 'normal'      # Slope grade used for webfont CSS.      'normal'  | 'oblique' | 'italic'
 
-[buildPlans.$family.slopes.oblique]
-angle = 9.4
-shape = 'oblique'
-menu  = 'oblique'
-css   = 'oblique'
+# [buildPlans.$family.slopes.oblique]
+# angle = 9.4
+# shape = 'oblique'
+# menu  = 'oblique'
+# css   = 'oblique'
 
 [buildPlans.$family.slopes.italic]
 angle = 9.4
@@ -578,10 +579,10 @@ $shape            # Unit Width, measured in 1/1000 em.
 menu  = 5         # Width grade for the font's names.
 css   = 'normal'  # 'font-stretch' property of webfont CSS.
 
-[buildPlans.$family.widths.extended]
-shape = 600
-menu  = 7
-css   = 'expanded'
+# [buildPlans.$family.widths.extended]
+# shape = 600
+# menu  = 7
+# css   = 'expanded'
 
 # End width section
 ###################################################################################################
