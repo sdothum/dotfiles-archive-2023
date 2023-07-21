@@ -163,7 +163,7 @@ e_ink() {
 
 dfont() { iosevka expanded j-serifed q-hook Q-bar $(options $@) at-tall $cap; }
 # wfont() { iosevka english  j-serifed G-hookless+ Q-bar $(options $@) asterisk-high; }  # override dyslexic "asterisk-low"
-wfont() { iosevka english a-single  j-serifed G-hookless+ Q-straight $(options $@) asterisk-high; }
+wfont() { iosevka english a-single  j-serifed G-hookless+ Q-straight $(options $@) asterisk-high emdash $emdash; }
 efont() { iosevka $language $(options $@); }
 
 if [ "$mu" ] ;then
@@ -212,6 +212,7 @@ elif [ $ebook ] ;then                     # e-reader fonts
 
 elif [ $web ] ;then                       # www fonts
   unset cap
+  [ $ereader = kobo ] && emdash=$emkobo || emdash=$emkindle  # == M + space width
   wfont heading  quasi-extension                                         space M    kobo webfont
   wfont dyslexic quasi-extension    f-extended Y-descending cap extended space M    kobo webfont raw
   wfont dyslexic quasi-extension    f-extended J-flat       cap extended space M    kobo webfont family wCaps
