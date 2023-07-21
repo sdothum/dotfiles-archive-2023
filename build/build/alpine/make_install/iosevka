@@ -216,15 +216,14 @@ elif [ $web ] ;then                       # www fonts
   wfont dyslexic quasi-extension    f-extended Y-descending cap extended space M    kobo webfont raw
   wfont dyslexic quasi-extension    f-extended J-flat       cap extended space M    kobo webfont family wCaps
   wfont dyslexic quasi-proportional                                      space 1.15 kobo webfont
-  dfont ${cap:-cap extended} family wIosevka
 
 else                                      # desktop fonts
   cmdopts cap extended altmono
-  # dfont $leading          I-serifed       # override I-descending
-  dfont proof             Y-descending raw Q-straight $altmono 
-  # dfont menu              j-serifless      Q-straight J-flat
-  # dfont dyslexic a-single j-serifless      Q-straight J-flat space 2 family qclocktwo    # conky qclocktwo font
-  # dfont dyslexic quasi-extension $altmono  I-descending      space M family monograffic  # panel/dunst/browser font
+  dfont $leading G-toothed I-serifed       # override I-descending
+  dfont proof              Y-descending raw Q-straight $altmono
+  dfont menu               j-serifless      Q-straight J-flat
+  dfont dyslexic a-single  j-serifless      Q-straight J-flat space 2 family qclocktwo    # conky qclocktwo font
+  dfont dyslexic quasi-extension   $altmono I-descending      space M family monograffic  # panel/dunst/browser font
 fi
 
 # vim: set ft=sh: #
