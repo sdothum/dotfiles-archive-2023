@@ -661,11 +661,11 @@ fi
 [ $FP_descending ] && fforge FP_descending ${shape##* } $raw $family  # decending caps (experimental)
 
 # [ $ebook ] && echo $spacing | grep -vq 'quasi-' && { fforge punctuation ${emdash:-2} $family; unset width; }  # wide cell emdash and double width ellipsis
-# [ $ebook ] && { fforge punctuation ${emdash:-2} ${shape##* } $family; unset width; }               # wide cell emdash and double width ellipsis
+[ $ebook ] && { fforge punctuation ${emdash:-2} ${shape##* } $family; unset width; }               # wide cell emdash and double width ellipsis
 
 [ $ebook ] && [ $spacing != 'quasi-proportional' ] && fforge ligature $width ${shape##* } $family  # ae width character adjustment
 
-[ $space ] && fforge dyslexic $space $family           # lengthen space character cell width
+[ $space ] && fforge space $space $family              # lengthen space character cell width
 
 [ $ebook ] && fforge ${regular}weight $adjust $family  # rename weight for e-reader (as regular)
 

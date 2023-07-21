@@ -11,15 +11,18 @@
 # see colors.fish
 
 # for posix shell scripts
-# blink|noblink|nocolor|normal|underline
 export BLINK=$(printf "\e[5m")
-export NOBLINK=$(printf "\e[25m")
-export NOCOLOR=$(printf "\e[0;0m")
+export FAINT=$(printf "\e[2m")
+export ITALIC=$(printf "\e[3m")
+export REVERSE=$(printf "\e[7m")
+export STRIKETHROUGH=$(printf "\e[9m")
 export UNDERLINE=$(printf "\e[4m")
 
-# NORMAL
-# __BRIGHT
-# black|BLACK|white|WHITE|blue|BLUE|cyan|CYAN|green|GREEN|magenta|MAGENTA|red|RED|yellow|YELLOW
+export NOBLINK=$(printf "\e[25m")
+export NOCOLOR=$(printf "\e[0;0m")
+
+# _NORMAL_
+# BRIGHT
 export _BLACK_=$(printf "\e[0;30m")
 export BLACK=$(printf "\e[1;90m")
 export _WHITE_=$(printf "\e[0;37m")

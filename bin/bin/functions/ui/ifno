@@ -7,9 +7,10 @@
 # ..................................................................... Negative
 
 sig=${sig:--TERM}
+attn=${STRIKETHROUGH}${YELLOW}  # grab attention
 
 # if no || ..
-underline $@
+underline $attn$@
 
 while : ;do
   printf 'continue? [No]/yes/abort : '
