@@ -20,8 +20,8 @@ usage() {
 argv="$@"
 [ $leader ] || leader=.  # initial leader
 
-ATTCOLOR=${ORANGE}
-MSGCOLOR=${YELLOW}
+ATTCOLOR=${CYAN}
+MSGCOLOR=${TURQUOISE}
 
 while [ "$1" ] ;do
   case $1 in
