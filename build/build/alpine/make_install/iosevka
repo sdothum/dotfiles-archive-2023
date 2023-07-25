@@ -9,9 +9,9 @@ usage() {
   echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [family <name>]
                             [book+regular | latin+greek | cyrillic | fluent]
                             [quasi-extension | space <parm>] [raw]
-                            [mu | myfont | altmono | elementary | grotesk | open ]
+                            [mu | test | altmono | elementary | grotesk | open ]
                             [ D-serifless | G-[hookless[+]|toothless|default] | [t]I-[serifless|descending] | J-descending | j-serifed | m-rounded | Q-[bar|horizontal|open|straight|default] | Q-[bar|crossing|detached|hook|straight|custom] | a-[single|earless|rounded] | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat ]
-                            [ascender <parm> | cap <parm> | leading <parm>]
+                            [ascender <parm> | cap <parm> | leading <parm> | sb <parm>]
                             [-- <options>*]"
   exit 1
 }
@@ -23,7 +23,7 @@ usage() {
 #        make_install iosevka Q-bar                                              # default desktop fonts
 #        make_install iosevka grotesk                                            # grotesk style desktop fonts
 #        make_install iosevka elementary                                         # elementary style desktop fonts
-#        make_install iosevka kobo latin+greek myfonts space 1.5000 eQ-bar       # my custom e-reader fonts
+#        make_install iosevka kobo latin+greek space 1.5000 Q-bar                # my custom e-reader fonts
 #        make_install iosevka -- I-serifless family forCoding                    # single custom font, see font/iosevka
 #        make_install iosevka -- dyslexic kobo english I-serifless f-extended cap extended family Grotesk  # single custom ebook font with extended cap height
 #
@@ -41,8 +41,8 @@ GLYPH=b-rounded
 language=fluent  # default e-reader glyph set
 dyslexic=true    # default e-reader dyslexic font families
 emdash=2
-emkindle=1.2
-emkobo=1.2       # lengthened emdash, width == 2*space where emdash == 1.6667*space
+emkindle=1.296   # lengthened emdash, width == 2.25*space where emdash == 1.7361*space
+emkobo=1.296
 ecopy=true       # copy typeface to device folder
 
 touch $MAKE_INSTALL
@@ -94,10 +94,9 @@ cmdopts() {
     quasi-ext*                               ) quasi=$1 ;;
     space                                    ) [ $2 ] && { space="$1 $2"; shift; } || usage ;;
     source-only                              ) source_only=true ;;
-    myfonts                                  ) [ "$2" = Q ] && { for_Q=true; shift; }; unset dyslexic ;;  # my elementary and grotesk fonts with tweaked space cell width
     ypsilon                                  ) ypsilon=true ;;
     mu                                       ) mu=true ;;
-    myfont                                   ) myfont=true ;;
+    test                                     ) test=true ;;
     elementary                               ) style=$1 ;;
     grotesk                                  ) style=$1 ;;
     open                                     ) open=$1; f=f-extended ;;
@@ -106,6 +105,7 @@ cmdopts() {
     kobo                                     ) ereader=$1 ;;
     family                                   ) [ $ereader ] && [ $2 ] && { family=$2; shift; } || usage ;;
     ebook                                    ) ebook=true ;;
+    sb                                       ) [ $2 ] && { sb="$1 $2"; shift; } || usage ;;
     web                                      ) web=true ;;
     --                                       ) shift; . $HOME/bin/functions/font/iosevka $@; exit ;;
     *                                        ) usage ;;
@@ -146,7 +146,7 @@ options() { echo $adjust $ascender $cap $quasi $sb $style $D $G $I $J $Q $a $b $
 e_ink() {
   name=$1
   shift
-  iosevka dyslexic $ereader $language $(options $@) emdash $emdash $space family $name
+  iosevka dyslexic $ereader $language q-hook $(options $@) emdash $emdash $space family $name
   update $GLYPH $name
 }
 
@@ -173,12 +173,11 @@ if [ "$mu" ] ;then
   e_ink typograffic ${cap:-cap extended} a-single f-extended           G-rounded   I-serifless J-flat      Q-straight
   e_ink muse        ${cap:-cap extended} a-single f-extended j-serifed G-hookless+ I-descending            Q-straight
   e_ink mu          ${cap:-cap extended} a-single f-extended j-serifed G-hookless+ Y-descending            Q-straight open 4-open
-  unset ecopy
-  e_ink mu          ${cap:-cap extended} a-single f-extended j-serifed G-hookless+ Y-descending raw q-hook Q-straight open 4-open
-elif [ "$myfont" ] ;then
+elif [ "$test" ] ;then
   cmdopts quasi-ext ${space:-space M} m-rounded
   [ $ereader = kobo ] && emdash=$emkobo || emdash=$emkindle  # == M + space width
-  e_ink myfont      ${cap:-cap extended} a-single f-extended j-serifed G-hookless+ Y-descending            Q-straight open 4-open
+  unset ecopy
+  e_ink mu          ${cap:-cap extended} a-single f-extended j-serifed G-hookless+ Y-descending            Q-straight open 4-open
 elif [ $family ] ;then                    # custom e-ink font (non-published)
   e_ink $family
 
@@ -189,18 +188,6 @@ elif [ $ereader ] && [ $dyslexic ] ;then  # e-ink fonts (dyslexic default)
   e_ink Unolexic  f-extended Q-bar      I-serifless
   e_ink iGeolexic a-single   Q-straight
   e_ink Geolexic  a-single   Q-straight I-serifless
-
-elif [ $ereader ] ;then                   # quasimono ereader spacing
-  if [ $for_Q ] ;then
-    unset eQ gQ
-    for Q in Q-bar Q-bend Q-crossing Q-detached Q-straight ;do 
-      myfonts
-      rm -fr ${FOLDER%/*}.space:${space#* }.$Q
-      mv -v ${FOLDER%/*} ${FOLDER%/*}.space:${space#* }.$Q
-    done
-  else
-    myfonts
-  fi
 
 elif [ $ebook ] ;then                     # e-reader fonts
   efont ebook
@@ -213,10 +200,10 @@ elif [ $ebook ] ;then                     # e-reader fonts
 elif [ $web ] ;then                       # www fonts
   unset cap
   [ $ereader = kobo ] && emdash=$emkobo || emdash=$emkindle  # == M + space width
-  wfont heading  quasi-extension                                         space M    kobo webfont
-  wfont dyslexic quasi-extension    f-extended Y-descending cap extended space M    kobo webfont raw
-  wfont dyslexic quasi-extension    f-extended J-flat       cap extended space M    kobo webfont family wCaps
-  wfont dyslexic quasi-proportional                                      space 1.15 kobo webfont
+  # wfont heading  quasi-extension                                       space M    webfont
+  wfont dyslexic quasi-extension    f-extended Y-descending cap extended space M    webfont raw
+  wfont dyslexic quasi-extension    f-extended J-flat       cap extended space M    webfont family wCaps
+  wfont dyslexic quasi-proportional                                      space 1.15 webfont
 
 else                                      # desktop fonts
   cmdopts cap extended altmono
