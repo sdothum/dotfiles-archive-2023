@@ -8,7 +8,8 @@
 # see make_install iosevka
 
 usage() { 
-  echo "usage: $(basename $0) Q_hook | q_hook | I_descending <shape> [raw]
+  echo "usage: $(basename $0) Q_hook | q_hook | descending <shape>
+       $(basename $0) I_descending <shape> [raw]
        $(basename $0) Q_custom <shape>
        $(basename $0) Q_horizontal <shape>
        $(basename $0) T_descending <shape> [raw]
@@ -29,10 +30,9 @@ REPO=/net/depot/Iosevka
 ANGLE=-9       # iosevka italic angle (verify with fontforge)
 Xshift=-40     # italic descending capital left side bearing shift
 Yadjust=32     # caps tweak visual alignment for eink rendering at small fontsizes
-# Yshrink=50   # elongation bar percent
+# Yshrink=50   # elongation bar percent (original large overlap spec)
 # Yshift=-174  # descending capital elongation
 # yshift=-140  # lower case t elongation
-# reduced overlap to look better on non-eink screens
 Yshrink=25.5   # elongation bar percent
 Yshift=-210    # descending capital elongation
 yshift=-176    # lower case t elongation
@@ -88,6 +88,7 @@ Select($2);
 CopyReference();
 Select($1);
 PasteWithOffset($3,$4);
+RemoveOverlap();
 "
 }
 
@@ -148,10 +149,12 @@ Select($3);
 CopyReference();
 Select($1);
 PasteWithOffset($shape,0);
+RemoveOverlap();
 Select($4);
 CopyReference();
 Select($1);
 PasteWithOffset($5,$6);
+RemoveOverlap();
 SetWidth($(( $shape * 2 )));
 "
   else
@@ -185,6 +188,58 @@ Generate(\$1);
 
 # descending glyphs
 
+baseline() {
+  confirm "baseline"
+  # [ $shape -eq 600 ] && xshift=-253 || xshift=-242  # if 100% width
+  [ $shape -eq 600 ] && xshift=-2 || xshift=-1
+  echo "
+Open(\$1);
+Select(0u007c);
+CopyReference();
+Select(0u0001);             # temporary cell to avoid modifying original glyph
+Paste();
+Select(0u0001);
+# Transform(2,0,0,1,0,0);   # test position
+Transform(0.0001,0,0,0.0001,0,0);
+CopyReference();
+SelectGlyphsSplines();
+SelectFewer(0u0001);
+PasteWithOffset($xshift,$(( $Yshift - 37)));
+Select(0u0001);
+Clear();
+Generate(\$1);
+" >/tmp/fontforge:baseline.script
+
+  for i in $(regular) ;do
+    ditto baseline $i
+    fontforge --script /tmp/fontforge:baseline.script $i
+  done
+
+#   # do similar for italics
+#   xshift=$(( $xshift + $Xshift ))
+#   echo "
+# Open(\$1);
+# Select(0u007c);
+# CopyReference();
+# Select(0u0001);             # temporary cell to avoid modifying original glyph
+# Paste();
+# Select(0u0001);
+# Transform(0.0001,0,0,0.0001,0,0);
+# CopyReference();
+# SelectGlyphsSplines();
+# SelectFewer(0u0001);
+# PasteWithOffset($xshift,$(( $Yshift - 37)));
+# Select(0u0001);
+# Clear();
+# Generate(\$1);
+# " >/tmp/fontforge:baseline:italic.script
+#
+#   for i in $(italic) ;do
+#     ditto baseline $i
+#     fontforge --script /tmp/fontforge:baseline:italic.script $i
+#   done
+}
+
 move_up()   { [ $raw ]  || echo "Move(0,$Yadjust);"; }  # visual alignment at small fontsizes
 
 descender() {
@@ -201,7 +256,8 @@ CopyReference();
 Transform(100,0,0,$Yshrink,0,0);
 Select($2);
 PasteWithOffset($3,$4);
-$(move_up)  # move up a smidgen for small fontsize font (engine) rendering alignment
+RemoveOverlap();
+# $(move_up)  # move up a smidgen for small fontsize font (engine) rendering alignment
 Select(0u0001);
 Clear();
 Generate(\$1);
@@ -409,6 +465,7 @@ Generate(\$1);
 # main, see iosevka
 fforge=$1
 case $1 in
+  baseline     ) shape=$2; shift ;;
   I_descending ) shape=$2; [ $3 = raw ] && { raw=true; shift; }; shift ;;
   T_descending ) shape=$2; [ $3 = raw ] && { raw=true; shift; }; shift ;;
   t_descending ) shape=$2; raw=true; shift ;;

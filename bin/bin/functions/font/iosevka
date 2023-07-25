@@ -296,7 +296,7 @@ while [ $1 ] ;do
     G-toothed    ) variant $1 ;;
     G-toothless  ) variant $1 ;;
     g-double     ) variant $1 ;;
-    I-descending ) variant I-serifless 'DESCENDING'; I_descending=true ;;
+    I-descending ) variant I-serifless 'DESCENDING'; I_descending=true; baseline=true ;;
     I-serifed    ) variant $1 ;;
     I-serifless  ) variant $1; initial ;;          # combined minimal stroke glyphs
     i-serifed    ) variant $1 ;;
@@ -320,12 +320,12 @@ while [ $1 ] ;do
     Q-open       ) variant $1 ;;
     Q-straight   ) variant $1 ;;
     Q-custom     ) variant 'Q=CUSTOM';      Q_custom=true ;;
-    q-hook       ) variant 'q=HOOK-TAILED'; q_hook=true ;;
+    q-hook       ) variant 'q=HOOK-TAILED'; q_hook=true; baseline=true ;;
     q-tailed     ) variant $1; unset q_hook ;;
-    T-descending ) variant 'T=DESCENDING I=DESCENDING'; T_descending=true; I_descending=true ;;
+    T-descending ) variant 'T=DESCENDING I=DESCENDING'; T_descending=true; I_descending=true; baseline=true ;;
     t-cross      ) variant $1 ;;
-    t-descending ) variant t-cross 'DESCENDING'; t_descending=true ;;
-    Y-descending ) variant I-serifless 'DESCENDING T=DESCENDING Y=DESCENDING'; I_descending=true; T_descending=true; Y_descending=true ;;
+    t-descending ) variant t-cross 'DESCENDING'; t_descending=true; baseline=true ;;
+    Y-descending ) variant I-serifless 'DESCENDING T=DESCENDING Y=DESCENDING'; I_descending=true; T_descending=true; Y_descending=true; baseline=true ;;
     y-straight   ) variant $1 ;;
     raw          ) variant 'RAW'; raw=raw ;;
     asterisk-high) variant $1 ;;
@@ -336,7 +336,7 @@ while [ $1 ] ;do
     elementary   ) variant I-serifless a-single ;;
     grotesk      ) variant I-serifless f-extended ;;
     grotesque    ) grotesque ;;
-    descenders   ) variant 'FP=DESCENDING'; FP_descending=true ;;
+    descenders   ) variant 'FP=DESCENDING'; FP_descending=true; baseline=true ;;
     open         ) variant B-open P-open R-open ;;
     atkinson     ) grotesque; ebook hyperlegible; variant b-toothed G-toothed J-serifless p-eared Q-crossing q-tailed u-toothed ampersand at number_sign percent ;;
     geometric    ) geometric; cap extended; build=-jost ;;
@@ -346,8 +346,8 @@ while [ $1 ] ;do
     *Monolexic   ) initial ${1%Monolexic} ;;
     ascender     ) ascender $2  || usage; shift ;;                                 # affects descender as well
     cap          ) cap $2       || usage; shift ;;                                 # H height
-    kindle       ) leading 1.5; shape $extended; sb 0.6450 ;;                      # side bearing difference to kobo's font rendering
-    kobo         ) leading 1 ;;                                                    # any value >= 1 (but have retained setting for interested kindle users)
+    kindle       ) leading 1.5; shape $extended; sb 0.6450 ;;
+    kobo         ) leading 1; shape $extended; sb 0.6450 ;;                        # any value >= 1 (but have retained setting for interested kindle users)
     book+regular ) adjust="book+regular" ;;                                        # see fforge bookweight
     leading      ) leading $2   || usage; shift ;;                                 # line spacing > 1.0
     noround      ) unset sb ;;
@@ -357,7 +357,7 @@ while [ $1 ] ;do
     emdash       ) emdash $2    || usage; shift ;;                                 # emdash width
     weight       ) weight $2 $3 || usage; shift 2 ;;                               # custom font weight
     # webfont    ) weight 500 medium; initial w; regular=medium ;;                 # heavier font for web usage
-    webfont      ) initial w ;;
+    webfont      ) leading 1; initial w ;;
     xheight      ) xheight $2   || usage; shift ;;                                 # height of x (experimental for larger fontsizes)
     *            ) usage ;;
   esac
@@ -655,19 +655,19 @@ fi
 [ $Q_hook        ] && fforge Q_hook                          $family  # hooked capital Q
 [ $Q_horizontal  ] && fforge Q_horizontal  ${shape##* }      $family  # open horizontal capital Q
 [ $Q_custom      ] && fforge Q_custom      ${shape##* }      $family  # custom capital Q
+
 [ $I_descending  ] && fforge I_descending  ${shape##* } $raw $family  # font mod for descending serifless capital I
 [ $T_descending  ] && fforge T_descending  ${shape##* } $raw $family  # font mod for descending capital T
 [ $t_descending  ] && fforge t_descending  ${shape##* }      $family  # font mod for descending t
 [ $Y_descending  ] && fforge Y_descending  ${shape##* } $raw $family  # font mod for descending capital Y
 [ $FP_descending ] && fforge FP_descending ${shape##* } $raw $family  # decending caps (experimental)
 
-# [ $ebook ] && echo $spacing | grep -vq 'quasi-' && { fforge punctuation ${emdash:-2} $family; unset width; }  # wide cell emdash and double width ellipsis
 [ $ebook ] && { fforge punctuation ${emdash:-2} ${shape##* } $family; unset width; }               # wide cell emdash and double width ellipsis
 
 [ $ebook ] && [ $spacing != 'quasi-proportional' ] && fforge ligature $width ${shape##* } $family  # ae width character adjustment
 
-[ $space ] && fforge space $space $family              # lengthen space character cell width
-
-[ $ebook ] && fforge ${regular}weight $adjust $family  # rename weight for e-reader (as regular)
+[ $baseline ] && fforge baseline ${shape##* }    $family  # force baseline adjustment for descending caps and q-hook
+[ $space ]    && fforge space $space             $family  # lengthen space character cell width
+[ $ebook ]    && fforge ${regular}weight $adjust $family  # rename weight for e-reader (as regular)
 
 # vim: set ft=sh: #
