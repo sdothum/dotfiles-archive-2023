@@ -6,7 +6,7 @@
 # ...................................................................... iosevka
 
 usage() { 
-  echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [family <name>]
+  echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [nocopy] [family <name>]
                             [book+regular | latin+greek | cyrillic | fluent]
                             [quasi-extension | space <parm>] [raw]
                             [mu | test | altmono | elementary | grotesk | open ]
@@ -50,7 +50,7 @@ trap "rm -f $MAKE_INSTALL; pkill -f iosevka" EXIT INT
 shift
 
 glyph()   { unset b d p; eval $1=$2; GLYPH=$2; }
-altmono() { altmono='a-single f-extended G-hookless+'; }
+altmono() { altmono='a-toothless f-extended G-hookless+'; }
 
 cmdopts() {
   while [ $1 ] ;do
@@ -103,6 +103,7 @@ cmdopts() {
     altmono                                  ) altmono ;;   # alternate "monospace" coding font
     kindle                                   ) ereader=$1 ;;
     kobo                                     ) ereader=$1 ;;
+    nocopy                                   ) unset ecopy ;;
     family                                   ) [ $ereader ] && [ $2 ] && { family=$2; shift; } || usage ;;
     ebook                                    ) ebook=true ;;
     sb                                       ) [ $2 ] && { sb="$1 $2"; shift; } || usage ;;
@@ -163,21 +164,22 @@ e_ink() {
 
 dfont() { iosevka expanded j-serifed q-hook Q-bar $(options $@) at-tall $cap; }
 # wfont() { iosevka english  j-serifed G-hookless+ Q-bar $(options $@) asterisk-high; }  # override dyslexic "asterisk-low"
-wfont() { iosevka english a-single  j-serifed G-hookless+ Q-straight $(options $@) asterisk-high emdash $emdash; }
+wfont() { iosevka english j-serifed G-hookless+ Q-straight $(options $@) asterisk-high emdash $emdash; }
 efont() { iosevka $language $(options $@); }
 
 if [ "$mu" ] ;then
   cmdopts quasi-ext ${space:-space M}
   [ $ereader = kobo ] && emdash=$emkobo || emdash=$emkindle  # == M + space width
-  e_ink articulate  ${cap:-cap extended}                               G-toothed               J-serifless Q-crossing
-  e_ink typograffic ${cap:-cap extended} a-single f-extended           G-rounded   I-serifless J-flat      Q-straight
-  e_ink muse        ${cap:-cap extended} a-single f-extended j-serifed G-hookless+ I-descending            Q-straight
-  e_ink mu          ${cap:-cap extended} a-single f-extended j-serifed G-hookless+ Y-descending            Q-straight open 4-open
+  e_ink articulate  ${cap:-cap extended}                                  G-toothed               J-serifless Q-crossing
+  e_ink typograffic ${cap:-cap extended}             f-extended           G-rounded   I-serifless J-flat      Q-straight
+  e_ink mu          ${cap:-cap extended} a-toothless f-extended j-serifed G-hookless+ I-descending            Q-straight      4-open
+  e_ink upsilon     ${cap:-cap extended} a-single    f-extended j-serifed G-hookless+ Y-descending            Q-straight open 4-open+
+
 elif [ "$test" ] ;then
-  cmdopts quasi-ext ${space:-space M} m-rounded
+  unset ecopy; cmdopts quasi-ext ${space:-space M} m-rounded
   [ $ereader = kobo ] && emdash=$emkobo || emdash=$emkindle  # == M + space width
-  unset ecopy
-  e_ink mu          ${cap:-cap extended} a-single f-extended j-serifed G-hookless+ Y-descending            Q-straight open 4-open
+  e_ink xi          ${cap:-cap extended} a-single f-extended j-serifed G-hookless+ Y-descending            Q-straight open 4-open
+
 elif [ $family ] ;then                    # custom e-ink font (non-published)
   e_ink $family
 
@@ -198,20 +200,22 @@ elif [ $ebook ] ;then                     # e-reader fonts
   efont dyslexic quasi-proportional I-serifless
 
 elif [ $web ] ;then                       # www fonts
-  unset cap
-  [ $ereader = kobo ] && emdash=$emkobo || emdash=$emkindle  # == M + space width
-  # wfont heading  quasi-extension                                       space M    webfont
-  wfont dyslexic quasi-extension    f-extended Y-descending cap extended space M    webfont raw
-  wfont dyslexic quasi-extension    f-extended J-flat       cap extended space M    webfont family wCaps
-  wfont dyslexic quasi-proportional                                      space 1.15 webfont
+  unset cap; emdash=$emkobo
+  wfont heading  quasi-extension                                   space M    webfont      # wMonolegible
+  # wfont dyslexic quasi-extension  f-extended        cap extended space M    webfont Y-descending raw
+  wfont dyslexic quasi-extension    f-extended        cap extended space M    webfont      # wMonolexic
+  wfont dyslexic quasi-extension    f-extended J-flat cap extended space M    webfont family wCaps
+  wfont dyslexic quasi-proportional                                space 1.15 webfont      # wQuasilexic
+  dfont ${cap:-cap extended}        G-toothed  I-serifed                              family wIosevka
 
 else                                      # desktop fonts
   cmdopts cap extended altmono
-  dfont $leading G-toothed I-serifed       # override I-descending
-  dfont proof              Y-descending raw Q-straight $altmono
+  # dfont $leading         I-serifed        G-toothed  # classic coding style
+  dfont $leading $altmono  I-serifed        G-toothed
+  dfont proof    $altmono  I-descending     Q-straight
   dfont menu               j-serifless      Q-straight J-flat
-  dfont dyslexic a-single  j-serifless      Q-straight J-flat space 2 family qclocktwo    # conky qclocktwo font
-  dfont dyslexic quasi-extension   $altmono I-descending      space M family monograffic  # panel/dunst/browser font
+  dfont dyslexic           j-serifless      Q-straight J-flat space 2 family qclocktwo    # conky qclocktwo font
+  dfont dyslexic $altmono  quasi-extension  I-descending      space M family monograffic  # panel/dunst/browser font
 fi
 
 # vim: set ft=sh: #

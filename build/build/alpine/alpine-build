@@ -559,6 +559,7 @@ stage_33() {
   doas apk add feh
 
   make_install calibre
+  make_install epubcheck
   make_install kobopatch
   doas apk add foliate
   doas apk add zathura zathura-ps zathura-pdf-mupdf
