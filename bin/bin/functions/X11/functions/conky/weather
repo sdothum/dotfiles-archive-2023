@@ -31,7 +31,7 @@ esac
 # scrape weather synopsis
 WEATHER=$(curl --silent "https://weather.gc.ca/rss/city/${city}_e.xml?source=ignitionfork")
 if [ $debug ] ;then
-  echo $WEATHER >/tmp/weather
+  echo $WEATHER >/tmp/conky:weather
   echo Weather .. $WEATHER
   echo
   read input
@@ -72,7 +72,7 @@ if [ ! -e $MONOCLE ] ;then
       read input
     fi
 
-    GUST=$(echo $WEATHER | awk '/Wind:.*gust / { gsub(/.*Wind:.*gust /, "", $0); gsub(/ km.*$/, "", $0); print }')
+    GUST=$(echo $WEATHER | awk '/Wind:.* gust / { gsub(/.*Wind:.* gust /, "", $0); gsub(/ km.*$/, "", $0); print }')
     if [ $debug ] ;then
       echo Gust .. \"$GUST\"
       echo

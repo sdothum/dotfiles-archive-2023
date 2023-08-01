@@ -21,7 +21,7 @@ argv="$@"
 [ $leader ] || leader=.  # initial leader
 
 ATTCOLOR=${BROWN}
-MSGCOLOR=${ORANGE}
+MSGCOLOR=${TURQUOISE}
 
 while [ "$1" ] ;do
   case $1 in

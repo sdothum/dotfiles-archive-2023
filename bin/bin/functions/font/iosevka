@@ -30,7 +30,7 @@ usage() {
                [english | latin+greek | cyrillic | fluent | ligature <name>]
 
                [grotesque (default) | atkinson | geometric | jost]
-               [elementary | grotesk | descenders | open | a-single | b-corner | D-serifless | d-[tailed|toothless] | FP-descending [raw] | f-extended | G-[corner|hookless[+]|rounded|toothed|toothless] | g-double | I-[serifed|serifless|descending] | i-serifed | J-[descending|flat] | j-[serifed|serifless] | l-[hooky|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|open|straight|custom] | q-[hook|tailed] | T-descending [raw] | t-[cross | descending] | u-toothed | Y-descending [raw] | y-straight | asterisk-high | at-tall | 0-split | 4-open | paren-flat]*
+               [elementary | grotesk | descenders | open | a-[single|toothless] | b-corner | D-serifless | d-[tailed|toothless] | FP-descending [raw] | f-extended | G-[corner|hookless[+]|rounded|toothed|toothless] | g-double | I-[serifed|serifless|descending] | i-serifed | J-[descending|flat] | j-[serifed|serifless] | l-[hooky|serifless] | p-[eared|serifed] | Q-[bar|bend|crossing|detached|hook|open|straight|custom] | q-[hook|tailed] | T-descending [raw] | t-[cross | descending] | u-toothed | Y-descending [raw] | y-straight | asterisk-high | at-tall | 0-split | 4-open[+] | paren-flat]*
 
                [proof | menu | book+regular | kindle | kobo | leading <decimal>]
                [double] [space M|<decimal>] [ emdash <decimal> ]
@@ -149,7 +149,8 @@ variant() {
   for o in $@ ;do  # "o"nly non-variant character ($i in use for variant :) ..since rectified with long variant names
     case $o in
       0-split      ) glyph zero=reverse-slashed-split ;;
-      4-open       ) glyph four=semi-open-non-crossing ;;
+      4-open+      ) glyph four=semi-open-non-crossing ;;
+      4-open       ) glyph four=semi-open ;;
       B-open       ) glyph capital_b=standard-interrupted-serifless ;;
       D-serifless  ) glyph capital_d=standard-serifless ;;
       G-corner     ) glyph capital_g=toothless-corner-serifless-hooked ;;
@@ -175,6 +176,7 @@ variant() {
       a-single     ) glyph a=single-storey-serifless ;;
       a-earless    ) glyph a=single-storey-earless-corner-serifless ;;
       a-rounded    ) glyph a=single-storey-earless-rounded-serifless ;;
+      a-toothless  ) glyph a=double-storey-toothless-corner ;;
       ampersand    ) glyph ampersand=closed ;;
       asterisk-high) glyph asterisk=penta-high ;;  # webfont restoration
       asterisk-low ) glyph asterisk=penta-low ;;   # paragraph separator (ebook) glyph
@@ -284,6 +286,7 @@ while [ $1 ] ;do
     a-single     ) variant $1 ;;
     a-earless    ) variant $1 ;;
     a-rounded    ) variant $1 ;;
+    a-toothless  ) variant $1 ;;
     b-corner     ) variant $1 p-serifed ;;         # alternate b p dyslexic glyphs
     D-serifless  ) variant $1 ;;
     d-tailed     ) variant $1 b-corner p-eared ;;  # alternate b d p dyslexic glyphs
@@ -332,6 +335,7 @@ while [ $1 ] ;do
     at-tall      ) variant $1 ;;
     0-split      ) variant $1 ;;
     4-open       ) variant $1 ;;
+    4-open+      ) variant $1 ;;
     paren-flat   ) variant $1 ;;
     elementary   ) variant I-serifless a-single ;;
     grotesk      ) variant I-serifless f-extended ;;
@@ -346,8 +350,8 @@ while [ $1 ] ;do
     *Monolexic   ) initial ${1%Monolexic} ;;
     ascender     ) ascender $2  || usage; shift ;;                                 # affects descender as well
     cap          ) cap $2       || usage; shift ;;                                 # H height
-    kindle       ) leading 1.5; shape $extended; sb 0.6450 ;;
-    kobo         ) leading 1; shape $extended; sb 0.6450 ;;                        # any value >= 1 (but have retained setting for interested kindle users)
+    kindle       ) leading 1.5; shape $extended; sb 0.6150 ;;
+    kobo         ) leading 1; shape $extended; sb 0.6850 ;;                        # any value >= 1 (but have retained setting for interested kindle users)
     book+regular ) adjust="book+regular" ;;                                        # see fforge bookweight
     leading      ) leading $2   || usage; shift ;;                                 # line spacing > 1.0
     noround      ) unset sb ;;
@@ -666,7 +670,7 @@ fi
 
 [ $ebook ] && [ $spacing != 'quasi-proportional' ] && fforge ligature $width ${shape##* } $family  # ae width character adjustment
 
-[ $baseline ] && fforge baseline ${shape##* }    $family  # force baseline adjustment for descending caps and q-hook
+[ $ebook ] && [ $baseline ] && fforge baseline ${shape##* }  $family  # force baseline adjustment for descending caps and q-hook
 [ $space ]    && fforge space $space             $family  # lengthen space character cell width
 [ $ebook ]    && fforge ${regular}weight $adjust $family  # rename weight for e-reader (as regular)
 

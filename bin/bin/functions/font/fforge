@@ -215,29 +215,29 @@ Generate(\$1);
     fontforge --script /tmp/fontforge:baseline.script $i
   done
 
-#   # do similar for italics
-#   xshift=$(( $xshift + $Xshift ))
-#   echo "
-# Open(\$1);
-# Select(0u007c);
-# CopyReference();
-# Select(0u0001);             # temporary cell to avoid modifying original glyph
-# Paste();
-# Select(0u0001);
-# Transform(0.0001,0,0,0.0001,0,0);
-# CopyReference();
-# SelectGlyphsSplines();
-# SelectFewer(0u0001);
-# PasteWithOffset($xshift,$(( $Yshift - 37)));
-# Select(0u0001);
-# Clear();
-# Generate(\$1);
-# " >/tmp/fontforge:baseline:italic.script
-#
-#   for i in $(italic) ;do
-#     ditto baseline $i
-#     fontforge --script /tmp/fontforge:baseline:italic.script $i
-#   done
+  # do similar for italics (though, appears to be unnecessary)
+  xshift=$(( $xshift + $Xshift ))
+  echo "
+Open(\$1);
+Select(0u007c);
+CopyReference();
+Select(0u0001);             # temporary cell to avoid modifying original glyph
+Paste();
+Select(0u0001);
+Transform(0.0001,0,0,0.0001,0,0);
+CopyReference();
+SelectGlyphsSplines();
+SelectFewer(0u0001);
+PasteWithOffset($xshift,$(( $Yshift - 37)));
+Select(0u0001);
+Clear();
+Generate(\$1);
+" >/tmp/fontforge:baseline:italic.script
+
+  for i in $(italic) ;do
+    ditto baseline:italic $i
+    fontforge --script /tmp/fontforge:baseline:italic.script $i
+  done
 }
 
 move_up()   { [ $raw ]  || echo "Move(0,$Yadjust);"; }  # visual alignment at small fontsizes
@@ -283,7 +283,7 @@ Generate(\$1);
 " >/tmp/fontforge:descender:italic.script
 
   for i in $(italic) ;do
-    ditto $1 $i
+    ditto $1:italic $i
     echo $i | grep -q '[-]italic.ttf' && regular=${i%italic*}regular.ttf || regular=${i%italic*}.ttf
     fontforge --script /tmp/fontforge:descender:italic.script $i $regular
   done

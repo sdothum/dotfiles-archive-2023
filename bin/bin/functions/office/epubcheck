@@ -1,0 +1,24 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................... epubcheck
+
+usage() { echo "usage: $(basename $0) <epub> | <dir> | ."; exit 1; }
+
+CATLG=/tmp/epubcheck:catlg
+
+case $1 in
+  ''   ) usage ;;
+  *epub) echo $1 >$CATLG ;;
+  *    ) find "$1" -name '*epub' >$CATLG 2>/dev/null || usage ;;
+esac
+
+while read file <&3 ;do
+  ditto epubcheck "$file"
+  java -jar $HOME/.local/bin/epubcheck.jar "$file"
+done 3< $CATLG
+
+# vim: set ft=sh: #
