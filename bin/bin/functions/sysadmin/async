@@ -1,0 +1,78 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Sysadmin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... async optimization
+
+usage() { echo "usage: $(basename $0) on | off"; exit 1; }
+
+BOOT='networking wpa_supplicant'
+DEFAULT='nfs nfsmount openntpd'
+
+sv show
+services=$(sv show | cut -d'|' -f1)
+
+check() { echo $services | grep -q $1; }
+
+async() {
+  check $1 || return
+  doas rc-update del $1 $2
+  doas rc-update add $1 async
+}
+
+boot() {
+  check $1 || return
+  doas rc-update del $1 async
+  doas rc-update add $1 boot
+}
+
+default() {
+  check $1 || return
+  doas rc-update del $1 async
+  doas rc-update add $1 default
+}
+
+on() {
+  ifno "async boot startup" && exit
+  doas mkdir -p /etc/runlevels/async
+  doas rc-update add -s default async
+  echo "::once:/sbin/openrc async" | doas tee -a /etc/inittab
+
+  for i in $BOOT; do
+    async $i boot
+  done
+
+  for i in $DEFAULT; do
+    async $i
+  done
+}
+
+off() {
+  [ -d /etc/runlevels/async ] || exit
+  ifno "normal boot startup" && exit
+
+  for i in $BOOT; do
+    boot $i
+  done
+
+  for i in $DEFAULT; do
+    default $i
+  done
+
+  doas rc-update del -s default async
+  doas rmdir /etc/runlevels/async
+  doas sed -i '/::once:.* async/d' /etc/inittab
+}
+
+case $1 in
+  off) off ;;
+  on ) on ;;
+  *  ) usage ;;
+esac
+
+sv show
+reboot
+
+# vim: set ft=sh: #

@@ -145,7 +145,7 @@ case $action in
   held      ) for i in $(xbps-query --list-hold-pkgs) ;do ditto held "$i $(status $i)" ;done ;;
   history   ) if [ $package ] ;then  ls -l $CACHE/$package* 2>/dev/null ;else history ;fi ;;
   hold      ) [ $pkgver ] && { sudo xbps-pkgdb -m hold $options $package; ditto hold "$pkgver"; [ -e $ITERATE ] || xb C; } ;;
-  installed ) xbps-query -l $options | cut -d' ' -f2- | sed -r "s/^([^ ]*)/${_YELLOW_}\1${NOCOLOR}/" | grep "$@" && ditto installed "$@" ;;
+  installed ) xbps-query -l $options | cut -d' ' -f2- | sed -r "s/^([^ ]*)/${yellow}\1${NOCOLOR}/" | grep "$@" && ditto installed "$@" ;;
   query     ) [ $options ] && xbps-query -R $options $package || xbps-query -Rs $options "$package" | a $package ;;
   remove    ) sudo xbps-remove $recursive $options $package ;;
   requiredby) xbps-query -X $package ;;

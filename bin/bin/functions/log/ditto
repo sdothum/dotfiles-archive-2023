@@ -27,7 +27,7 @@ while [ "$1" ] ;do
   case $1 in
     ERR*) MSGCOLOR=${RED}   ;;
     WAR*) MSGCOLOR=${BLACK} ;;
-    INF*) MSGCOLOR=${_WHITE_} ;;
+    INF*) MSGCOLOR=${white} ;;
     @   ) [ "$2" ] || usage; desc=$2; message=' ';     shift ;;
     @*  ) [ "$2" ] && usage; desc=${1#@}; message=' '        ;;
     -t  ) timestamp="$(date "+%-H %M'%S\" ")"                ;;
