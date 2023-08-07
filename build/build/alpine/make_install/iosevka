@@ -9,7 +9,7 @@ usage() {
   echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [nocopy] [family <name>]
                             [book+regular | latin+greek | cyrillic | fluent]
                             [quasi-extension | space <parm>] [raw]
-                            [mu | test | altmono | elementary | grotesk | open ]
+                            [mu | test | altmono | coding | grotesk | open ]
                             [ D-serifless | G-[hookless[+]|toothless|default] | [t]I-[serifless|descending] | J-descending | j-serifed | m-rounded | Q-[bar|horizontal|open|straight|default] | Q-[bar|crossing|detached|hook|straight|custom] | a-[single|earless|rounded] | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat ]
                             [ascender <parm> | cap <parm> | leading <parm> | sb <parm>]
                             [-- <options>*]"
@@ -97,7 +97,7 @@ cmdopts() {
     ypsilon                                  ) ypsilon=true ;;
     mu                                       ) mu=true ;;
     test                                     ) test=true ;;
-    elementary                               ) style=$1 ;;
+    coding                                   ) coding=true ;;
     grotesk                                  ) style=$1 ;;
     open                                     ) open=$1; f=f-extended ;;
     altmono                                  ) altmono ;;   # alternate "monospace" coding font
@@ -208,13 +208,16 @@ elif [ $web ] ;then                       # www fonts
   wfont dyslexic quasi-proportional                                space 1.15 webfont      # wQuasilexic
   dfont ${cap:-cap extended}        G-toothed  I-serifed                              family wIosevka
 
+elif [ $coding ] ;then                    # classic coding font
+  cmdopts cap extended
+  dfont $leading I-serifed G-toothed a-toothless f-extended family monodyslexic
+
 else                                      # desktop fonts
   cmdopts cap extended altmono
-  # dfont $leading         I-serifed        G-toothed  # classic coding style
-  dfont $leading $altmono  I-serifed        G-toothed
+  dfont $leading $altmono  I-descending
   dfont proof    $altmono  I-descending     Q-straight
-  dfont menu               j-serifless      Q-straight J-flat
-  dfont dyslexic           j-serifless      Q-straight J-flat space 2 family qclocktwo    # conky qclocktwo font
+  dfont menu     $altmono                   Q-straight
+  dfont dyslexic $altmono                   Q-straight J-flat space 2 family qclocktwo    # conky qclocktwo font
   dfont dyslexic $altmono  quasi-extension  I-descending      space M family monograffic  # panel/dunst/browser font
 fi
 
