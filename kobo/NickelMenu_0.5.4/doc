@@ -1,0 +1,259 @@
+# NickelMenu (libnm.so)
+# https://pgaskin.net/NickelMenu
+#
+# This tool injects menu items into Nickel.
+#
+# It should work on firmware 4.6+, but it has only been tested on 4.20.14622 -
+# 4.31.19086. It is perfectly safe to try out on any newer firmware version, as
+# it has a lot of error checking, and a failsafe mechanism which automatically
+# uninstalls it as a last resort.
+#
+# Place your configuration files in this folder. They can be named anything, and
+# should consist of multiple lines either starting with # for a comment, or in
+# one of the the following formats (spaces around fields are ignored):
+#
+#   menu_item:<location>:<label>:<action>:<arg>
+#     Adds a menu item.
+#
+#     <location>  the menu to add the item to, one of:
+#                   main             - the menu in the top-left corner of the home screen
+#                                      (in firmware 4.23.15505+, this menu was removed, so a new item will be added to the tabs on the bottom-right)
+#                   reader           - the overflow menu in the reader
+#                   browser          - the menu in the bottom-right of the web browser
+#                   library          - the menu in the filter bar for the "My Books" and "My Articles" library views
+#                   selection        - the selection menu (4.20.14622+)
+#                                      all arguments will support substitutions in the form {A|B|C} as follows (see the end of this file for examples):
+#                                          A is the string to substitute
+#                                              1 - current selection
+#                                          B is zero or more transformations applied from left to right:
+#                                              a - all to lowercase
+#                                              A - all to uppercase
+#                                              f - keep everything up to the first whitespace character
+#                                              n - remove non-alphanumeric
+#                                              s - trim whitespace
+#                                              S - normalize whitespace (trim, then collapse multiple whitespace chars)
+#                                              u - replace whitespace with underscores
+#                                              w - remove all whitespace
+#                                              x - special: return an error if the string is empty at this point
+#                                          C is zero or more escape methods applied from left to right:
+#                                              " - escape for double-quoted strings (JSON-compatible, C-compatible):
+#                                                  "               => \"
+#                                                  newline         => \n
+#                                                  backspace       => \b
+#                                                  tab             => \t
+#                                                  form-feed       => \f
+#                                                  carriage-return => \r
+#                                                  \               => \\
+#                                              $ - escape for single-quoted strings (bash-compatible):
+#                                                  ' => '"'"'
+#                                              % - url encode all non-alphanumeric chars
+#                   selection_search - the search sub-menu of the selection menu (4.20.14622+)
+#                                      see above
+#     <label>     the label to show on the menu item (must not contain :)
+#     <action>    the type of action to run, one of:
+#                   cmd_spawn          - starts a command in the background
+#                   cmd_output         - runs a command, waits for it to exit, and optionally displays the output
+#                   dbg_syslog         - writes a message to syslog (for testing)
+#                   dbg_error          - always returns an error (for testing)
+#                   dbg_msg            - shows a message (for testing)
+#                   dbg_toast          - shows a toast (for testing)
+#                   kfmon              - triggers a kfmon action
+#                   nickel_setting     - changes a setting
+#                   nickel_extras      - opens one of the beta features
+#                   nickel_browser     - opens the browser
+#                                        (on firmware 4.23.15505+, you won't be able to exit the browser unless you use the "modal" option or add "menu_item:browser:Quit:nickel_misc:home" to the config)
+#                   nickel_misc        - other stuff which isn't significant enough for its own category
+#                   nickel_open        - opens a view
+#                   nickel_wifi        - controls wifi (note: it doesn't wait for it to connect or disconnect, neither does it check for success)
+#                   nickel_orientation - controls screen orientation
+#                                        (devices without an orientation sensor may need to use the kobopatch patch "Allow rotation on all devices" or set [DeveloperSettings] ForceAllowLandscape=true)
+#                                        (devices with an orientation sensor don't need to do anything, but can set the config setting to make this work on all views)
+#                                        (this will override the rotation icon/popup until it is set to something different or the device is rebooted)
+#                   power              - gracefully controls the power state
+#                   skip               - skips a number of actions after the current one (mainly useful for more complex conditional chains) (this action will not update the success/failure flag)
+#     <arg>       the argument passed to the action:
+#                   cmd_spawn          - the command line to pass to /bin/sh -c (started in /)
+#                                        It can be prefixed with "quiet:" to prevent the toast with the process PID from being displayed.
+#                   cmd_output         - the timeout in milliseconds (0 < t < 10000), a colon, then the command line to pass to /bin/sh -c (started in /)
+#                                        It can be prefixed with "quiet:" to prevent the message box with the output from being displayed (i.e. you'd use this where you'd normally use >/dev/null 2>&1).
+#                   dbg_syslog         - the text to write
+#                   dbg_error          - the error message
+#                   dbg_msg            - the message
+#                   dbg_toast          - the message
+#                   kfmon              - the filename of the KFMon watched item to launch.
+#                                        This is actually the basename of the watch's filename as specified in its KFMon config (i.e., the png).
+#                                        You can also check the output of the 'list' command via the kfmon-ipc tool.
+#                   nickel_setting     - <action>:<setting>
+#                                        action is one of:
+#                                          toggle  - toggles between true/false
+#                                          enable  - sets to true
+#                                          disable - sets to false
+#                                        setting is one of:
+#                                          invert          - FeatureSettings.InvertScreen (this requires a reboot to apply on 4.28.18220+, and may not work on newer devices)
+#                                          dark_mode       - ReadingSettings.DarkMode
+#                                          lockscreen      - PowerSettings.UnlockEnabled (4.12.12111+)
+#                                          screenshots     - FeatureSettings.Screenshots
+#                                          force_wifi      - DeveloperSettings.ForceWifiOn (note: the setting doesn't apply until you toggle WiFi)
+#                                          auto_usb_gadget - Automatically enable USB mass storage on connection
+#                   nickel_extras      - the mimetype of the plugin, or one of:
+#                                          unblock_it
+#                                          sketch_pad
+#                                          solitaire
+#                                          sudoku
+#                                          word_scramble
+#                   nickel_browser     - one of:
+#                                                            - opens the web browser to the default homepage (note that the line should end with a colon even though the argument is blank)
+#                                          <url>             - opens the web browser to the specified URL
+#                                          <url> <css>       - opens the web browser to the specified URL and injects the specified CSS (which can contain spaces and colons) into all pages
+#                                          modal             - opens the web browser to the default homepage as a pop-up window
+#                                          modal:<url>       - see above
+#                                          modal:<url> <css> - see above
+#                   nickel_misc        - one of:
+#                                          home                 - goes to the home screen
+#                                          force_usb_connection - forces a usb connection dialog to be shown
+#                                          rescan_books         - forces nickel to rescan books (4.13.12638+)
+#                                          rescan_books_full    - forces a full usb connect/disconnect cycle (4.13.12638+)
+#                   nickel_open        - one of:
+#                                          discover:storefront       - Kobo Store
+#                                          discover:wishlist         - Wishlist
+#                                          library:library           - My Books (with last tab and filter)
+#                                          library:all               - Books
+#                                          library:authors           - Authors
+#                                          library:series            - Series (4.20.14601+)
+#                                          library:shelves           - Collections
+#                                          library:pocket            - Articles
+#                                          library:dropbox           - Dropbox (4.18.13737+)
+#                                          reading_life:reading_life - Activity (with last tab)
+#                                          reading_life:stats        - Activity
+#                                          reading_life:awards       - Awards
+#                                          reading_life:words        - My Words
+#                                          store:overdrive           - OverDrive (4.10.11655+) (note: if you don't have an active OverDrive account, it will give you a "Network Error")
+#                                          store:search              - Search
+#                   nickel_wifi        - one of:
+#                                          autoconnect        - attempts to enable and connect to wifi (similar to what happens when you open a link)
+#                                          autoconnect_silent - attempts to connect to wifi in the background (does nothing if wifi is disabled, the battery is low, is already connected, or there aren't any known networks in range) (no errors are shown) (similar to what happens when you turn on the Kobo)
+#                                          enable             - enables WiFi (but doesn't necessarily connect to it)
+#                                          disable            - disables WiFi
+#                                          toggle             - toggles WiFi (but doesn't necessarily connect to it)
+#                   nickel_orientation - one of:
+#                                          portrait           (4.13.12638+)
+#                                          landscape          (4.13.12638+)
+#                                          inverted_portrait  (4.13.12638+)
+#                                          inverted_landscape (4.13.12638+)
+#                                          invert             (4.13.12638+) - Toggles between inverted/non-inverted (preserves side) (this will not work if used in a chain with swap)
+#                                          swap               (4.13.12638+) - Toggles between portrait/landscape (preserves inversion) (this will not work if used in a chain with invert)
+#                   power              - one of:
+#                                          shutdown (4.13.12638+)
+#                                          reboot   (4.13.12638+)
+#                                          sleep    (4.13.12638+)
+#                   skip               - the number of actions to skip, or -1 to skip all remaining ones (i.e. end the chain)
+#
+#   chain_success:<action>:<arg>
+#   chain_failure:<action>:<arg>
+#   chain_always:<action>:<arg>
+#     Adds an action to the chain that began with the preceding menu_item.
+#     Actions are performed in the order they are written.
+#     Each chain entry MUST follow the menu_item it is attached to. Another
+#     menu_item marks the start of the next chain.
+#     By default, each action only executes if the previous one was successful.
+#     If chain_failure is used, the action is only executed if the last one
+#     failed. If chain_always is used, the action is executed no matter what.
+#     Any error message is only displayed if the action is the last one which
+#     was executed in the chain (not necessarily the last one in the config
+#     file).
+#
+#   generator:<location>:<generator>
+#   generator:<location>:<generator>:<arg>
+#     Generates menu items dynamically during startup.
+#
+#     <location>   the menu to add the items to, same as for menu_item.
+#     <generator>  the generator to use to generate the options, one of:
+#                    _test - generates numbered items, for testing only
+#                    kfmon - adds items from kfmon
+#     <arg>        the argument passed to the generator (if needed):
+#                    _test - the number of items to generate (0-10)
+#                    kfmon - one or none of:
+#                              gui - only enumerate non-hidden active KFMon watches (this is the default)
+#                              all - enumerate all active KFMon watches
+#
+#   experimental:<key>:<val>
+#     Sets an experimental option. These are not guaranteed to be stable or be
+#     compatible across NickelMenu or firmware versions, and may stop working at
+#     any time. In addition, these options may not take effect without a reboot.
+#     Unknown options are ignored. If there are multiple declarations of an
+#     option, only the first one takes effect.
+#
+#     <key>  the option name, one of:
+#              menu_main_15505_label       - sets the label used for the NickelMenu button on 4.23.15505+
+#              menu_main_15505_icon        - sets the icon used for the NickelMenu button on 4.23.15505+
+#              menu_main_15505_icon_active - sets the active icon used for the NickelMenu button on 4.23.15505+
+#     <val>  the option value:
+#              menu_main_15505_label       - the label to use instead of "NickelMenu"
+#              menu_main_15505_icon        - the path passed to QPixmap
+#              menu_main_15505_icon_active - the path passed to QPixmap
+#
+# For example, you might have a configuration file named "mystuff" like:
+#
+#   menu_item :main    :Show an Error      :dbg_error          :This is an error message!
+#   menu_item :main    :Do Nothing         :cmd_spawn          :sleep 60
+#   menu_item :main    :Dump Syslog        :cmd_spawn          :logread > /mnt/onboard/.adds/syslog.log
+#   menu_item :main    :Kernel Version     :cmd_output         :500:uname -a
+#   menu_item :main    :Sketch Pad         :nickel_extras      :sketch_pad
+#   menu_item :main    :Plato              :kfmon              :plato.png
+#   generator :main    :kfmon
+#   menu_item :reader  :Invert Screen      :nickel_setting     :toggle :invert
+#   menu_item :reader  :Invert Orientation :nickel_orientation :invert
+#   menu_item :main    :IP Address         :cmd_output         :500:/sbin/ifconfig | /usr/bin/awk '/inet addr/{print substr($2,6)}'
+#   menu_item :main    :Telnet             :cmd_spawn          :quiet:/bin/mount -t devpts | /bin/grep -q /dev/pts || { /bin/mkdir -p /dev/pts && /bin/mount -t devpts devpts /dev/pts; }
+#     chain_success                        :cmd_spawn          :quiet:/usr/bin/pkill -f "^/usr/bin/tcpsvd -E 0.0.0.0 1023" || true && exec /usr/bin/tcpsvd -E 0.0.0.0 1023 /usr/sbin/telnetd -i -l /bin/login
+#     chain_success                        :dbg_toast          :Started Telnet server on port 1023.
+#   menu_item :main    :FTP                :cmd_spawn          :quiet:/usr/bin/pkill -f "^/usr/bin/tcpsvd -E 0.0.0.0 1021" || true && exec /usr/bin/tcpsvd -E 0.0.0.0 1021 /usr/sbin/ftpd -w -t 30 /mnt/onboard
+#     chain_success                        :dbg_toast          :Started FTP server for KOBOeReader partition on port 1021.
+#   menu_item :main    :Telnet (toggle)    :cmd_output         :500:quiet :/usr/bin/pkill -f "^/usr/bin/tcpsvd -E 0.0.0.0 2023"
+#     chain_success:skip:5
+#       chain_failure                      :cmd_spawn          :quiet :/bin/mount -t devpts | /bin/grep -q /dev/pts || { /bin/mkdir -p /dev/pts && /bin/mount -t devpts devpts /dev/pts; }
+#       chain_success                      :cmd_spawn          :quiet :exec /usr/bin/tcpsvd -E 0.0.0.0 2023 /usr/sbin/telnetd -i -l /bin/login
+#       chain_success                      :dbg_toast          :Started Telnet server on port 2023
+#       chain_failure                      :dbg_toast          :Error starting Telnet server on port 2023
+#       chain_always:skip:-1
+#     chain_success                        :dbg_toast          :Stopped Telnet server on port 2023
+#   menu_item :library :Import books       :nickel_misc        :rescan_books_full
+#   menu_item :browser :Invert Screen      :nickel_setting     :toggle :invert
+#   menu_item :browser :Open Pop-Up        :nickel_browser     :modal
+#
+# And here are some examples of selection menu substitutions:
+#
+#   menu_item :selection        :Run command       :cmd_output     :500:echo '{1||$}'
+#   menu_item :selection        :Complex example   :cmd_output     :500:echo '{1|aS|"$}'
+#   menu_item :selection_search :Search DuckDuckGo :nickel_browser :modal:https://duckduckgo.com/?q={1|S|%}
+#   menu_item :selection_search :Search TLFi       :nickel_browser :modal:https://www.cnrtl.fr/definition/{1|S|%} #menubox,#header,#nav,#footer,td>.box.bottombox{display:none} #wrap{max-width:100%;width:auto;border-width:0} .tab_box a{padding:8px 6px !important;margin-right:0 !important;border:none !important;background:0 0 !important} .tab_box{padding-bottom:8px} a[href*="/proxemie/"],a[href*="/aide/"]{display:none}
+#
+# If there is an error in the configuration, an item which displays it will be
+# added to the main menu. If an internal error occurs, it is written to syslog,
+# which can be viewed over telnet or SSH (the username is root) with the command
+# logread.
+#
+# To uninstall NickelMenu, create a file in this directory named "uninstall",
+# or manually uninstall it by deleting libnm.so. You can also uninstall it by
+# triggering the failsafe mechanism by turning your Kobo off within 20 seconds
+# of turning it on.
+#
+# To use NickelMenu to launch other software, you can usually use cmd_spawn with
+# the normal launch script. For example, KOReader and Plato will work as-is (or
+# with NiLuJe's one-click install packages which include NM). For specific
+# instructions, you should see their documentation (most newer software has
+# information about NickelMenu). If using cmd_spawn directly doesn't work, you
+# can also try using KFMon and the kfmon action/generator.
+#
+# - NiLuJe's KOReader/Plato packages: https://www.mobileread.com/forums/showthread.php?t=314220
+# - KOReader: https://github.com/koreader/koreader/wiki/Installation-on-Kobo-devices
+# - Plato: https://github.com/baskerville/plato/blob/master/doc/GUIDE.md
+# - Vlasovsoft: https://wiki.vlasovsoft.net/doku.php?id=en:installation
+#
+# Note: If you are embedding a NickelMenu config in your own mod, please name it
+# something unique to avoid overwriting someone's existing configuration. In
+# addition, please do not include NickelMenu itself in it unless you are
+# planning to update it as new releases are made.
+#
+# Note: Do not edit this file directly, as it will be overwritten when updating
+# NickelMenu.

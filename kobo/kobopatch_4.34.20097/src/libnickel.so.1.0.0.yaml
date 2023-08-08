@@ -135,6 +135,31 @@ My 24 line spacing values:
   - ReplaceFloat: {Offset: 56, Find: 2.4,  Replace: 1.933}
   - ReplaceFloat: {Offset: 64, Find: 2.6,  Replace: 1.966}
   - ReplaceFloat: {Offset: 72, Find: 2.8,  Replace: 2.0}
+  # - ReplaceFloat: {Offset:   0, Find: 1.0, Replace: 1.425}
+  # - ReplaceFloat: {Offset:   8, Find: 1.0, Replace: 1.45}
+  # - ReplaceFloat: {Offset:  16, Find: 1.0, Replace: 1.475}
+  # - ReplaceFloat: {Offset:  24, Find: 1.0, Replace: 1.5}
+  # - ReplaceFloat: {Offset:  32, Find: 1.0, Replace: 1.525}
+  # - ReplaceFloat: {Offset:  40, Find: 1.0, Replace: 1.55}
+  # - ReplaceFloat: {Offset:  48, Find: 1.0, Replace: 1.575}
+  # - ReplaceFloat: {Offset:  56, Find: 1.0, Replace: 1.6}
+  # - ReplaceFloat: {Offset:  64, Find: 1.0, Replace: 1.625}
+  # - ReplaceFloat: {Offset:  72, Find: 1.0, Replace: 1.65}
+  # - ReplaceFloat: {Offset:  80, Find: 1.0, Replace: 1.675}
+  # - ReplaceFloat: {Offset:  88, Find: 1.0, Replace: 1.7}
+  # - ReplaceFloat: {Offset:  96, Find: 1.0, Replace: 1.725}
+  # - ReplaceFloat: {Offset: 104, Find: 1.0, Replace: 1.75}
+  # - FindBaseAddressHex: CDCC CCCC CCCC F03F 1F85 # beginning of old table
+  # - ReplaceFloat: {Offset:  0, Find: 1.05, Replace: 1.795}
+  # - ReplaceFloat: {Offset:  8, Find: 1.07, Replace: 1.8}
+  # - ReplaceFloat: {Offset: 16, Find: 1.1,  Replace: 1.825}
+  # - ReplaceFloat: {Offset: 24, Find: 1.35, Replace: 1.85}
+  # - ReplaceFloat: {Offset: 32, Find: 1.7,  Replace: 1.875}
+  # - ReplaceFloat: {Offset: 40, Find: 1.8,  Replace: 1.9}
+  # - ReplaceFloat: {Offset: 48, Find: 2.2,  Replace: 1.925}
+  # - ReplaceFloat: {Offset: 56, Find: 2.4,  Replace: 1.95}
+  # - ReplaceFloat: {Offset: 64, Find: 2.6,  Replace: 1.975}
+  # - ReplaceFloat: {Offset: 72, Find: 2.8,  Replace: 2.0}
     # The first 14 replace_float values above should allow the line spacing to be
     # adjusted in increments of one pixel when using a medium sized font on a high
     # resolution device. If you use a smaller font size and/or a lower resolution
@@ -157,15 +182,24 @@ Custom left & right margins:
       adjustment slider, as a percentage of screen width.
   - FindBaseAddressString: "\0\0\0\0\x02\0\0\0\x04\0\0\0\x06\0\0\0\x08\0\0\0\x0A\0\0\0\x0C\0\0\0\x0E\0\0\0\x10\0\0\0"
   # 9 values for replacement:
-  - ReplaceInt: {Offset: 0x00, Find:  0, Replace: 0}
-  - ReplaceInt: {Offset: 0x04, Find:  2, Replace: 2}
-  - ReplaceInt: {Offset: 0x08, Find:  4, Replace: 4}
-  - ReplaceInt: {Offset: 0x0C, Find:  6, Replace: 6}
-  - ReplaceInt: {Offset: 0x10, Find:  8, Replace: 8}
-  - ReplaceInt: {Offset: 0x14, Find: 10, Replace: 10}
-  - ReplaceInt: {Offset: 0x18, Find: 12, Replace: 12}
-  - ReplaceInt: {Offset: 0x1C, Find: 14, Replace: 14}
-  - ReplaceInt: {Offset: 0x20, Find: 16, Replace: 16}
+  # - ReplaceInt: {Offset: 0x00, Find:  0, Replace: 0}
+  # - ReplaceInt: {Offset: 0x04, Find:  2, Replace: 4}
+  # - ReplaceInt: {Offset: 0x08, Find:  4, Replace: 8}
+  # - ReplaceInt: {Offset: 0x0C, Find:  6, Replace: 10}
+  # - ReplaceInt: {Offset: 0x10, Find:  8, Replace: 12}
+  # - ReplaceInt: {Offset: 0x14, Find: 10, Replace: 13}
+  # - ReplaceInt: {Offset: 0x18, Find: 12, Replace: 14}
+  # - ReplaceInt: {Offset: 0x1C, Find: 14, Replace: 15}
+  # - ReplaceInt: {Offset: 0x20, Find: 16, Replace: 16}
+  - ReplaceInt: {Offset: 0x00, Find:  0, Replace: 2}
+  - ReplaceInt: {Offset: 0x04, Find:  2, Replace: 4}
+  - ReplaceInt: {Offset: 0x08, Find:  4, Replace: 6}
+  - ReplaceInt: {Offset: 0x0C, Find:  6, Replace: 8}
+  - ReplaceInt: {Offset: 0x10, Find:  8, Replace: 10}
+  - ReplaceInt: {Offset: 0x14, Find: 10, Replace: 12}
+  - ReplaceInt: {Offset: 0x18, Find: 12, Replace: 14}
+  - ReplaceInt: {Offset: 0x1C, Find: 14, Replace: 16}
+  - ReplaceInt: {Offset: 0x20, Find: 16, Replace: 18}
 
 Custom font sizes:
   - Enabled: no

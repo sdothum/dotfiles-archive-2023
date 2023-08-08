@@ -1,0 +1,250 @@
+#!/bin/sh
+#
+# Misc helpers to handle OTA KoboStuff updates
+#
+# $Id: libotautils 18274 2021-03-14 00:58:32Z NiLuJe $
+#
+##
+
+## Automagic progress bar pilfered from libotautils5 ;)
+# Check if arg is an int
+is_integer() {
+	# Cheap trick ;)
+	[ "${1}" -eq "${1}" ] 2>/dev/null
+	return $?
+}
+
+# The amount of steps needed to fill the progress bar
+[ -z "${STEPCOUNT}" ] && STEPCOUNT="$(grep -c '^[[:blank:]]*do_progress$' "${0}" 2>/dev/null)"
+# Make sure it's sane...
+is_integer "${STEPCOUNT}" || STEPCOUNT=1
+
+# Fill up our progress bar, one step at a time
+# Keep track of what we're doing...
+_CUR_STEP=0
+_CUR_PERCENTAGE=0
+do_progress() {
+	# One more step...
+	_CUR_STEP=$((_CUR_STEP + 1))
+	# Bounds checking...
+	if [ ${_CUR_STEP} -lt 0 ] ; then
+		_CUR_STEP=0
+	elif [ ${_CUR_STEP} -gt ${STEPCOUNT} ] ; then
+		_CUR_STEP=${STEPCOUNT}
+	fi
+
+	# Make that a percentage
+	local bar_percentage=$(( (_CUR_STEP * 100) / STEPCOUNT ))
+	# We can only *fill* the bar...
+	if [ ${_CUR_PERCENTAGE} -lt ${bar_percentage} ] ; then
+		_CUR_PERCENTAGE=${bar_percentage}
+	fi
+
+	# Make sure that percentage is sane...
+	is_integer "${_CUR_PERCENTAGE}" || _CUR_PERCENTAGE=0
+	# Bounds checking...
+	if [ ${_CUR_PERCENTAGE} -gt 100 ] ; then
+		_CUR_PERCENTAGE=100
+	elif [ ${_CUR_PERCENTAGE} -lt 0 ] ; then
+		_CUR_PERCENTAGE=0
+	fi
+
+	# Finally, refresh the bar
+	fbink -qpm -y -11 -P "${_CUR_PERCENTAGE}"
+}
+
+# Handle visual feedback
+do_msg() {
+	# Text
+	echo "* ${1}"
+	fbink -qpm -y -12 " "
+	fbink -qpm -y -13 "${1}"
+}
+
+## Quick'n dirty OTA index parsing...
+OTA_BASE_URL="https://storage.gra.cloud.ovh.net/v1/AUTH_2ac4bfee353948ec8ea7fd1710574097/mr-public"
+MANIFEST_BASE_URL="http://cloud.ak-team.com"
+# We'll want to work in a tmpfs
+OTA_WORKDIR="/tmp/stuff"
+OTA_INDEX="${OTA_WORKDIR}/manifest.json"
+
+# Start by downloading the index...
+get_ota_index() {
+	# Work in a tmpfs
+	mkdir -p "${OTA_WORKDIR}"
+
+	# Check if the remote file is actually available, first...
+	if ! curl --location --output /dev/null --silent --head --fail "${MANIFEST_BASE_URL}/manifest.json" ; then
+		# If the server is unavailable, poke at the object storage directly...
+		if ! curl --location --output /dev/null --silent --head --fail "${OTA_BASE_URL}/manifest.json" ; then
+			echo "* Failed to download the OTA index!"
+			return 1
+		else
+			curl --location --fail "${OTA_BASE_URL}/manifest.json" -o "${OTA_INDEX}"
+		fi
+	else
+		curl --location --fail "${MANIFEST_BASE_URL}/manifest.json" -o "${OTA_INDEX}"
+	fi
+
+	# Assuming we've got the manifest, check for a storage URL update...
+	local STORAGE_URL
+	STORAGE_URL="$(get_storage_url)"
+	local RET=$?
+	if [ "${RET}" -eq 1 ] ; then
+		# Something went wrong, abort after printing the actual error
+		echo "${STORAGE_URL}"
+		return 1
+	fi
+
+	# Check if it differs from ours...
+	if [ "${STORAGE_URL}" != "${OTA_BASE_URL}" ] ; then
+		# Warn and require user consent before using the new value...
+		echo ""
+		echo "The latest manifest indicates that packages are now stored in a different location than expected!"
+		echo "Expected location: ${OTA_BASE_URL}"
+		echo "New location     : ${STORAGE_URL}"
+		echo ""
+		echo "* Do you consent to this change (when in doubt, check the MobileRead thread)? (Answer by Yes or no, then press <ENTER>): "
+		read -r prompt
+		echo ""
+		case "${prompt}" in
+			Y* )
+				# We're good to go!
+				OTA_BASE_URL="${STORAGE_URL}"
+			;;
+			* )
+				echo "Aborting!"
+				return 1
+			;;
+		esac
+	fi
+}
+
+# Get the base storage URL of the remote packages
+get_storage_url() {
+	if [ ! -f "${OTA_INDEX}" ] ; then
+		echo "* No ota index found, run get_ota_index first!"
+		return 1
+	fi
+
+	# Now we're talking...
+	local STORAGE_URL
+	STORAGE_URL="$(jq -r ".Storage_URL" < "${OTA_INDEX}")"
+
+	if [ -n "${STORAGE_URL}" ] ; then
+		echo "${STORAGE_URL}"
+		return "0"
+	else
+		echo "* Failed to compute base storage URL!"
+		return 1
+	fi
+}
+
+# Cleanup behind us
+ota_cleanup() {
+	rm -rf "${OTA_WORKDIR}"
+}
+
+# Get the revision of a specific package
+get_pkg_revision() {
+	if [ $# -ne 1 ] ; then
+		echo "* get_pkg_revision expects a package name!"
+		return 1
+	fi
+
+	local PKG_NAME="${1}"
+
+	if [ ! -f "${OTA_INDEX}" ] ; then
+		echo "* No ota index found, run get_ota_index first!"
+		return 1
+	fi
+
+	# Now we're talking...
+	local LATEST_REV
+	LATEST_REV="$(jq -r ".[\"Kobo\"][] | select(.name == \"${PKG_NAME}\") | .revision" < "${OTA_INDEX}")"
+
+	if is_integer "${LATEST_REV}" ; then
+		echo "${LATEST_REV}"
+		return 0
+	else
+		echo "* Failed to compute latest revision for '${PKG_NAME}'!"
+		return 1
+	fi
+}
+
+# Get the date of a specific package
+get_pkg_date() {
+	if [ $# -ne 1 ] ; then
+		echo "* get_pkg_date expects a package name!"
+		return 1
+	fi
+
+	local PKG_NAME="${1}"
+
+	if [ ! -f "${OTA_INDEX}" ] ; then
+		echo "* No ota index found, run get_ota_index first!"
+		return 1
+	fi
+
+	# Now we're talking...
+	local LATEST_DATE
+	LATEST_DATE="$(jq -r ".[\"Kobo\"][] | select(.name == \"${PKG_NAME}\") | .date" < "${OTA_INDEX}")"
+
+	if is_integer "${LATEST_DATE}" ; then
+		echo "${LATEST_DATE}"
+		return 0
+	else
+		echo "* Failed to compute latest date for '${PKG_NAME}'!"
+		return 1
+	fi
+}
+
+# Get the URL of a specific package
+get_pkg_url() {
+	if [ $# -ne 1 ] ; then
+		echo "* get_pkg_url expects a package name!"
+		return 1
+	fi
+
+	local PKG_NAME="${1}"
+
+	if [ ! -f "${OTA_INDEX}" ] ; then
+		echo "* No ota index found, run get_ota_index first!"
+		return 1
+	fi
+
+	# Now we're talking...
+	local LATEST_PKG
+	LATEST_PKG="$(jq -r ".[\"Kobo\"][] | select(.name == \"${PKG_NAME}\") | .path" < "${OTA_INDEX}")"
+
+	if [ -n "${LATEST_PKG}" ] ; then
+		# The manifest returns a relative path, we want the full URL
+		LATEST_PKG="${OTA_BASE_URL}/${LATEST_PKG}"
+
+		echo "${LATEST_PKG}"
+		return "0"
+	else
+		echo "* Failed to compute latest package URL for '${PKG_NAME}'!"
+		return 1
+	fi
+}
+
+# Check that we have enough free space
+enough_free_space()
+{
+	if [ $# -ne 2 ] ; then
+		echo "* enough_free_space expects a size in MB and a mountpoint!"
+		return 1
+	fi
+
+	local REQ_SPACE="${1}"
+	local MOUNTPOINT="${2}"
+
+	if [ "$(df -k "${MOUNTPOINT}" | awk '$3 ~ /[0-9]+/ { print $4 }')" -lt "$((REQ_SPACE * 1024))" ] ; then
+		# Less than ${REQ_SPACE}MB left, meep!
+		return 1
+	else
+		# Good enough!
+		return 0
+	fi
+}

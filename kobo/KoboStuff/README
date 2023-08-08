@@ -1,0 +1,629 @@
+README
+
+  This is basically a collection of all the custom binaries I use throughout my Kindle hacks,
+  but built for the Kobo, put in a single package, and symlinked (when not clashing) in the PATH.
+  That includes, among other things, stuff like less, htop, strace, ltrace, lsof, fbgrab, sqlite3, elfutils, rsync,
+  xzdec, zstd-decompress, lz4, ImageMagick, gawk, nano, ZSH, ag, tmux, GDB, gprof, perf, objdump, cURL, evtest, evemu,
+  FBInk, the full OpenSSH suite, jq, bsdtar, lftp, tree, file, dtc,
+  and a CLI Python 2.7 & Python 3.9 build with quite a few third-party modules (HTTPie, requests & co, Pillow, wand, ...).
+  And yes, just for kicks, there's also KindleTool in there ;D.
+  sshfs is also bundled, although Kobo kernels do not ship with FUSE enabled, so making use of it will require
+  building/installing the proper kernel modules, c.f. https://www.mobileread.com/forums/showpost.php?p=3920175&postcount=66.
+
+  I still follow the Kindle spirit of "don't put anything in the rootfs if you don't have to",
+  so almost all of this lives in /mnt/onboard/.niluje, so don't be surprised if stuff goes missing after a factory reset ;).
+
+  It also provides ftpd/telnetd through inetd (following Kevin Short's KoboTelnet package), plus sshd w/ sftp (dropbear).
+  The dropbear build provides the same convenience features than my Kindle one (namely, persistent shared key auth:
+  the keylist is expected in /usr/local/niluje/usbnet/etc/authorized_keys).
+  There is *no* automatic USB networking handling here. WiFi only.
+  That said, you *can* manually toggle USBNetworking (provided your device isn't truly ancient), if need be:
+  c.f., /usr/local/stuff/bin/usbnet-toggle.sh for more details (in particular the fact that I'm using legacy Kindle IP settings ;p).
+  If you want an easy way to launch this script (besides in a shell via SSH over WiFi, as it's symlinked as usbnet-toggle),
+  see KFMon: https://github.com/NiLuJe/kfmon#how-can-i-add-my-own-actions and/or NickelMenu: https://pgaskin.net/NickelMenu/ ;).
+
+  It also installs an udev rule providing a means to run an user-editable script (/usr/local/stuff/bin/stuff.sh) early during boot.
+  (AFAICT, that loop0 udev trick is used in a number of Kobo packages (David Beinder's kobo-nightmode and Andreas Klauer's AutoPatch, for instance),
+  no idea who got the idea first ;)).
+  This script is used to launch both inetd & dropbear.
+  Since everything is passwordless, running this on a public/open WiFi would be a *terrible* idea.
+  If you really need to, I'd recommend disabling inetd, setting up ssh shared key auth, making dropbear actually check passwords,
+  and locking dropbear to shared key auth only:
+  by removing the -n switch & adding the -s switch to its startup args, see the comments in /usr/local/stuff/bin/stuff-daemons.sh.
+
+  This touches neither rcS nor inittab, but if you already have an inetd setup in your inittab, you should probably clean that up, or it will clash.
+  If you have custom stuff in (or symlinked in) /usr/bin, take a closer look at what this package installs to avoid overwriting your own stuff.
+  This *will* survive FW updates ;).
+
+  NOTE: Since v1.6.N, the way Python is handled has changed a bit. Instead of shipping *everything* in the install KoboRoot tarball,
+        only the "core" stuff is bundled (i.e., everything except Python).
+        To install (or update) Python, make sure WiFi is enabled and will stick around (i.e., either via ForceWifi,
+        or by simply keeping the WiFi popup open), then run update-kobostuff
+        Ideally, do that in a tmux session: e.g., to install/update Python 3, run
+            tmux new -s kobo update-kobostuff Python
+        c.f., /usr/local/stuff/bin/update-kobostuff.sh for more details (including how to do offline updates).
+        It can also be used to update the "core" component, saving you an USBMS session and a reboot, and quite a bit of time,
+        as it will then use a much more efficient compression algorithm than the standard KoboRoot tarball.
+        Another major interest in doing it this way is that the compressed data will never make it to disk,
+        saving a few write cycles to the internal storage in the process ;).
+
+  To save space, both Python builds are shipped without compiled bytecode. Run python-setup to generate it.
+  Be aware that it could take around 5 minutes on slower devices...
+
+  Assuming you want Python, this *does* require a significant amount of free storage space (as each Python version requires around 150MB),
+  so make sure you have north of 400MB of free space for a full (Core + Python3 + Python2) install...
+  The update-kobostuff script should be taking care of checking that for you at install time, though.
+  That said, the actual core KoboRoot itself no longer bundles Python, and it should only require around 50MB.
+  And on that note, be aware than on slower devices (especially those using an internal SD card),
+  the "update" process can take a fair bit of time.
+
+  Tested on a H2O running FW 3.12.1 - 4.28.x, a Forma running FW 4.9.x - 4.28.x, as well as an Elipsa running FW 4.27.x - 4.28.x ;).
+  I'm fairly sure that this will *not* work on *really, really* old Kobo devices/firmwares:
+  basically, if your device is *not* running at least Linux 2.6.35.3 & a hardfp eglibc 2_15, don't use this.
+  TL;DR: It should work just fine for 99.9% of the population ;).
+
+  NOTE: Speaking of FW 4.17+, c.f., the entry about *nix hidden folders at the bottom of this page: https://github.com/NiLuJe/kfmon#things-to-watch-out-for
+        Because you'll probably want to tweak that setting *before* installing this ;).
+
+  NOTE: Kobo ships a glibc with no compiled locales. This is problematic, because it makes anything non-ASCII tricky to deal with...
+        c.f., http://trac.ak-team.com/trac/browser/niluje/Configs/trunk/Kindle/Misc/kobo-fix-locales.sh for a quick recap of how to build some yourself.
+
+  Sidebar: If you need git, it's also available for installation via the update-kobostuff script (e.g., tmux new -s kobo update-kobostuff Git).
+  It's not part of the default package because, among other things, it has to eat a ~10MB chunk out of the rootfs...
+
+  -- NiLuJe ($Id: README 18832 2021-11-14 16:24:04Z NiLuJe $)
+
+
+INSTALL
+
+  Copy the KoboRoot.tgz file found inside the kobo-stuff archive in the .kobo folder of your device.
+  Eject it safely, and wait for it to reboot after the "update" process.
+
+  NOTE: Like mentioned in the Python aside above, once installed this way, you can simply check for updates by running
+            tmux new -s kobo update-kobostuff Core
+        This ought to be much faster than doing the KoboRoot dance again.
+
+
+LICENSE
+
+  Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted, provided
+that the above copyright notice appears in all copies and that both the
+copyright notice and this permission notice appear in supporting
+documentation, and that the same name not be used in advertising or
+publicity pertaining to distribution of the software without specific,
+written prior permission. We make no representations about the
+suitability this software for any purpose. It is provided "as is"
+without express or implied warranty.
+
+
+CREDITS
+
+  xzdec: XZ Utils,
+Released under the public domain.
+(http://tukaani.org/xz/)
+
+  zstd-decompress: Zstandard, Copyright (c) 2016-present, Facebook, Inc. All rights reserved,
+  Licensed under the BSD 3-Clause License (http://opensource.org/licenses/BSD-3-Clause),
+(https://github.com/facebook/zstd)
+
+  lz4: LZ4 Command Line Interface, Copyright (C) Yann Collet 2011-2016,
+  licensed under the GNU General Public License version 2+ (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+(http://www.lz4.org/)
+
+  fc-scan: Fontconfig, Copyright (C) 2001, 2003 Keith Packard,
+provided "as is". (http://www.fontconfig.org)
+
+  |
+  |->   libuuid.so, Copyright (C) 1996, 1997, 1998 Theodore Ts'o.,
+  |   Licensed under the BSD 3-Clause License (http://opensource.org/licenses/BSD-3-Clause),
+  |   (https://github.com/karelzak/util-linux)
+  |
+  |->   expat: Expat, Copyright (c) 1998, 1999, 2000 Thai Open Source Software Center Ltd and Clark Cooper, Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006 Expat maintainers,
+  |   Licensed under the MIT License (http://www.opensource.org/licenses/mit-license.php).
+  |   (http://expat.sourceforge.net/)
+  |
+  `->   zlib, Copyright (C) 1995-2013 Jean-loup Gailly and Mark Adler,
+      Licensed under the zlib license (http://zlib.net/zlib_license.html)
+      (http://zlib.net/)
+
+  libfreetype.so: FreeType, Copyright 1996-2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 by David Turner, Robert Wilhelm, and Werner Lemberg,
+Licensed under the FreeType License (http://freetype.org/FTL.TXT). (http://freetype.org)
+
+  libharfbuzz.so: HarfBuzz, Copyright © 2010,2011,2012  Google, Inc., Copyright © 2012  Mozilla Foundation, Copyright © 2011  Codethink Limited, Copyright © 2008,2010  Nokia Corporation and/or its subsidiary(-ies),
+    Copyright © 2009  Keith Stribley, Copyright © 2009  Martin Hosken and SIL International, Copyright © 2007  Chris Wilson, Copyright © 2006  Behdad Esfahbod, Copyright © 2005  David Turner,
+    Copyright © 2004,2007,2008,2009,2010  Red Hat, Inc., Copyright © 1998-2004  David Turner and Werner Lemberg,
+Licensed in part under the "Old MIT" license (http://cgit.freedesktop.org/harfbuzz/tree/COPYING)
+(http://www.freedesktop.org/wiki/Software/HarfBuzz/)
+
+  shlock: shlock.c, Copyright (c) 2005 The DragonFly Project,
+licensed under the DragonFly BSD License (http://www.dragonflybsd.org/docs/developer/DragonFly_BSD_License/).
+(http://gitweb.dragonflybsd.org/dragonfly.git/blob/HEAD:/usr.bin/shlock/shlock.c)
+
+
+  python2.7 & python3.9: Python, Copyright (C) 2001-2020 Python Software Foundation,
+licensed under the PSF license agreement for Python 2.7.17 (http://docs.python.org/2/license.html) & Python 3.9.1 (https://docs.python.org/3/license.html).
+(http://www.python.org)
+
+    |     ICU, Copyright (C) 1999-2014, International Business Machines,
+    |   Licensed under the New BSD License (http://www.opensource.org/licenses/bsd-license.php).
+    |   (http://www.icu-project.org/)
+    |
+    `->   bzip2, Copyright (C) 1996-2010 Julian R Seward.
+        Licensed under the BZIP2 license (a BSD-style license) (http://www.opensource.apple.com/source/bzip2/bzip2-29/bzip2/LICENSE?txt).
+        (http://www.bzip.org)
+
+  libexpat.so*: Expat, Copyright (c) 1998, 1999, 2000 Thai Open Source Software Center Ltd and Clark Cooper, Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006 Expat maintainers,
+    Licensed under the MIT License (https://opensource.org/licenses/MIT).
+    (http://expat.sourceforge.net/)
+
+  libffi.so*: libffi, Copyright (c) 1996-2012  Anthony Green, Red Hat, Inc and others.,
+    Licensed under an MIT license (https://github.com/atgreen/libffi/blob/master/LICENSE)
+    (http://sourceware.org/libffi/)
+
+  libcrypto.so*, libssl.so*: OpenSSL, Copyright (C) 1998-2011 The OpenSSL Project. SSLeay, Copyright (C) 1995-1998 Eric Young,
+    Licensed under an Apache-style licence (http://openssl.org/source/license.html).
+    (http://openssl.org/)
+
+  libncurses*.so*, libpanel*.so*: ncurses, Copyright (c) 1998-2011 Free Software Foundation, Inc.,
+    Distributed under a MIT-style license (http://opensource.org/licenses/MIT).
+    (https://www.gnu.org/software/ncurses/)
+
+  libreadline.so*: readline, Copyright (C) 1987-2013 Free Software Foundation, Inc.,
+    Licensed under the GNU General Public License version 3+ (http://www.gnu.org/licenses/gpl.html).
+    (http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html)
+
+  libsqlite3.so*, sqlite3: SQLite,
+    Released under the public domain.
+    (http://sqlite.org/)
+
+  libz.so*: zlib, Copyright (C) 1995-2013 Jean-loup Gailly and Mark Adler,
+    Licensed under the zlib license (http://zlib.net/zlib_license.html).
+    (http://zlib.net/)
+
+  libfbink.so*: FBInk (FrameBuffer eInker), Copyright (C) 2018-2020 NiLuJe <ninuje@gmail.com>,
+    Released under the GNU Affero General Public License version 3+ (https://www.gnu.org/licenses/agpl.html).
+    (https://github.com/NiLuJe/FBInk)
+
+  libjpeg.so*, libturbojpeg.so*: libjpeg-turbo, Copyright (C) 1991-2010, Thomas G. Lane, Guido Vollbeding.,
+    Licensed under a BSD-style license (http://sourceforge.net/p/libjpeg-turbo/code/HEAD/tree/trunk/README).
+    (http://libjpeg-turbo.virtualgl.org/)
+
+  libfreetype.so: FreeType, Copyright 1996-2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 by David Turner, Robert Wilhelm, and Werner Lemberg,
+    Licensed under the FreeType License (http://freetype.org/FTL.TXT).
+    (http://freetype.org)
+
+  libharfbuzz.so: HarfBuzz, Copyright © 2010,2011,2012  Google, Inc., Copyright © 2012  Mozilla Foundation, Copyright © 2011  Codethink Limited, Copyright © 2008,2010  Nokia Corporation and/or its subsidiary(-ies),
+    Copyright © 2009  Keith Stribley, Copyright © 2009  Martin Hosken and SIL International, Copyright © 2007  Chris Wilson, Copyright © 2006  Behdad Esfahbod, Copyright © 2005  David Turner,
+    Copyright © 2004,2007,2008,2009,2010  Red Hat, Inc., Copyright © 1998-2004  David Turner and Werner Lemberg,
+    Licensed in part under the "Old MIT" license (http://cgit.freedesktop.org/harfbuzz/tree/COPYING).
+    (http://www.freedesktop.org/wiki/Software/HarfBuzz/)
+
+  libMagickCore-*.so*, libMagickWand-*.so*: ImageMagick, Copyright (C) 1999-2011 ImageMagick Studio LLC,
+    Licensed under the Apache 2.0 license (http://www.imagemagick.org/script/license.php).
+    (http://www.imagemagick.org/script/index.php)
+
+  libxml2.so*: The XML C parser and toolkit of Gnome, Copyright (C) 1998-2012 Daniel Veillard. All Rights Reserved.
+    Licensed under the MIT License (https://opensource.org/licenses/MIT).
+    (http://www.xmlsoft.org/)
+
+  libxslt.so*, libexslt.so*: The XSLT C library for GNOME, libxslt is Copyright (C) 2001-2002 Daniel Veillard. All Rights Reserved.; libexslt is Copyright (C) 2001-2002 Thomas Broyer, Charlie Bozeman and Daniel Veillard. All Rights Reserved.,
+    Licensed under the MIT License (https://opensource.org/licenses/MIT).
+    (http://xmlsoft.org/XSLT/)
+
+----
+
+  chardet: The Universal Character Encoding Detector, by Daniel Blanchard,
+    Licensed under the GNU Library or Lesser General Public License (LGPL 2.1+) (https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html).
+    (https://github.com/chardet/chardet)
+
+  idna: Internationalized Domain Names in Applications (IDNA), Copyright (c) 2013-2018, Kim Davies,
+    Licensed under the BSD license (https://opensource.org/licenses/BSD-3-Clause).
+    (https://github.com/kjd/idna)
+
+  urllib3: HTTP library with thread-safe connection pooling, file post, and more., Copyright 2008-2016 Andrey Petrov and contributors,
+    Licensed under the MIT License (https://opensource.org/licenses/MIT).
+    (https://urllib3.readthedocs.io/)
+
+  certifi: Python package for providing Mozilla's CA Bundle., by Kenneth Reitz,
+    Licensed under the Mozilla Public License 2.0 (MPL 2.0) (http://mozilla.org/MPL/2.0/).
+    (https://certifi.io/)
+
+  PySocks: A Python SOCKS client module, Copyright 2006 Dan-Haim,
+    Licensed under the BSD license (https://opensource.org/licenses/BSD-3-Clause).
+    (https://github.com/Anorov/PySocks)
+
+  requests: Python HTTP for Humans., Copyright 2018 Kenneth Reitz,
+    Licensed under the Apache Software License (Apache 2.0) (https://www.apache.org/licenses/LICENSE-2.0).
+    (http://python-requests.org/)
+
+  unidecode: ASCII transliterations of Unicode text, Copyright 2018, Tomaz Solc,
+    Licensed under the GNU General Public License v2 or later (GPLv2+) (https://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
+    (https://github.com/avian2/unidecode)
+
+  pycparser: C parser in Python, Copyright (c) 2008-2017, Eli Bendersky,
+    Licensed under the BSD License (https://opensource.org/licenses/BSD-3-Clause).
+    (https://github.com/eliben/pycparser)
+
+  cffi: Foreign Function Interface for Python calling C code, by Armin Rigo & Maciej Fijałkowski,
+    Licensed under the MIT License (https://opensource.org/licenses/MIT).
+    (http://cffi.readthedocs.org/)
+
+  simplejson: Simple, fast, extensible JSON encoder/decoder for Python, Copyright (c) 2006 Bob Ippolito,
+    Licensed under the MIT License (https://opensource.org/licenses/MIT).
+    (https://github.com/simplejson/simplejson)
+
+  six: Python 2 and 3 compatibility utilities, Copyright (c) 2010-2018 Benjamin Peterson,
+    Licensed under the MIT License (https://opensource.org/licenses/MIT).
+    (https://github.com/benjaminp/six)
+
+  future: Clean single-source support for Python 3 and 2, Copyright (c) 2013-2019 Python Charmers Pty Ltd,
+    Licensed under the MIT License (https://opensource.org/licenses/MIT).
+    (https://github.com/PythonCharmers/python-future)
+
+  asn1crypto: Fast ASN.1 parser and serializer, Copyright (c) 2015-2018 Will Bond <will@wbond.net>,
+    Licensed under the MIT License (https://opensource.org/licenses/MIT).
+    (https://github.com/wbond/asn1crypto)
+
+  enum34: Python 3.4 Enum backported to 3.3, 3.2, 3.1, 2.7, 2.6, 2.5, and 2.4, Copyright (c) 2013, Ethan Furman,
+    Licensed under the BSD License (https://opensource.org/licenses/BSD-3-Clause).
+    (https://bitbucket.org/stoneleaf/enum34)
+
+  ipaddress: IPv4/IPv6 manipulation library, by Philipp Hagemeister,
+    Licensed under the Python Software Foundation License (http://docs.python.org/2/license.html)
+    (https://github.com/phihag/ipaddress)
+
+  cryptography: cryptographic recipes and primitives,
+    Licensed under the Apache Software License (Apache 2.0) (https://www.apache.org/licenses/LICENSE-2.0).
+    (https://github.com/pyca/cryptography)
+
+  toolbelt: A utility belt for advanced users of python-requests, Copyright 2014 Ian Cordasco, Cory Benfield,
+    Licensed under the Apache Software License (Apache 2.0) (https://www.apache.org/licenses/LICENSE-2.0).
+    (https://toolbelt.readthedocs.org/)
+
+  betamax: A VCR imitation for python-requests, Copyright 2013 Ian Cordasco,
+    Licensed under the Apache Software License (Apache 2.0) (https://www.apache.org/licenses/LICENSE-2.0).
+    (https://github.com/sigmavirus24/betamax)
+
+  pyjwt: JSON Web Token implementation, Copyright (c) 2015 José Padilla,
+    Licensed under the MIT License (https://opensource.org/licenses/MIT).
+    (http://github.com/jpadilla/pyjwt)
+
+  oauthlib: generic, spec-compliant, thorough implementation of the OAuth request-signing logic, Copyright (c) 2018 The OAuthlib Community,
+    Licensed under the BSD License (https://opensource.org/licenses/BSD-3-Clause).
+    (https://github.com/oauthlib/oauthlib)
+
+  requests-oauthlib: OAuthlib authentication support for Requests, Copyright (c) 2014 Kenneth Reitz,
+    Licensed under the ISC License (https://opensource.org/licenses/ISC).
+    (https://github.com/requests/requests-oauthlib)
+
+  py-fbink: cFFI bindings for FBInk, by NiLuJe,
+    Released under the GNU General Public License version 3+ (https://www.gnu.org/licenses/gpl.html).
+    (https://github.com/NiLuJe/py-fbink)
+
+  Pillow: Python Imaging Library (Fork), Copyright © 2010-2018 by Alex Clark and contributors,
+    Licensed under the Standard PIL License (https://github.com/python-pillow/Pillow/blob/master/LICENSE).
+    (http://python-pillow.org/)
+
+  wand: Ctypes-based simple MagickWand API binding, Copyright (C) 2011-2016 by Hong Minhee <http://hongminhee.org/>,
+    Licensed under the MIT License (https://opensource.org/licenses/MIT).
+    (http://wand-py.org/)
+
+  python-ioctl-opt: Pythonified linux asm-generic/ioctl.h, Copyright (C) 2013-2018  Vincent Pelletier <plr.vincent@gmail.com>,
+    Licensed under the GNU Library or Lesser General Public License (LGPL 2+) (https://www.gnu.org/licenses/old-licenses/lgpl-2.0.html).
+    (https://github.com/vpelletier/python-ioctl-opt)
+
+  cssselect: CSS Selectors for Python, Copyright (c) 2007-2012 Ian Bicking and contributors,
+    Licensed under the BSD License (https://opensource.org/licenses/BSD-3-Clause).
+    (https://github.com/scrapy/cssselect)
+
+  webencodings: Character encoding for the web, Copyright (c) 2012 by Simon Sapin,
+    Licensed under the BSD License (https://opensource.org/licenses/BSD-3-Clause).
+    (https://github.com/gsnedders/python-webencodings)
+
+  html5lib: Standards-compliant library for parsing and serializing HTML documents and fragments in Python, Copyright (c) 2006-2013 James Graham and other contributors,
+    Licensed under the MIT License (https://opensource.org/licenses/MIT).
+    (https://github.com/html5lib/html5lib-python)
+
+  lxml: The lxml XML toolkit for Python, Copyright (C) Infrae,
+    Licensed under the BSD License (https://opensource.org/licenses/BSD-3-Clause).
+    (https://lxml.de/)
+
+  beautifulsoup: a screen-scraping library, Copyright (C) 2004-2019 Leonard Richardson,
+    Licensed under the MIT License (https://opensource.org/licenses/MIT).
+    (https://www.crummy.com/software/BeautifulSoup/)
+
+  soupsieve: A modern CSS selector implementation for BeautifulSoup, Copyright (C) 2018 Isaac Muse <isaacmuse@gmail.com>,
+    Licensed under the MIT License (https://opensource.org/licenses/MIT).
+    (https://github.com/facelessuser/soupsieve)
+
+  pyelftools: a pure-Python library for parsing and analyzing ELF files and DWARF debugging information, by Eli Bendersky <eliben@gmail.com>,
+    Released in the public domain (ttp://unlicense.org/).
+    (https://github.com/eliben/pyelftools)
+
+  Pygments: a syntax highlighting package written in Python., by Georg Brandl <georg@python.org>,
+    Licensed under the BSD License (https://opensource.org/licenses/BSD-3-Clause).
+    (https://github.com/pygments/pygments)
+
+  setuptools: by the Python Packaging Authority,
+    Licensed under the MIT License (https://opensource.org/licenses/MIT).
+    (hhttps://github.com/pypa/setuptools)
+
+  HTTPie: a CLI, cURL-like tool for humans, by Jakub Roztocil,
+    Licensed under the BSD License (https://opensource.org/licenses/BSD-3-Clause).
+    (https://github.com/jakubroztocil/httpie)
+
+  SLPP: a simple lua-python data structures parser, Copyright (c) 2010, 2011, 2012 SirAnthony <anthony at adsorbtion.org>,
+    Licensed under the MIT License (https://opensource.org/licenses/MIT).
+    (https://github.com/SirAnthony/slpp)
+
+  numpy: Fast array and numerical python library, Copyright (c) 2005-2021, NumPy Developers,
+    Licensed under the BSD License (https://opensource.org/licenses/BSD-3-Clause).
+    (https://numpy.org/)
+
+  python-libevdev: Python wrapper for libevdev, Copyright © 2016-2018 Red Hat, Inc.,
+    Licensed under the MIT License (https://opensource.org/licenses/MIT).
+    (https://gitlab.freedesktop.org/libevdev/python-libevdev)
+
+  defusedxml: defusing XML bombs and other exploits, Copyright (c) 2013 by Christian Heimes <christian@python.org>,
+    Licensed to PSF under a Contributor Agreement (https://www.python.org/psf/license).
+    (https://github.com/tiran/defusedxml)
+
+  charset_normalizer: Charset Detection, for Everyone, Copyright © 2019 Ahmed TAHRI @Ousret.,
+    Licensed under the MIT License (https://opensource.org/licenses/MIT).
+    (https://github.com/ousret/charset_normalizer)
+
+  multidict: A multidict implementation, Copyright 2016-2021 Andrew Svetlov and aio-libs team,
+    Licensed under the Apache License, Version 2.0 (https://www.apache.org/licenses/LICENSE-2.0).
+    (https://github.com/aio-libs/multidict)
+
+----
+
+
+  sort: coreutils, Copyright (C) 1988, 1991-2011 Free Software Foundation, Inc.,
+licensed under the GNU General Public License (http://www.gnu.org/licenses/gpl.html).
+(http://www.gnu.org/software/coreutils)
+
+  convert, identify, mogrify: ImageMagick, Copyright (C) 1999-2011 ImageMagick Studio LLC,
+licensed under the Apache 2.0 license (http://www.imagemagick.org/script/license.php)
+(http://www.imagemagick.org/script/index.php)
+
+    |->   libpng, Copyright (c) 2004, 2006-2012 Glenn Randers-Pehrson,
+    |   Licensed under the libpng license (http://www.libpng.org/pub/png/src/libpng-LICENSE.txt)
+    |   (http://www.libpng.org/pub/png/libpng.html)
+    |
+    |->   zlib, Copyright (C) 1995-2013 Jean-loup Gailly and Mark Adler,
+    |   Licensed under the zlib license (http://zlib.net/zlib_license.html)
+    |   (http://zlib.net/)
+    |
+    `->   libjpeg-turbo, Copyright (C) 1991-2010, Thomas G. Lane, Guido Vollbeding.,
+        Licensed under a BSD-style license (http://sourceforge.net/p/libjpeg-turbo/code/HEAD/tree/trunk/README).
+        (http://libjpeg-turbo.virtualgl.org/)
+
+  inotifywait: inotify-tools, Copyright (C) 2006-2012 Rohan McGovern,
+licensed under the GNU General Public License, version 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
+(https://github.com/rvoicilas/inotify-tools)
+
+
+  busybox: BusyBox, licensed under the GNU General Public License version 2.
+(http://www.busybox.net/license.html)
+
+  dropbearmulti: Dropbear, distributed under a MIT-style license.
+(http://matt.ucc.asn.au/dropbear/dropbear.html)
+
+    `->   libtommath & libtomcrypt, (C) Tom St Denis, <tomstdenis@gmail.com>,
+        released in the Public Domain,
+        (https://github.com/libtom/libtommath & https://github.com/libtom/libtomcrypt)
+
+  libxxhash.so.0, xxHash, Extremely fast non-cryptographic hash algorithm, Copyright (c) 2012-2020 Yann Collet,
+Licensed under the BSD 2-Clause License (https://opensource.org/licenses/BSD-2-Clause).
+(https://github.com/Cyan4973/xxHash)
+
+  rsync: Rsync, licensed under the GNU General Public License (http://www.gnu.org/licenses/gpl.html).
+(http://rsync.samba.org)
+
+  htop: htop, licensed under the GNU General Public License version 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
+(http://htop.sourceforge.net/index.php?page=author)
+
+  lsof: lsof, Copyright 2002 Purdue Research Foundation, West Lafayette, Indiana 47907. All rights reserved. Written by Victor A. Abell
+(ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof)
+
+  mosh-server: Mosh, Copyright (C) 2012 Keith Winstein, along with Anders Kaseorg, Quentin Smith, Richard Tibbetts and Keegan McAllister,
+Licensed under the GNU General Public License version 3+ (http://www.gnu.org/licenses/gpl.html).
+(http://mosh.mit.edu/)
+
+    |->   libstdc++, Copyright (C) 1994-2012, Free Software Foundation, Inc.,
+    |   Licensed under the GNU General Public License version 3 (http://gcc.gnu.org/onlinedocs/libstdc++/manual/license.html)
+    |   (http://gcc.gnu.org/)
+    |
+    `->   protobuf, Copyright (C) 2008, Google Inc.,
+        Licensed under the New BSD License (http://www.opensource.org/licenses/bsd-license.php).
+        (http://code.google.com/p/protobuf/)
+
+  kindletool: KindleTool, Copyright (C) 2011-2015  Yifan Lu, licensed under the GNU General Public License version 3+ (http://www.gnu.org/licenses/gpl.html).
+  (https://github.com/NiLuJe/KindleTool/)
+
+    |
+    |->   libarchive, Copyright (C) Tim Kientzle, licensed under the New BSD License (http://www.opensource.org/licenses/bsd-license.php)
+    |   (http://libarchive.github.com/)
+    |
+    |->   GMP, GNU MP Library, Copyright 1991-2013 Free Software Foundation, Inc.,
+    |   licensed under the GNU Lesser General Public License version 3+ (http://www.gnu.org/licenses/lgpl.html).
+    |   (http://gmplib.org/)
+    |
+    `->   nettle, Copyright (C) 2001-2013 Niels Möller,
+        licensed under the GNU Lesser General Public License version 2.1+ (https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html).
+        (http://www.lysator.liu.se/~nisse/nettle)
+
+  sftp-server, sshd, ssh, scp, sftp, ssh-*: OpenSSH, licensed under a BSD licence (http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/LICENCE?rev=1.19;content-type=text%2Fplain).
+(http://openssh.org/)
+
+    |
+    |->   OpenSSL, Copyright (C) 1998-2011 The OpenSSL Project. SSLeay, Copyright (C) 1995-1998 Eric Young,
+    |   Licensed under an Apache-style licence (http://openssl.org/source/license.html).
+    |   (http://openssl.org/)
+    |
+    `->   zlib, Copyright (C) 1995-2013 Jean-loup Gailly and Mark Adler,
+        Licensed under the zlib license (http://zlib.net/zlib_license.html)
+        (http://zlib.net/)
+
+  sshfs: SSH file system, Copyright (C) 2004, Miklos Szeredi <miklos@szeredi.hu>,
+Licensed under the GNU General Public License version 2 (https://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
+(http://fuse.sourceforge.net/sshfs.html)
+
+    |->   libfuse, Filesystem in Userspace, Copyright (C) 2001-2007 Miklos Szeredi <miklos@szeredi.hu>,
+    |   Licensed under the GNU Lesser General Public License, version 2.1 (https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html)
+    |   (http://fuse.sourceforge.net/)
+    |
+    `->   glib, Library of useful routines for C programming, Copyright (C) 1995-1997 Peter Mattis, Spencer Kimball and Josh MacDonald,
+       Licensed under the GNU Lesser General Public License, version 2 (https://www.gnu.org/licenses/old-licenses/lgpl-2.0.html)
+       (http://library.gnome.org/devel/glib/)
+
+  fbgrab: fbgrab, Copyright (C) Gunnar Monell <gmo@linux.nu> 2002,
+Licensed under the GNU General Public License version 2 (https://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
+(http://fbgrab.monells.se/)
+
+    |->   libpng, Copyright (c) 2004, 2006-2012 Glenn Randers-Pehrson,
+    |   Licensed under the libpng license (http://www.libpng.org/pub/png/src/libpng-LICENSE.txt)
+    |   (http://www.libpng.org/pub/png/libpng.html)
+    |
+    `->   zlib, Copyright (C) 1995-2013 Jean-loup Gailly and Mark Adler,
+        Licensed under the zlib license (http://zlib.net/zlib_license.html)
+        (http://zlib.net/)
+
+  strace: strace, Copyright (c) 1991, 1992 Paul Kranenburg <pk@cs.few.eur.nl>,
+                  Copyright (c) 1993 Branko Lankester <branko@hacktic.nl>,
+                  Copyright (c) 1993 Ulrich Pegelow <pegelow@moorea.uni-muenster.de>,
+                  Copyright (c) 1995, 1996 Michael Elizabeth Chastain <mec@duracef.shout.net>,
+                  Copyright (c) 1993, 1994, 1995, 1996 Rick Sladkey <jrs@world.std.com>,
+                  Copyright (C) 1998-2001 Wichert Akkerman <wakkerma@deephackmode.org>,
+        Licensed under the BSD 3-Clause License (http://opensource.org/licenses/BSD-3-Clause)
+        (http://sourceforge.net/projects/strace/)
+
+  libncurses*.so*: ncurses, Copyright (c) 1998-2011 Free Software Foundation, Inc.,
+        distributed under a MIT-style license (http://opensource.org/licenses/MIT).
+        (https://www.gnu.org/software/ncurses/)
+
+  libunwind*: libunwind, Copyright (C) 2008 CodeSourcery,
+        distributed under a MIT-style license (http://opensource.org/licenses/MIT).
+        (http://savannah.nongnu.org/projects/libunwind)
+
+  eu-*, libelf.so*, libdw.so*: elfutils, Copyright (C) 1999-2014 Red Hat, Inc.,
+        Licensed under the GNU General Public License version 3+ (http://www.gnu.org/licenses/gpl.html)
+        (https://fedorahosted.org/elfutils/)
+
+  ltrace: ltrace, Copyright (C) 2009 Juan Cespedes,
+        Licensed under the GNU General Public License version 2+ (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html),
+        (http://www.ltrace.org/)
+
+  nano: nano, Copyright (C) 1999-2014 Free Software Foundation, Inc.,
+        Licensed under the GNU General Public License version 3+ (http://www.gnu.org/licenses/gpl.html)
+        (http://www.nano-editor.org/)
+
+  zsh: the Z shell, Copyright (c) 1992-1997 Paul Falstad,
+        Licensed under the ZSH License (http://sourceforge.net/p/zsh/code/ci/master/tree/LICENCE)
+        (http://www.zsh.org/)
+
+    |->   dircolors.*: seebi/dircolors-solarized,
+    |   (https://github.com/seebi/dircolors-solarized)
+    |
+    `->   zsh-syntax-highlighting, Copyright (c) 2010-2018 zsh-syntax-highlighting contributors. All rights reserved.,
+        Licensed under the BSD 3-Clause License (https://opensource.org/licenses/BSD-3-Clause).
+        (https://github.com/zsh-users/zsh-syntax-highlighting)
+
+  b2sum, dircolors: coreutils, Copyright (C) 1988, 1991-2011 Free Software Foundation, Inc.,
+        Licensed under the GNU General Public License (http://www.gnu.org/licenses/gpl.html).
+        (http://www.gnu.org/software/coreutils)
+
+  file, libmagic.so*: file, Copyright (c) Ian F. Darwin 1986-1995,
+        Licensed under the New BSD License (http://www.opensource.org/licenses/bsd-license.php).
+        (http://www.darwinsys.com/file/)
+
+  libpcre*.so: PCRE, Copyright (c) 1997-2014 University of Cambridge,
+        Licensed under the BSD 3-Clause License (https://opensource.org/licenses/BSD-3-Clause).
+        (http://www.pcre.org/)
+
+  ag: The Silver Searcher, Copyright (c) 2011-2014 Geoff Greer,
+        Licensed under the Apache 2.0 License (https://www.apache.org/licenses/LICENSE-2.0.html).
+        (http://github.com/ggreer/the_silver_searcher)
+
+  libevent*.so: libevent, Copyright (c) 2007-2012 Niels Provos and Nick Mathewson,
+        Licensed under the BSD 3-Clause License (https://opensource.org/licenses/BSD-3-Clause).
+        (http://libevent.org/)
+
+  tmux: tmux, Copyright (c) 2007 Nicholas Marriott <nicholas.marriott@gmail.com>,
+        Licensed under the ISC License (https://opensource.org/licenses/ISC).
+        (http://tmux.github.io/)
+
+  gcore, gdb*: GDB, the GNU Debugger, Copyright (C) 1986-2016 Free Software Foundation, Inc.
+        Licensed under the GNU General Public License (http://www.gnu.org/licenses/gpl.html).
+        (http://sourceware.org/gdb/)
+
+  objdump, gprof: GNU Binutils, Copyright (C) 1990-2015 Free Software Foundation, Inc.
+        Licensed under the GNU General Public License (http://www.gnu.org/licenses/gpl.html).
+        (https://sourceware.org/binutils/)
+
+  fbink, fbdepth: FBInk (FrameBuffer eInker), Copyright (C) 2018-2020 NiLuJe <ninuje@gmail.com>,
+        Released under the GNU General Public License version 3+ (https://www.gnu.org/licenses/gpl.html)
+        (https://github.com/NiLuJe/FBInk)
+
+  curl: cURL, Copyright (C) 1998 - 2019, Daniel Stenberg, <daniel@haxx.se>, et al.,
+        Licensed under the MIT license (https://opensource.org/licenses/MIT)
+        (https://curl.haxx.se/)
+
+  evtest: Event device test program, Copyright (c) 1999-2000 Vojtech Pavlik; Copyright (c) 2009-2011 Red Hat, Inc.,
+        Licensed under the GNU General Public License version 2+ (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+        (https://gitlab.freedesktop.org/libevdev/evtest)
+
+  libevdev*.so*: libevdev, Copyright © 2013 Red Hat, Inc.,
+        Distributed under a MIT-style license (http://opensource.org/licenses/MIT)
+        (https://gitlab.freedesktop.org/libevdev/libevdev)
+
+  evemu-*: evemu, Copyright (C) 2010-2012 Canonical Ltd.; Copyright (C) 2013-2015 Red Hat, Inc.; Copyright (C) 2010 Henrik Rydberg <rydberg@euromail.se>,
+        Licensed under the GNU Lesser General Public License version 3 (http://www.gnu.org/licenses/lgpl.html).
+        (https://gitlab.freedesktop.org/libevdev/evemu)
+
+  scanelf, lddtree, symtree: pax-utils, Copyright 2003-2012 Gentoo Foundation, Copyright 2003-2012 Ned Ludd <solar@gentoo.org>, Copyright 2003-2012 Mike Frysinger <vapier@gentoo.org>, Copyright 2012-2014 The Chromium OS Authors,
+        Licensed under the GNU General Public License version 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html),
+        (https://wiki.gentoo.org/index.php?title=Project:Hardened/PaX_Utilities & https://gitweb.gentoo.org/proj/pax-utils.git/)
+
+  libpcre2*.so*: PCRE - Perl Compatible Regular Expressions, Copyright (c) 1997-2020 University of Cambridge; Copyright(c) 2009-2020 Zoltan Herczeg,
+        Licensed under the BSD 3-Clause License (https://opensource.org/licenses/BSD-3-Clause).
+        (http://www.pcre.org/)
+
+  less, lessecho, lesskey: Less, Copyright (C) 1984-2020 Mark Nudelman,
+        Licensed under the GNU General Public License (http://www.gnu.org/licenses/gpl.html).
+        (http://www.greenwoodsoftware.com/less/)
+
+  perf, trace: Userland tools for Linux Performance Counters, developed as part of the Linux kernel,
+        Licensed under the GNU General Public License version 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+        (https://perf.wiki.kernel.org/index.php/Main_Page)
+
+  blkid, lsblk, choom, lsipc, lslocks, libsmartcols.so.1, libmount.so.1, libblkid.so.1: A random collection of Linux utilities, Copyright (C) 2008-2020 Karel Zak <kzak@redhat.com>,
+        Libraries licensed under the GNU Lesser General Public version 2.1+ (https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html)
+        Binaries licensed under the GNU General Public License version 2+ (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+        (https://github.com/karelzak/util-linux)
+
+  fatlabel, fsck.fat, mkfs.fat: DOSFSTools, c.f., individual source files for detailed Copyright attribution,
+        Released under the GNU General Public License version 3+ (https://www.gnu.org/licenses/gpl.html),
+        (https://github.com/dosfstools/dosfstools)
+
+  jq: a lightweight and flexible command-line JSON processor, Copyright (c) 2012 Stephen Dolan,
+        Licensed under the MIT License (https://github.com/stedolan/jq/blob/master/COPYING)
+        (https://github.com/stedolan/jq)
+
+    `->   oniguruma, a regular expression library, Copyright (c) 2002-2020  K.Kosako <kkosako0@gmail.com>,
+        Licensed under the BSD 2-Clause License (https://opensource.org/licenses/BSD-2-Clause).
+        (https://github.com/kkos/oniguruma)
+
+  lftp, lftpget: LFTP, Copyright (c) 1996-2020 by Alexander V. Lukyanov (lav@yars.free.net),
+        Released under the GNU General Public License version 3+ (https://www.gnu.org/licenses/gpl.html),
+        (https://lftp.tech)
+
+  tree: tree, Copyright (c) 1996-2018 by Steve Baker (ice@mama.indstate.edu),
+        Released under the GNU General Public License version 2+ (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html),
+        (http://mama.indstate.edu/users/ice/tree)
+
+  dtc: Device Tree Compiler, (C) Copyright David Gibson <dwg@au1.ibm.com>, IBM Corporation.  2005.,
+        Released under the GNU General Public License version 2+ (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html),
+        (https://git.kernel.org/cgit/utils/dtc/dtc.git/)

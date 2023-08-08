@@ -1,0 +1,2895 @@
+2022-03-23 23:22  NiLuJe
+
+	* [r18901] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  KoboStuff:
+	  * Handle the fun new builtin modules suprise of FW 4.31 a tiny bit
+	  better
+
+2021-11-14 23:28  NiLuJe
+
+	* [r18833] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries (httpie hotfix)
+
+2021-11-14 16:24  NiLuJe
+
+	* [r18832] README:
+	  
+	  Kindle Hacks:
+	  * Python: Bundle multidict for HTTPie
+
+2021-11-14 15:58  NiLuJe
+
+	* [r18829] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2021-10-27 18:30  NiLuJe
+
+	* [r18797] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * X-TC:
+	  * Refresh binaries (requests hotfix)
+
+2021-10-26 21:36  NiLuJe
+
+	* [r18795] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2021-10-24 21:04  NiLuJe
+
+	* [r18779] README:
+	  
+	  Kindle Hacks:
+	  * Python:
+	  * Bundle charset_normalizer for requests on Python 3
+
+2021-09-19 18:49  NiLuJe
+
+	* [r18745] src/usr/local/stuff/bin/stuff-daemons.sh:
+	  
+	  KoboStuff:
+	  * Allow more easily disabling telnet and/or sshd
+
+2021-09-02 18:32  NiLuJe
+
+	* [r18721] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2021-09-02 11:27  NiLuJe
+
+	* [r18719] README:
+	  
+	  Kindle Hacks:
+	  * Add defusedxml to the Python distro (for HTTPie).
+
+2021-09-02 10:27  NiLuJe
+
+	* [r18717] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2021-08-11 18:27  NiLuJe
+
+	* [r18694] README:
+	  
+	  KoboStuff:
+	  * Back to the future! (I, err, got the minor version wrong ;p).
+
+2021-08-09 18:53  NiLuJe
+
+	* [r18692] README:
+	  
+	  KoboStuff:
+	  * Mention Elipsa support
+
+2021-08-09 18:32  NiLuJe
+
+	* [r18689] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2021-08-03 18:37  NiLuJe
+
+	* [r18668] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  Kindle Hacks:
+	  * Update binutils SOVER
+
+2021-07-04 23:59  NiLuJe
+
+	* [r18638] README, build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  Kindle Hacks:
+	  * X-TC:
+	  * Build & ship dtc
+
+2021-07-03 23:34  NiLuJe
+
+	* [r18632] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  KoboStuff:
+	  * Really fix USBNet toggle on Mk.8...
+
+2021-06-30 15:02  NiLuJe
+
+	* [r18609] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  KoboStuff:
+	  * Fix USBnet on Mk. 8
+
+2021-06-18 21:13  NiLuJe
+
+	* [r18579] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  KoboStuff:
+	  * Handle Mark 8 devices properly in the USBNet script
+
+2021-06-18 18:32  NiLuJe
+
+	* [r18578] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * Cleanup old libs when updating Core
+
+2021-06-18 18:23  NiLuJe
+
+	* [r18577] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  Kindle Hacks:
+	  * Move to new pcre2 sover
+
+2021-06-18 18:19  NiLuJe
+
+	* [r18575] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2021-06-13 00:05  NiLuJe
+
+	* [r18554] src/usr/local/stuff/bin/stuff.sh:
+	  
+	  Minor comment typo
+
+2021-05-17 04:25  NiLuJe
+
+	* [r18509] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries (TC update: the great GCC 11 update)
+
+2021-04-22 17:44  NiLuJe
+
+	* [r18462] README, build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  Kindle Hacks:
+	  * USBNetwork:
+	  * Ship the file tool
+
+2021-04-14 18:19  NiLuJe
+
+	* [r18435] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * X-TC:
+	  * Refresh binaries
+
+2021-04-13 23:40  NiLuJe
+
+	* [r18422] build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  KoboStuff:
+	  * Don't stomp on stock blkid symlinks (leave it outside of PATH)
+
+2021-04-13 23:37  NiLuJe
+
+	* [r18421] build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  Kindle Hacks:
+	  * Fix blkid symlinks, too
+
+2021-04-07 17:05  NiLuJe
+
+	* [r18405] src/usr/local/stuff/bin/python-setup.sh:
+	  
+	  Kindle Hacks:
+	  * Python:
+	  * Don't generate optimized bytecode anymore.
+	  99.9% of users will never use it, and it takes forever.
+
+2021-04-07 17:02  NiLuJe
+
+	* [r18404] src/usr/local/stuff/bin/python-setup.sh:
+	  
+	  KoboStuff:
+	  * In Python 3.9, compileall gained the ability to compile for both
+	  levels in one call.
+
+2021-04-07 16:58  NiLuJe
+
+	* [r18403] src/usr/local/stuff/bin/python-setup.sh:
+	  
+	  KoboStuff:
+	  * Python: Don't compile optimized bytecode by default (i.e., honor
+	  PYTHONOPTIMIZE)
+
+2021-04-07 00:21  NiLuJe
+
+	* [r18399] README:
+	  
+	  Kindle Hacks:
+	  * X-TC:
+	  * Ship python-libevdev w/ Python 3
+
+2021-04-06 23:32  NiLuJe
+
+	* [r18397] README, build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  Kindle Hacks:
+	  * USBNet:
+	  * Ship util-linux's blkid
+
+2021-04-06 17:40  NiLuJe
+
+	* [r18393] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  KoboStuff:
+	  * Update g_ether config comments
+
+2021-04-05 15:14  NiLuJe
+
+	* [r18392] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * X-TC:
+	  * Refresh binaries (numpy hotfix)
+
+2021-04-04 14:09  NiLuJe
+
+	* [r18386] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2021-03-27 19:23  NiLuJe
+
+	* [r18341] README:
+	  
+	  Kindle Hacks:
+	  * Add numpy to the Python CREDITs
+
+2021-03-15 00:46  NiLuJe
+
+	* [r18286] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2021-03-14 01:12  NiLuJe
+
+	* [r18278] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * Update:
+	  * Start with a blank line, because tmux will scroll down one line to
+	  print the pane status line.
+
+2021-03-14 01:07  NiLuJe
+
+	* [r18277] README:
+	  
+	  KoboStuff:
+	  * Minor README tweak for git
+
+2021-03-14 01:06  NiLuJe
+
+	* [r18276] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * Update:
+	  * Don't print the Python spiel when installing git
+
+2021-03-14 01:00  NiLuJe
+
+	* [r18275] README:
+	  
+	  KoboStuff:
+	  * Update the git mention
+
+2021-03-14 00:58  NiLuJe
+
+	* [r18274] README, src/usr/local/stuff/bin/update-kobostuff.sh,
+	  src/usr/local/stuff/lib/libotautils:
+	  
+	  KoboStuff:
+	  * Update:
+	  * Handle the new git package
+
+2021-03-14 00:24  NiLuJe
+
+	* [r18271] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * Update:
+	  * Missed an r in front of the revs there ;).
+
+2021-03-14 00:20  NiLuJe
+
+	* [r18270] src/usr/local/stuff/lib/libotautils:
+	  
+	  KoboStuff:
+	  * Update:
+	  * Check for storage URL updates, and require user consent to validate
+	  one.
+
+2021-03-14 00:05  NiLuJe
+
+	* [r18269] src/usr/local/stuff/bin/update-kobostuff.sh,
+	  src/usr/local/stuff/lib/libotautils:
+	  
+	  KoboStuff:
+	  * Display the package's timestamp in addition to its revision
+
+2021-03-13 23:43  NiLuJe
+
+	* [r18266] README, build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  Kindle Hacks:
+	  * X-TC:
+	  * Bundle coreutils' b2sum
+
+2021-03-13 00:41  NiLuJe
+
+	* [r18261] src/usr/local/stuff/lib/libotautils:
+	  
+	  KoboStuff:
+	  * Jot down some more stuff to do w/ the update script
+
+2021-03-13 00:37  NiLuJe
+
+	* [r18260] src/usr/local/stuff/lib/libotautils:
+	  
+	  KoboStuff:
+	  * update-kobostuff:
+	  * Add a facility to update the base URL from the manifest.
+	  (Which we're not currently using).
+
+2021-03-13 00:21  NiLuJe
+
+	* [r18258] src/usr/local/stuff/lib/libotautils:
+	  
+	  KoboStuff:
+	  * update-kobostuff:
+	  * Switch to the JSON manifest to get package data
+	  * When downloading the manifest, check the frontend first, before
+	  falling back to the object storage itself
+
+2021-03-10 21:51  NiLuJe
+
+	* [r18246] src/usr/local/stuff/lib/libotautils:
+	  
+	  Kindle Hacks:
+	  * Move object storage to the GRA DC, given that SBG burned down and
+	  won't be back up for a while :s.
+
+2021-03-10 19:50  NiLuJe
+
+	* [r18245] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2021-03-09 18:20  NiLuJe
+
+	* [r18234] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  KoboStuff:
+	  * Add a few pointers at the top of the USBNet script, as that's what
+	  the README points to.
+
+2021-03-09 18:15  NiLuJe
+
+	* [r18233] README:
+	  
+	  KoboStuff:
+	  * Minor README formatting tweaks
+
+2021-03-09 18:14  NiLuJe
+
+	* [r18232] README:
+	  
+	  KoboStuff:
+	  * Add an INSTALL section to the readme
+
+2021-02-27 06:29  NiLuJe
+
+	* [r18219] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries (Python 2.7 hotfix)
+
+2021-02-21 03:12  NiLuJe
+
+	* [r18190] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2021-01-30 21:07  NiLuJe
+
+	* [r18140] README, build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  Kindle Hacks:
+	  * USBNetwork:
+	  * Build & bundle tree
+
+2021-01-29 03:28  NiLuJe
+
+	* [r18137] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries (busybox & requests hotfix)
+
+2021-01-28 21:05  NiLuJe
+
+	* [r18133] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh Kobo binaries
+
+2021-01-28 18:52  NiLuJe
+
+	* [r18128] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2020-12-16 01:58  NiLuJe
+
+	* [r18009] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2020-12-15 00:49  NiLuJe
+
+	* [r17990] README, build/build-updates.sh,
+	  src/usr/local/stuff/bin/python-setup.sh,
+	  src/usr/local/stuff/bin/update-kobostuff.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  Kindle Hacks:
+	  * Update to Python 3.9
+
+2020-11-24 01:25  NiLuJe
+
+	* [r17954] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  KoboStuff:
+	  * With quoting
+
+2020-11-24 01:24  NiLuJe
+
+	* [r17953] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  KoboStuff:
+	  * Run grep against /proc/modules directly, no need to go through lsmod
+
+2020-11-17 13:25  NiLuJe
+
+	* [r17944] README:
+	  
+	  KoboStuff:
+	  * Update FW version mentions
+
+2020-11-14 13:10  NiLuJe
+
+	* [r17940] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2020-11-06 21:03  NiLuJe
+
+	* [r17915] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2020-11-06 15:18  NiLuJe
+
+	* [r17913] README, build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  Kindle Hacks:
+	  * USBNet:
+	  * Bundle lftp
+
+2020-10-24 22:18  NiLuJe
+
+	* [r17894] build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  KoboStuff:
+	  * Symlink gdb-add-index
+
+2020-10-21 12:30  NiLuJe
+
+	* [r17883] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2020-10-18 16:02  NiLuJe
+
+	* [r17868] README:
+	  
+	  KoboStuff:
+	  * Minor typo.
+
+2020-10-11 13:05  NiLuJe
+
+	* [r17853] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries (requests hotfix)
+
+2020-10-10 23:46  NiLuJe
+
+	* [r17851] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2020-10-10 15:47  NiLuJe
+
+	* [r17847] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * X-TC:
+	  * Refresh binaries
+
+2020-10-01 20:54  NiLuJe
+
+	* [r17821] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2020-09-27 21:11  NiLuJe
+
+	* [r17808] README:
+	  
+	  KoboStuff:
+	  * Update FW range mention.
+
+2020-09-27 20:58  NiLuJe
+
+	* [r17805] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2020-09-07 10:57  NiLuJe
+
+	* [r17754] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2020-09-05 20:00  NiLuJe
+
+	* [r17739] README:
+	  
+	  KoboStuff:
+	  * Also update the FW version range here
+
+2020-08-26 15:52  NiLuJe
+
+	* [r17726] README:
+	  
+	  Kindle Hacks:
+	  * X-TC:
+	  * Bundle SLPP w/ Python 3
+	  Helps when playing with KOReader ;).
+
+2020-08-20 19:38  NiLuJe
+
+	* [r17721] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  KoboStuff:
+	  * Oops, forgot to throw that to the ether ;).
+
+2020-08-20 19:37  NiLuJe
+
+	* [r17720] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  KoboStuff:
+	  * The USBNet dhcpcd annoyance has been fixed in FW 4.23 (!). Yay!
+
+2020-08-20 17:50  NiLuJe
+
+	* [r17718] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2020-08-03 03:32  NiLuJe
+
+	* [r17684] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries (more polished zlib-ng fixes, unbreak HTTPie)
+
+2020-08-02 15:18  NiLuJe
+
+	* [r17679] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries (hotfix the hotfix of the hotfix of the hotfix of
+	  the zlib-ng hotfix ;p)
+
+2020-08-01 20:09  NiLuJe
+
+	* [r17672] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * X-TC:
+	  * Refresh binaries (zlib hotfix)
+
+2020-08-01 17:33  NiLuJe
+
+	* [r17671] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * Update Script:
+	  * Switch to bsdtar now that we ship it w/ all the bells and whistles
+	  (i.e., zstd support ;p).
+
+2020-08-01 05:09  NiLuJe
+
+	* [r17666] build/build-updates.sh:
+	  
+	  Revert r17657
+
+2020-08-01 02:02  NiLuJe
+
+	* [r17663] README:
+	  
+	  Kindle Hacks:
+	  * X-TC:
+	  * Add PySocks, optional dep of requests, apparently now necessary for
+	  HTTPie
+
+2020-08-01 01:35  NiLuJe
+
+	* [r17662] build/busybox-links.tar:
+	  
+	  KoboStuff:
+	  * Hotfix busybox to avoid segfaults in (at least) tar.
+
+2020-08-01 00:18  NiLuJe
+
+	* [r17657] build/build-updates.sh:
+	  
+	  Kindle Hacks:
+	  * Handle the libz rename
+
+2020-07-31 23:13  NiLuJe
+
+	* [r17648] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2020-07-30 22:06  NiLuJe
+
+	* [r17610] src/usr/local/stuff/bin/python-setup.sh:
+	  
+	  KoboStuf:
+	  * Drop HTTPie comment, the next build will ship w/ setuptools
+
+2020-07-26 03:49  NiLuJe
+
+	* [r17573] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  KoboStuff:
+	  * Tell dhcpcd to shut-up about usb0 (at least *this* instance of
+	  dhcpcd...)
+
+2020-07-13 16:56  NiLuJe
+
+	* [r17557] README:
+	  
+	  KoboStuff:
+	  * Tone down the space requirements warning now that Python was split
+	  off into its own package
+
+2020-06-15 18:56  NiLuJe
+
+	* [r17522] README, build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  Kindle Hacks:
+	  * USBNet:
+	  * Ship rsync-ssl & xxhash for rsync 3.2.0
+
+2020-06-15 18:06  NiLuJe
+
+	* [r17519] README, build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  Kindle Hacks:
+	  * USBNet:
+	  * Ship bsdtar
+
+2020-06-13 21:35  NiLuJe
+
+	* [r17512] README:
+	  
+	  Kindle Hacks:
+	  * X-TC:
+	  * Ship setuptools because it's needed by HTTPie's CLI at runtime :/
+
+2020-06-13 21:17  NiLuJe
+
+	* [r17511] src/usr/local/stuff/bin/python-setup.sh:
+	  
+	  KoboStuff:
+	  * Keep the final LF.
+
+2020-06-13 21:16  NiLuJe
+
+	* [r17510] src/usr/local/stuff/bin/python-setup.sh:
+	  
+	  KoboStuff:
+	  * Oh, joy. The HTTPie CLI requires setuptools -_-".
+
+2020-06-13 20:55  NiLuJe
+
+	* [r17508] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2020-06-13 17:06  NiLuJe
+
+	* [r17507] src/usr/local/stuff/bin/update-kobostuff.sh,
+	  src/usr/local/stuff/lib/libotautils:
+	  
+	  KoboStuff:
+	  * Make sure cURL follows redirections (not that this should currently
+	  happen, but, still).
+
+2020-06-12 23:54  NiLuJe
+
+	* [r17500] build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  Kindle Hacks:
+	  * Python 3:
+	  * Setup HTTPie symlinks
+
+2020-06-12 23:43  NiLuJe
+
+	* [r17499] build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  Kindle Hacks:
+	  * USBNet:
+	  * Install jq symlink
+
+2020-06-12 23:40  NiLuJe
+
+	* [r17498] README:
+	  
+	  Kindle Hacks:
+	  * X-TC:
+	  * Build & bundle jq
+
+2020-06-12 20:39  NiLuJe
+
+	* [r17497] src/usr/local/stuff/bin/python-setup.sh:
+	  
+	  KoboStuff:
+	  * Document ensurepip usage.
+	  Very much not recommended, but otherwise working ;).
+
+2020-06-12 16:58  NiLuJe
+
+	* [r17493] README:
+	  
+	  Kindle Hacks:
+	  * X-TC:
+	  * Bundle HTTPie w/ Python 3
+
+2020-06-11 16:54  NiLuJe
+
+	* [r17492] README:
+	  
+	  Kindle Hacks:
+	  * X-TC:
+	  * Bundle future w/ Python
+
+2020-06-05 00:39  NiLuJe
+
+	* [r17466] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2020-06-02 18:49  NiLuJe
+
+	* [r17447] README:
+	  
+	  KoboStuff:
+	  * Add dosfstools to CREDITS
+
+2020-06-02 18:44  NiLuJe
+
+	* [r17445] build/build-updates.sh:
+	  
+	  KoboStuff:
+	  * Ship a not horribly broken dosfstools version in the rootfs...
+
+2020-06-02 17:46  NiLuJe
+
+	* [r17443] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * Display the target revision properly on a fresh install
+
+2020-06-02 01:48  NiLuJe
+
+	* [r17441] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2020-05-27 18:06  NiLuJe
+
+	* [r17415] build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  Kindle Hacks:
+	  * Bundle & setup a few extra util-linux binaries
+
+2020-05-27 17:57  NiLuJe
+
+	* [r17414] README:
+	  
+	  Kindle Hacks:
+	  * Update CREDITS for util-linux
+
+2020-05-19 01:47  NiLuJe
+
+	* [r17373] src/usr/local/stuff/bin/update-kobostuff.sh,
+	  src/usr/local/stuff/lib/libotautils:
+	  
+	  KoboStuff:
+	  * Move get_ota_index error printing to the function itself
+	  We're not redirecting its output anywhere.
+
+2020-05-19 01:41  NiLuJe
+
+	* [r17372] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * Lower the space constraint for Python
+	  The check is done *before* cleaning up the old install, so, we're
+	  likely to actually have enough free space
+
+2020-05-19 01:30  NiLuJe
+
+	* [r17371] src/usr/local/stuff/bin/update-kobostuff.sh,
+	  src/usr/local/stuff/lib/libotautils:
+	  
+	  KoboStuff:
+	  * Alwyas use curl --fail, and never clobber its return code
+
+2020-05-19 01:28  NiLuJe
+
+	* [r17370] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * Simplify get_ota_index error handling
+
+2020-05-19 01:25  NiLuJe
+
+	* [r17369] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * Check for free space on offline installs, too.
+	  And simplify (and fix) the error handling.
+
+2020-05-19 01:21  NiLuJe
+
+	* [r17368] src/usr/local/stuff/bin/update-kobostuff.sh,
+	  src/usr/local/stuff/lib/libotautils:
+	  
+	  KoboStuff:
+	  * Check that we have enough free space available before installing a
+	  package
+
+2020-05-19 01:06  NiLuJe
+
+	* [r17367] src/usr/local/stuff/bin/update-kobostuff.sh,
+	  src/usr/local/stuff/lib/libotautils:
+	  
+	  KoboStuff:
+	  * Fail graciously if the OTA index/package can't be downloaded
+
+2020-05-19 00:50  NiLuJe
+
+	* [r17366] README:
+	  
+	  Kindle Hacks:
+	  * Add lz4 to CREDITS
+
+2020-05-19 00:43  NiLuJe
+
+	* [r17365] build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  KoboStuff:
+	  * Bundle LZ4
+
+2020-05-18 21:28  NiLuJe
+
+	* [r17361] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * Some more minor output tweaks in the OTA script
+
+2020-05-18 21:12  NiLuJe
+
+	* [r17360] README:
+	  
+	  KoboStuff:
+	  * Some more README tweaks...
+
+2020-05-18 20:45  NiLuJe
+
+	* [r17359] README:
+	  
+	  KoboStuff:
+	  * Update README
+
+2020-05-18 20:43  NiLuJe
+
+	* [r17358] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * Tweak screen/console output layout a bit...
+
+2020-05-18 20:39  NiLuJe
+
+	* [r17357] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * Print a final message after the sync after an OTA
+
+2020-05-18 20:35  NiLuJe
+
+	* [r17356] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * Yeaah, somehow, I knew this wasn't going to fly...
+
+2020-05-18 20:33  NiLuJe
+
+	* [r17355] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * Ha, my favorite typo...
+
+2020-05-18 20:31  NiLuJe
+
+	* [r17354] src/usr/local/stuff/lib/libotautils:
+	  
+	  KoboStuff:
+	  * Oops, forgot to update this RE when I updated the package names...
+
+2020-05-18 20:08  NiLuJe
+
+	* [r17352] README, build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  KoboStuff:
+	  * Symlink perf & co
+
+2020-05-18 20:05  NiLuJe
+
+	* [r17349] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2020-05-17 21:01  NiLuJe
+
+	* [r17342] README:
+	  
+	  Kindle Hacks:
+	  * Add perf to the CREDITs
+
+2020-05-17 17:12  NiLuJe
+
+	* [r17336] build/build-updates.sh:
+	  
+	  KoboStuff:
+	  * Remove old OTA tarballs when creating a new one
+
+2020-05-16 02:34  NiLuJe
+
+	* [r17328] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * Handle fresh Python installs properly
+
+2020-05-16 02:28  NiLuJe
+
+	* [r17327] build/build-updates.sh:
+	  
+	  KoboStuff:
+	  * Make sure zstd force overwrites when packaging
+
+2020-05-16 02:25  NiLuJe
+
+	* [r17326] src/usr/local/stuff/bin/update-kobostuff.sh,
+	  src/usr/local/stuff/lib/libotautils:
+	  
+	  KoboStuff:
+	  * Even more error handling fixes
+
+2020-05-16 02:18  NiLuJe
+
+	* [r17325] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * Fix eror checking
+
+2020-05-16 01:58  NiLuJe
+
+	* [r17322] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * Don't skip pre-install cleanups for offline installs...
+
+2020-05-16 01:53  NiLuJe
+
+	* [r17321] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * Clean the previous ZSH setup when updating Core
+
+2020-05-16 01:43  NiLuJe
+
+	* [r17320] build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  KoboStuff:
+	  * Unbreak packaging script (thanks, shellcheck!)
+
+2020-05-16 01:39  NiLuJe
+
+	* [r17319] README, build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  KoboStuff:
+	  * Update readme for new OTA feature
+
+2020-05-16 01:19  NiLuJe
+
+	* [r17318] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * And a final shellchekc pass to fix that...
+
+2020-05-16 01:17  NiLuJe
+
+	* [r17317] src/usr/local/stuff/bin/python-setup.sh,
+	  src/usr/local/stuff/bin/update-kobostuff.sh,
+	  src/usr/local/stuff/bin/usbnet-toggle.sh,
+	  src/usr/local/stuff/lib/libotautils:
+	  
+	  KoboStuff:
+	  * Do a shellcheck pass
+
+2020-05-16 01:09  NiLuJe
+
+	* [r17316] src/usr/local/stuff/bin/update-kobostuff.sh,
+	  src/usr/local/stuff/lib/libotautils:
+	  
+	  KoboStuff:
+	  * Don't use exit in libotautils, handle error codes at call sites
+	  instead.
+
+2020-05-16 01:06  NiLuJe
+
+	* [r17315] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * Make tar silent for OTA updates, curl is going to be the bottleneck,
+	  so we want to see its own progress bar.
+
+2020-05-16 01:05  NiLuJe
+
+	* [r17314] src/usr/local/stuff/bin/update-kobostuff.sh,
+	  src/usr/local/stuff/lib/libotautils:
+	  
+	  KoboStuff:
+	  * Don't forget to DL the OTA index, first ;p
+
+2020-05-15 23:26  NiLuJe
+
+	* [r17313] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * Clear out the previous Python install on update...
+
+2020-05-15 23:21  NiLuJe
+
+	* [r17312] build/build-updates.sh:
+	  
+	  KoboStuff:
+	  * Bump "version" to 1.6.N to mark the new setup model
+
+2020-05-15 23:20  NiLuJe
+
+	* [r17311] build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  KoboStuff:
+	  * Symlink the OTA scripts
+
+2020-05-15 23:14  NiLuJe
+
+	* [r17310] src/usr/local/stuff/bin/update-kobostuff.sh:
+	  
+	  KoboStuff:
+	  * Print a success message after an update
+
+2020-05-15 23:06  NiLuJe
+
+	* [r17309] build/build-updates.sh,
+	  src/usr/local/stuff/bin/python-setup.sh,
+	  src/usr/local/stuff/bin/update-kobostuff.sh[ADD],
+	  src/usr/local/stuff/lib[ADD],
+	  src/usr/local/stuff/lib/libotautils[ADD]:
+	  
+	  KoboStuff:
+	  * Allow updating components OTA
+
+2020-05-15 22:21  NiLuJe
+
+	* [r17308] src/usr/local/stuff/bin/python-setup.sh:
+	  
+	  KoboStuff:
+	  * python-setup now handles Python not actually being installed.
+
+2020-05-15 22:08  NiLuJe
+
+	* [r17307] build/build-updates.sh:
+	  
+	  KoboStuff:
+	  * Don't rebuild the KoboRoot tarball twice
+	  * Better naming scheme for OTA tarballs
+
+2020-05-15 18:21  NiLuJe
+
+	* [r17305] build/build-updates.sh:
+	  
+	  KoboStuff:
+	  * Clear the staging rootfs
+	  * Clear the Core scripts before starting Python packagin
+
+2020-05-15 18:19  NiLuJe
+
+	* [r17304] build/build-updates.sh:
+	  
+	  KoboStuff:
+	  * Don't keep the uncompressezd tarballs around
+
+2020-05-15 18:17  NiLuJe
+
+	* [r17303] build/build-updates.sh:
+	  
+	  KoboStuff:
+	  * Each Python package will needs its own VERSION tag for the update
+	  script
+
+2020-05-15 18:14  NiLuJe
+
+	* [r17302] build/build-updates.sh:
+	  
+	  KoboStuff:
+	  * Oops, don't clobber the actual src folder
+
+2020-05-15 18:06  NiLuJe
+
+	* [r17301] build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  KoboStuff:
+	  * Sart working on packaging tweaks...
+	  Namely, splitting KoboStuff in three:
+	  * Core (i.e., USBNet & co)
+	  * Python 3
+	  * Python 2
+	  The idea being to make the initial KoboRoot install slightly less
+	  insane.
+	  After that, updates will be handled on-device via a new script, which
+	  will use zstd variants of the package to make the process faster.
+	  (i.e., via a curl + zstd + tar pipeline, so that the compressed data
+	  never even hits the disk).
+	  
+	  Python install will follow the same process (basically enhancing the
+	  existing python setup scripts).
+	  
+	  * Switch the default python symlink to Python 3, now that Python 2 is
+	  definitely EoL.
+
+2020-05-15 16:36  NiLuJe
+
+	* [r17300] build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  KoboStuff:
+	  * Forgot to bundle zstd-decompress...
+
+2020-05-14 21:48  NiLuJe
+
+	* [r17297] build/busybox-links.tar:
+	  
+	  KoboStuff:
+	  * Update busybox w/ latest tweaks
+
+2020-05-14 06:23  NiLuJe
+
+	* [r17292] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  KoboStuff:
+	  * USBNet:
+	  * export PLATFORM in the fallback, too.
+	  Actually not necessary right now, but it would be if I were to switch
+	  to my own busybox modprobe build...
+
+2020-05-14 05:44  NiLuJe
+
+	* [r17290] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  KoboStuff:
+	  * Make shellcheck happier
+
+2020-05-14 05:18  NiLuJe
+
+	* [r17287] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  KoboStuff:
+	  * Even simpler env siphoning, thanks to busybox magic...
+
+2020-05-14 04:37  NiLuJe
+
+	* [r17286] build/busybox-links.tar:
+	  
+	  KoboStuff:
+	  * Update busybox binary.
+	  Working modprobe with automagic dependency handling, whee!
+
+2020-05-13 02:19  NiLuJe
+
+	* [r17279] build/busybox-links.tar:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2020-05-12 21:43  NiLuJe
+
+	* [r17275] build/busybox-links.tar:
+	  
+	  KoboStuff:
+	  * Test bb master binary
+
+2020-05-12 21:11  NiLuJe
+
+	* [r17272] src/usr/local/stuff/bin/stuff-daemons.sh:
+	  
+	  KoboStuff:
+	  * DRYer
+
+2020-05-12 20:58  NiLuJe
+
+	* [r17271] build/busybox-links.tar:
+	  
+	  KoboStuff:
+	  * Fix busybox pidfile folder
+
+2020-05-12 18:41  NiLuJe
+
+	* [r17267] src/usr/local/stuff/bin/stuff-daemons.sh:
+	  
+	  KoboStuff:
+	  * Unbreak inetd spawning
+
+2020-05-12 04:19  NiLuJe
+
+	* [r17261] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  KoboStuff:
+	  * Simplify env shenanigans in the USBNet script
+
+2020-05-12 03:53  NiLuJe
+
+	* [r17257] src/usr/local/stuff/bin/stuff.sh:
+	  
+	  KoboStuff:
+	  * Make the separation between env & setsid more obvious w/ a bit of
+	  getopt magic
+
+2020-05-12 03:24  NiLuJe
+
+	* [r17253] src/usr/local/stuff/bin/stuff.sh:
+	  
+	  KoboStuff:
+	  * Clear the env before launching the daemons
+
+2020-05-11 15:50  NiLuJe
+
+	* [r17249] src/usr/local/stuff/bin/stuff-daemons.sh:
+	  
+	  KoboStuff:
+	  * More accurate comment
+
+2020-05-11 14:19  NiLuJe
+
+	* [r17248] build/build-updates.sh:
+	  
+	  KoboStuff:
+	  * Unbreak packaging
+
+2020-05-11 14:06  NiLuJe
+
+	* [r17247] build/busybox-links.tar:
+	  
+	  KoboStuff:
+	  * Fix OpenSSH shell
+
+2020-05-11 04:37  NiLuJe
+
+	* [r17246] build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  KoboStuff:
+	  * Missed a few OpenSSH bits...
+
+2020-05-11 03:55  NiLuJe
+
+	* [r17245] uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  KoboStuff:
+	  * Uninstall the nologin symlink, too.
+
+2020-05-11 03:40  NiLuJe
+
+	* [r17243] src/usr/local/stuff/bin/stuff-daemons.sh:
+	  
+	  KoboStuff:
+	  * Slightly better OpenSSH userdesc
+
+2020-05-11 03:37  NiLuJe
+
+	* [r17242] src/usr/local/stuff/bin/stuff-daemons.sh:
+	  
+	  KoboStuff:
+	  * Less stupid permissions on OpenSSH sandbox
+
+2020-05-11 03:30  NiLuJe
+
+	* [r17241] src/usr/local/stuff/bin/stuff-daemons.sh:
+	  
+	  KoboStuff:
+	  * More OpenSSH comments...
+
+2020-05-11 03:02  NiLuJe
+
+	* [r17239] src/usr/local/stuff/bin/stuff-daemons.sh:
+	  
+	  KoboStuff:
+	  * Eh, just in case.
+
+2020-05-11 03:01  NiLuJe
+
+	* [r17238] src/usr/local/stuff/bin/stuff-daemons.sh:
+	  
+	  KoboStuff:
+	  * More OpenSSH fixes
+
+2020-05-11 02:55  NiLuJe
+
+	* [r17237] build/build-updates.sh,
+	  src/usr/local/stuff/bin/stuff-daemons.sh:
+	  
+	  KoboStuff:
+	  * Fix OpenSSH
+
+2020-05-11 01:59  NiLuJe
+
+	* [r17233] build/build-updates.sh:
+	  
+	  KoboStuff:
+	  * Unbreak packaging...
+
+2020-05-11 01:53  NiLuJe
+
+	* [r17232] build/busybox-links.tar:
+	  
+	  KoboStuff:
+	  * Refresh binaries
+
+2020-05-10 21:24  NiLuJe
+
+	* [r17227] src/usr/local/stuff/bin/stuff-daemons.sh:
+	  
+	  KoboStuff:
+	  * Toggle OpenSSH via a file trigger, to make it persist across
+	  reinstalls
+
+2020-05-10 16:50  NiLuJe
+
+	* [r17224] src/usr/local/stuff/bin/stuff-daemons.sh:
+	  
+	  KoboStuff:
+	  * Support using OpenSSH instead of dropbear
+
+2020-05-10 16:31  NiLuJe
+
+	* [r17221] uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  KoboStuff:
+	  * Update uninstaller for the OpenSSH move
+
+2020-05-10 16:27  NiLuJe
+
+	* [r17220] build/build-updates.sh:
+	  
+	  KoboStuff:
+	  * Install OpenSSH in the rootfs, too.
+
+2020-05-09 05:20  NiLuJe
+
+	* [r17219] src/usr/local/stuff/bin/stuff-daemons.sh:
+	  
+	  KoboStuff:
+	  * Drop the bogus banner flag in dropbear, we've stopped applying the
+	  Kindle patch...
+
+2020-05-08 04:22  NiLuJe
+
+	* [r17215] src/usr/local/niluje/usbnet/etc/inetd.conf:
+	  
+	  KoboStuff:
+	  * Don't serve / over ftp, chroot into onboard
+
+2020-05-02 04:06  NiLuJe
+
+	* [r17190] README:
+	  
+	  KoboStuff:
+	  * Document fix-locales
+
+2020-05-02 00:24  NiLuJe
+
+	* [r17185] build/build-updates.sh:
+	  
+	  KoboStuff:
+	  * Prefer our own lsof & evtest
+
+2020-05-01 23:16  NiLuJe
+
+	* [r17181] build/build-updates.sh:
+	  
+	  KoboStuff:
+	  * Make sure our fancy busybox gets picked first w/ ZSH
+
+2020-05-01 23:11  NiLuJe
+
+	* [r17180] build/busybox-links.tar[ADD]:
+	  
+	  Kindle Hacks:
+	  * KoboStuff:
+	  * Switch to a standalone bb build
+
+2020-05-01 00:10  NiLuJe
+
+	* [r17156] build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  KoboStuff:
+	  * Symlink ZSH in /bin
+
+2020-04-22 22:20  NiLuJe
+
+	* [r17131] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  KoboStuff:
+	  * Take a slightly dfferent approach for the Mk. 6 USBNet workaround.
+	  It's apparently conceivable that some old FW may have been shipping a
+	  broken module, so checking for the existence of the module file itself
+	  is unadvisable.
+	  Just check for the platform instead.
+
+2020-04-22 12:45  NiLuJe
+
+	* [r17130] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  KoboStuff:
+	  * Fix USBNet toggle on Mk.6
+	  arcotg_udc is builtin there! (c.f.,
+	  kernel_imx/root_modules/lib/modules/3.0.35+/modules.builtin).
+	  Reported in https://www.mobileread.com/forums/showthread.php?t=329136
+
+2020-04-20 04:58  NiLuJe
+
+	* [r17115] README:
+	  
+	  Kindle Hacks:
+	  * USBNet:
+	  * Ship the real less, w/ pcre2 support
+
+2020-04-20 01:11  NiLuJe
+
+	* [r17112] README:
+	  
+	  KoboStuff:
+	  * Link to git, as a reward for reading the docs 'til the end ;).
+
+2020-04-05 01:56  NiLuJe
+
+	* [r17015] README, build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  Kindle Hacks:
+	  * USBNet:
+	  * Ship & symlink fbdepth
+
+2020-03-28 15:12  NiLuJe
+
+	* [r17004] build/build-updates.sh:
+	  
+	  KoboStuff:
+	  * Make sure scp lives in the main rootfs, too.
+	  And that its rpath reflects that...
+
+2020-03-28 02:58  NiLuJe
+
+	* [r16999] build/build-updates.sh:
+	  
+	  Kindle Hacks:
+	  * Regenerate dropbear host keys
+
+2020-03-03 22:29  NiLuJe
+
+	* [r16911] README:
+	  
+	  KoboStuff:
+	  * Business as usual on 4.20
+
+2020-02-20 18:59  NiLuJe
+
+	* [r16891] README:
+	  
+	  Kindle Hacks:
+	  * X-TC:
+	  * Build zstd-decompress, if we ever want to replace xzdec one day...
+
+2020-02-16 18:34  NiLuJe
+
+	* [r16872] build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  Kindle Hacks:
+	  * USBNet:
+	  * Install the pax-utils stuff
+
+2020-02-16 18:26  NiLuJe
+
+	* [r16871] README:
+	  
+	  Kindle Hacks:
+	  * X-TC:
+	  * Build pyelftools & pax-utils for lddtree & friends.
+
+2020-02-11 03:19  NiLuJe
+
+	* [r16859] README:
+	  
+	  Kindle Hacks:
+	  * Actually Python 3.8 now ;p.
+
+2020-02-10 17:28  NiLuJe
+
+	* [r16853] src/usr/local/stuff/bin/python-setup.sh:
+	  
+	  KoboStuff:
+	  * Hndle Py2 & Py3 separately when checking if we need to compile...
+
+2020-02-10 17:23  NiLuJe
+
+	* [r16852] src/usr/local/stuff/bin/python-setup.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Oops, unbreak python-setup (forgot to bump to Python 3.8)
+
+2020-02-09 22:27  NiLuJe
+
+	* [r16844] README:
+	  
+	  Kindle Hacks:
+	  * Get rid of the old elfutils libebl_* libs, they're now statically
+	  linked in libdw*
+
+2020-02-09 22:18  NiLuJe
+
+	* [r16842] README, build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  Kindle Hacks:
+	  * We've moved to Python 3.8, handle it properly during
+	  install/uninstall
+
+2019-12-12 18:36  NiLuJe
+
+	* [r16755] README:
+	  
+	  KoboStuff:
+	  * 4.19 is out ;).
+
+2019-11-25 22:45  NiLuJe
+
+	* [r16739] README:
+	  
+	  KoboStuff:
+	  * Link to the FUSE modules
+
+2019-11-24 23:57  NiLuJe
+
+	* [r16730] README:
+	  
+	  KoboStuf:
+	  * Mention FUSE shenanigans for sshfs
+
+2019-11-24 23:53  NiLuJe
+
+	* [r16729] build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  KoboStuff:
+	  * Symlink fuse utils
+
+2019-10-11 20:29  NiLuJe
+
+	* [r16571] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  KoboStuff:
+	  * I'd, err, forgotten that the S/N made its way in there...
+	  (That said, it's missing the final character on my H2O...)
+
+2019-10-04 17:30  NiLuJe
+
+	* [r16525] src/usr/local/stuff/bin/stuff.sh,
+	  uninstall/usr/local/stuff/bin/stuff.sh:
+	  
+	  KoboStuff:
+	  * Make sure we end up with a neutral nice value...
+	  (busybox's renice handles -n in a slightly different manner than
+	  coreutils).
+
+2019-10-03 16:09  NiLuJe
+
+	* [r16520] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  KoboStuff:
+	  * USBNet: Repeat the toggle in the "done" message (for the cases where
+	  the PNG opens between the two messages).
+
+2019-10-01 01:56  NiLuJe
+
+	* [r16516] README:
+	  
+	  KoboStuff:
+	  * 4.18 is out ;).
+
+2019-09-20 15:22  NiLuJe
+
+	* [r16500] README:
+	  
+	  Kobo Hacks:
+	  * Mention the hidden folders scanning thing
+
+2019-09-02 12:42  NiLuJe
+
+	* [r16441] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Double-checked the S/N shenanigans on a Mk.7 ;).
+
+2019-08-30 15:05  NiLuJe
+
+	* [r16425] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Oops, fix those comments
+
+2019-08-30 14:59  NiLuJe
+
+	* [r16424] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Err, that's the NIC, not the OUI... >_<"
+
+2019-08-30 14:50  NiLuJe
+
+	* [r16423] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Oops, silence that ;)
+
+2019-08-30 14:47  NiLuJe
+
+	* [r16422] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Make the USBNet script self-sufficient
+	  (i.e., compute PLATFORM ourselves when it's missing).
+
+2019-08-30 14:41  NiLuJe
+
+	* [r16421] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Sanity checks our fancy OUI, just in case...
+
+2019-08-30 14:31  NiLuJe
+
+	* [r16420] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Use a device-specific OUI for the USBNet MAC address
+	  Makes working with multiple different devices in parallel easier...
+
+2019-08-14 13:18  NiLuJe
+
+	* [r16307] README:
+	  
+	  Kindle Hacks:
+	  * X-TC:
+	  * Gah, bs4 now relies on soupsieve for CSS selectors...
+
+2019-08-13 21:24  NiLuJe
+
+	* [r16301] README:
+	  
+	  Kindle Hacks:
+	  * Resync Python CREDITs
+
+2019-08-13 15:25  NiLuJe
+
+	* [r16296] README:
+	  
+	  Kindle Hacks:
+	  * Update Python CREDITS for python-ioctl-opt
+
+2019-07-30 22:07  NiLuJe
+
+	* [r16287] uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  KoboStuff:
+	  * Add xzdec to the uninstaller, too.
+
+2019-07-27 17:36  NiLuJe
+
+	* [r16264] README:
+	  
+	  Kindle Hacks:
+	  * Prepare for FBInk's relicensing
+
+2019-07-26 19:22  NiLuJe
+
+	* [r16263] README, build/build-updates.sh:
+	  
+	  KoboStuff:
+	  * Install & symlink xzdec, too
+
+2019-07-20 02:18  NiLuJe
+
+	* [r16236] build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  Kindle Hacks:
+	  * USBNet:
+	  * The cake is a lie.
+
+2019-07-19 21:12  NiLuJe
+
+	* [r16226] uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  KoboStuff:
+	  * Update uninstaller for Python 3, curl & evemu.
+	  Kind of forgot that I'd made an uninstaller :D.
+
+2019-07-19 21:09  NiLuJe
+
+	* [r16225] build/build-updates.sh:
+	  
+	  KoboStuff:
+	  * Setup curl & evemu symlinks (Kobo ships with an evtest binary in
+	  /bin)
+
+2019-07-19 21:01  NiLuJe
+
+	* [r16223] README:
+	  
+	  Kindle Hacks:
+	  * Update CREDITs in preparation of evemu/evtest/curl
+
+2019-07-12 02:38  NiLuJe
+
+	* [r16162] README:
+	  
+	  Kindle Hacks:
+	  * Minor cosmetic tweak
+
+2019-07-12 02:33  NiLuJe
+
+	* [r16160] build/build-updates.sh:
+	  
+	  Kindle Hacks:
+	  * Make sure we deref hardlinks when creating tarballs that might be
+	  unpacked on vfat...
+
+2019-07-12 02:13  NiLuJe
+
+	* [r16159] build/build-updates.sh,
+	  src/usr/local/stuff/bin/python-setup.sh:
+	  
+	  Kindle Hacks:
+	  * Link to python3.7, not python3.7m
+	  They're hardlinks, and tar is helpfully storing them as such, which
+	  doesn't work when expanded on vfat.
+	  python3.7 wins, 3.7m loses.
+
+2019-07-12 02:02  NiLuJe
+
+	* [r16158] README:
+	  
+	  Kobo Hacks:
+	  * Warn that the install process may take a while on crappy storage.
+
+2019-07-12 00:53  NiLuJe
+
+	* [r16153] build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * Ship Python 3!
+
+2019-07-12 00:09  NiLuJe
+
+	* [r16152] README:
+	  
+	  Kindle Hacks:
+	  * Update Python CREDITS to include Python 3
+
+2019-07-11 19:56  NiLuJe
+
+	* [r16150] src/usr/local/stuff/bin/python-setup.sh:
+	  
+	  Kobo Hacks:
+	  * Leave a blank line betwene text & progress bar
+	  (On the off-chance text might take two lines on low dpi devices).
+
+2019-07-11 05:01  NiLuJe
+
+	* [r16149] src/usr/local/stuff/bin/python-setup.sh:
+	  
+	  Kindle Hacks:
+	  * Python:
+	  * Stricter storage requirement on Kindle.
+	  Because, unlike on Kobo, when this check is run, Python is completely
+	  gone.
+
+2019-07-11 04:57  NiLuJe
+
+	* [r16148] src/usr/local/stuff/bin/python-setup.sh:
+	  
+	  Kindle Hacks:
+	  * Python:
+	  * Increase storage requirements in preparation of Python 3
+
+2019-07-11 04:44  NiLuJe
+
+	* [r16147] src/usr/local/stuff/bin/python-setup.sh:
+	  
+	  Kobo Hacks:
+	  * Make shellcheck mostly happy
+
+2019-07-11 04:43  NiLuJe
+
+	* [r16146] src/usr/local/stuff/bin/python-setup.sh:
+	  
+	  Kobo Hacks:
+	  * Implement automagic progress bar
+
+2019-07-11 04:38  NiLuJe
+
+	* [r16145] src/usr/local/stuff/bin/python-setup.sh:
+	  
+	  Kobo Hacks:
+	  * Start updating Python setup for Python 3
+
+2019-06-18 20:14  NiLuJe
+
+	* [r16046] README:
+	  
+	  Kindle Hacks:
+	  * Add zsh-syntax-highlighting to CREDITs
+
+2019-04-09 15:12  NiLuJe
+
+	* [r15865] README:
+	  
+	  Kindle Hacks:
+	  * Bundle gprof properly everywhere
+
+2019-04-06 22:00  NiLuJe
+
+	* [r15863] build/build-updates.sh,
+	  uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  Kobo Hacks:
+	  * Symlink gprof
+
+2019-04-06 05:29  NiLuJe
+
+	* [r15861] README:
+	  
+	  Kobo Hacks:
+	  * Good to go on 4.13 ;)
+
+2019-01-08 06:19  NiLuJe
+
+	* [r15719] README:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Reword a few things
+
+2019-01-08 06:16  NiLuJe
+
+	* [r15718] README:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Awesome typo.
+
+2019-01-08 06:15  NiLuJe
+
+	* [r15717] README:
+	  
+	  Kobo Hacks:
+	  * KoboStuff: Update the "tested on" spiel a bit ;).
+
+2019-01-08 06:13  NiLuJe
+
+	* [r15716] README:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Mention a few of the extra Python modules we ship
+
+2019-01-08 06:11  NiLuJe
+
+	* [r15715] README:
+	  
+	  Kindle Hacks:
+	  * We now ship identify & mogrify from IM, too.
+
+2019-01-08 06:09  NiLuJe
+
+	* [r15714] README:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Mention KFMon's possible handling of the USBNet toggle script
+
+2019-01-03 04:43  NiLuJe
+
+	* [r15703] build/build-updates.sh:
+	  
+	  Kindle Hacks:
+	  * Update packaging scripts for new libs/binaries
+
+2018-12-18 22:47  NiLuJe
+
+	* [r15619] build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * Prepare for new IM binaries
+
+2018-12-16 23:49  NiLuJe
+
+	* [r15613] README:
+	  
+	  KoboStuff:
+	  * Update FW range in README ;).
+
+2018-11-23 21:04  NiLuJe
+
+	* [r15570] src/usr/local/stuff/bin/stuff.sh:
+	  
+	  Kobo Hacks:
+	  * Run things via setsid when we're started from an udev rule.
+	  That's an extra setsid() + fork(), mirroring daemon(), and should
+	  ensure we'll never get killed by udev for being slow.
+	  Not that we ever did, since we basically only launch daemons that were
+	  already doing that later ;).
+
+2018-11-18 20:48  NiLuJe
+
+	* [r15550] build/build-updates.sh:
+	  
+	  KoboStuff:
+	  * Fix uninstaller tarball creation
+
+2018-11-18 20:47  NiLuJe
+
+	* [r15549] build/build-updates.sh:
+	  
+	  KoboStuff:
+	  * Fix yet another stupid path issue
+
+2018-11-18 20:45  NiLuJe
+
+	* [r15548] build/build-updates.sh:
+	  
+	  KoboStuff:
+	  * Oops, fix uninstaller location
+
+2018-11-18 20:42  NiLuJe
+
+	* [r15547] uninstall/usr/local/stuff/bin/self-destruct.sh:
+	  
+	  KoboStuff:
+	  * Shellchecked the uninstaller. Now has a vague chance of actually
+	  working as intended ;p.
+
+2018-11-18 20:39  NiLuJe
+
+	* [r15546] build/build-updates.sh:
+	  
+	  KoboStuff:
+	  * Package the uninstaller (like KFMon, piggyback on the existing udev
+	  rule)
+
+2018-11-18 20:35  NiLuJe
+
+	* [r15545] uninstall/usr/local/stuff/bin/self-destruct.sh,
+	  uninstall/usr/local/stuff/bin/stuff.sh:
+	  
+	  KoboStuff:
+	  * SVN keyword shenanigans...
+
+2018-11-18 20:34  NiLuJe
+
+	* [r15544] build/build-updates.sh, src/usr/local/stuff/bin/stuff.sh,
+	  uninstall[ADD], uninstall/usr[ADD], uninstall/usr/local[ADD],
+	  uninstall/usr/local/stuff[ADD], uninstall/usr/local/stuff/bin[ADD],
+	  uninstall/usr/local/stuff/bin/self-destruct.sh[ADD],
+	  uninstall/usr/local/stuff/bin/stuff.sh[ADD]:
+	  
+	  KoboStuff:
+	  * Start working on an uninstaller
+
+2018-11-18 18:58  NiLuJe
+
+	* [r15543] src/usr/local/niluje/usbnet/etc/inetd.conf:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Whitespace monster!
+
+2018-11-09 18:51  NiLuJe
+
+	* [r15530] src/usr/local/stuff/bin/python-setup.sh:
+	  
+	  KoboStuff:
+	  * Python:
+	  * Fix fbink message...
+
+2018-09-10 02:32  NiLuJe
+
+	* [r15425] src/usr/local/stuff/bin/python-setup.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Clear two lines before a new progress report, to avoid leaving stray
+	  stuff on screen after a multi-line print.
+
+2018-07-19 16:00  NiLuJe
+
+	* [r15226] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * More Mark7 USBNet tweaks
+
+2018-07-19 15:56  NiLuJe
+
+	* [r15225] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Possibly make USBNet work for good on Mark7?
+
+2018-07-10 13:17  NiLuJe
+
+	* [r15167] README:
+	  
+	  Kobo Hacks:
+	  * Kobo Stuff:
+	  * Reword that a bit ;).
+
+2018-06-30 20:49  NiLuJe
+
+	* [r15121] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Sleep a bit between module insert/remove, because everything is
+	  terrible and race-y.
+
+2018-06-21 15:53  NiLuJe
+
+	* [r15098] README:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Update README to mention new stuff
+
+2018-06-16 01:10  NiLuJe
+
+	* [r15074] src/usr/local/stuff/bin/python-setup.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Abort python-setup when bytecode is already up to date
+
+2018-06-16 01:02  NiLuJe
+
+	* [r15073] src/usr/local/stuff/bin/python-setup.sh,
+	  src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Plug some fbink status messages in USBNet & Python setup scripts
+
+2018-06-16 00:57  NiLuJe
+
+	* [r15072] README:
+	  
+	  Kindle Hacks:
+	  * And update CREDITS for FBInk
+
+2018-06-16 00:56  NiLuJe
+
+	* [r15071] build/build-updates.sh:
+	  
+	  Kindle Hacks:
+	  * Bundle FBInk w/ USBNet
+
+2018-06-15 21:55  NiLuJe
+
+	* [r15069] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Yup, it indeed looks like my educated guess for USBNet on Mark7 was
+	  right on the money ;).
+
+2018-06-10 13:29  NiLuJe
+
+	* [r15051] build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Err, what? Drop that comment, it makjes no sense.
+
+2018-06-09 15:19  NiLuJe
+
+	* [r15047] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Jot down some ideas for USBNet on Mark7...
+
+2018-06-09 14:54  NiLuJe
+
+	* [r15046] src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Disable USBNet toggle on Mark7 until we get confirmation of how it's
+	  supposed to work...
+
+2018-05-30 16:55  NiLuJe
+
+	* [r14987] README, build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Tag v1.5.N
+
+2018-05-14 20:49  NiLuJe
+
+	* [r14918] README:
+	  
+	  Kindle Hacks:
+	  * KoboStuff:
+	  * Time flies when you're having fun!
+
+2018-05-13 21:50  NiLuJe
+
+	* [r14885] build/build-updates.sh:
+	  
+	  Kindle Hacks:
+	  * KoboStuff:
+	  * Looks sane! :)
+
+2018-05-01 22:05  NiLuJe
+
+	* [r14824] build/build-updates.sh:
+	  
+	  Kindle Hacks:
+	  * KoboStuff:
+	  * Add a FIXME regarding the latest change so that I remember to
+	  double-check it ;p.
+
+2018-05-01 21:53  NiLuJe
+
+	* [r14823] build/build-updates.sh:
+	  
+	  Kindle Hacks:
+	  * KoboStuff:
+	  * Match official KoboRoot more closely (root:root, leading .)
+
+2016-04-11 15:50  NiLuJe
+
+	* [r13159] README, build/build-updates.sh:
+	  
+	  Kindle Hacks:
+	  * Install an objdump binary from binutils, since the one from elfutils
+	  can't deal with ARM yet ;).
+
+2016-03-02 16:55  NiLuJe
+
+	* [r13000] build/build-updates.sh:
+	  
+	  Kindle Hacks:
+	  * X-TC:
+	  * Fix gdb install
+
+2016-03-02 16:06  NiLuJe
+
+	* [r12999] build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Setup symlinks for gdb
+
+2016-03-02 15:57  NiLuJe
+
+	* [r12998] README:
+	  
+	  Kindle Hacks:
+	  * Update CREDITS for gdb
+
+2016-02-20 21:31  NiLuJe
+
+	* [r12949] README:
+	  
+	  Kindle Hacks:
+	  * Update CREDITS for tmux & libevent
+
+2016-02-20 19:20  NiLuJe
+
+	* [r12945] build/build-updates.sh:
+	  
+	  Kindle Hacks:
+	  * USBNetwork:
+	  * Build & install tmux :)
+
+2016-01-16 19:06  NiLuJe
+
+	* [r12794] README:
+	  
+	  Kindle Hacks:
+	  * X-TC:
+	  * Tag v2016.01
+
+2015-10-31 15:40  NiLuJe
+
+	* [r12570] README:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Touch to rbump
+
+2015-09-20 11:03  NiLuJe
+
+	* [r12430] README:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Bump
+
+2015-08-19 16:43  NiLuJe
+
+	* [r12255] build/build-updates.sh:
+	  
+	  Kindle Hacks:
+	  * USBNet:
+	  * Bundle & symlink ag :)
+
+2015-08-19 16:34  NiLuJe
+
+	* [r12254] README:
+	  
+	  Kindle Hacks:
+	  * Add ag to credits
+
+2015-08-18 15:41  NiLuJe
+
+	* [r12241] README:
+	  
+	  Kindle Hacks:
+	  * Update credits for xzdec :).
+
+2015-08-18 15:40  NiLuJe
+
+	* [r12240] build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Update forthe move to xz Python archives
+
+2015-08-16 10:33  NiLuJe
+
+	* [r12203] README:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries (TC update)
+
+2015-08-13 18:12  NiLuJe
+
+	* [r12132] README:
+	  
+	  Kindle Hacks:
+	  * We'll be shipping ncurses 6 in the next snapshots... Fix build
+	  scripts & credits.
+
+2015-07-25 18:21  NiLuJe
+
+	* [r12082] build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * Scratch that, that was a genuine broken archive (WTF?!)
+
+2015-07-25 18:12  NiLuJe
+
+	* [r12081] build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * ... And now lbzip2 is acting up on my host, too...
+
+2015-06-13 14:57  NiLuJe
+
+	* [r12025] README:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2015-06-05 22:17  NiLuJe
+
+	* [r12019] README:
+	  
+	  Kindle Hacks:
+	  • Refresh binaries
+
+2015-05-31 01:14  NiLuJe
+
+	* [r12014] README:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2015-05-08 15:32  NiLuJe
+
+	* [r11974] README, build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Tag v1.4.N
+
+2015-05-01 21:35  NiLuJe
+
+	* [r11929] README:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Update tested FW range in the doc
+
+2015-04-28 19:31  NiLuJe
+
+	* [r11910] build/build-updates.sh,
+	  src/usr/local/stuff/bin/python-setup.sh,
+	  src/usr/local/stuff/bin/usbnet-toggle.sh:
+	  
+	  The great shebang enfixening!
+
+2015-04-27 00:29  NiLuJe
+
+	* [r11901] README:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Document the usbnet toggle script.
+
+2015-04-26 23:41  NiLuJe
+
+	* [r11900] src/usr/local/stuff/bin/usbnet-toggle.sh[ADD]:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Add a simple USBNet toggle script
+
+2015-03-07 16:23  NiLuJe
+
+	* [r11725] README:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2015-03-07 01:33  NiLuJe
+
+	* [r11721] README:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Touch to bump
+
+2015-02-26 17:00  NiLuJe
+
+	* [r11697] README:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Touch to bump
+
+2015-02-24 02:22  NiLuJe
+
+	* [r11626] build/build-updates.sh:
+	  
+	  Kindle Hacks:
+	  * Typo in a comment.
+	  * Confirm that the reason we can't use lbzip2 -u is the
+	  horrendously old busybox version bundled on Kindles...
+
+2015-02-23 23:55  NiLuJe
+
+	* [r11625] README:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Touch
+
+2015-02-23 22:43  NiLuJe
+
+	* [r11622] build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Whoops, fix build script.
+
+2015-02-23 22:30  NiLuJe
+
+	* [r11620] build/build-updates.sh:
+	  
+	  Kindle Hacks:
+	  * Parallelize compression in buildscripts... (lbzip2, pigz & threaded
+	  xz)
+
+2015-02-23 21:32  NiLuJe
+
+	* [r11619] README:
+	  
+	  Fix upload on vanilla setups
+
+2015-02-23 02:18  NiLuJe
+
+	* [r11604] README:
+	  
+	  Kindle Hacks:
+	  * refresh binaries (fix readline)
+
+2015-02-22 17:43  NiLuJe
+
+	* [r11581] README, build/build-updates.sh:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries (zsh & nano)
+
+2015-02-22 04:34  NiLuJe
+
+	* [r11573] build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Drop the VERSION file on device, too.
+
+2015-02-19 23:45  NiLuJe
+
+	* [r11556] README:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Forgot to update those credits...
+
+2015-02-19 23:38  NiLuJe
+
+	* [r11555] README:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Touch to bump
+
+2015-02-18 21:46  NiLuJe
+
+	* [r11542] README:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Touch to bump rev
+
+2015-02-17 23:35  NiLuJe
+
+	* [r11537] README:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries (Linaro 4.9 2015.02)
+
+2015-02-13 17:17  NiLuJe
+
+	* [r11508] README:
+	  
+	  Kindle Hacks:
+	  * Update dropbear binaries (kill trace printf debugging in verbose
+	  mode)
+
+2015-02-12 20:49  NiLuJe
+
+	* [r11506] README:
+	  
+	  Kobo hacks:
+	  * KoboStuff:
+	  * Touch to bump rev.
+
+2015-01-31 19:58  NiLuJe
+
+	* [r11464] README:
+	  
+	  Kindle Hacks:
+	  * Refresh binaries
+
+2015-01-18 08:22  NiLuJe
+
+	* [r11433] README:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Update readme
+
+2015-01-11 04:06  NiLuJe
+
+	* [r11391] README, src/usr/local/stuff/bin/stuff-daemons.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Enable dropbear's nopasswd flag by default
+	  (telnetd is already passwordless, so be consistent).
+	  Update the readme to explain how to tighten things up.
+
+2015-01-11 03:14  NiLuJe
+
+	* [r11390] build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Tag v1.3.N
+
+2015-01-11 02:41  NiLuJe
+
+	* [r11387] build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Less stupid packaging
+
+2015-01-11 02:33  NiLuJe
+
+	* [r11386] src/usr/local/stuff/bin/python-setup.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Forgot to move Python, too...
+
+2015-01-11 02:30  NiLuJe
+
+	* [r11385] README, build/build-updates.sh, src/mnt[DEL],
+	  src/usr/local/niluje[ADD], src/usr/local/niluje/usbnet[ADD],
+	  src/usr/local/niluje/usbnet/etc[ADD],
+	  src/usr/local/niluje/usbnet/etc/inetd.conf[CPY],
+	  src/usr/local/stuff/bin/python-setup.sh[CPY],
+	  src/usr/local/stuff/bin/stuff-daemons.sh,
+	  src/usr/local/stuff/bin/stuff.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Handle the impending move.
+	  Most binaries moved to /mnt/onboard/.niluje, while
+	  busybox & dropbear went to /usr/local/niluje
+	  Hopefully this should be less screwy with USBMS...
+
+2015-01-11 00:09  NiLuJe
+
+	* [r11383] build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Really unbreak packaging...
+
+2015-01-11 00:04  NiLuJe
+
+	* [r11382] build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Tag v1.2.N
+
+2015-01-11 00:04  NiLuJe
+
+	* [r11381] build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Unbreak the packaging again ;p.
+
+2015-01-11 00:01  NiLuJe
+
+	* [r11380] src/usr/local/stuff/bin/stuff-daemons.sh:
+	  
+	  Kobo Hacks:
+	  * Kobo Stuff:
+	  * Play it safer in the onboard check, I'm not familiar enough with the
+	  partition layout Kobo uses across its devices...
+
+2015-01-10 23:58  NiLuJe
+
+	* [r11379] README, src/etc/udev/rules.d/99-stuff.rules,
+	  src/mnt/onboard/.kobo/stuff/stuff-daemons.sh[DEL],
+	  src/mnt/onboard/.kobo/stuff/stuff.sh[DEL], src/usr[ADD],
+	  src/usr/local[ADD], src/usr/local/stuff[ADD],
+	  src/usr/local/stuff/bin[ADD],
+	  src/usr/local/stuff/bin/stuff-daemons.sh[CPY],
+	  src/usr/local/stuff/bin/stuff.sh[CPY]:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Make sure onboard is up, part 2.
+
+2015-01-10 23:50  NiLuJe
+
+	* [r11378] src/mnt/onboard/.kobo/stuff/stuff-daemons.sh[CPY],
+	  src/mnt/onboard/.kobo/stuff/stuff.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Make sure onboard is up before trying to run stuff from it (step 1
+	  of 2)
+
+2015-01-10 18:52  NiLuJe
+
+	* [r11377] src/mnt/onboard/.kobo/stuff/stuff.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Make sure we correct udev's inherited negative nice value.
+	  Wouldn't want to deadlock the system.
+
+2015-01-10 17:57  NiLuJe
+
+	* [r11375] README:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Now that I remember where I saw the udev trick, namecheck people ;)
+
+2015-01-10 17:27  NiLuJe
+
+	* [r11372] README, src/mnt/onboard/.kobo/stuff/python-setup.sh[ADD]:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Add a helper script to rebuild the ython bytecode
+
+2015-01-10 16:58  NiLuJe
+
+	* [r11371] build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Fix packaging
+
+2015-01-10 16:53  NiLuJe
+
+	* [r11370] build/build-updates.sh, src/mnt/onboard/.kobo/stuff/stuff.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Tag v1.1.N
+
+2015-01-10 16:51  NiLuJe
+
+	* [r11369] README, src/etc/inetd.conf.user[DEL], src/etc/init.d[DEL],
+	  src/etc/inittab[DEL], src/mnt/onboard/.kobo/stuff/stuff.sh,
+	  src/mnt/onboard/.kobo/usbnet[ADD],
+	  src/mnt/onboard/.kobo/usbnet/etc[ADD],
+	  src/mnt/onboard/.kobo/usbnet/etc/inetd.conf[CPY],
+	  src/mnt/onboard/.kobo/usbnet/run[ADD]:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Get rid of the custom inittab, and do everything through udev.
+	  That means we don't touch any system files now, yay.
+
+2015-01-08 18:46  NiLuJe
+
+	* [r11360] README:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Add an Id tag to the readme
+
+2015-01-08 18:46  NiLuJe
+
+	* [r11359] README:
+	  
+	  Kobo Hacks:
+	  * Kobo Stuff:
+	  * Mention how to lock things up a bit tighter.
+
+2015-01-07 23:41  NiLuJe
+
+	* [r11358] README:
+	  
+	  Kobo Hacks:
+	  * Kobo Stuff:
+	  * Update ReadMe
+
+2015-01-07 23:37  NiLuJe
+
+	* [r11357] build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * Kobo Stuff:
+	  * Stupid and inconsequential c/p typo
+
+2015-01-07 23:31  NiLuJe
+
+	* [r11356] build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * Kobo Stuff:
+	  * Make the build-script package it too, since I'm probably not gonna
+	  build seventy billion of those
+
+2015-01-07 23:20  NiLuJe
+
+	* [r11355] README[ADD]:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Add a readme
+
+2015-01-07 22:01  NiLuJe
+
+	* [r11352] src/etc/inetd.conf.user:
+	  
+	  Kobo Hacks:
+	  * Kobo Stuff:
+	  * Fix dropbear...
+
+2015-01-07 21:42  NiLuJe
+
+	* [r11351] build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Nice typo.
+
+2015-01-07 21:39  NiLuJe
+
+	* [r11350] src/etc/inittab:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Forgot a few comments
+
+2015-01-07 21:37  NiLuJe
+
+	* [r11349] build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Don't ship gawk twice
+
+2015-01-07 21:34  NiLuJe
+
+	* [r11348] build/build-updates.sh:
+	  
+	  Kobo Hacks:
+	  * KoboStuff:
+	  * Make sure we don't have any weird leading stuff in the tarball
+	  paths, you never know...
+
+2015-01-07 21:29  NiLuJe
+
+	* [r11347] .[ADD], build[ADD], build/build-updates.sh[ADD], src[ADD],
+	  src/etc[ADD], src/etc/inetd.conf.user[ADD], src/etc/init.d[ADD],
+	  src/etc/init.d/rcS2[ADD], src/etc/inittab[ADD], src/etc/udev[ADD],
+	  src/etc/udev/rules.d[ADD], src/etc/udev/rules.d/99-stuff.rules[ADD],
+	  src/mnt[ADD], src/mnt/onboard[ADD], src/mnt/onboard/.kobo[ADD],
+	  src/mnt/onboard/.kobo/stuff[ADD],
+	  src/mnt/onboard/.kobo/stuff/stuff.sh[ADD]:
+	  
+	  Kobo Hacks:
+	  * Initial import of KoboStuff
+	  That's basically all my binaries dumped in a sack and symlinked in
+	  $PATH
+	  Plus ftpd/telnetd/sshd through inetd
+	  And a hook script run at boot
+

@@ -1,0 +1,31 @@
+# Indent menu label with leading <Colon> 0u00a0 <Space>.. (char decimal 160)
+# -----------------------------------------------------------------------
+  menu_item  :main       :Dark Mode          :nickel_setting  :toggle  :dark_mode
+  menu_item  :main       :      Invert       :nickel_setting  :toggle  :invert
+  menu_item  :main       :      Screenshots  :nickel_setting  :toggle  :screenshots
+  menu_item  :main       :WiFi               :nickel_wifi     :enable
+                          chain_success      :nickel_wifi     :autoconnect_silent
+  menu_item  :main       :      Airplane     :nickel_wifi     :disable
+  menu_item  :main       :      IP Address   :cmd_output      :500     :/sbin/ifconfig | /usr/bin/awk '/inet addr/{print substr($2,6)}'
+  menu_item  :main       :USB                :nickel_misc     :force_usb_connection 
+  menu_item  :main       :      Reboot       :power           :reboot 
+  menu_item  :main       :      Shutdown     :power           :shutdown
+# ------------------------------------------------------------------------
+  menu_item  :reader     :Dark Mode          :nickel_setting  :toggle  :dark_mode
+  menu_item  :reader     :      Invert       :nickel_setting  :toggle  :invert
+  menu_item  :reader     :      Screenshots  :nickel_setting  :toggle  :screenshots
+  menu_item  :reader     :WiFi               :nickel_wifi     :enable
+                          chain_success      :nickel_wifi     :autoconnect_silent
+  menu_item  :reader     :      Airplane     :nickel_wifi     :disable
+  menu_item  :reader     :      Shutdown     :power           :shutdown
+# ------------------------------------------------------------------------
+  menu_item  :library    :Import books       :nickel_misc     :rescan_books_full
+# ------------------------------------------------------------------------
+  menu_item  :selection  :Translation        :cmd_output      :9999    :/usr/bin/wget --header='Authorization: DeepL-Auth-Key 55eafa5e-1dd9-8368-a08a-b74da3d7822e:fx' --post-data='target_lang=EN&text={1|S|%}' -qO - https://api-free.deepl.com/v2/translate | jq '.translations[0].text' | fold -s -w 55 
+  menu_item  :selection  :      WiFi         :nickel_wifi     :enable
+                          chain_success      :nickel_wifi     :autoconnect_silent
+  menu_item  :selection  :      Airplane     :nickel_wifi     :disable
+# -----------------------------------------------------------------------
+  experimental           :menu_main_15505_label               :Toggle
+  experimental           :menu_main_15505_icon                :/mnt/onboard/.adds/nm/.icon.png
+  experimental           :menu_main_15505_icon_active         :/mnt/onboard/.adds/nm/.icon_active.png
