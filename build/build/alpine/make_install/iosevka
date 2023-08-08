@@ -215,10 +215,10 @@ elif [ $coding ] ;then                    # classic coding font
 else                                      # desktop fonts
   cmdopts cap extended altmono
   dfont $leading $altmono  I-descending
-  dfont proof    $altmono  I-descending     Q-straight
-  dfont menu     $altmono                   Q-straight
-  dfont dyslexic $altmono                   Q-straight   J-flat   space 2 family qclocktwo    # conky qclocktwo font
-  dfont dyslexic $altmono  quasi-extension  I-descending extended space M family monograffic  # panel/dunst/browser font
+  dfont proof    $altmono  I-descending Q-straight
+  dfont menu     $altmono  I-descending Q-straight
+  dfont dyslexic $altmono               Q-straight      J-flat   space 2 family qclocktwo    # conky qclocktwo font
+  dfont dyslexic $altmono  I-descending quasi-extension extended space M family monograffic  # panel/dunst/browser font
 fi
 
 # vim: set ft=sh: #
