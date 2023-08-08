@@ -1,0 +1,6 @@
+[ ] test parser
+[ ] design parser
+[ ] design template.txt
+[ ] actually write the parser
+
+https://github.com/qmk/qmk_firmware/blob/e1203a222bb12ab9733916164a000ef3ac48da93/tmk_core/common/matrix.h

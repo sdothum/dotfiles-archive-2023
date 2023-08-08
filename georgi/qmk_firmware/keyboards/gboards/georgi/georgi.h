@@ -6,6 +6,12 @@
 #include "i2c_master.h"
 #include "matrix.h"
 
+// missing keycodes..
+#define KC_SCOLON   KC_SCLN
+#define KC_LBRACKET KC_LBRC
+#define KC_RBRACKET KC_RBRC
+#define KC_BSLASH   KC_BSLS
+// ..redefined in current qmk master
 
 extern i2c_status_t mcp23018_status;
 #define ERGODOX_EZ_I2C_TIMEOUT 1000
@@ -30,7 +36,7 @@ void init_ergodox(void);
 uint8_t init_mcp23018(void);
 
 /*  ---------- LEFT HAND -----------   ---------- RIGHT HAND ---------- */
-#define LAYOUT_georgi(                                            \
+#define LAYOUT_GEORGI(                                            \
     L00,L01,L02,L03,L04,L05,            R00,R01,R02,R03,R04,R05,  \
     L10,L11,L12,L13,L14,L15,            R10,R11,R12,R13,R14,R15,  \
                	L20,L21,L22,            R20,R21,R22)              \
