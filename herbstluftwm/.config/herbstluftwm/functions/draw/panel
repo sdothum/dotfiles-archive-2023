@@ -28,6 +28,9 @@ PANEL_UNDERLINE=2
 
 # tic indicator: none (unset), dot, circle, square, bar, tape, seconds
 [ -e $TICKER ] && { TIC=$(cat $TICKER); TIC=${TIC:-tape}; }
+tagcount=$(echo $TAGS | awk '{print $NF}')
+counter=0   # desktops
+cardinal=0  # directions
 
 # panel symbols (tag numbers option dropped to simplify colour assignments)
 OCCUPIED='■'
@@ -36,6 +39,7 @@ TAG_PAD='    '          # tag bar separator (visual spacing)
 STATPAD=${TAG_PAD% }
 [ $(query displaywidth) -lt 1920 ] && scaledown=true
 [ $scaledown ] && { TAG_PAD='  '; LSEP=${LSEP# }; LSEP=${LSEP% }; RSEP=${RSEP# }; RSEP=${RSEP% }; STATPAD=$TAG_PAD; }
+TRIANGLES="▶ ◢ ▼ ◣ ◀ ◤ ▲ ◥"
 
 # panel theme
 DEFAULT_BG='#00000000'  # alpha channel for panel transparency with picom
@@ -44,6 +48,8 @@ ACTIVE_FG="#$(rice color active)"
 INACTIVE_FG="#$(rice color inactive)"
 FREE_FG="#$(rice color free)"
 OCCUPIED_FG=$FREE_FG
+# $STARTREK == ['', #<color>, $ACTIVE_FG, ..] 
+[ -s $STARTREK ] && eval VIEWSCREEN="%{F$(cat $STARTREK)}"
 
 [ -e $PMARGIN ] && margin=$(cat $PMARGIN) || return  # wait for draw monitor to complete, initialize in autostart
 [ -s $PANEL_HEIGHT ] && PANEL_HEIGHT=$(cat $PANEL_HEIGHT) || PANEL_HEIGHT=$(query pheight)
@@ -93,11 +99,11 @@ desktops() {
   inactive=$(query tag inactive)
   unset tags
   for i in $(query winids) ;do tags="$tags $(herbstclient attr clients.$i.tag)" ;done
-  unset desktops
+  unset desktops viewscreen
   for i in $TAGS ;do
     format="%{B$DEFAULT_BG}"
     if echo $tags | grep -q $i ;then
-      echo $tags | egrep -q "^$i| $i" && visible=true || unset visible
+      echo $tags | grep -E -q "^$i| $i" && visible=true || unset visible
       echo $tags | grep -q "'$i" && hidden=true || unset hidden
       [ $visible ] && tag=$OCCUPIED || tag=$FREE
       if [ $i = "$active" ] ;then
@@ -123,6 +129,7 @@ desktops() {
       fi
     fi
     desktops="${desktops}${TAG_PAD}${format}${tag}%{-u}%{U-}%{B-}%{F-}"
+    viewscreen="${viewscreen} ${format} ${tag}"  # star trek!
   done
   [ -e $STAT ] || desktops="${desktops}$TAG_PAD"  # center tags with triple padding, see $stat
 }
@@ -208,31 +215,31 @@ bar() {
   tic=${line#*|}
   tic=${tic%|*}
   case $tic in
-  00      ) tic=' ' ;;
-  0[2468] ) tic="%{F$DEFAULT_FG}▁%{F-}" ;;
-  0[13579]) tic="%{F$DEFAULT_FG}▂%{F-}" ;;
-  10      ) tic="%{F$DEFAULT_FG}▁%{F-}" ;;
-  1[2468] ) tic="%{F$DEFAULT_FG}▂%{F-}" ;;
-  1[13579]) tic="%{F$DEFAULT_FG}▃%{F-}" ;;
-  20      ) tic="%{F$DEFAULT_FG}▂%{F-}" ;;
-  2[2468] ) tic="%{F$DEFAULT_FG}▃%{F-}" ;;
-  2[13579]) tic="%{F$DEFAULT_FG}▄%{F-}" ;;
-  30      ) tic="%{F$DEFAULT_FG}▃%{F-}" ;;
-  3[2468] ) tic="%{F$DEFAULT_FG}▄%{F-}" ;;
-  3[13579]) tic="%{F$DEFAULT_FG}▅%{F-}" ;;
-  40      ) tic="%{F$DEFAULT_FG}▄%{F-}" ;;
-  4[2468] ) tic="%{F$DEFAULT_FG}▅%{F-}" ;;
-  4[13579]) tic="%{F$DEFAULT_FG}▆%{F-}" ;;
-  50      ) tic="%{F$DEFAULT_FG}│%{F-}" ;;
-  51      ) tic="%{F$DEFAULT_FG}┃%{F-}" ;;
-  52      ) tic="%{F$DEFAULT_FG}█%{F-}" ;;
-  53      ) tic="%{F$DEFAULT_FG}▇%{F-}" ;;
-  54      ) tic="%{F$DEFAULT_FG}▆%{F-}" ;;
-  55      ) tic="%{F$DEFAULT_FG}▅%{F-}" ;;
-  56      ) tic="%{F$DEFAULT_FG}▄%{F-}" ;;
-  57      ) tic="%{F$DEFAULT_FG}▃%{F-}" ;;
-  58      ) tic="%{F$DEFAULT_FG}▂%{F-}" ;;
-  59      ) tic="%{F$DEFAULT_FG}▁%{F-}" ;;
+    00      ) tic=' ' ;;
+    0[2468] ) tic="%{F$DEFAULT_FG}▁%{F-}" ;;
+    0[13579]) tic="%{F$DEFAULT_FG}▂%{F-}" ;;
+    10      ) tic="%{F$DEFAULT_FG}▁%{F-}" ;;
+    1[2468] ) tic="%{F$DEFAULT_FG}▂%{F-}" ;;
+    1[13579]) tic="%{F$DEFAULT_FG}▃%{F-}" ;;
+    20      ) tic="%{F$DEFAULT_FG}▂%{F-}" ;;
+    2[2468] ) tic="%{F$DEFAULT_FG}▃%{F-}" ;;
+    2[13579]) tic="%{F$DEFAULT_FG}▄%{F-}" ;;
+    30      ) tic="%{F$DEFAULT_FG}▃%{F-}" ;;
+    3[2468] ) tic="%{F$DEFAULT_FG}▄%{F-}" ;;
+    3[13579]) tic="%{F$DEFAULT_FG}▅%{F-}" ;;
+    40      ) tic="%{F$DEFAULT_FG}▄%{F-}" ;;
+    4[2468] ) tic="%{F$DEFAULT_FG}▅%{F-}" ;;
+    4[13579]) tic="%{F$DEFAULT_FG}▆%{F-}" ;;
+    50      ) tic="%{F$DEFAULT_FG}│%{F-}" ;;
+    51      ) tic="%{F$DEFAULT_FG}┃%{F-}" ;;
+    52      ) tic="%{F$DEFAULT_FG}█%{F-}" ;;
+    53      ) tic="%{F$DEFAULT_FG}▇%{F-}" ;;
+    54      ) tic="%{F$DEFAULT_FG}▆%{F-}" ;;
+    55      ) tic="%{F$DEFAULT_FG}▅%{F-}" ;;
+    56      ) tic="%{F$DEFAULT_FG}▄%{F-}" ;;
+    57      ) tic="%{F$DEFAULT_FG}▃%{F-}" ;;
+    58      ) tic="%{F$DEFAULT_FG}▂%{F-}" ;;
+    59      ) tic="%{F$DEFAULT_FG}▁%{F-}" ;;
   esac
 }
 
@@ -257,35 +264,53 @@ tape() {
 
 # ................................................................ Weather watch
 
-weather() { unset update_weather; conky weather panel >$WEATHER & }
+weather() { unset update_weather; conky weather panel >/tmp/${WEATHER##*/} & }
 
 # .................................................................. System info
 
 # initialize (for overlay redraw), see draw root
-[ -e $WEATHER ] && { [ -s $WEATHER ] && current_weather=$(cat $WEATHER); weather; }
+[ -e $WEATHER ] && { [ -s /tmp/${WEATHER##*/} ] && current_weather=$(cat /tmp/${WEATHER##*/}); weather; }
 
-touch $STAT:cpu $STAT:temp $STAT:mem
-cpu_usage=$(cat $STAT:cpu)  # to avoid line centering shift
-cpu_temp=$(cat $STAT:temp)
-mem_usage=$(cat $STAT:mem)
+touch /tmp/${STAT##*/}:cpu /tmp/${STAT##*/}:temp /tmp/${STAT##*/}:mem
+cpu_usage=$(cat /tmp/${STAT##*/}:cpu)  # to avoid line centering shift
+cpu_temp=$(cat /tmp/${STAT##*/}:temp)
+mem_usage=$(cat /tmp/${STAT##*/}:mem)
 
 currently() {
   line=$(echo "$line" | sed -r 's/#[{]/%{/g; s/(AM|PM)/\L\1/')  # recover lemonbar format strings, see clock below
+  if [ -e $STARTREK ] ;then
+    [ $counter -lt $tagcount ] && counter=$(( $counter + 1 )) || { counter=1; cardinal=0; }
+    if [ -e $STARTREK:cardinal ] ;then
+      [ $cardinal -lt 8 ] && cardinal=$(( $cardinal + 1 )) || cardinal=1
+      TRIANGLE=$(echo $TRIANGLES | cut -d' ' -f$cardinal)
+    else
+      TRIANGLE=${TRIANGLES%% *}
+    fi
+    set -- ${viewscreen}
+    unset desktops
+    for i in $TAGS ;do
+      [ $counter = $i ] && tag="${VIEWSCREEN}$TRIANGLE" || tag=$2
+      desktops="${desktops}${TAG_PAD}$1${tag}%{-u}%{U-}%{B-}%{F-}"
+      shift 2
+    done
+    [ -e $STAT ] || desktops="${desktops}$TAG_PAD"  # center tags with triple padding, see $stat
+  fi
+
   unset clock
   if [ $TIC ] ;then
     case $TIC in
-    b* ) bar ;;
-    c* ) circle ;;
-    d* ) dot ;;
-    sq*) square ;;
-    s* ) seconds ;;
-    t* ) tape ;;
+      b* ) bar ;;
+      c* ) circle ;;
+      d* ) dot ;;
+      sq*) square ;;
+      s* ) seconds ;;
+      t* ) tape ;;
     esac
     ticker="%{F$DEFAULT_FG}$tic%{F-}"
     case $TIC in
-    se*) clock="$ticker" ;;
-    t* ) clock="$ticker" ;;
-    *  ) clock="  $ticker" ;;
+      se*) clock="$ticker" ;;
+      t* ) clock="$ticker" ;;
+      *  ) clock="  $ticker" ;;
     esac
   fi
 
@@ -293,13 +318,13 @@ currently() {
   if [ -e $WEATHER ] ;then
     minute=${line#*:?}    # hh:mm:ss.* -> m:ss.*
     case ${minute%:*} in  #            -> m
-    0) [ $update_weather ] && weather ;;
-    *) update_weather=true ;;
+      0) [ $update_weather ] && weather ;;
+      *) update_weather=true ;;
     esac
   fi
-  [ -s $WEATHER ] && [ "$(cat $WEATHER)" != '' ] && current_weather=$(cat $WEATHER)  # prevent blanking during update, see weather()
-  line="${line%%^*}${current_weather}${line#*^}"
+  [ -s /tmp/${WEATHER##*/} ] && [ "$(cat /tmp/${WEATHER##*/})" != '' ] && current_weather=$(cat /tmp/${WEATHER##*/})  # prevent blanking during update, see weather()
 
+  line="${line%%^*}${current_weather}${line#*^}"
   line="${line%%|*}${clock}%{F-}${line##*|}"
   system="%{F$DEFAULT_FG}%{B$DEFAULT_BG}${line#?}%{B-}%{F-}"
 }
@@ -311,17 +336,16 @@ musl && MUSL=true || GLIBC=true
 alpine && { GLIBC=true; unset MUSL; }
 
 panel() {
+  desktops  # initialize
   while read -r line ;do
     case $line in
-    S*        ) currently                     ;;  # clock based info
-    X*        ) active_window; desktops       ;;
-    C*        ) [ "${line#?}" = '  0%' ] || cpu_usage=${line#?}; cpu_stat ;;  # ignore 0%
-    T*        ) cpu_temp=${line#?};  cpu_stat ;;
-    # M*      ) mem_usage=$(echo ${line#?} | sed 's/..M/M/'); cpu_stat ;;
-    # M*      ) mem_usage=$(echo ${line#?} | sed 's/..M/ᴹ/; s/G/ᴳ/'); cpu_stat ;;
-    M*        ) mem_usage=$(echo ${line#?} | sed 's/..M/⠍/; s/G/⠛/'); cpu_stat ;;
-    !*        ) echo "$cpu_usage" >$STAT:cpu; echo "$cpu_temp" >$STAT:temp; echo "$mem_usage" >$STAT:mem ;;  # save stats for draw root redraw
-    *_changed*) active_window; desktops ;;
+      S*        ) currently                     ;;  # clock based info
+      X*        ) active_window; desktops       ;;
+      C*        ) [ "${line#?}" = '  0%' ] || cpu_usage=${line#?}; cpu_stat ;;  # ignore 0%
+      T*        ) cpu_temp=${line#?};  cpu_stat ;;
+      M*        ) mem_usage=${line#?}; cpu_stat ;;
+      !*        ) echo "$cpu_usage" >/tmp/${STAT##*/}:cpu; echo "$cpu_temp" >/tmp/${STAT##*/}:temp; echo "$mem_usage" >/tmp/${STAT##*/}:mem ;;  # save stats for draw root redraw
+      *_changed*) active_window; desktops ;;
     esac
     
     [ $MUSL ] && { line=$(xtitle -f 'X%s'); active_window; desktops; }  # see below
@@ -347,9 +371,9 @@ echo $PANEL_FIFO:$fifo >$PANEL_FIFO
 # note physical linebreaks for each format specification (to accomodate slow processors, notably arm)
 # NOTE: lemonbar %{F..} changed to #{F..} for alpine "clock" (fails on % char, see function currently)
 case $TIC in
-se*) clock -i 1 -sf "S^${RSEP}#{F$ACTIVE_FG}| %-I:%M %S%p|#{F-}${RSEP}%a %-d %b '%y" >$PANEL_FIFO:$fifo & ;;
-t* ) clock -i 1 -sf "S^${RSEP}#{F$ACTIVE_FG}| %-I:%M:%S%p|#{F-}${RSEP}%a %-d %b '%y" >$PANEL_FIFO:$fifo & ;;
-*  ) clock -i 1 -sf "S^${RSEP}#{F$ACTIVE_FG}%-I:%M#{F-} %p|%S|${RSEP}%a %-d %b '%y"  >$PANEL_FIFO:$fifo & ;;
+  se*) clock -i 1 -sf "S^${RSEP}#{F$ACTIVE_FG}| %-I:%M %S%p|#{F-}${RSEP}%a %-d %b '%y" >$PANEL_FIFO:$fifo & ;;
+  t* ) clock -i 1 -sf "S^${RSEP}#{F$ACTIVE_FG}| %-I:%M:%S%p|#{F-}${RSEP}%a %-d %b '%y" >$PANEL_FIFO:$fifo & ;;
+  *  ) clock -i 1 -sf "S^${RSEP}#{F$ACTIVE_FG}%-I:%M#{F-} %p|%S|${RSEP}%a %-d %b '%y"  >$PANEL_FIFO:$fifo & ;;
 esac
 
 # event driven panel update
@@ -363,7 +387,7 @@ fi
 if [ -e $STAT ] ;then
   while : ;do sar -u --dec=0 1 1 | tail -1 | awk '{ printf "C%3d%%\n", $3 }'                                                    >$PANEL_FIFO:$fifo;          done &  # cycle >~ 1 second
   while : ;do echo "T$(cpu_temp)°"                                                                                              >$PANEL_FIFO:$fifo; sleep 2; done &
-  while : ;do free -h | grep 'Mem:' | sed -r 's/^[^ ]* *[^ ]* *([0-9.]*)Mi.*/\1⠍/; s/^[^ ]* *[^ ]* *([0-9.]*)Gi.*/\1⠛/; s/^/M/' >$PANEL_FIFO:$fifo; sleep 3; done &
+  while : ;do free -h | grep 'Mem:' | sed -r 's/^[^ ]* *[^ ]* *([0-9.]*)Mi.*/\1ᴹ/; s/^[^ ]* *[^ ]* *([0-9.]*)Gi.*/\1ᴳ/; s/^/M/' >$PANEL_FIFO:$fifo; sleep 3; done &
 fi
 
 cat $PANEL_FIFO:$fifo | panel | lemonbar -d -n "lemonbar:$fifo" \

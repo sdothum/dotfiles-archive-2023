@@ -14,14 +14,14 @@ HIDDEN='□'
 
 action() {
   case $1 in
-  focus) mode='Focus ' ;;
-
-  raise) mode='Raise '
-         tag=$(herbstclient attr monitors.focus.tag)
-         title=" to $(query tname $tag)" ;;
-
-  close) mode='Close ' ;;
-  *    ) return 1 ;;
+    focus) mode='Focus ' ;;
+  
+    raise) mode='Raise '
+           tag=$(herbstclient attr monitors.focus.tag)
+           title=" to $(query tname $tag)" ;;
+  
+    close) mode='Close ' ;;
+    *    ) return 1 ;;
   esac
 }
 
@@ -34,8 +34,11 @@ tag() {
 
 for i in $(query winids) ;do
   TAG=$(herbstclient attr clients.$i.tag)
-  window="$TAG$DLM$(query wtitle $i) ^$(tag)$DLM$i"
-  [ "$windows" ] && windows="$windows\n$window" || windows="$window"
+  # trap  partially updated clients..tag structure for first winid on successive close
+  if [ $TAG ] ;then
+    window="$TAG$DLM$(query wtitle $i) ^$(tag)$DLM$i"
+    [ "$windows" ] && windows="$windows\n$window" || windows="$window"
+  fi
 done
 echo $windows | grep $HIDDEN && hidden="  ⇣$HIDDEN"
 
@@ -57,24 +60,24 @@ if window=$(echo $windows | sort | cut -d$DLM -f2 | column -s\^ -t |
   CLIENT=$(echo $window | cut -d$DLM -f3 | cut -d. -f2)
 
   case $mode in
-  Close*) herbstclient close "$CLIENT"
-          # desktop cleanup loop
-          exec focus hlwm close ;;
-
-  Raise*) focus frame
-          herbstclient bring "$CLIENT" ;;
-
-  *     ) swap_monitors=$(herbstclient get swap_monitors_to_get_tag)
-          lock set swap_monitors_to_get_tag 0
-          if echo $window | grep -q " \^$VISIBLE [0-9]" ;then
-            herbstclient chain . use $TAG . jumpto "$CLIENT"  # focus normal tag
-          else
-            herbstclient use ${TAG#\'}  # focus (restore) tick'tag
-            focus frame
-            herbstclient bring "$CLIENT"
-          fi
-          unlock set swap_monitors_to_get_tag $swap_monitors
-          restore panel ;;
+    Close*) herbstclient close "$CLIENT"
+            # desktop cleanup loop
+            exec focus hlwm close ;;
+  
+    Raise*) focus frame
+            herbstclient bring "$CLIENT" ;;
+  
+    *     ) swap_monitors=$(herbstclient get swap_monitors_to_get_tag)
+            lock set swap_monitors_to_get_tag 0
+            if echo $window | grep -q " \^$VISIBLE [0-9]" ;then
+              herbstclient chain . use $TAG . jumpto "$CLIENT"  # focus normal tag
+            else
+              herbstclient use ${TAG#\'}  # focus (restore) tick'tag
+              focus frame
+              herbstclient bring "$CLIENT"
+            fi
+            unlock set swap_monitors_to_get_tag $swap_monitors
+            restore panel ;;
   esac
   echo $window | grep " $HIDDEN [0-9]${DLM}0x" && query ttag $TAG
 fi

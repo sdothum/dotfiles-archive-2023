@@ -29,40 +29,43 @@ hc rule class=Minitube                     tag=1
 hc rule class=dwb                          tag=1
 hc rule class=luakit                       tag=1
 hc rule title=RSS                          tag=1 index=1 focus=off
-# hc rule title=IM                         tag=2 index=0 focus=on
-# hc rule title=IRC                        tag=2 index=1 focus=on
-# hc rule class=firefox                    tag=2 once index=0 focus=on hook=max
-hc rule class=Pidgin                       tag=2
-hc rule class=surf                         tag=2 once index=0 focus=on
-hc rule title=IM                           tag=2 focus=on
-hc rule title=Messenger                    tag=2 focus=on
-hc rule title=Twitter                      tag=2
-hc rule title=irc                          tag=2
-hc rule title=jabber                       tag=2
+# chromium title (class) doesn't appear to be trapped
+# hc rule class=Surf                       tag=2
+hc rule title=thedarnedestthing            tag=2 index=1
+hc rule windowrole="'the darnedest thing'" tag=2 index=1 focus=on
+hc rule class=Gvim                         tag=2 focus=on switchtag=on hook=max
+# hc rule windowrole=gvimdiff              tag=2 focus=on fullscreen=on hook=fullscreen
+hc rule windowrole=gvimdiff                tag=2 focus=on hook=max
+# hc rule title=IM                         tag=3 index=0 focus=on
+# hc rule title=IRC                        tag=3 index=1 focus=on
+# hc rule class=firefox                    tag=3 once index=0 focus=on hook=max
+hc rule class=Pidgin                       tag=3
+hc rule class=surf                         tag=3 once index=0 focus=on
+hc rule title=IM                           tag=3 focus=on
+hc rule title=Messenger                    tag=3 focus=on
+hc rule title=Twitter                      tag=3
+hc rule title=irc                          tag=3
+hc rule title=jabber                       tag=3
 hc rule class=Astroid                      tag=3 focus=on
 hc rule class=Geary                        tag=3
-hc rule title=Calendar                     tag=3 index=1 focus=on switchtag=on
+hc rule title=Calendar                     tag=3 index=2 focus=on switchtag=on
 hc rule title=IMAP                         tag=3
 hc rule title=Usenet                       tag=3
-hc rule title=mail                         tag=3 index=0 focus=on switchtag=on
-# chromium title (class) doesn't appear to be trapped
-# hc rule class=Surf                       tag=4
-hc rule title=thedarnedestthing            tag=4 index=1
-hc rule windowrole="'the darnedest thing'" tag=4 index=1 focus=on
-# hc rule class=Kodi                       tag=5 index=1 monitor=5 focus=on switchtag=on hook=fullscreen
-# hc rule class=Rrip_gui                   tag=5 focus=on switchtag=on
-hc rule class=Darktable                    tag=5 monitor=5 focus=on switchtag=on fullscreen=on hook=fullscreen
-hc rule class=Gimp                         tag=5 monitor=5 focus=on switchtag=on
-hc rule class=Rawtherapee                  tag=5 monitor=5 focus=on switchtag=on
+hc rule title=mail                         tag=3 index=1 focus=on switchtag=on
+hc rule class=Darktable                    tag=4 index=1 monitor=4 focus=on switchtag=on fullscreen=on hook=fullscreen
+hc rule class=Gimp                         tag=4 index=1 monitor=4 focus=on switchtag=on
+hc rule class=Rawtherapee                  tag=4 index=1 monitor=4 focus=on switchtag=on
+hc rule class=calibre                      tag=4 index=1 monitor=4 focus=on switchtag=on
+hc rule class=digikam                      tag=4 index=1 monitor=4 focus=on switchtag=on
+hc rule class=mplayer2                     tag=5
 hc rule class=Smplayer                     tag=5 index=1 monitor=5 focus=on switchtag=on fullscreen=off
 hc rule class=Umplayer                     tag=5 index=1 monitor=5 focus=on switchtag=on fullscreen=off
 hc rule class=VirtualBox                   tag=5 monitor=0 focus=on switchtag=on
-hc rule class=calibre                      tag=5 monitor=5 focus=on switchtag=on
-hc rule class=digikam                      tag=5 monitor=5 focus=on switchtag=on
-hc rule class=mplayer2                     tag=5
-hc rule title=Music                        tag=5 focus=on pseudotile=on
-hc rule title=Radio                        tag=5 focus=off
+# hc rule class=Kodi                       tag=5 index=1 monitor=5 focus=on switchtag=on hook=fullscreen
 # hc rule class=Thunar                     tag=6 focus=on switchtag=on
+# hc rule class=Rrip_gui                   tag=6 focus=on switchtag=on
+hc rule title=Music                        tag=6 focus=on pseudotile=on
+hc rule title=Radio                        tag=6 focus=off
 hc rule class=Pavucontrol                  tag=6 index=1 focus=off
 hc rule class=Pulseaudio-equalizer-gtk     tag=6 index=1 focus=off
 hc rule class=Tixati                       tag=6 focus=on switchtag=on
@@ -89,9 +92,6 @@ hc rule class=feh                          focus=on switchtag=on
 hc rule class=File-roller                  pseudotile=off
 hc rule class=float                        pseudotile=on focus=on
 # hc rule class=Gnome-mpv                  pseudotile=on
-hc rule class=Gvim                         focus=on hook=max
-# hc rule windowrole=gvimdiff              focus=on fullscreen=on hook=fullscreen
-hc rule windowrole=gvimdiff                focus=on hook=max
 hc rule class=Klavaro                      pseudotile=on
 hc rule class=mpv                          focus=on switchtag=on fullscreen=off index=1
 hc rule instance='www.netflix.com__ca'     focus=on

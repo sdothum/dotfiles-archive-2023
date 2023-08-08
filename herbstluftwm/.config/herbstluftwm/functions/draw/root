@@ -18,7 +18,7 @@
 #        draw root wallpaper, draw background
 
 [ -e $BLACKBOARD ] && exit
-exists setroot && XSETROOT=setroot || XSETROOT=xwallpaper  # alpine
+alpine && XSETROOT=xwallpaper || XSETROOT=setroot  # alpine wallpaper
 
 # cpu arm && exit
 SETBLUR=$HLWM:setblur
@@ -104,28 +104,28 @@ shuffle() {
 
 # remember current background state for autostart
 case $1 in
-color    ) color $2 $3 ;;  # $3, see dmenu root
-restore  ) select_color ;;
-invert   ) grep -q dark $THEME && echo light >$THEME || echo dark >$THEME; cp $THEME $(query theme) ;;
-wallpaper) wallpaper ;;
-
-select   ) rm -f $SHUFFLE
-           select_wallpaper
-           echo wallpaper >$SETROOT
-           notify 5 'Panel Contrast' '&lt;Mod-Control-Shift-P&gt; to invert contrast';;
-
-shuffle  ) touch $SHUFFLE
-           shuffle
-           echo wallpaper >$SETROOT ;;
-
-*        ) [ "$(setblur)" = "$(cat $SETBLUR)" ] && exit
-           # echo "= setblur -> $(setblur)\n= setroot -> $(cat $SETBLUR)" >>$TRACE
-           # random background selection on un-blur change of state
-           if [ -e $SHUFFLE ] ;then
-             if [ $(unblur ${primary%%:*} 1) ] || [ $(unblur ${secondary%%:*} 3) ] ;then
-               one_in $modulo && shuffle  # increase modulo to reduce frequency of shuffle
-             fi
-           fi ;;
+  color    ) color $2 $3 ;;  # $3, see dmenu root
+  restore  ) select_color ;;
+  invert   ) grep -q dark $THEME && echo light >$THEME || echo dark >$THEME; cp $THEME $(query theme) ;;
+  wallpaper) wallpaper ;;
+  
+  select   ) rm -f $SHUFFLE
+             select_wallpaper
+             echo wallpaper >$SETROOT
+             notify 5 'Panel Contrast' '&lt;Mod-Control-Shift-P&gt; to invert contrast';;
+  
+  shuffle  ) touch $SHUFFLE
+             shuffle
+             echo wallpaper >$SETROOT ;;
+  
+  *        ) [ "$(setblur)" = "$(cat $SETBLUR)" ] && exit
+             # echo "= setblur -> $(setblur)\n= setroot -> $(cat $SETBLUR)" >>$TRACE
+             # random background selection on un-blur change of state
+             if [ -e $SHUFFLE ] ;then
+               if [ $(unblur ${primary%%:*} 1) ] || [ $(unblur ${secondary%%:*} 3) ] ;then
+                 one_in $modulo && shuffle  # increase modulo to reduce frequency of shuffle
+               fi
+             fi ;;
 esac
 
 # .................................................................. Apply theme

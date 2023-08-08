@@ -21,8 +21,8 @@
 # load theme
 # . $XDG_CONFIG_HOME/herbstluftwm/config/ENV
 case $@ in
-secondary*) panel=$(query pheight secondary) ;;
-*         ) panel=$(query pheight primary) ;;
+  secondary*) panel=$(query pheight secondary) ;;
+  *         ) panel=$(query pheight primary) ;;
 esac
 
 # ..................................................................... Displays
@@ -96,40 +96,40 @@ SEC() { SECONDARY=$(printf '%dx%d%+d%+d' $1 $2 $3 $4); }
 # monitor regions are adjusted per conky layout.. in this particular instance,
 # margin is added to 0x0+X'+0 to tuck right window margin under conky panel area
 case $@ in
-conky     ) rm -f $FULLSCREEN:primary
-            rm -f $FULLSCREEN:$TAG
-            PRI $(( $normal_width - $SHADOW )) $(( $Y0 - $margins )) $(( $margin + $monocle )) $margin ;;
-
-conky*f*  ) touch $FULLSCREEN:primary
-            touch $FULLSCREEN:$TAG
-            if [ $X0 -gt $MIN_DISPLAY ] ;then PRI $(( $fullscreen_width - $SHADOW )) $(( $Y0 - $margins - $window_frame*2 )) \
-                                                  $(( $margin + $window_frame + $monocle )) $(( $margin + $window_frame ))  # desktop screens retain margins
-            else                              PRI $(( $fullscreen_width + $margin + $window_frame )) $Y0 0 0                # laptop screens fill to edge
-            fi ;;
-
-fullframe ) rm -f $FULLSCREEN:primary
-            rm -f $FULLSCREEN:$TAG
-            if [ $monocle -eq 0 ] ;then PRI $(( $X0 - $margin*2 )) $(( $Y0 - $margins )) $margin $margin
-            else                        PRI $normal_width $(( $Y0 - $margins )) $(( ($X0 - $normal_width)/2 )) $margin
-            fi ;;
-
-fullscreen) touch $FULLSCREEN:primary
-            touch $FULLSCREEN:$TAG
-            if [ $monocle -eq 0 ] ;then PRI $X0 $Y0 0 0
-            fi ;;
-
-secondary ) rm -f $FULLSCREEN:secondary
-            rm -f $FULLSCREEN:$TAG
-            SEC $(( $X1 - $margin*2 )) $(( $Y1 - $margins )) \
-                $(( X0 + $margin )) $margin ;;
-
-second*f* ) touch $FULLSCREEN:secondary
-            touch $FULLSCREEN:$TAG
-            SEC $X1 $Y1 $X0 0 ;;
-
-menu      ) if is primary ;then touch $FULLSCREEN:primary; PRI $X0 $Y0 0 0
-            else                touch $FULLSCREEN:secondary; SEC $X1 $Y1 $X0 0
-            fi ;;
+  conky     ) rm -f $FULLSCREEN:primary
+              rm -f $FULLSCREEN:$TAG
+              PRI $(( $normal_width - $SHADOW )) $(( $Y0 - $margins )) $(( $margin + $monocle )) $margin ;;
+  
+  conky*f*  ) touch $FULLSCREEN:primary
+              touch $FULLSCREEN:$TAG
+              if [ $X0 -gt $MIN_DISPLAY ] ;then PRI $(( $fullscreen_width - $SHADOW )) $(( $Y0 - $margins - $window_frame*2 )) \
+                                                    $(( $margin + $window_frame + $monocle )) $(( $margin + $window_frame ))  # desktop screens retain margins
+              else                              PRI $(( $fullscreen_width + $margin + $window_frame )) $Y0 0 0                # laptop screens fill to edge
+              fi ;;
+  
+  fullframe ) rm -f $FULLSCREEN:primary
+              rm -f $FULLSCREEN:$TAG
+              if [ $monocle -eq 0 ] ;then PRI $(( $X0 - $margin*2 )) $(( $Y0 - $margins )) $margin $margin
+              else                        PRI $normal_width $(( $Y0 - $margins )) $(( ($X0 - $normal_width)/2 )) $margin
+              fi ;;
+  
+  fullscreen) touch $FULLSCREEN:primary
+              touch $FULLSCREEN:$TAG
+              if [ $monocle -eq 0 ] ;then PRI $X0 $Y0 0 0
+              fi ;;
+  
+  secondary ) rm -f $FULLSCREEN:secondary
+              rm -f $FULLSCREEN:$TAG
+              SEC $(( $X1 - $margin*2 )) $(( $Y1 - $margins )) \
+                  $(( X0 + $margin )) $margin ;;
+  
+  second*f* ) touch $FULLSCREEN:secondary
+              touch $FULLSCREEN:$TAG
+              SEC $X1 $Y1 $X0 0 ;;
+  
+  menu      ) if is primary ;then touch $FULLSCREEN:primary; PRI $X0 $Y0 0 0
+              else                touch $FULLSCREEN:secondary; SEC $X1 $Y1 $X0 0
+              fi ;;
 esac
 
 # configure multihead..

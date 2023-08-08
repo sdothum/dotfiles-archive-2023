@@ -10,8 +10,8 @@
 
 which picom >/dev/null 2>&1 || exit
 case $1 in
-off) [ -e $PICOM ] || exit ;;
-on ) [ -e $PICOM ] && exit ;;
+  off) [ -e $PICOM ] || exit ;;
+  on ) [ -e $PICOM ] && exit ;;
 esac
 
 if [ -e $PICOM ] ;then

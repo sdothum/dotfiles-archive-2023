@@ -47,14 +47,14 @@ toggle_term() {
 toggle_app() {
   # handle binary / class name differences
   case $msg in
-  rox       ) class=ROX-Filer ;;
-  scratchpad) class=$1        ;;  # see keybinds
+    rox       ) class=ROX-Filer ;;
+    scratchpad) class=$1        ;;  # see keybinds
   esac
   # close application
   if pgrep -lf ${class:-$msg} | grep -qv toggle ;then
     case $msg in
-    xpad    ) xpad --quit;    exit ;;  # xpad multiple windows shortcut
-    rox     ) killall $class; exit ;;  # close method can hang dmenu
+      xpad    ) xpad --quit;    exit ;;  # xpad multiple windows shortcut
+      rox     ) killall $class; exit ;;  # close method can hang dmenu
     esac
     class=${class:-$msg}
     lock

@@ -25,46 +25,48 @@ winid=$(herbstclient attr clients.focus.winid 2>/dev/null)
 # layout functions
 layout() {
   case $1 in
-  1:1    ) echo halves    ;;
-  1:2    ) echo one2two   ;;
-  1:3    ) echo one2three ;;
-  2:3    ) echo two2three ;;
-  1:1:1  ) echo thirds    ;;
-  1:1:1:1) echo quarters  ;;
-  *      ) echo $1        ;;
+    1:1    ) echo halves    ;;
+    1:2    ) echo one2two   ;;
+    1:3    ) echo one2three ;;
+    2:3    ) echo two2three ;;
+    1:1:1  ) echo thirds    ;;
+    1:1:1:1) echo quarters  ;;
+    *      ) echo $1        ;;
   esac
 }
 
 # save current layout
-[ "$1" = '--' ] && shift || [ -e $MONOCLE ] ||
-  # for when manual frame manipulations bypass layout dump history
-  if [ -e $LAYOUT:$TAG ] && [ -e $LAYOUT:$TAG:$(layout $1) ] && [ $(cat $LAYOUT:$TAG) = $(layout $1) ] ;then  # double tap re-initializaton
-    rm $LAYOUT:$TAG
-    rm $LAYOUT:$TAG:$(layout $1)
-  else
-    herbstclient dump >$LAYOUT:$TAG:$(cat $LAYOUT:$TAG)  # store current layout, see reload
-  fi
+if [ "$1" != tags ] ;then
+  [ "$1" = '--' ] && shift || [ -e $MONOCLE ] ||
+    # for when manual frame manipulations bypass layout dump history
+    if [ -e $LAYOUT:$TAG ] && [ -e $LAYOUT:$TAG:$(layout $1) ] && [ $(cat $LAYOUT:$TAG) = $(layout $1) ] ;then  # double tap re-initializaton
+      rm $LAYOUT:$TAG
+      rm $LAYOUT:$TAG:$(layout $1)
+    else
+      herbstclient dump >$LAYOUT:$TAG:$(cat $LAYOUT:$TAG)  # store current layout, see reload
+    fi
+fi
 
 # initial desktop layouts
 init() {
   load=true
   if is display =3440 ;then
     case $1 in
-    1) thirds     '1' ;;
-    2) spread     '2' ;;
-    3) thirds     '3' ;;
-    4) thirds     '4' ;;
-    5) one2two    '5' ;;
-    6) quarters   '6' ;;
+      1) thirds     '1' ;;
+      2) thirds     '2' ;;
+      3) thirds     '3' ;;
+      4) one2three  '4' ;;
+      5) max        '5' ;;
+      6) quarters   '6' ;;
     esac
   elif is display +1440 ;then
     case $1 in
-    1) halves     '1' ;;
-    2) two2three  '2' ;;
-    3) two2three  '3' ;;
-    4) halves     '4' ;;
-    5) grid       '5' ;;
-    6) thirds     '6' ;;
+      1) halves     '1' ;;
+      2) two2three  '2' ;;
+      3) two2three  '3' ;;
+      4) halves     '4' ;;
+      5) grid       '5' ;;
+      6) thirds     '6' ;;
     esac
   else
     herbstclient load $1 '(clients vertical:0)'
@@ -220,36 +222,36 @@ default() { is display +1920 && echo thirds || is display +1440 && echo halves |
 [ $1 ] && is fullscreen && toggle fullscreen
 
 case $1 in
-tags      ) for i in $TAGS ;do init $i ;done
-            exit ;;
-
-1:1       |\
-2:3       |\
-1:2       |\
-1:3       |\
-1:1:1     |\
-1:1:1:1   |\
-spread    |\
-max       |\
-grid      |\
-halves    |\
-thirds    |\
-one2two   |\
-quarters  |\
-vertical  |\
-one2three |\
-two2three |\
-horizontal) [ -e $LOCK ] || herbstclient lock  # may already be in lock state, see toggle monocle
-            $(layout $1) $TAG
-            notify "Layout $TAG" "$1"
-            herbstclient unlock ;;             # unlock to enable focus borders
-
-default   ) restore windowed
-            $(layout $(default)) $TAG ;;       # exec draw layout $(default)
-
-*         ) layout=$(echo "$layouts" | rmenu 'Explode to Layout' $(default) -no-custom) || exit
-            restore windowed
-            $(layout $layout) $TAG ;;          # exec draw layout $layout
+  tags      ) for i in $TAGS ;do init $i ;done
+              exit ;;
+  
+  1:1       |\
+  2:3       |\
+  1:2       |\
+  1:3       |\
+  1:1:1     |\
+  1:1:1:1   |\
+  spread    |\
+  max       |\
+  grid      |\
+  halves    |\
+  thirds    |\
+  one2two   |\
+  quarters  |\
+  vertical  |\
+  one2three |\
+  two2three |\
+  horizontal) [ -e $LOCK ] || herbstclient lock  # may already be in lock state, see toggle monocle
+              $(layout $1) $TAG
+              notify "Layout $TAG" "$1"
+              herbstclient unlock ;;             # unlock to enable focus borders
+  
+  default   ) restore windowed
+              $(layout $(default)) $TAG ;;       # exec draw layout $(default)
+  
+  *         ) layout=$(echo "$layouts" | rmenu 'Explode to Layout' $(default) -no-custom) || exit
+              restore windowed
+              $(layout $layout) $TAG ;;          # exec draw layout $layout
 esac
 
 if [ $windows -gt 1 ] &&  [ $layout != max ] ;then

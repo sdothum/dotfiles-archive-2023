@@ -41,7 +41,9 @@ export MONOCLE=$HLWM:monocle
 export PANEL=$HLWM:panel
 export PMARGIN=$HLWM:margin
 export PANEL_FIFO=${PANEL_FIFO:-${PANEL}-fifo}
-echo $PANEL_FIFO:$(herbstclient attr monitors.focus.index) >$PANEL_FIFO  # sat by draw panel but needed beforehand
+# herbstluftwm is not fully stared yet, so assume monitor 0 focus
+# echo $PANEL_FIFO:$(herbstclient attr monitors.focus.index) >$PANEL_FIFO  # set by draw panel but needed beforehand
+echo $PANEL_FIFO:0 >$PANEL_FIFO  # set by draw panel but needed beforehand
 
 # ............................................................... Session states
 
@@ -59,6 +61,7 @@ export PANEL_HEIGHT=$UI:panel_height
 export PANEL_INDENT=$UI:panel_indent
 export SPANEL=$SESSION/panel  # toggle state
 export PCONKY=$SPANEL:conky
+export STARTREK=$SPANEL:startrek
 export STAT=$SPANEL:stat
 export TICKER=$SPANEL:ticker
 export WEATHER=$SPANEL:weather
@@ -96,7 +99,7 @@ export PULSAR=$SSPINE:pulsar
 # ..................................................................... Desktops
 
 # desktops, see config/tags
-export TAG_NAMES='WEB CHAT MAIL WIKI MEDIA ADMIN'
+export TAG_NAMES='DESK DEV COMMS MEDIA VIDEO SYSTEM'
 export TAGS="$(seq 1 $(echo $TAG_NAMES | sed 's/ /\n/g' | wc -l))"
 # export TAG_NAME = TAG
 for key in $TAGS ;do export $(echo $TAG_NAMES | awk "{ print \$$key }")=$key ;done
@@ -116,7 +119,7 @@ export CONKY_WIDTH=$(getparm $CONKYRC 'maximum_width')
 # picom shadow left shift pixel adjustment for conky panel edge (0) none
 if [ ! -e $PICOMCONF ] ;then
   export SHADOW=0
-elif egrep -q '^(shadow = false|shadow-opacity = 0.0)' $PICOMCONF ;then
+elif grep -E -q '^(shadow = false|shadow-opacity = 0.0)' $PICOMCONF ;then
   export SHADOW=0
 else
   # assumes shadow-offset = -(shadow-radius)

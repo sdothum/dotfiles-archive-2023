@@ -30,16 +30,16 @@ if [ $count -gt 0 ] ;then
 
   if [ "$window" ] ;then
     case $window in
-    "$ALL" ) exec restore windows ;;
-    "$LAST") exec restore window ;;
-
-    # escape special characters in window title e.g. url page titles, and restore ^$SEP, see query wtitle
-    *      ) winid=$(echo $hidden |
-                   grep "$(echo $window | sed -r "s/([[])/\\\1/g; s/([]])/\\\1/g; s/ *($SEP)/^\1/; s/([*])/\\\1/g")" |
-                   cut -d$DLM -f2 | cut -d. -f2)
-             lock use $TAG
-             focus frame
-             unlock bring $winid
+      "$ALL" ) exec restore windows ;;
+      "$LAST") exec restore window ;;
+  
+      # escape special characters in window title e.g. url page titles, and restore ^$SEP, see query wtitle
+      *      ) winid=$(echo $hidden |
+                     grep "$(echo $window | sed -r "s/([[])/\\\1/g; s/([]])/\\\1/g; s/ *($SEP)/^\1/; s/([*])/\\\1/g")" |
+                     cut -d$DLM -f2 | cut -d. -f2)
+               lock use $TAG
+               focus frame
+               unlock bring $winid
     esac
   fi
 fi

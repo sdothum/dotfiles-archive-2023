@@ -12,11 +12,11 @@
 background=$(cat $SETROOT 2>/dev/null)
 
 case $background in
-color    ) color=$(find $PALETTE -iname $(cat $COLOR).png | cut -d/ -f6)
-           [ $color ] && { [ $color = light ] && echo dark >$THEME || echo light >$THEME; }
-           draw root color $(cat $COLOR 2>/dev/null) $(cat $THEME 2>/dev/null) ;;
-wallpaper) draw root wallpaper ;;
-*        ) draw root color ;;
+  color    ) color=$(find $PALETTE -iname $(cat $COLOR).png | cut -d/ -f6)
+             [ $color ] && { [ $color = light ] && echo dark >$THEME || echo light >$THEME; }
+             draw root color $(cat $COLOR 2>/dev/null) $(cat $THEME 2>/dev/null) ;;
+  wallpaper) draw root wallpaper ;;
+  *        ) draw root color ;;
 esac
 
 # vim: set ft=sh: #

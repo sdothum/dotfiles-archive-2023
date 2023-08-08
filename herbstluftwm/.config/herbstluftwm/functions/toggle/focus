@@ -9,9 +9,9 @@
 # Usage: toggle focus [fsplit | status]
 
 case $1 in
-''    ) [ -e $DYNAMIC ] && rm $DYNAMIC || touch $DYNAMIC; [ -e $DYNAMIC ] && focus window ;;  # see emit_hook and focus functions
-fsplit) [ -s $DYNAMIC ] && { rm $DYNAMIC; touch $DYNAMIC; } || echo frames >$DYNAMIC ;;       # see focus frame
-status) ;;
+  ''    ) [ -e $DYNAMIC ] && rm $DYNAMIC || touch $DYNAMIC; [ -e $DYNAMIC ] && focus window ;;  # see emit_hook and focus functions
+  fsplit) [ -s $DYNAMIC ] && { rm $DYNAMIC; touch $DYNAMIC; } || echo frames >$DYNAMIC ;;       # see focus frame
+  status) ;;
 esac
 
 if [ -e $DYNAMIC ] ;then
