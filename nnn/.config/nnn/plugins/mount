@@ -4,9 +4,9 @@
 # nnn Plugin
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ................................................................. Jump refresh
+# ....................................................... mount removable device
 
-# fcache PWD
-env SUBTREE=pwd $(dirname $0)/jump $@  # see .jump:caches
+ls $HOME/mtp/* 2>/dev/null && exit
+mtp mount
 
 # vim: set ft=sh: #

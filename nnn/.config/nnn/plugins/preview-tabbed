@@ -7,7 +7,7 @@
 #   - xterm (or urxvt or st) : xembed client for text-based preview
 #   - mpv (https://mpv.io): xembed client for video/audio
 #   - sxiv (https://github.com/muennich/sxiv) or,
-#   - nsxiv (https://github.com/nsxiv/nsxiv) : xembed client for images
+#   - nsxiv (https://codeberg.org/nsxiv/nsxiv) : xembed client for images
 #   - zathura (https://pwmt.org/projects/zathura): xembed client for PDF
 #   - nnn's nuke plugin for text preview and fallback
 #     nuke is a fallback for 'mpv', 'sxiv'/'nsxiv', and 'zathura', but has its
@@ -27,6 +27,7 @@
 #   1. This plugin needs a "NNN_FIFO" to work. See man.
 #   2. If the same NNN_FIFO is used in multiple nnn instances, there will be one
 #      common preview window. With different FIFO paths, they will be independent.
+#   3. This plugin only works on X, not on Wayland.
 #
 # How it works:
 #   We use `tabbed` [1] as a xembed [2] host, to have a single window
@@ -51,6 +52,10 @@ XDOTOOL_TIMEOUT=2
 PAGER=${PAGER:-"vim -R"}
 NUKE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/plugins/nuke"
 
+if [ -n "$WAYLAND_DISPLAY" ] ; then
+    echo "Wayland is not supported in preview-tabbed, this plugin could freeze your session!" >&2
+    exit 1
+fi
 
 if type xterm >/dev/null 2>&1 ; then
     TERMINAL="xterm -into"

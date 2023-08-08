@@ -1,0 +1,1109 @@
+nnn v4.7 Cuba libre
+2022-11-24
+
+
+- fix <kbd>^N</kbd> not working sometimes (#1449)
+- fix file remove confirmation prompt
+- bring back `atool` as the default archive handler
+- add option `-B` to use `bsdtar` as the archive utility
+- find and list mode improvements
+  ntinue even if max paths/data size limit is exceeded
+  eed improvements
+  pport listing maximum 16K paths of 64 MiB of data
+- key <kbd>J</kbd> to jump to an entry or relative offset from current entry
+- prefill the hard link creation prompt when there's a single target (#1507)
+- documented workaround for docker container crash (#1407, #1476)
+- plugin `imgview`: handle arguments as strings (#1509)
+- plugin `wallpaper`: support Wayland (#1512)
+- plugin `upload`: handle selection using `ffsend` (#1523)
+- add Rust icons (#1502)
+
+-------------------------------------------------------------------------------
+
+nnn v4.6 Absinthe
+2022-07-26
+
+- icon handling overhaul (#1432, #1436)
+  - better performance, memory usage and reduced binary size
+- emoji support for supporting distros and terminals (#1346)
+- open the target directory of symlinked bookmarks (#1353)
+- enable show hidden when a hidden file is passed as argument
+- add Colemak-DH layout keybinds to patch framework (#1421)
+- set `bsdtar` as the default archive utility
+- support 4 byte unicode keybinds (#1428)
+- enable directory auto-enter during filter operation (`-A` to disable)
+- enable filter prompt inside the bookmark/plugin dirs
+- show volume usage information in help
+- add new icon colors for mp4 and flac files
+- use `stat -x` for file details on *BSD and macOS (#1389)
+- interpret suffix `$nnn` when paging (#1355)
+- disable key <kbd>e</kbd> (edit file) in explorer mode (#1394)
+- fix double order chars on filter case match change
+- `.cbcp`: more verbose message on paste without a selection
+- plugin `preview-tui`: scale-up kitty previews
+- plugin `preview-tui`: account for ueberzug offset
+- plugin `preview-tui`: support `SPLIT_SIZE` for preview pane (#1431)
+- plugin `autojump`: support z.lua
+- new Makefile target `shellcheck` to verify plugins
+
+-------------------------------------------------------------------------------
+
+nnn v4.5 Cachaça
+2022-04-26
+
+- disable filter info if file details (option `-i`) enabled
+- open previous active context on context quit
+- switch <kbd>^J</kbd> and <kbd>+</kbd> functionality:
+  - <kbd>+</kbd>: toggle file selection
+  - <kbd>^J</kbd>: toggle auto-jump on file open
+- allow symlink creation with name `@` to a single file (#1345)
+- clear selection on successful operation at native prompt with "%j" (#1330)
+- reverse timestamps of entries modified/created within 5 minutes
+- avoid using non-portable `xargs` flags on macOS (#1299)
+- quitcd script for Elvish shell > 0.17.0 (#1344)
+- plugin `openall` to open selected files together (#1333)
+- plugin `gitroot` to jump to git root directory from a subtree
+- plugin `gsconnect` to send the selected files to Android using gsconnect
+- icon for opus and webp files
+- `preview-tui` - fix gif conversion and whitespace name
+- `preview-tui` - add support for windows terminal split
+- `preview-tui` - djvu file previews
+- `nuke` - add support for `imv` when named _imv_
+- `gsconnect` - support connection to multiple devices
+- export `NNN_INCLUDE_HIDDEN` to plugins (#1308)
+- respect `NNN_TRASH` in `.nmv` (#1306)
+- add GNU sed as a dependency with support for env var `SED`
+- use bold `>` to point at current entry in detail mode
+- add 2 spaces after icons for better visibility
+- documentation refresh
+- make option `O_NOSORT` to load directories unsorted on entry
+
+-------------------------------------------------------------------------------
+
+nnn v4.4 Tequila
+2021-11-23
+
+- support macOS iterm2 in plugin preview-tui (#1196)
+- use selection at native command prompt with `%j` and `%J`
+  - docs - https://github.com/jarun/nnn/wiki/concepts#special-variables
+- scroll strings longer than columns in rename/new prompts (#1213, #279)
+- batch rename symlink targets in listing mode (#1214)
+- option for recursive rename in plugin .nmv (#1186)
+- more frequent checks for cancellation during du (#1236)
+- picker mode: enable auto-proceed
+- picker mode: don't pick hovered file on <kbd>Enter</kbd> if selection exists
+- picker mode: fix issue in plugin `fzopen` when used to pick files
+- send file to explorer FIFO on double left click instead of opening it
+- new neovim plugin [nnn.nvim](https://github.com/luukvbaal/nnn.nvim)
+  - nvim-only, featuring explorer mode (`-F` flag)
+- explorer mode for [nnn.vim](https://github.com/mcchrish/nnn.vim#explorer)
+- remove option `-w`: always place HW cursor on current entry
+- accept link name when linking a single target (#1201)
+- option `-i` to show current file information in info bar
+- force GNU sed on *BSD and Solaris
+- add `nsxiv` support to nuke, preview-tabbed and imgview (#1230)
+- fix preview-tui without `-a` (#1208)
+- pass `pts` in env var for preview-tui to use in `tput` (#1235)
+- disable editing file in picker mode (#1183)
+- save session in picker mode (#1190)
+- use nerd icons for gitstatus patch (#1220)
+
+-------------------------------------------------------------------------------
+
+nnn v4.3 Martini
+2021-09-29
+
+- cool ASCII art logo in the help screen
+- add `bookmarks` directory for flexible symlinked bookmarks
+- new key <kbd>B</kbd> to add a symlinked bookmark for current dir
+- special variables `$dN`, `$fN` available for plugins/prompt/shell to access
+  dir/hovered file in each conext
+- config `NNN_ORDER` to set directory-specific ordering
+- show/hide hidden files as per context state in plugin based batch rename
+- retain search filter history for plugin `finder`
+- sync multiple instances of `nnn` after operation on selection
+- signal CWD change to terminal via OSC-7 (#1147)
+- save complete per-context filter when saving sessions
+- disable symlink resolution for paths in `NNN_BMS` and arg `PATH`
+- do not end selection mode on running plugins/prompt/shell
+- plugin `bookmarks` replaced by symlinked bookmarks support
+- list open locations in active contexts in help page
+- make option `O_MATCHFLTR` to discard filter key if no match
+- configurable `NNN_TMPFILE` to _cd on quit_
+- disable auto marking directories (use <kbd>-</kbd>)
+- picker mode improvements
+  - open tty for input if `STDIN` is non-tty
+  - truncate output file before writing
+  - do not double select a file on <kbd>Enter</kbd>
+- legacy macOS (< 10.12.0) support
+- no redraw during du calculation, show processed dir name
+- plugin `xdgdefault`: add dmenu support
+- user patch `restorepreview`: close/restore `preview-tui` for internal edits
+
+-------------------------------------------------------------------------------
+
+nnn v4.2 Mojito
+2021-07-21
+
+- `NNN_PLUG` indicator symbol interpretation has **changed**:
+  - `!` - _run-cmd-as-plugin_ (earlier `_`)
+  - `&` - _run-gui-cmd-as-plugin_ (earlier `|`)
+  - `|` (new) - page noninteractive _run-cmd-as-plugin_ output
+- persistent selection markers (#1086)
+- option _extract to..._ for archives
+- mount remote and mount/extract archive to a smart context
+- confirm file trashing to avoid accidental press of <kbd>x</kbd> (#1101)
+- insert the last command executed at prompt on <kbd>Up</kbd> or <kbd>Down</kbd>
+- insert the current file name at empty prompt on <kbd>TAB</kbd>
+- handle redraw issue on missed `KEY_RESIZE` (#1067)
+- add force-tty capability to spawn and set pagers to it (#1064)
+- clear selection mode on deselecting last selected file (#1098)
+- remove selected hovered entry from selection on deletion
+- disable filtering in empty directories
+- ignore last pressed filter character when no matches
+- fix broken screen on resize while paging (#1072)
+- fix archive not hovered on creation
+- remove libgit2 dependency in `gitstatus` patch (#1095)
+- add `-G` flag for `gitstatus` patch
+- option `-X` for explorer (persistent picker) mode
+- option `-F` decommissioned in favour of config `NNN_HELP`
+- `-F` redefined to multiplex `NNN_FIFO` to preview or explore
+- support paging noninterative _run-cmd-as-plugin_ output
+- `nuke` - add option to execute binaries (#1111)
+- plugin `fzopen` - call `open` on macOS, add option to use `nuke`
+- plugin `fzcd` will not modify selection
+- plugin `suedit` - preserve environment
+- several `preview-tui` fixes
+- plugin `wall` renamed to `wallpaper`
+- remove plugin `fzz` - merged into plugin `autojump`
+- remove plugin `upgrade` - packaging is on OBS now
+- remove plugin `treeview` - needs minor `preview-tui` tweak
+- remove plugin `picker` - `nnn -p -` does the same
+- remove plugin `pdfview` - needs simple change in `pdfread`
+- remove plugin `uidgid` - use program option `-U`
+- remove plugins `mediainf`, `hexview` - simple one-liners
+
+-------------------------------------------------------------------------------
+
+nnn v4.1.1 Sake
+2021-06-03
+
+- fix segfault on session save (#1041)
+- remove redundant `_Atomic` usage
+- move [`patches`](../tree/master/patches) directory to top-level
+- fix and cleanup gitstatus patch
+- plugin `imgview` improvements (#1049)
+- restore source-code packing on CircleCI
+- add Makefile target to compile with musl
+
+-------------------------------------------------------------------------------
+
+nnn v4.1
+2021-06-02
+
+- a patch management model for approved patches
+- multi-threaded disk usage calculation using pthreads and FTS
+- dynamic view update when calculating disk usage
+- <kbd>Bksp</kbd>/<kbd>Del</kbd> at empty filter prompt to refresh dir
+- Try to create new context with <kbd>Shift-TAB</kbd>, else reverse cycle
+- <kbd>Alt+Esc</kbd> to quit context from filter prompt
+- fix zombies left behind after running plugins (#999)
+- named persistent sessions (mcchrish/nnn.vim#43)
+- consider nanosecond resolution when sorting by time (#978)
+- check external selection in `'c'urrent / 's'el` prompt (#976)
+- show number of files selected in local selection buffer, if any
+- `nnn` & picker plugin (e.g. `fzopen`) sync (mcchrish/nnn.vim#82)
+- make batch rename interactive (#971)
+- cached uid/gid for performance improvement
+- fixes for `nnn` with `netbsd-curses`, `musl-fts`, `musl` (#998)
+- script to statically compile `nnn` with `musl gcc` on Ubuntu
+- restore hovered file when plugin is chosen from plugin dir
+- support QuickLook on WSL in `preview-tui` (#959)
+- toggle `preview-tui` with the same _custom_ plugin key
+- smoother preview toggling in `preview-tui` (#966)
+- `listen_on` should be set in kitty.conf for `preview-tui` (#970)
+- minimal `bat` style in `preview-tui`, honors `$BAT_STYLE`
+- plugin `preview-tui-ext` supersedes `preview-tui` (#1033)
+- plugin `fzcd` can now fuzzy search multiple directories
+- plugin `imgview` supersedes `imgthumb` and `vidthumb`
+- plugin `umounttree`: unmount remote mntpoint from within
+- plugin `xdgdefault`: set the default app for hovered file type
+- plugin `fzplug`: fuzzy find, preview and run other plugins
+- plugin `cmusq`: queue/play music in `cmus`
+- plugin `mocplay` renamed to `mocq`
+- plugin `cleanfilename` renamed to `fixname`
+- go to last dir on <kbd>~</kbd> (HOME) or <kbd>`</kbd> (ROOT) key repeat
+- ambiguous key <kbd>^Space</kbd> to select/clear range dropped (#998)
+- user wiki page for [Themes](https://github.com/jarun/nnn/wiki/Themes)
+- show selection mark (`+`) in reverse bold for improved visibility
+- reverse block replaces `>` to mark hovered entry in detail mode
+- make option `O_CKBOARD` removed
+- make option `O_NOLOC` renamed to `O_NOLC`
+- ignore `O_NOLC` if `O_ICONS` or `O_NERD` is specified (#1026)
+- unicode arrow indicators if `O_ICONS` or `O_NERD` is specified
+- make option `NOX11`: disable notis, sel-clipboard sync, xterm title
+- retain filter in _nav-to-type_ mode after file open
+- fix no files picked with `NNN_TMPFILE` exported and <kbd>q</kbd> to quit
+- disable xterm title setting in picker mode (#974)
+
+-------------------------------------------------------------------------------
+
+nnn v4.0 Sushi
+2021-04-13
+
+- show xterm title on option `-x`
+
+-------------------------------------------------------------------------------
+
+nnn v3.7
+2021-04-13
+
+- allow plugins to clear selection (#884, #889, #917)
+- do not clear selection on hovered file deletion
+- resurrect `'c'urrent/'s'el` prompt and option `-u` (#889)
+- show only file name in reverse in detail mode
+- more file/mime types supported in `preview-tui-ext`
+- plugin `mtpmount` - (un)mount MTP devices
+- plugin `cleanfilename` - more shell-friendly file names
+- plugin `rsynccp` - copy-paste with visual progress
+- replace `$HOME` by `~` in address bar
+- show current path in terminal title (#911)
+- total links and inode number of hardlink in statusbar
+- fix symlink to text file not opening in CLI editor (#890)
+- fix symlink size shown as 0B in statusbar (#888)
+- show symlink target in statusbar (#893)
+- show correct disk free/total on macOS (#888)
+- fix directory disk usage showing as 0 on macOS (#941)
+- fix name col len with `-C` and icons compiled-in (#936)
+- refactor printing entries in light/detail modes (#934)
+- make option `O_CKBOARD` for checker board as indicator
+
+-------------------------------------------------------------------------------
+
+nnn v3.6 Nina
+2021-03-16
+
+- REPL command prompt (<kbd>Esc</kbd> or <kbd>Enter</kbd> to exit)
+- invert selection with <kbd>A</kbd>
+- option `-u` removed (always prefer selection to hovered)
+- visit start dir on <kbd>@</kbd> when start path is a file
+- exit filter mode and redraw on <kbd>^L</kbd> if no last filter
+- plugin `fzcd` now selects the chosen file (#876)
+- `ueberzug` support in plugin `preview-tui`
+- new plugin `preview-tui-ext` with extra preview support
+- clear selection after successful plugin invocation
+- add method to sync subshell `$PWD` in WIki
+- clear selection on single file deletion (#812)
+- copy between instances not working (#864)
+- plugin `togglex` to toggle exe mode of a selection (#813)
+- fix `memccpy()` buffer overlap fault on macOS (#786)
+- show `0 selected` msg on cp/mv with empty selection (#855)
+- fix frozen terminal caused by opener (#858)
+- migrate macOS CI to GitHub workflows, retire Travis
+
+-------------------------------------------------------------------------------
+
+nnn v3.5 Freddie
+2020-11-17
+
+- compile-in Alexey Tourbin's QSORT macro
+- support Nerd Font patched icons [`make O_NERD=1`]
+- auto-generate static binaries with icons support
+- audit and adapt all plugins for macOS
+- enhance plugin `dups` to delete duplicates interactively
+- plugin `autojump` now supports `jump` and `zoxide`
+- support `gio trash` to Trash [`export NNN_TRASH=2`] (#740)
+- quit program on double <kbd>Esc</kbd> in normal mode (#775)
+- <kbd>^Space</kbd> replaces <kbd>^K</kbd> for range selection/clear selection
+- show selection symbol (`+`) next to filename in detail mode (#741)
+- error & quit on <kbd>Q</kbd> if no selection, else pick to stdout
+- repeat <kbd>^T</kbd> to cycle sort by time, size and clear
+- option `-U` to show user & group info in status bar
+- option `-J` to disable auto-proceed on select (#713)
+- option `-D` to show dirs in context color with `NNN_FCOLORS`
+- honor option `-C` for context colors
+- show indicators if more entries above/below listing (#744)
+- show missing utility name in flash msg (#753)
+- exit `preview-tabbed` on <kbd>^C</kbd> (#727)
+- invoke GNU sed (_gsed_) on macOS (#728)
+- fix HW cursor moves to wrong line (#735)
+- fix rollover bug with multiline scroll (#743)
+- fix input stream not listed with `-s`/`-S` (#777)
+- fix locker not being invoked
+- make target `upx` for additional binary compression
+- compress auto-generated static binaries with upx
+- make variable `O_NOSSN` to compile out sessions
+- make variable `O_NOUG` to compile out user & group info
+
+-------------------------------------------------------------------------------
+
+nnn v3.4 Emilia
+2020-08-18
+
+- icons with icon-specific colors (thanks @KlzXS)
+- enhanced `NNN_COLORS` with xterm 256 colors support
+- new colorscheme with `NNN_FCOLORS` (file type specific colors)
+- switch `-C` to force earlier colorscheme (dirs follow context color)
+- updates for Haiku (thanks @CodeforEvolution)
+- fix XFS navigation issue (thanks @ucs1)
+- optimize archive extension matching on file open
+- show location in context color
+- support `host[:dir]` format for remote mounts
+- clear selection after copy
+- support traversal on file/dir creation
+- show selection in reverse in status bar
+- show status bar indicator `H` when hidden files are listed
+- show and confirm archive command output
+- support _cd on quit_ in picker mode
+
+-------------------------------------------------------------------------------
+
+nnn v3.3
+2020-07-14
+
+- subdir `mounts` for remote and archive mounts
+- remove mount point on successful unmount of remote/archive
+- show error and prompt user if `cp`/`mv`/`rm` operation fails
+- support absolute/relative paths in cp/mv as
+- mark current path automatically on archive/remote mount
+- mark current path automatically on target file visit in _find and list_ mode
+- option `-C` to place HW cursor on hovered for screen readers and braille displays
+- option `-u` to use selection (if available) and skip `current/sel` prompt
+- key <kbd>Alt+Esc</kbd> to clear filter prompt and redraw
+- support <kbd>Esc</kbd> to cancel remove operation
+- `gpge` & `gpgd`: encrypt and decrypt with GPG
+- `blknew`: create new files and directories in bulk
+- `preview-tui`
+  - unified to support `tmux`/`kitty`/`xterm`/`$TERMINAL`
+  - auto-determine split orientation based on terminal height and width
+  - provision to use [`scope.sh`](https://github.com/ranger/ranger/blob/master/ranger/data/scope.sh) and [`pistol`](https://github.com/doronbehar/pistol)
+- various other improvements
+- `upload`: send to Firefox Send if [`ffsend`](https://github.com/timvisee/ffsend) is found
+- `hexview`: add [`hx`](https://github.com/krpors/hx) as alternative hex viewer
+- `nuke` and `imgview`: add [`imv`](https://github.com/eXeC64/imv) as alternative image viewer
+- add find (with `fd`) and grep (with `rg`) examples in plugins doc
+- key <kbd>Esc</kbd> or left click to resend hovered file path to `NNN_FIFO`
+- show `+` instead of `s` in status bar on selection
+- <kbd>F5</kbd> removed (misfit for toggle hidden), <kbd>^S</kbd> removed (often masked, redundant)
+- handle abnormal program termination and remove NNN_PIPE and/or NNN_FIFO
+- clear selection after successful batch rename, link creation
+- make option `O_CTX8` for 8 contexts (NOT backward compatible with 4 contexts)
+- fix issue with child window resize (see #656)
+- fix issue with `NNNLVL` on macOS (see #639)
+- fix issue with restoring session with du/au enabled
+
+-------------------------------------------------------------------------------
+
+nnn v3.2
+2020-05-26
+
+- an official logo
+- previews
+  - config `NNN_FIFO` to write hovered file paths a previewer can read
+  - plugin `preview-tabbed`: [tabbed](https://tools.suckless.org/tabbed)/xembed based file previewer
+  - plugin `preview-tui`: simple TUI file previewer in tmux/xterm
+  - plugin `preview-kitty`: preview using kitty terminal's capabilities
+  - [live preview](https://github.com/jarun/nnn/wiki/Live-previews) configuration example
+- find & list
+  - send list of files from (cmd run as) plugin to  `nnn`
+  - plugin `finder`: find/fd/fzf/grep/ripgrep/fzf (in subtree) and list in `nnn`
+  - <kbd>Right</kbd> or <kbd>l</kbd> on symlink in list dir takes to target file
+- persistent session option `-S` [for disk usage, run `nnn -T d` (see help)]
+- hover on the file when a file path is passed as positional argument
+- go to first file or match with <kbd>'</kbd> (followed by <kbd>'</kbd> or <kbd>char</kbd>)
+- config `NNN_SEL` to specify custom selection file
+- config `NNN_LOCKER` to specify locker program
+- dim file details in detail mode
+- call `chdir()` on directory change
+- option `-l`: number of lines to move on mouse scroll
+- graphical [keybind map](https://github.com/jarun/nnn/wiki/Usage#graphical-map)
+- let `NNN_COLORS` override `NO_COLOR`
+- plugins
+  - option `-P`: run plugin by key at start
+  - run plugins with <kbd>Alt+key</kbd>
+  - allow `NNN_PIPE` usage by commands run as plugin
+  - input format to `NNN_PIPE`: `<ctxcode><opcode><data>` (see plugins doc)
+  - set `ctxcode` to `+` for smart context usage (next inactive, else current)
+  - `getplugs` to fetch plugins by installed version of `nnn`
+  - plugin `mimelist`: list files by mime type in subtree
+  - plugin `bookmarks`: named bookmarks using symlinks
+  - plugin `nbak`: backup `nnn` config
+  - `nuke` adds lowdown as alternative markdown viewer
+  - several plugin improvements
+- fix broken screen on resize (see #520)
+- fix broken version sort (see #550)
+- fix list and pipe modes not working together
+- fix multiple issues with listing files
+- fix `@` shown in detail mode for symlink to dir
+- fix listing files directly under `/`
+- move to `-std=c11`
+
+-------------------------------------------------------------------------------
+
+nnn v3.1
+2020-04-13
+
+- unlimited bookmarks and plugin keys
+- status bar text in context color
+- support config `NO_COLOR` to disable colors
+- config `NNN_OPTS` to specify binary options to `nnn`
+- config `NNN_MCLICK` to emulate configurable key
+- toggle selection on right click
+- ignore hard links when calculating disk usage
+- dim (hard/sym) link names (symlink to file has `@`)
+- more special keys at empty filter prompt in _type-to-nav_
+- key <kbd>></kbd> to export file list
+- option `-F` to show fortune in help and settings screen
+- option `-T` to specify sort order (obsoletes `-v`)
+- option to clear sort order
+- key <kbd>T</kbd> to change time type (access/change/mod)
+- `.nmv` - internal fully-functional batch renamer plugin
+- make var `O_NOBATCH` to disable native batch renamer
+- `nuke` & `imgview` - open all images in directory sxiv
+- `nuke` - open log files in vi
+- plugin `x2sel` - system clipboard to selection copier
+- plugin `fzy` - cd using z database
+- plugin `fzopen` - support `FZF_DEFAULT_COMMAND`
+- create new context on TAB without prompt
+- hover and connect by dir name (within config dir)
+- move to next entry on current file delete
+- on single file copy/move, select the copied/moved file
+- option `-f` to use readline history file (off by default)
+- use `s` in status bar to indicate selection in progress
+- make var `O_NOMOUSE` to disable mouse support
+- do not store `NNN_TRASH` and `-Q` in config/session
+- add sample .desktop file for XDG compatible DEs
+- rename _nav-as-you-type_ to _type-to-nav_ mode
+- fix PCRE case-insensitive regex search
+- fix no error msg when filter length limit exceeded
+- fix static package generation
+- fix broken abort message when started in du-mode
+- fix filter lost on context switch in non _type-to-nav_ mode
+- fix broken readline prompt
+- fix long strings treated as action keys in filter prompt
+- fix `NNNLVL` not reset when spawned shell is exited
+
+-------------------------------------------------------------------------------
+
+nnn v3.0
+2020-02-12
+
+- take list of files as input and show
+- option `-e` replaces `NNN_USE_EDITOR`
+- option `-t` replaces `NNN_IDLE_TIMEOUT`
+- PCRE support
+- more readline bindings for native prompts
+- run GUI app as plugin
+- attempt lazy unmount when regular unmount fails
+- fix unmount on macOS: use `umount`
+- detect `sshfs` and `rclone` to prompt intelligently
+- auto-proceed on file open (toggle key <kbd>+</kbd>)
+- quit with error code on <kbd>Q</kbd>
+- additional key <kbd>F5</kbd> to toggle hidden
+- key <kbd>e</kbd> to edit in EDITOR (back on multiple user requests)
+- option to edit list of files in selection is changed to <kbd>E</kbd>
+- do not end selection on redraw
+- `nuke`: [`glow`](https://github.com/charmbracelet/glow) as Markdown viewer
+- `nuke`: refactor, handle some common video types by extension
+- file name removed from status bar
+- static Makefile target
+- generate, upload static package on release
+- fix crash on entering empty dir, then Down
+- fix keypresses lost when showing message
+- fix #227: `nnn` creates xdg-open zombies
+
+-------------------------------------------------------------------------------
+
+nnn v2.9
+2020-01-15
+
+- all keybinds and options reviewed by the team and frozen (see #422)
+  - reduced number of keybinds
+- greatly improved help screen readability
+- `nuke`: sample opener (CLI-only by default) and plugin
+- fast line redraws instead of full screen refresh (thanks @annagrram)
+- auto archive handling by extension (see config `NNN_ARCHIVE`)
+- Lead key simplified to bookmark key (<kbd>b</kbd> or <kbd>^/</kbd>)
+- single key to toggle order (<kbd>t</kbd> or <kbd>^T</kbd>)
+- plugins
+  - `.cbcp`: copy selection to system clipboard (internal, program option `-x`)
+  - `.ntfy`: show noti on cp, mv, rm completion (internal, program option `-x`)
+  - `autojump`: navigate using autojump
+  - `upload`: paste text files to http://ix.io, upload rest to https://file.io
+  - all fuzzy plugins modified to support both `fzf` and `fzy`
+- more control on plugins
+  - prefix `-` to skip directory refresh after running (cmd as) plugin
+  - suffix `*` to skip confirmation after running cmd as plugin
+- indicate range selection mode with `*`
+- list keys at bookmark and plugin key prompts
+- visit to pinned dir like bookmarks (Bookmark key followed by <kbd>,</kbd>)
+- toggle executable (key <kbd>*</kbd>)
+- show mime along with file details
+- more special keys at empty filter prompt:
+  - apply the last filter (<kbd>^L</kbd>)
+  - toggle between string and regex (<kbd>/</kbd>)
+  - toggle case-sensitivity (<kbd>:</kbd>)
+- retain filter on <kbd>Esc</kbd>, <kbd>Up</kbd>, <kbd>Down</kbd>
+- show filter details when filter is on
+- remove option to run filter as cmd on prompt key (can be disruptive)
+- program options
+  - option `-x`: enable notis and copy selection to system clipboard
+  - option `-g`: regex filters (string filter is default now)
+  - option `-Q`: quit program without confirmation
+  - option `-s`: load session
+  - option `-n`: start in nav-as-you-type mode
+  - option `-v`: version sort
+  - option `-V`: show program version
+  - option `-A`: disable dir auto-select
+- ISO 8601 compliant date in status bar
+- ported to Haiku OS (thanks @annagrram)
+- sort only filtered entries (to avoid directory refresh)
+- fix `getplugs` to install hidden files
+- fix several selection issues (see #400)
+- fix detail mode not restored on loading session
+- fix symlink to directory not auto-selected
+- fix regex error on partial regex patterns
+- fix symlink not shown if `stat(2)` on target fails
+- fix flags when spawning a CLI opener as default FM
+- fix issue with stat flag on Sun (no support for `dirent.d_type`)
+- fix current file in current context not saved correctly in session
+- signed source distribution on release
+- simplified debugging with line numbers in logs
+
+-------------------------------------------------------------------------------
+
+nnn v2.8.1
+2019-12-05
+
+- Fix always archiving current file
+- More elaborate docs on selection changes
+
+-------------------------------------------------------------------------------
+
+nnn v2.8
+2019-12-04
+
+- sessions (thanks @annagrram)
+- `rclone` support for remote access (mount _any_ cloud storage!!!)
+- toggle selection with <kbd>Space</kbd> or <kbd>^J</kbd>
+- ignore events during selection so the `+` symbol is not lost
+- run custom (non-shell-interpreted) commands like plugins
+- configure _cd-on-quit_ as the default behaviour
+- create parent dirs for new files and dirs, duplicate a file/dir anywhere
+- _copy/move as_ workflow (thanks @KlzXS)
+- edit , flush selection buffer (thanks @KlzXS)
+- support xargs with minimal options (as in BusyBox) (thanks @KlzXS)
+- changed the key to size sort to <kbd>z</kbd>
+- additional key <kbd>]</kbd> to show command prompt
+- mount archives using `archivemount`
+- smoother double click handling
+- program option `-R` to disable rollover at edges
+- keybind collision checker (for custom keybind config) (thanks @annagrram)
+- show size of file in bytes in status bar in disk usage mode
+- pass unresolved path as second argument (`$2`) to plugin
+- mechanism for plugins to control active directory
+- all binary questions are confirmed by <kbd>y</kbd> or <kbd>Y</kbd>
+- plugins
+  - some plugins renamed
+  - integrated `shellcheck` in CI, POSIX-compliance fixes (thanks @koalaman)
+  - `getplugs` - detect modifications in exiting plugin file (thanks @KlzXS)
+  - `drag-file` & `drop-file`: drag & drop files using dragon
+  - `gutenread`: browse, download and read from Project Gutenberg
+  - `suedit` - edit file with superuser permissions
+  - `fzhist` - fuzzy select commands from history, edit and run
+  - `fzcd` - change to a fuzzy-searched directory
+  - `rename` - batch rename directory or selection using qmv or vidir
+  - `pskill` - fuzzy list a process or zombies by name and kill
+  - `exetoggle` - toggle executable status of hovered file
+  - `treeview` - informative tree output with file permissions and size
+  - `chksum` - recursively calculate checksum for files in hovered directory
+  - `fzopen` renamed to `fzopen`
+  - `imgsxiv` instructions added to browse and rename images
+- create link to current file
+- additional key <kbd>;</kbd> to execute plugin
+- more explicit force removal message
+- force non-detachable internal edits in $EDITOR (option `-E`)
+- export current file as `$nnn` (instead of `$NN`)
+- fix file open failure from browser when configured as default FM
+
+-------------------------------------------------------------------------------
+
+nnn v2.7
+2019-10-06
+
+- plugins for image preview, image and video thumbnails
+- redesigned selection workflow
+- drop path prefix for files in current dir for selection based archives
+- custom direct keybinds for plugins
+- libreadline `.history` file moved to `nnn` config directory
+- export current entry as `$NN` at command prompt
+- more informative status bar in light/detail modes
+- auto-proceed to next file on single file select
+- path clipping for long paths
+- completely revamped wiki
+- new program options:
+  - `-a` to use file access time throughout the program
+  - `-c` to indicate cli-only opener
+  - `-f` to run filter as command on <kbd>^P</kbd>
+  - `-o` replaces config `NNN_RESTRICT_NAV_OPEN`
+  - `-t` replaces config `NNN_NO_AUTOSELECT`
+  - `-r` replaces config `NNN_OPS_PROG`
+- plugin changes:
+  - `vidthumb` - show video thumbnails in terminal
+  - `mediainf` - show media info (decoupled as a plugin)
+  - `notes` - open a quick notes file/dir in `$EDITOR` (decoupled as a plugin)
+  - `dups` - list duplicate files in the current directory
+  - `oldbigfile` - list large files by access time
+  - `moclyrics` - show lyrics of the track currently playing in MOC
+  - `uidgid` list uid and gid of files in directory
+  - `mocplay` - now detects if a track is playing or not
+  - `organize` - categorize files and move to respective directories
+  - `pastebin` - now uses ix.io paste service
+  - `fzy-edit` - merged into `fzy-open`
+  - `viuimg` - fix directory view
+  - `checksum` - fixed POSIX compliance issues
+  - `boom` - play music in MOC
+- keybind changes:
+  - select entry: <kbd>Space</kbd> and <kbd>^J</kbd>
+  - select range (or clear selection): <kbd>m</kbd> and <kbd>^K</kbd>
+  - select all in dir: <kbd>a</kbd>
+  - list selection: <kbd>M</kbd>
+  - <kbd>^N</kbd> replaces <kbd>^T</kbd> to toggle _nav-as-you-type_
+  - <kbd>Shift TAB</kbd> to reverse context cycle
+  - <kbd>'</kbd> to jump to first file in dir
+  - <kbd>S</kbd> for du, <kbd>A</kbd> for apparent du
+  - additional key <kbd>:</kbd> to run plugin
+  - additional key <kbd>F2</kbd> to rename file
+  - additional key <kbd>F5</kbd> to redraw
+  - quit context key <kbd>Leadq</kbd> is removed
+- Leader key combinations:
+  - <kbd>Lead'</kbd> to jump to first file in dir
+  - <kbd>Lead]</kbd> go to next active context
+  - <kbd>Lead[</kbd> go to prev active context
+  - <kbd>Lead.</kbd> toggle show hidden files
+- improved duplicate file workflow
+- improved batch rename workflow when a selection exists
+- removed the wild load option (`-w`)
+- removed quick notes (added plugin `notes`)
+- fix #225 (thanks @KlzXS)
+- fix `tar`/`bsdtar` always creating tar archives (and not by suffix)
+- fix single mouse click to select file not working
+- fix symlink to dir removed on batch rename
+- fix detail mode not set with program option `-S`
+
+-------------------------------------------------------------------------------
+
+nnn v2.6
+2019-08-06
+
+- new plugins
+   - view image or browse a directory of images in terminal
+   - show image thumbnails
+   - PDF and text file reader
+   - calculate and verify checksum of selection or file
+   - append (and play) selection/dir/file music in MOC
+   - variable bitrate mp3 ringtone generator
+   - split current file or join selection
+- better experience on Termux (and touch based devices)
+   - mouse scrolling support (with ncursesw6.0 and above)
+   - tap/left click to visit parent, toggle nav-as-you-type mode
+- light mode set as default
+- show status bar and use reverse video in light mode
+- changed program options
+  - `-d`: detail mode
+  - `-H`: show hidden files
+  - `-l` is retired
+- support `XDG_CONFIG_HOME`
+- support <kbd>/</kbd> as an additional Leader key when filter is on
+- sort by file extension
+- use zip/unzip/tar if atool/bsdtar not found
+- support duplicate file (key <kbd>^R</kbd>, same as rename file)
+- new config option `NNN_SSHFS_OPTS` to specify `sshfs` options
+- restrict opening 0 byte files (`NNN_RESTRICT_0B` is obsolete)
+- critical defects fixed
+   - fix #276 - crash with variable length inotify event handling
+   - fix #285 - hang after deleting/moving current directory
+   - fix #274 - a broken prompt on empty input with libreadline
+   - fix #304 - list selection from another instance
+- `cmatrix` as locker fallback
+- wait for user input after running a command from prompt
+- scrolloff set to 3 from 5
+
+-------------------------------------------------------------------------------
+
+nnn v2.5
+2019-05-27
+
+- mouse support
+- new location for config files - `~/.config/nnn`
+  - plugin dir location: `~/.config/nnn/plugins`
+  - selection file `.nnncp` is now `~/.config/nnn/.selection`
+- plugins:
+  - pdfview: view a PDF in pager
+  - nmount: (un)mount a storage device
+  - ndiff: file and directory diff for selection
+  - hexview: view a file in hex
+  - imgresize: batch resize images to desktop resolution
+  - ipinfo: check your IP address and whois information
+  - transfer: upload a file to transfer.in
+  - pastebin: paste the contents of a text file to paste.ubuntu.com
+  - boom: play random music from a directory
+  - nwal: set an image as wallpaper using nitrogen
+  - pywal: set selected image as wallpaper, change terminal color scheme
+  - getplugs: update plugins
+- SSHFS support
+- support `bsdtar`, simplify `patool` integration
+- native batch rename support (`vidir` dependency dropped)
+- changes to support [configuration](https://github.com/jarun/nnn/wiki/nnn-as-default-file-manager) as the default file manager
+- per-context detail/light mode
+- case-insensitive version compare
+- shortcut to visit `/` - <kbd>`</kbd> (backtick)
+- vim-like scrolloff support
+- <kbd>^D</kbd> & <kbd>^U</kbd>: scroll half page, <kbd>PgDn</kbd> & <kbd>PdUp</kbd>: scroll full page
+- fix selection across contexts
+- recognize <kbd>Home</kbd> and <kbd>End</kbd> keys at prompt for editing
+- fix broken program option `-b`
+- POSIX-compliant user-scripts (wherever possible)
+- `NNN_SCRIPT` is retired (replaced by plugins)
+
+-------------------------------------------------------------------------------
+
+nnn v2.4
+2019-03-19
+
+- FreeDesktop.org compliant trashing
+- mark selected entries with `+`
+- _wild_ mode (option `-w`, key <kbd>^W</kbd>) for _nav-as-you-type_
+- POSIX-compliant GUI app launcher with drop-down menu (key <kbd>=</kbd>)
+- new scripts:
+  - upload image to imgur
+  - send selection to Android using kdeconnect-cli
+- show permissions in detail mode
+- cp, mv progress bar for Linux (needs advcpmv) [BSD, macOS shows on <kbd>^T</kbd>]
+- make libreadline an optional dep (reduces memory usage)
+- minimize the number of redraws
+- handle screen resize gracefully
+- option `-d` to show hidden files (`NNN_SHOW_HIDDEN` is removed)
+- additional key <kbd>K</kbd> to toggle selection
+- change visit start dir key to <kbd>@</kbd>
+- option `-C` to disable colors removed
+- per-context initial directory replaced by program start dir
+- marker msg when spawning new shell removed
+- rename debug file to `nnndbg`
+
+-------------------------------------------------------------------------------
+
+nnn v2.3
+2019-02-19
+
+- file picker mode
+- repo of user-contributed scripts
+- substring search for filters (option `-s`)
+- version sort (option `-n`)
+- disk usage calculation abort with <kbd>^C</kbd>
+- create sym/hard link(s) to files in selection
+- archiving of selection
+- show dir symlinks along with dirs in top
+- fixed CJK character handling at prompts
+- key `N` (1 <= N <= 4) to switch to context N
+- bring back `NNN_OPENER` to specify file opener
+- env var `NNN_NOTE` and keybind <kbd>^N</kbd> for quick notes
+- handle multiple arguments in VISUAL/EDITOR
+- show the current directory being scanned in `du` mode
+- select all files (<kbd>Y</kbd>)
+- show command prompt (<kbd>^P</kbd>)
+- key <kbd>,</kbd> replaces <kbd>`</kbd> as alternative Leader Key
+- keybind for visit pinned directory is now <kbd>^B</kbd>
+- additional key <kbd>^V</kbd> to run or select custom script
+- use libreadline for command prompt
+- reduce delay on <kbd>Esc</kbd> press
+- config option to avoid unexpected behaviour on 0-byte file open (see #187)
+- rename config option `DISABLE_FILE_OPEN_ON_NAV` to `NNN_RESTRICT_NAV_OPEN`
+- keys removed - <kbd>$</kbd>, <kbd>^</kbd>, <kbd>Backspace</kbd>, <kbd>^H</kbd>, <kbd>^P</kbd>, <kbd>^M</kbd>, <kbd>^W</kbd>, <kbd>`</kbd>
+
+-------------------------------------------------------------------------------
+
+nnn v2.2
+2019-01-01
+
+What's in?
+- (neo)vim plugin [nnn.vim](https://github.com/mcchrish/nnn.vim)
+- macOS fixes
+  - Fix issues with file copy, move, remove
+  - Handle <kbd>Del</kbd> in rename prompt
+  - Pass correct `file` option to identify mime
+- Support selection across directories and contexts
+- Offer option `force` before file remove
+- Keys <kbd>Tab</kbd>, <kbd>^I</kbd> to go to next active context
+- Per-context directory color specified by `$NNN_CONTEXT_COLORS`
+  - Option `-c` is removed
+- Option `-C` to disable colors
+- Choose script to run from a script directory
+- Run a command (or launch an application)
+- Run file as executable (key <kbd>C</kbd>)
+- Documentation on lftp integration for remote file transfers
+- Support a _combined_ set of arguments to `$EDITOR`, `$PAGER` and `$SHELL`
+- Handle > 2 GB files on 32-bit ARM
+- Env var `$DISABLE_FILE_OPEN_ON_NAV` to disable file open on <kbd>Right</kbd> or <kbd>l</kbd>
+- `NUL`-terminated file paths in selection list instead of `LF`
+- Better support for Termux and Cygwin environments
+- Remapped keys
+  - <kbd>^I</kbd> - go to next active context
+  - <kbd>^T</kbd> - toggle _navigate-as-you-type_
+
+-------------------------------------------------------------------------------
+
+nnn v2.1
+2018-11-23
+
+What's in?
+- Inclusion in several distros including Arch Linux official repo
+- Multiple contexts (_aka_ tabs _aka_ workspaces) [max 4]
+- Copy, move, remove selected files, remove current file
+- [Leader key](https://github.com/jarun/nnn#leader-key) (like vim)
+- In-built  GUI app launcher with up to 2 arguments (key <kbd>o</kbd>)
+- List copy selection (key <kbd>y</kbd>)
+- Env var `NNN_NO_AUTOSELECT` to disable dir auto-select
+- Key <kbd>Esc</kbd> exits prompt, <kbd>^L</kbd> clears prompt
+- Program runtime help revamped
+- Static code analysis integration
+- gcc-8 warnings fixed
+- Remapped keys:
+  - <kbd>^W</kbd> - go to pinned dir
+  - <kbd>^X</kbd> - delete current entry
+  - <kbd>^Q</kbd> - quit program
+- `nlay` is retired (functionality built into `nnn`)
+- `chdir` prompt is retired
+- Env var `NNN_NO_X` retired, selection now works out of the box
+- Only single-char bookmark keys (to work with Leader key)
+
+-------------------------------------------------------------------------------
+
+nnn v2.0
+2018-10-19
+
+What's in?
+- Mode to show apparent size (key `S`)
+- Script to integrate `patool` instead of `atool`
+- Support `bashlock` (OS X) and `lock` (BSD) as terminal locker
+- Symbol `@/` for symlink to dir
+- Dependency on `libreadline` removed
+
+-------------------------------------------------------------------------------
+
+nnn v1.9
+2018-08-10
+
+What's in?
+- Support unlimited number of scripts
+- Pass currently selected filename as first argument to custom scripts
+- Support directory auto-select in _navigate-as-you-type_ mode
+- Show selection name in archive name prompt
+- Support Cygwin opener
+- Better support on RHEL 25 with earlier version on curses
+- Sample script for `fzy` integration
+- Now available on OpenBSD
+- Disabled package generation for Ubuntu 17.10
+
+-------------------------------------------------------------------------------
+
+nnn v1.8
+2018-05-02
+
+What's in?
+- Run a custom script
+- Archive selected file/directory
+- Show number of cherry-picked files in multi-copy mode
+- Env var `NNN_SHOW_HIDDEN` to show hidden files by default
+- Additional information in help screen
+- Give preference to env var VISUAL, if defined, over EDITOR
+- New/changed/remapped shortcuts
+  - <kbd>^]</kbd> - spawn a new shell in current directory
+  - <kbd>r</kbd> - edit directory entries in vidir
+  - <kbd>R</kbd> - run a custom script
+  - <kbd>^I</kbd> - toggle navigate-as-you-type mode
+  - <kbd>L</kbd> - lock the current terminal (Linux-only)
+- All Ctrl shortcuts enabled in navigate-as-you-type mode
+- Fix: GUI programs closing when parent terminal is closed
+- Recognize `~`, `-` and `&` at bookmark prompt
+- Recognize ruby (.rb) files as text files
+- Efficient integer-only file size calculation
+- Official inclusion on openSUSE and Fedora
+- Package generation for Ubuntu 18.04
+
+-------------------------------------------------------------------------------
+
+nnn v1.7
+2018-02-28
+
+What's in?
+- Batch rename/move/delete files in vidir from [moreutils](https://joeyh.name/code/moreutils/)
+- Copy multiple file paths
+- Copy file paths when X is unavailable
+- Optionally quote individual file paths with single quotes on copy
+- Use ISO 8601 date format in file details
+- New/changed/remapped shortcuts:
+  - <kbd>^B</kbd> - show bookmark prompt (replaces <kbd>b</kbd>)
+  - <kbd>b</kbd> - pin current dir (replaces <kbd>^B</kbd>)
+  - <kbd>^J</kbd> - toggle du mode
+  - <kbd>R</kbd> - batch rename files in vidir
+  - <kbd>^F</kbd> - extract archive (replaces <kbd>^X</kbd>)
+  - <kbd>^G</kbd> - quit nnn and change dir
+  - <kbd>^X</kbd> - quit nnn (replaces <kbd>^Q</kbd>)
+- Extra shortcuts enabled in nav-as-you-type mode:
+  - <kbd>^K</kbd>, <kbd>^Y</kbd> (file path copy)
+  - <kbd>^T</kbd> (toggles quoted file path copy)
+  - <kbd>^R</kbd> (rename)
+  - <kbd>^O</kbd> (open with...)
+  - <kbd>^B</kbd> (show bookmark prompt)
+  - <kbd>^V</kbd> (visit pinned dir)
+  - <kbd>^J</kbd> (toggle du mode)
+  - <kbd>^/</kbd> (open desktop opener)
+  - <kbd>^F</kbd> (extract archive)
+  - <kbd>^L</kbd> (refresh)
+  - <kbd>^G</kbd> (quit nnn and change dir)
+  - <kbd>^X</kbd> (quit nnn)
+
+-------------------------------------------------------------------------------
+
+nnn v1.6
+2017-12-25
+
+What's in?
+- Shortcut `^O` to open file with custom application
+- Option `-b` to open bookmarks directly at start
+- Huge performance improvements around file name storing and handling
+- Several large static buffers removed or reduced
+- Several internal algorithms fine tuned for performance/resource usage
+
+-------------------------------------------------------------------------------
+
+nnn v1.5
+2017-10-05
+
+What's in?
+- File and directory creation (`n`)
+- Env variable `NNN_NOWAIT` to unblock nnn when opening files (DE-specific)
+- Show current entry number in status bar
+- Support archive listing (`F`) and extraction (`Ctrl-X`) [using `atool`]
+- Show correct file size on i386 for large files (> 2GB)
+
+-------------------------------------------------------------------------------
+
+nnn v1.4
+2017-09-04
+
+What's in?
+- Monitor directory changes
+- In-place file rename
+- Pin (`Ctrl-B`) a directory and visit (`Ctrl-V`) it anytime
+- Auto-completion scripts
+- Show volume capacity and free in help
+- Auto-fallback to light mode if too few columns (< 35)
+- PackageCore integration
+- Unsupported Function keys (they never work universally):
+  - `F2` (rename), use `Ctrl-R`
+  - `F5` (refresh), use `Ctrl-L`
+
+-------------------------------------------------------------------------------
+
+nnn v1.3
+2017-07-26
+
+What's in?
+- Show directories in custom color (default: enabled in blue)
+- Option `-e` to use exiftool instead of mediainfo
+- Fixed #34: nftw(3) broken with too many open descriptors
+- More concise help screen
+
+-------------------------------------------------------------------------------
+
+nnn v1.2
+2017-06-29
+
+What's in?
+- Use the desktop opener (xdg-open on Linux, open(1) on OS X) to open files
+- Option `NNN_USE_EDITOR` to open text files in EDITOR (fallback vi)
+- Bookmark support (maximum 10, key `b`)
+- *Navigate-as-you-type* mode (key `Insert` or option `-i`)
+- Subtree search: gnome-search-tool, fallback catfish (key `^/`) (customizable)
+- Show current directory content size and file count in disk usage mode
+- Add detail view mode as default, use `-l` to start in light mode
+- Shortcuts `F2` and `^L` to refresh and unfilter
+  Note: if filter is empty, `Enter` *opens* the currently selected file now
+- Help screen shows bookmarks and configuration
+- Show a message when calculating disk usage
+- Show the spawned shell level
+- Linux only: use vlock as the locker on timeout (set using `NNN_IDLE_TIMEOUT`)
+
+-------------------------------------------------------------------------------
+
+nnn v1.1
+2017-05-12
+
+News
+- Introducing nlay - a highly customizable bash script to handle media type
+- nnn is on [Homebrew](http://braumeister.org/formula/nnn) now
+- RPM packages for CentOS 7 and Fedora 24 generated on release
+
+What's in?
+- *Search-as-you-type*
+- Unicode support
+- Option `-S` to start in disk usage analyzer mode
+- Show media information (using mediainfo)
+- Use readline at change directory prompt
+- Jump to prev directories using `cd .....` (with `.` as PWD)
+- Jump to initial directory using `&`
+- Show help, mediainfo and file info in PAGER
+- Several optimizations
+
+-------------------------------------------------------------------------------
+
+nnn v1.0
+2017-04-13
+
+Modifications
+- Behaviour and navigation
+  - Detail view (default: disabled) with:
+    - file type (directory, regular, symlink etc.)
+    - modification time
+    - human-readable file size
+    - current item in reverse video
+    - number of items in current directory
+    - full name of currently selected file in 'bar'
+  - Show details of the currently selected file (stat, file)
+  - Disk usage analyzer mode (within the same fs, doesn't follow symlinks)
+  - Directories first (even with sorting)
+  - Sort numeric names in numeric order
+  - Case-insensitive alphabetic content listing instead of upper case first
+  - Key `-` to jump to last visited directory
+  - Roll over at the first and last entries of a directory (with Up/Down keys)
+  - Removed navigation restriction with relative paths (and let permissions handle it)
+  - Sort entries by file size (largest to smallest)
+  - Shortcut to invoke file name copier (set using environment variable `NNN_COPIER`)
+- File association
+  - Set `NNN_OPENER` to let a desktop opener handle it all. E.g.:
+        export NNN_OPENER=xdg-open
+        export NNN_OPENER=gnome-open
+        export NNN_OPENER=gvfs-open
+  - Selective file associations (ignored if `NNN_OPENER` is set):
+    - Associate plain text files (determined using file) with vi
+    - Associate common audio and video mimes with mpv
+    - Associate PDF files with [zathura](https://pwmt.org/projects/zathura/)
+    - Removed `less` as default file opener (there is no universal standalone opener utility)
+    - You can customize further (see [how to change file associations](#change-file-associations))
+  - `NNN_FALLBACK_OPENER` is the last line of defense:
+    - If the executable in static file association is missing
+    - If a file type was not handled in static file association
+    - This may be the best option to set your desktop opener to
+  - To enable the desktop file manager key, set `NNN_DE_FILE_MANAGER`. E.g.:
+        export NNN_DE_FILE_MANAGER=thunar
+- Optimization
+  - All redundant buffer removal
+  - All frequently used local chunks now static
+  - Removed some redundant string allocation and manipulation
+  - Simplified some roundabout procedures
+  - Compiler warnings fixed
+  - strip the final binary
+
+-------------------------------------------------------------------------------

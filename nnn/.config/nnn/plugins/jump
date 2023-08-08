@@ -8,7 +8,6 @@
 
 # env control variables
 # REFRESH=-, see jump-refresh
-# SUBTREE,   see jump-subtree, .jump:caches
 
 # fcache performance over fzcd
 
@@ -19,7 +18,7 @@ CTX=+
 
 # fcache replacement for fzcd
 . $(dirname $0)/.jump:caches
-sel=$(fcache $REFRESH $(cache $2) | fZf)  # see j
+sel=$(fcache $REFRESH $(cache "$2") | fZf)  # see j
 
 if [ -n "$sel" ]; then
   if [ "$sel" = "." ] || { ! [ -d "$sel" ] && ! [ -f "$sel" ]; }; then

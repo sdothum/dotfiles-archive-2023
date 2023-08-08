@@ -4,9 +4,10 @@
 # nnn Plugin
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ................................................................. Jump refresh
+# ...................................................... umount removable device
 
-# force cache rebuild
-env REFRESH=- $(dirname $0)/jump "$1" "$2" "$3"
+ls $HOME/mtp/* 2>/dev/null || exit
+mtp umount
 
 # vim: set ft=sh: #
+

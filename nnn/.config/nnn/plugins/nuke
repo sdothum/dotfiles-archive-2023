@@ -135,6 +135,7 @@ handle_video() {
         elif type mpv >/dev/null 2>&1; then
             nohup mpv "${FPATH}" >/dev/null 2>&1 &
         else
+            nohup mpv "${FPATH}" >/dev/null 2>&1 &
             return
         fi
     elif type ffmpegthumbnailer >/dev/null 2>&1; then
@@ -155,6 +156,12 @@ handle_video() {
 # handle this extension and exit
 handle_extension() {
     case "${ext}" in
+        azw3|epub|mobi)
+            foliate $FNAME
+            exit 0;;
+        jpg|JPG|jpeg)
+            feh $FNAME
+            exit 0;;
         ## Archive
         a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|\
         rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)
