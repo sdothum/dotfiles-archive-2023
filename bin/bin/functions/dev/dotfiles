@@ -9,7 +9,7 @@
 # .......................................................................... Git
 
 usage() {
-  echo "usage: $(basename $0) [<stowdir>] add [-f] <package>[/<filespec>]* | comment [<comment>] | edit | ignore | init | list | log | undo | rm <dir>"
+  echo "usage: $(basename $0) [<stowdir>] add [-f] <package>[/<filespec>]* | comment [<comment>] | edit | ignore | init | list | log | undo | rm <dir> | sync"
   ditto rules "$(dirname $0)/.dotfiles:folders"
   exit 1
 }
@@ -81,6 +81,12 @@ rm() {
   fi
 }
 
+sync() {
+  for i in * ;do
+    ifno "sync $i" || dotfiles add $i
+  done
+}
+
 # any updates to push?
 # changes=$(git diff --name-only)
 # [ -z "$changes" ] && [ -z $1 ] && exit
@@ -111,6 +117,7 @@ case $1 in
   
   reset  ) git reset ;;
   rm     ) shift; rm $@ ;;
+  sync   ) sync ;;
   *      ) add $@ ;;
 esac
 
