@@ -15,26 +15,34 @@ end
 
 abbr K 'env sig=-KILL k'
 abbr KK 'env sig=-KILL kk'
-abbr sv 'service'
-if void
-  abbr svd  'service disable'
-  abbr svdn 'service down'
-  abbr sve  'service enable'
-  abbr svm  'service mask'  # at boot
-  abbr svr  'service restart'
-  abbr svs  'service status'
-  abbr svu  'service up'
-  abbr svv  'service UP'
+abbr sv 'sv'  # override service abbrev (from fish-completions)
+if alpine
+  abbr sva  'sv add'
+  abbr svd  'sv delete'
+  abbr svi  'sv status'
+  abbr svl  'sv list'
+  abbr svr  'sv restart'
+  abbr svs  'sv start'
+  abbr svx  'sv stop'
+else if void
+  abbr svd  'sv disable'
+  abbr svdn 'sv down'
+  abbr sve  'sv enable'
+  abbr svm  'sv mask'  # at boot
+  abbr svr  'sv restart'
+  abbr svs  'sv status'
+  abbr svu  'sv up'
+  abbr svup 'sv UP'
 else
-  abbr svd  'service disable'
-  abbr sve  'service enable'
-  abbr svi  'service info'
-  abbr svl  'service reload'
-  abbr svm  'service mask'
-  abbr svr  'service restart'
-  abbr svs  'service start'
-  abbr svt  'service stop'  # terminate
-  abbr svu  'service unmask'
+  abbr svd  'sv disable'
+  abbr sve  'sv enable'
+  abbr svi  'sv info'
+  abbr svl  'sv reload'
+  abbr svm  'sv mask'
+  abbr svr  'sv restart'
+  abbr svs  'sv start'
+  abbr svx  'sv stop'  # terminate
+  abbr svu  'sv unmask'
 end
 
 # ....................................................................... Device
@@ -55,9 +63,9 @@ abbr ttop 'htop --tree'
 abbr iotop 'sudo iotop'
 abbr lpr 'lpr -P hp-LaserJet-1320-series'
 abbr screenfetch 'fetch'
-abbr services "systemctl list-units -t service --no-pager --no-legend | grep active | egrep -v 'systemd|exited' | cut -d' ' -f1"
+abbr services "systemctl list-units -t service --no-pager --no-legend | grep active | grep -E -v 'systemd|exited' | cut -d' ' -f1"
 abbr bash 'bash -norc'
-abbr sh 'rlwrap sh'
+abbr sh 'rlwrap dash'
 abbr time '/usr/bin/time -p'
 abbr traceroute 'mtr --report -c 1'
 abbr who 'command w'
@@ -68,15 +76,20 @@ abbr friendlybear 'smbclient -R bcast //friendlybear/patricia motu om'
 
 # ......................................................................... File
 
-abbr c 'cat'
+abbr c 'doas cat'
 abbr cp 'cp -i'
+abbr cpf 'cp -rf'
 abbr cpl 'cp -iLRfv'
+abbr cpr 'cp -rf'
 abbr cpv 'cp -iv'
 abbr gprename 'gprename $PWD'
 abbr m 'less'
 abbr mv 'mv -i'
+abbr mvf 'mv -f'
 abbr mvv 'mv -iv'
 abbr rm 'rm -i'
+abbr rmf 'rm -rf'
+abbr rmr 'rm -rf'
 abbr rmv 'rm -iv'
 abbr s 'sort -n'
 abbr t 'tail -f'
@@ -102,7 +115,7 @@ abbr treed 'sudo tree -aCdF'
 # ................................................................. File manager
 
 abbr N 'nnn -p -'  # cmd .. (N) file picker mode
-abbr n 'nnn -Pp'
+abbr n 'nnn'
 abbr nb 'nnn -s ebooks'
 abbr r 'vifm'
 abbr R 'ranger'
@@ -161,18 +174,40 @@ abbr perli 'perl -de 1'
 
 # .................................................................. Application
 
+abbr \? 'chatgpt'
+abbr \?\? 'chatgpt -n'  # new conversation
+abbr \@ 'aichat'
+abbr \@s 'aichat -r shell'
+abbr \@c 'aichat -r c'
+abbr \@g 'aichat -r go'
+abbr \@j 'aichat -r julia'
+abbr \@p 'aichat -r python'
+abbr \@r 'aichat -r ruby'
+abbr \@R 'aichat -r rust'
 abbr bc 'bcd'
 abbr calc 'speedcrunch'
 abbr color 'pastel format hex'
-abbr d 'dict'
-abbr di 'dict -t'
+if exists /usr/bin/sdcv
+  abbr D  'dict'
+  abbr d  'sdcv -wn'
+  abbr de 'sdcv -uk'
+  abbr di 'sdcv -di'
+  abbr th 'sdcv -th'
+else
+  abbr d 'dict'
+  abbr di 'dict -t'
+end
 abbr dot 'rlwrap dotfiles'
+abbr gif 'nsxiv -a'
 abbr handbrake 'ghb'
 abbr hex 'hexdump -C'
 abbr kc "kconvert '*epub'"
 abbr kindle 'dmenu econvert azw3'
 abbr eformat 'dmenu econvert reformat'
 abbr kobo 'dmenu econvert epub'
+abbr md 'lowdown -tterm'
+abbr mdtxt 'lowdown -tterm --term-no-colour'
+abbr miniflux-migrate 'doas miniflux -c /etc/miniflux.conf -migrate'
 abbr music '!p ncmpcpp ;and ncmpcpp'
 abbr reqk 'qk stop; qk start'
 abbr scrot 'scrot -e "mv \$f /net/photos/batchqueue/"'

@@ -27,7 +27,7 @@ function j --description 'usage: j [-] [<dir>] [<pattern>]'
       if test -d $argv[1]
         fcache $refresh $argv[1] | fZf -q $argv[2] | read dir
       else
-        fcache $refresh $HOME | egrep "$argv[1]" | fZf -q $argv[2] | read dir
+        fcache $refresh $HOME | grep -E "$argv[1]" | fZf -q $argv[2] | read dir
       end
   end
   test -n $dir ;and cd $dir

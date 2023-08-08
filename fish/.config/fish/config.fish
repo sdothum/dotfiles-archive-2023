@@ -14,7 +14,7 @@ fish_vi_key_bindings
 
 # fuzzy searches
 test -e /usr/share/fish/completions/autojump.fish
-  and source /usr/share/fish/completions/autojump.fish
+and source /usr/share/fish/completions/autojump.fish
 
 # ............................................................ Shell environment
 
@@ -27,7 +27,7 @@ set -x KEYTIMEOUT 1
 set -x CACHEDIR $HOME/.cache
 set -x CDPATH . .. ../.. ~ ~/.config ~/build ~/stow /usr / >/dev/null
 echo $PATH | grep -q "$HOME/.gem/ruby/(rubyver)/bin"
-  or set -x PATH $PATH ~/.gem/ruby/(rubyver)/bin ~/.cabal/bin /bin /sbin /usr/sbin /usr/bin/core_perl /usr/local/games >/dev/null
+or set -x PATH $PATH ~/.gem/ruby/(rubyver)/bin ~/.cabal/bin /bin /sbin /usr/sbin /usr/bin/core_perl /usr/local/games >/dev/null
 
 # ........................................................... System environment
 
@@ -36,7 +36,7 @@ set -x LANG en_US.UTF-8
 
 # gpg key
 test -S ~/.gnupg/S.gpg-agent
-  and set -x GPG_AGENT_INFO ~/.gnupg/S.gpg-agent
+and set -x GPG_AGENT_INFO ~/.gnupg/S.gpg-agent
 set -x PASSWORD_STORE_CLIP_TIME 60
 
 # ..................................................................... Hardware
@@ -72,15 +72,15 @@ set -x NNTPSERVER news.sunnyusenet.com
 
 # default editor
 # set -x EDITOR 'vi -e'
-set -x EDITOR 'vim'
+set -x EDITOR vim
 # set -x VISUAL 'gvim -f'
-set -x VISUAL 'vim -g -f'  # foreground required for crontab -e ..avoids gvim library errors (?)
+set -x VISUAL 'vim -g -f' # foreground required for crontab -e ..avoids gvim library errors (?)
 
-set -x XIVIEWER 'feh'
-set -x PLAYER 'mpv'
+set -x XIVIEWER feh
+set -x PLAYER mpv
 # less prompt (replaced by wrapper to be able to set prompt colour)
 # set -x LESS '-RX -P ?B %f  %lt-%lb/%L  %Pb\%: [pipe]  %lt-%lb/\.\.'
-set -x PAGER 'less'
+set -x PAGER less
 
 # ..................................................... Development environments
 
@@ -95,10 +95,12 @@ set -x STOW $HOME/stow
 
 # ...................................................................... Session
 
+set -x TMPDIR $HOME/tmp
+
 set -x SESSION $HOME/.session
 # proxy override
-test -e $SESSION/http_proxy 
-  and set -x HTTP_PROXY (cat $SESSION/http_proxy)
+test -e $SESSION/http_proxy
+and set -x HTTP_PROXY (cat $SESSION/http_proxy)
 
 set -x XDG_DATA_HOME $HOME/.local/share
 set -x XDG_DOWNLOAD_DIR /net/downloads/http
@@ -107,12 +109,13 @@ set -x XDG_RUNTIME_DIR /run/user/(id -u)
 sudo mkdir -p $XDG_RUNTIME_DIR
 sudo chown $USER $XDG_RUNTIME_DIR
 sudo chmod 700 $XDG_RUNTIME_DIR
+
 set -x NNTPSERVER news.sunnyusenet.com
 
 # ..................................................................... Defaults
 
-test -n $HTTP_PROXY 
-  and set -x http_proxy $HTTP_PROXY
+test -n $HTTP_PROXY
+and set -x http_proxy $HTTP_PROXY
 
 # default browser changes require login (Ctrl-d) for X11 autostart
 # test (cpu) = celeron
@@ -121,15 +124,17 @@ test -n $HTTP_PROXY
 # set -x BROWSER surf
 # set -x BROWSER vimb
 test -n $SESSION/browser
-  and set -x BROWSER (cat $SESSION/browser 2>/dev/null)
+and set -x BROWSER (cat $SESSION/browser 2>/dev/null)
 test -z $BROWSER
-  and set -x BROWSER qutebrowser
+and set -x BROWSER qutebrowser
 
 # ................................................................. Applications
 
 # source shell variables
 function SOURCE --description 'usage: SOURCE <script>'
-  for i in (grep '^export ' $argv); eval $i; end
+    for i in (grep '^export ' $argv)
+        eval $i
+    end
 end
 
 # for alot mail
@@ -139,6 +144,10 @@ set -x VIM /usr/share/vim/vim9*
 set -x GOOGLE_API_KEY no
 set -x GOOGLE_DEFAULT_CLIENT_ID no
 set -x GOOGLE_DEFAULT_CLIENT_SECRET no
+
+# for chatgpt https://platform.openai.com/account/api-keys
+set -x OPENAI_API_KEY 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
+set -x AICHAT_API_KEY $OPENAI_API_KEY
 
 # source nnn environment (and LS_COLORS)
 SOURCE $HOME/bin/functions/shell/nnn
@@ -153,7 +162,11 @@ set -x splito $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymap
 # ............................................................... Initialization
 
 console_login
-user_login
+if [ -s $SESSION/boot:wm ] 
+  pgrep -f "sshd: $USER" >/dev/null || user_login &
+else
+  user_login
+end
 # clear 'fish' tmux window name
 pidof tmux >/dev/null 
   and begin 
