@@ -44,7 +44,7 @@ xrdb -merge $HOME/.Xresources &
 
 if xinput list --name-only | grep -E -q 'Georgi|Splitography' ;then
   if [ -e $PLOVER ] ;then
-    switch tag $ADMIN
+    switch tag $SYSTEM
     plover &
     sleep $instantiate
   fi
@@ -125,9 +125,9 @@ kill -KILL $BROWSER 2>/dev/null  # remove dangling instance on server
 # rm -rf $XDG_RUNTIME_DIR/$BROWSER 2>/dev/null
 
 [ -e $THEDARNEDESTTHING ] && thedarnedestthing &
-switch tag $CHAT
+switch tag $COMMS
 [ -e $HANGOUTS ] && { hangouts; sleep 1; }
-switch tag $WEB
+switch tag $DESK
 [ -e $WWW      ] && $BROWSER &
 [ -e $TERM     ] && toggle scratchpad
 if [ -e $REMINDER ] ;then

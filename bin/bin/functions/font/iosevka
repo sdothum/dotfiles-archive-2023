@@ -670,7 +670,7 @@ fi
 
 [ $ebook ] && [ $spacing != 'quasi-proportional' ] && fforge ligature $width ${shape##* } $family  # ae width character adjustment
 
-[ $ebook ] && [ $baseline ] && fforge baseline ${shape##* }  $family  # force baseline adjustment for descending caps and q-hook
+[ $baseline ] && fforge baseline ${shape##* }    $family  # force baseline adjustment for descending caps and q-hook
 [ $space ]    && fforge space $space             $family  # lengthen space character cell width
 [ $ebook ]    && fforge ${regular}weight $adjust $family  # rename weight for e-reader (as regular)
 
