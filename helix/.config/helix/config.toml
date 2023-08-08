@@ -1,0 +1,54 @@
+theme                  = "nord_light"
+
+[editor]
+auto-completion        = true
+auto-format            = true
+auto-info              = true
+auto-pairs             = false
+completion-trigger-len = 2
+line-number            = "relative"
+mouse                  = true
+scroll-lines           = 1
+shell                  = ["fish", "-c"]
+true-color             = true
+
+[editor.cursor-shape]
+insert                 = "bar"
+normal                 = "block"
+select                 = "underline"
+
+[editor.file-picker]
+hidden                 = false
+
+[editor.lsp]
+display-messages       = true
+
+[editor.search]
+smart-case             = true
+wrap-around            = true
+
+[editor.statusline]
+# left                   = ["mode", "diagnostics"]
+# center                 = ["file-name"]
+# right                  = ["selections", "file-type", "file-encoding", "position-percentage", "position"]
+left                   = ["spacer", "file-name"]
+center                 = ["selections", "spacer", "spacer", "spacer", "mode", "spacer", "spacer", "spacer", "position" ]
+right                  = ["position-percentage", "spacer"]
+
+[keys.insert]
+C-space                = "completion"
+j                      = { k = "normal_mode" }  # Maps `jk` to exit insert mode
+# Move cursor in insert mode
+A-h                    = "move_char_left"
+A-j                    = "move_line_down"
+A-k                    = "move_line_up"
+A-l                    = "move_char_right"
+A-o                    = "open_below"
+A-O                    = "open_above"
+
+[keys.normal]
+"ret"                  = ["move_line_down", "goto_first_nonwhitespace"]  # Maps the enter key to move to start of next line
+D                      = "delete_char_backward"
+X                      = "extend_line_above"
+g                      = { a = "code_action", o = "goto_last_accessed_file" }  # Maps `ga` to show possible code actions
+
