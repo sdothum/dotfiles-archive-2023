@@ -8,7 +8,7 @@
 doas apk add gcc-arm-none-eabi newlib-arm-none-eabi
 doas apk add gcc-avr avr-libc
 doas apk add avrdude binutils-avr
-apk_edge -t dfu-programmer dfu-util
+apk testing dfu-programmer dfu-util
 doas addgroup shum dialout
 ditto /dev/ttyACM "reboot required for $USER group pemission to access device"
 

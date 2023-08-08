@@ -390,7 +390,7 @@ stage_33() {
   doas apk add xset
   doas apk add xsetroot
   doas apk add xwallpaper
-  apk_edge -t setroot  # for color bg
+  apk testing setroot  # for color bg
 
   info ............................................. migrate desktop environment
   migrate pull conky dunst herbstluftwm images picom rofi session
@@ -409,8 +409,8 @@ stage_33() {
   info ........................................................... desktop theme
   # make_install flatseal
   doas apk add gtk-murrine-engine
-  apk_edge -t arc-dark
-  apk_edge -t lxappearance
+  apk testing arc-dark
+  apk testing lxappearance
   doas apk add paper-icon-theme
   make_install phinger-cursors
 
@@ -444,7 +444,7 @@ stage_33() {
   make_install lemonbar-xft  # edit makefile to /tmp/lemonbar.1 if error(?)
   make_install sutils
   # make_install xtitle
-  apk_edge -t xtitle
+  apk testing xtitle
 
   info ................................................................... audio
   # doas apk add alsa-plugins
@@ -541,7 +541,7 @@ stage_33() {
   # doas apk add lynx
   doas apk add qutebrowser
   stow qutebrowser
-  apk_edge -t surf
+  apk testing surf
   doas apk add youtube-dl
   make_install google-chrome
 

@@ -162,7 +162,7 @@ e_ink() {
 # e_ink Iota        ${cap:-cap extended} a-single f-extended j-serifed G-hookless+ I-descending Q-straight open ${space:-space 1.3333}
 # e_ink Ypsilon     ${cap:-cap extended} a-single f-extended j-serifed G-hookless+ Y-descending Q-straight open ${space:-space 1.3333}
 
-dfont() { iosevka expanded j-serifed q-hook Q-bar $(options $@) at-tall $cap; }
+dfont() { iosevka extended j-serifed q-hook Q-bar $(options $@) at-tall $cap; }
 # wfont() { iosevka english  j-serifed G-hookless+ Q-bar $(options $@) asterisk-high; }  # override dyslexic "asterisk-low"
 wfont() { iosevka english j-serifed G-hookless+ Q-straight $(options $@) asterisk-high emdash $emdash; }
 efont() { iosevka $language $(options $@); }
@@ -217,8 +217,8 @@ else                                      # desktop fonts
   dfont $leading $altmono  I-descending
   dfont proof    $altmono  I-descending     Q-straight
   dfont menu     $altmono                   Q-straight
-  dfont dyslexic $altmono                   Q-straight J-flat space 2 family qclocktwo    # conky qclocktwo font
-  dfont dyslexic $altmono  quasi-extension  I-descending      space M family monograffic  # panel/dunst/browser font
+  dfont dyslexic $altmono                   Q-straight   J-flat   space 2 family qclocktwo    # conky qclocktwo font
+  dfont dyslexic $altmono  quasi-extension  I-descending extended space M family monograffic  # panel/dunst/browser font
 fi
 
 # vim: set ft=sh: #
