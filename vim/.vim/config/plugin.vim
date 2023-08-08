@@ -16,6 +16,7 @@ call plug#begin('~/.vim/plugged')
 " ....................................................................... System
 " Plug 'tpope/vim-scriptease'          " debugger
 " Plug 'tpope/vim-dispatch'            " launch async shell command
+
 Plug 'dstein64/vim-startuptime'        " startup stats
 
 " User Interface _______________________________________________________________
@@ -30,6 +31,7 @@ Plug 'sdothum/vim-duochrome'           " distraction free monochromatic content 
 " Plug 'metakirby5/codi.vim'           " async evaluator
 " Plug 'tpope/vim-scriptease'          " meta plugin
 " Plug 'reedes/vim-wordy'              " word usage
+
 Plug 'majutsushi/tagbar'               " ctags
 Plug 'lvht/tagbar-markdown'            " markdown for tagbar
 Plug 'bimlas/vim-eightheader'          " custom foldtext
@@ -38,17 +40,19 @@ Plug 'junegunn/vim-peekaboo'           " registers
 " ....................................................................... Keymap
 " Plug 'kana/vim-arpeggio'             " key chords
 " Plug 'Jorengarenar/pseudoClip'       " clipboard registers
+" Plug 'tpope/vim-unimpaired'            " complementary mappings
+
 Plug 'tpope/vim-repeat'                " dot plugin
 Plug 'tpope/vim-rsi'                   " readline keybindings
-Plug 'tpope/vim-unimpaired'            " complementary mappings
 
 " ................................................................. Highlighting
 " Plug 'JuliaEditorSupport/julia-vim'  " julia programming language
 " Plug 'markonm/traces.vim'            " ex pattern/range highlghting
 " Plug 'romainl/vim-cool'              " dynamic search highlighting
+
 Plug 'itchyny/vim-cursorword'          " word highlighting
 Plug 'nathanaelkane/vim-indent-guides' " colourized indent columns
-Plug 'plasticboy/vim-markdown'         " concealed markdown
+Plug 'preservim/vim-markdown'          " concealed markdown
 Plug 'andymass/vim-matchup'            " match navigation
 Plug 'sheerun/vim-polyglot'            " multilingual highlighting
 Plug 'machakann/vim-highlightedyank'   " yank highlghting
@@ -58,23 +62,27 @@ Plug 'machakann/vim-highlightedyank'   " yank highlghting
 " ................................................................... Management
 " Plug 'duff/vim-scratch'              " scratch buffer
 " Plug 'simeji/winresizer'             " resize windows
+
 Plug 'chrisbra/NrrwRgn'                " visual block buffer
 
 " .............................................................. Version control
 " Plug 'tpope/vim-fugitive'            " github wrapper
 " Plug markwoodhall/vim-mercurial      " mercurial wrapper
+
 Plug 'mhinz/vim-signify'               " vcs diff
 
 " .................................................................... Hypertext
 " Plug 'dyng/ctrlsf.vim'               " ctrl-shift-f clone
 " Plug 'lervag/wiki'                   " vimwiki clone
+
 Plug 'junegunn/fzf'                    " fuzzy finder (separate plug install to avoid update errors)
 Plug 'junegunn/fzf.vim'                " fuzzy finder
 Plug 'sdothum/notational-fzf-vim-duochrome'  " fzf content search (patched)
 
 " ...................................................................... History
+" Plug 'vim-scripts/YankRing.vim'      " paste (yank)
 Plug 'simnalamburt/vim-mundo'          " undo
-Plug 'vim-scripts/YankRing.vim'        " paste (yank)
+Plug 'svermeulen/vim-yoink'            " killring
 
 " ....................................................................... Linter
 Plug 'dense-analysis/ale'              " asynchronous lint engine
@@ -83,14 +91,16 @@ Plug 'dense-analysis/ale'              " asynchronous lint engine
 
 " ................................................................... Navigation
 " Plug 'wellle/targets.vim'            " text objects
+
 Plug 'Konfekt/FastFold'                " update folds
 Plug 'masukomi/vim-markdown-folding'   " markdown foldexpr
 Plug 'kshenoy/vim-signature'           " toggle marks
 Plug 'justinmk/vim-sneak'              " jump to location
 
 " ................................................................. Text objects
+" Plug 'tpope/vim-surround'              " pairwise c'hange, d'elete, y'ank
 " Plug 'reedes/vim-textobj-quote'      " typographic characters
-Plug 'tpope/vim-surround'              " pairwise c'hange, d'elete, y'ank
+
 Plug 'glts/vim-textobj-comment'        " 'c' select comment
 Plug 'kana/vim-textobj-fold'           " 'z' select fold
 Plug 'kana/vim-textobj-function'       " 'f' select function
@@ -105,12 +115,12 @@ Plug 'reedes/vim-pencil'               " dynamic paragraph formatting
 Plug 'sdothum/vim-heading'             " comment heading formatter
 
 " ................................................................... Completion
+" Plug 'jiangmiao/auto-pairs'          " insert/delete pairs
 " Plug 'mattn/emmet-vim'               " html
-Plug 'jiangmiao/auto-pairs'            " insert/delete pairs
-Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
-Plug 'Shougo/neocomplete.vim'          " required by snippets
-Plug 'Shougo/neosnippet.vim'           " snippets
-Plug 'tpope/vim-endwise'               " add 'end' statement
+" Plug 'tpope/vim-endwise'             " add 'end' statement (conflicts with coc)
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'SirVer/ultisnips'                " snipppets (python)
 Plug 'reedes/vim-litecorrect'          " autocorrections
 
 " Plugin completion ____________________________________________________________

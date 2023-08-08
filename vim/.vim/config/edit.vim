@@ -35,6 +35,11 @@ inoremap <silent><C-CR> <C-o>:SmartWrap<CR>
 nnoremap <silent><C-S-Up>   m`:silent -g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
 nnoremap <silent><C-S-Down> m`:silent +g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
 
+" .................................................................. Edit column
+" to accommodate chorded georgi keyboard
+nnoremap <silent><C-v>a  <C-v><S-a> 
+nnoremap <silent><C-v>i  <C-v><S-i> 
+
 " ............................................................. Strip whitespace
 command! StripTrailingWhitespaces silent! call edit#StripTrailingWhitespaces()
 

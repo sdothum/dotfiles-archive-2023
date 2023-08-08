@@ -29,6 +29,168 @@ let g:AutoPairsMapBS                = 1       " auto delete symbol pairs
 " let g:AutoPairsFlyMode            = 1       " auto pair jumping
 let g:AutoPairsShortcutBackInsert = '<C-BS>'  " undo auto pair jump -> close pair
 
+" .......................................................................... coc
+" May need for Vim (not Neovim) since coc.nvim calculates byte offset by count
+" utf-8 byte sequence
+set encoding=utf-8
+" Some servers have issues with backup files, see #649
+set nobackup
+set nowritebackup
+
+" Having longer updatetime (default is 4000 ms = 4s) leads to noticeable
+" delays and poor user experience
+set updatetime=300
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s)
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Applying code actions to the selected code block
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying code actions at the cursor position
+nmap <leader>ac  <Plug>(coc-codeaction-cursor)
+" Remap keys for apply code actions affect whole buffer
+nmap <leader>as  <Plug>(coc-codeaction-source)
+" Apply the most preferred quickfix action to fix diagnostic on the current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Remap keys for applying refactor code actions
+nmap <silent> <leader>re <Plug>(coc-codeaction-refactor)
+xmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
+nmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
+
+" Run the Code Lens action on the current line
+nmap <leader>cl  <Plug>(coc-codelens-action)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Remap <C-f> and <C-b> to scroll float windows/popups
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
+" Use CTRL-S for selections ranges
+" Requires 'textDocument/selectionRange' support of language server
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer
+command! -nargs=0 Format :call CocActionAsync('format')
+
+" Add `:Fold` command to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Mappings for CoCList
+" Show all diagnostics
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
 " ......................................................................... Cool
 let g:CoolTotalMatches = 1  " command-line match statistics
 
@@ -75,10 +237,10 @@ let &foldtext =
 
 " ...................................................................... Endwise
 " add fish shell syntax rule, see ~/.vim/plugged/vim-fish/syntax/fish.vim
-autocmd plugin FileType fish
-    \  let b:endwise_addition  = 'end'
-    \| let b:endwise_words     = 'function,begin,if,while,for,switch'
-    \| let b:endwise_syngroups = 'shFunctionKey'
+" autocmd plugin FileType fish
+"     \  let b:endwise_addition  = 'end'
+"     \| let b:endwise_words     = 'function,begin,if,while,for,switch'
+"     \| let b:endwise_syngroups = 'shFunctionKey'
 
 " .......................................................................... Fzf
 " 'border' defines border around notational-fzf preview window
@@ -180,36 +342,6 @@ endfunction
 
 vmap <leader>n :NR<CR>:SplitColors<CR>
 nmap <leader>n :call <SID>closeNR()<CR>
-
-" .................................................................. Neocomplete
-let g:neocomplete#enable_at_startup                 = 1
-let g:neocomplete#enable_smart_case                 = 1
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-
-" inoremap <expr><Tab>  neocomplete#start_manual_complete()
-" inoremap <expr><TAB>  pumvisible() ?  "\<Down>" : neocomplete#start_manual_complete()
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <silent><expr><TAB> pumvisible() ? "\<C-n>" :
-        \ <SID>check_back_space() ? "\<TAB>" :
-        \ neocomplete#start_manual_complete()
-
-" ................................................................... Neosnippet
-let g:neosnippet#snippets_directory            = '~/.vim/snippets'
-let g:neosnippet#enable_snipmate_compatibility = 1
-let g:neosnippet#disable_runtime_snippets      = { '_' : 1 }  " disable all runtime snippets
-let g:neosnippet#scope_aliases =
-  \{
-  \  'new'  : 'conf,fish,hs,ruby,sh,zsh'
-  \, 'text' : 'mail'
-  \}
-
-imap <C-x> <Plug>(neosnippet_expand_or_jump)
-smap <C-x> <Plug>(neosnippet_jump)
 
 " ................................................................ Nerdcommenter
 let g:NERDSpaceDelims            = 1  " space after comment delimiter
@@ -381,20 +513,67 @@ imap <silent><S-F5> <C-o>:call <SID>toggleTypo()<CR>
 " autocmd plugin FileType html     call textobj#quote#init()
 " autocmd plugin FileType markdown call textobj#quote#init()
 
+" .................................................................... UltiSnips
+let g:UltiSnipsExpandTrigger       = "<C-x>"
+let g:UltiSnipsListSnippets        = "<C-z>"
+let g:UltiSnipsJumpForwardTrigger  = "<C-j>"
+let g:UltiSnipsJumpForwardTrigger  = "<C-l>"
+let g:UltiSnipsJumpBackwardTrigger = "<C-k>"
+
 " ....................................................................... Vimade
 nmap <silent><S-F11>       :VimadeToggle<CR>
 
 autocmd plugin BufWinEnter __Mundo_* VimadeBufDisable
 
-" ..................................................................... Yankring
-let g:yankring_default_menu_mode  = 1   " menu on with no shortcut
-let g:yankring_dot_repeat_yank    = 1   " allow repeating yankring action
-let g:yankring_enabled            = 1   " disable yankring because of macro conflict
-let g:yankring_min_element_length = 5   " minimum yankring size
-let g:yankring_window_height      = 30  " horizontal window height
-let g:yankring_zap_keys           = ''  " disable (conflicts with sneak)
+" ................................................................. Vim-markdown
+let g:vim_markdown_conceal             = 2
+let g:vim_markdown_conceal_code_blocks = 0
+let g:vim_markdown_math                = 1
+let g:vim_markdown_toml_frontmatter    = 1
+let g:vim_markdown_frontmatter         = 1
+let g:vim_markdown_strikethrough       = 1
+let g:vim_markdown_autowrite           = 1
+let g:vim_markdown_edit_url_in         = 'tab'
+let g:vim_markdown_follow_anchor       = 1
 
-nmap <silent>Y         :<C-U>YRYankCount 'y$'<CR>
-nmap <silent><leader>y :YRShow<CR>
+
+" .................................................................... Vim-yoink
+let g:yoinkMaxItems                   = 10
+let g:yoinkSyncNumberedRegisters      = 0
+let g:yoinkIncludeDeleteOperations    = 1
+let g:yoinkAutoFormatPaste            = 0
+let g:yoinkMoveCursorToEndOfPaste     = 0
+let g:yoinkSwapClampAtEnds            = 0
+let g:yoinkIncludeNamedRegisters      = 1
+let g:yoinkSyncSystemClipboardOnFocus = 0
+
+nmap <c-n> <plug>(YoinkPostPasteSwapBack)
+nmap <c-p> <plug>(YoinkPostPasteSwapForward)
+nmap p <plug>(YoinkPaste_p)
+nmap P <plug>(YoinkPaste_P)
+
+" Also replace the default gp with yoink paste so we can toggle paste in this case too
+nmap gp <plug>(YoinkPaste_gp)
+nmap gP <plug>(YoinkPaste_gP)
+nmap [y <plug>(YoinkRotateBack)
+nmap ]y <plug>(YoinkRotateForward)
+
+nmap <c-=> <plug>(YoinkPostPasteToggleFormat)
+nmap y <plug>(YoinkYankPreserveCursorPosition)
+xmap y <plug>(YoinkYankPreserveCursorPosition)
+
+nmap <silent><leader>y :Yanks<CR>
+nmap <silent><leader>Y :ClearYanks<CR>
+
+" ..................................................................... Yankring
+" let g:yankring_default_menu_mode  = 1   " menu on with no shortcut
+" let g:yankring_dot_repeat_yank    = 1   " allow repeating yankring action
+" let g:yankring_enabled            = 1   " disable yankring because of macro conflict
+" let g:yankring_min_element_length = 5   " minimum yankring size
+" let g:yankring_window_height      = 30  " horizontal window height
+" let g:yankring_zap_keys           = ''  " disable (conflicts with sneak)
+"
+" nmap <silent>Y         :<C-U>YRYankCount 'y$'<CR>
+" nmap <silent><leader>y :YRShow<CR>
 
 " setting.vim
