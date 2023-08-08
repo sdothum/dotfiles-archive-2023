@@ -1,3 +1,4 @@
+  X11
   amphetype
   bash
   bin
@@ -14,7 +15,7 @@
   kindle
   kobo/kobopatch_*/*yaml
   kobo/kobopatch_*/src/*yaml
-  kobo/fonts.*
+  kobo/fonts
   kobo/calibre_sync_columns.mkd
   kobo/Nickel*
   kobo/calibre_sync_columns
