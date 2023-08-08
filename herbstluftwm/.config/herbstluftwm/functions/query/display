@@ -6,10 +6,25 @@
 
 # ........................................................... Display resolution
 
-# Usage: query display [secondary], returns X Y _ area
-#        typically, set -- $(query display) to reference X Y as $1 $2
+# Usage: query display [secondary | [height | width [<monitor>]]
 
-[ $1 ] && secondary=-r
-xrandr 2>/dev/null | grep -E '[*+] |[*+]$' | sort $secondary | tail -1 | tr 'x' ' '
+void && order=tac || order=cat  # xrandr --primary not ordering stdout
+
+# monitor (0) primary (1) secondary, etc.
+monitor() { [ $1 ] && monitor=$1 || monitor=$(herbstclient attr monitors.focus.index); }
+
+case $1 in
+  # default, display current monitor display height
+  height) monitor $2
+          xrandr 2>/dev/null | grep -E '[*+] |[*+]$' | $order | cut -dx -f2 | cut -d' ' -f1 | sed "$(( $monitor + 1 ))q ;d" ;;
+
+  # default, display current monitor display width
+  width ) monitor $2
+          xrandr 2>/dev/null | grep -E '[*+] |[*+]$' | $order | cut -dx -f1 | sed "$(( $monitor + 1 ))q ;d" | sed 's/ //g' ;;
+
+  # typically, set -- $(query display) to reference X Y as $1 $2
+  *     ) [ $2 ] && secondary=-r
+          xrandr 2>/dev/null | grep -E '[*+] |[*+]$' | sort $secondary | tail -1 | tr 'x' ' '   ;;
+esac
 
 # vim: set ft=sh: #

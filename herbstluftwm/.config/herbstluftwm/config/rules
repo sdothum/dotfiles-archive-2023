@@ -40,7 +40,7 @@ hc rule windowrole=gvimdiff                tag=2 focus=on hook=max
 # hc rule title=IRC                        tag=3 index=1 focus=on
 # hc rule class=firefox                    tag=3 once index=0 focus=on hook=max
 hc rule class=Pidgin                       tag=3
-hc rule class=surf                         tag=3 once index=2 focus=on
+hc rule class=surf                         tag=3 index=2
 hc rule title=IM                           tag=3 focus=on
 hc rule title=Messenger                    tag=3 focus=on
 hc rule title=Twitter                      tag=3

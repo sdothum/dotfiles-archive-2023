@@ -35,9 +35,12 @@ cardinal=0  # directions
 # panel symbols (tag numbers option dropped to simplify colour assignments)
 OCCUPIED='■'
 FREE='□'
-TAG_PAD='    '          # tag bar separator (visual spacing)
-STATPAD=${TAG_PAD% }
-[ $(query displaywidth) -lt 1920 ] && scaledown=true
+case $(query display width) in
+  3440) TAG_PAD='      '; STATPAD='   ' ;;  # tag bar separator (visual spacing)
+  1920) TAG_PAD='     ' ; STATPAD='  '  ;;
+  *   ) TAG_PAD='    '  ; STATPAD='  '  ;;
+esac
+[ $(query display width) -lt 1920 ] && scaledown=true
 [ $scaledown ] && { TAG_PAD='  '; LSEP=${LSEP# }; LSEP=${LSEP% }; RSEP=${RSEP# }; RSEP=${RSEP% }; STATPAD=$TAG_PAD; }
 TRIANGLES="▶ ◢ ▼ ◣ ◀ ◤ ▲ ◥"
 
@@ -76,7 +79,7 @@ mid_point=$(( $monitorW / ($fontsize - 3) / 2 ))  # kludgey column width calcula
 
 # compositing shadow tweaking probably only works for flat looks, consider a panel height factor otherwise
 [ $PANEL_HEIGHT -lt $margin ] && PANEL_HEIGHT=$margin
-[ $PANEL_BOTTOM ] && panel_offsetY=$(( $(query displayheight) - $PANEL_HEIGHT )) || panel_offsetY=$PANEL_HEIGHT
+[ $PANEL_BOTTOM ] && panel_offsetY=$(( $(query display height) - $PANEL_HEIGHT )) || panel_offsetY=$PANEL_HEIGHT
 
 [ -s $PANEL_INDENT ] && indent=$(cat $PANEL_INDENT) || indent=0
 indent=$(( $margin + $indent ))
@@ -136,7 +139,7 @@ desktops() {
 
 # .................................................................... Cpu stats
 
-cpu_stat() { stat="${STATPAD}${STATPAD}$cpu_usage${STATPAD}$cpu_temp${STATPAD}$mem_usage${DESKPAD}${TAG_PAD}"; }
+cpu_stat() { stat="${TAG_PAD}${STATPAD}$cpu_usage ${STATPAD}$cpu_temp${STATPAD}$mem_usage${DESKPAD}${TAG_PAD}"; }
 
 # ............................................................... Current window
 
@@ -272,7 +275,7 @@ weather() { unset update_weather; conky weather panel >/tmp/${WEATHER##*/} & }
 [ -e $WEATHER ] && { [ -s /tmp/${WEATHER##*/} ] && current_weather=$(cat /tmp/${WEATHER##*/}); weather; }
 
 touch /tmp/${STAT##*/}:cpu /tmp/${STAT##*/}:temp /tmp/${STAT##*/}:mem
-cpu_usage=$(cat /tmp/${STAT##*/}:cpu)  # to avoid line centering shift
+cpu_usage=$(cat /tmp/${STAT##*/}:cpu | sed 's/^.$/  &/; s/^..$/ &/')  # to avoid line centering shift
 cpu_temp=$(cat /tmp/${STAT##*/}:temp)
 mem_usage=$(cat /tmp/${STAT##*/}:mem)
 
@@ -284,6 +287,7 @@ currently() {
       [ $cardinal -lt 8 ] && cardinal=$(( $cardinal + 1 )) || cardinal=1
       TRIANGLE=$(echo $TRIANGLES | cut -d' ' -f$cardinal)
     else
+      # TRIANGLE='⬤'
       TRIANGLE=${TRIANGLES%% *}
     fi
     set -- ${viewscreen}
