@@ -7,9 +7,15 @@
 #   startx -- -layout Multihead
 # Note: .xinitrc takes precedence over .xsession, use either but ensure dbus is enabled
 
-BOOTWM=$SESSION/boot:wm  # see console_login, user_login
+# ............................................................... Initialization
 
-rm -f $BOOTWM            # cancel autostart of wm if manually started
+BOOTWM=$SESSION/boot:wm  # see console_login, user_login
+WM=$HOME/.windowmanager
+
+rm -f $BOOTWM                                     # cancel autostart of wm if manually started
+[ -e $WM ] || { pkill -KILL startx; exit; }
+wm=$(cat $WM)
+[ $wm = shell ] && { pkill -KILL startx; exit; }  # trap autostart wm set as shell
 
 # ................................................................... User setup
 
@@ -28,16 +34,19 @@ killall bash
 # autocutsel -selection PRIMARY -fork &
 # Enable automounting removable devices
 exists udiskie && udiskie --automount --notify --no-tray &
-exists qk && { qk stop >/dev/null; qk start; }  # reattach cli autokey to xorg instance
+exists qk && { qk stop >/dev/null; qk start >/dev/null; }  # reattach cli autokey to xorg instance
 pulse &
+# pipewire &
+# pipewire-pulse &
 
 # ........................................................................ D-Bus
 
-# # d-bus for file management, authentication, and other essential system processes
-# if exists dbus-launch && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
-#     eval "$(dbus-launch --sh-syntax --exit-with-session)"
-#     echo "D-Bus per-session daemon address is: $DBUS_SESSION_BUS_ADDRESS"
-# fi
+# d-bus for file management, authentication, and other essential system processes
+if exists dbus-launch && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
+    eval "$(dbus-launch --sh-syntax --exit-with-session)"
+    echo "D-Bus per-session daemon address is: $DBUS_SESSION_BUS_ADDRESS"
+fi
+alpine && /usr/libexec/pipewire-launcher
 arch && . /etc/X11/xinit/xinitrc.d/50-systemd-user.sh
 # export dbus for cron notifications, see notify
 [ -e $HOME/.dbus ] || mkdir $HOME/.dbus
@@ -73,9 +82,7 @@ xrdb -load $HOME/.Xresources
 
 # login manager default
 DEFAULTSESSION=herbstluftwm
-windowmanager=$1
-[ $windowmanager ] || windowmanager=$(cat $HOME/.windowmanager)
-#echo $windowmanager >$HOME/.xsession.trace
+#echo $wm >$HOME/.xsession.trace
 
 # ...................................................................... Display
 
@@ -88,6 +95,29 @@ case $(hostname) in
   motu ) hdmi && tv_over eDP1 1920x1080 ;;
 esac
 # pulseeffects --gapplication-service &
+
+# .......................................................................... NFS
+
+# for xorg session restricted nfs: $SESSION/nfs
+nfs() {
+  case $1 in
+  mount ) if [ ! -d /net/depot/dotfiles ] ;then
+            ditto nfs 'mount..' 
+            grep -q "^$HOME/Maildir" /etc/fstab && sudo mount -v $HOME/Maildir 
+            sudo mount -v /net 
+          fi ;;
+  umount) ditto nfs 'umount..' 
+          sudo umount -v /net 
+          grep -q "^$HOME/Maildir" /etc/fstab && sudo umount -v $HOME/Maildir ;;
+  esac
+}
+
+NFSLOG=/tmp/.xinit:nfs.log
+
+nfs mount >$NFSLOG
+# suppress nfs messages to console when server is offline
+[ -e $SESSION/nfs ] && trap "nfs umount >>$NFSLOG" EXIT
+
 
 # ............................................................... Window manager
 
@@ -106,7 +136,7 @@ setpath() {
   export PATH=$(echo $path:$(echo $PATH | sed "s|$path:||g"))
 }
 
-case $windowmanager in
+case $wm in
 2b* ) xsetroot -solid grey20
       xrdb -load $HOME/.Xresources
       $TERM &
