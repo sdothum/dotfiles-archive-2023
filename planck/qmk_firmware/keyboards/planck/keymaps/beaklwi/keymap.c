@@ -99,6 +99,10 @@ enum keyboard_layers {
 // Layouts
 // ═════════════════════════════════════════════════════════════════════════════
 
+// map to new #defines..
+#define KEYMAP LAYOUT_planck_grid
+// ..current qmk master
+
 // ........................................................ Default Alpha Layout
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {

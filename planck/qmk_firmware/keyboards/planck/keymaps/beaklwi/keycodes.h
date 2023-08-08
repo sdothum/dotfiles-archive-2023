@@ -149,3 +149,5 @@ enum keyboard_keycodes {
 #define ROM     KC_NO
 #endif
 #endif
+
+#define RESET   KC_NO
