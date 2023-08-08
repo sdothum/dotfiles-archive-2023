@@ -7,7 +7,7 @@
 # .................................................................... Highlight
 
 # mark notation point
-drawline '  ‧‧••● ' ${teal}
+drawline '  ‧‧••●⬤ ' ${teal}
 attention $@
 
 # vim: set ft=sh: #

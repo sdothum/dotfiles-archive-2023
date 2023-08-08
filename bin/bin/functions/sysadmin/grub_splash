@@ -21,7 +21,7 @@ if [ -d "$splash" ] ;then
   [ "$1" ] && splash=$1 || splash=$theme
 
   # my current monitor resolutions
-  case $(query displaywidth) in
+  case $(query display width) in
     *1024) rez=-1024x600 ;;
     *1366) rez=-1366x768 ;;
     *1680) rez=-1680x1050 ;;

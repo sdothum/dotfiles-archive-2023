@@ -126,7 +126,7 @@ kill -KILL $BROWSER 2>/dev/null  # remove dangling instance on server
 
 [ -e $THEDARNEDESTTHING ] && thedarnedestthing &
 switch tag $COMMS
-[ -e $HANGOUTS ] && { hangouts; sleep 1; }
+[ -e $HANGOUTS ] && hangouts
 switch tag $DESK
 [ -e $WWW      ] && $BROWSER &
 [ -e $TERM     ] && toggle scratchpad
