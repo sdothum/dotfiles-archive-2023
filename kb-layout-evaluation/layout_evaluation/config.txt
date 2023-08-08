@@ -1,10 +1,3 @@
-/*
-This file can be commented by blocks or single lines using //
-Blank lines are ignored
-*/
-/*
-Bigram frequencies in stats.csv
-*/
 
 [keys]
 L21 L22 L23 L24 L25 L26 R26 R25 R24 R23 R22 R21
@@ -12,141 +5,11 @@ L31 L32 L33 L34 L35 L36 R36 R35 R34 R33 R32 R31
 L41 L42 L43 L44 L45 L46 R46 R45 R44 R43 R42 R41
 L51 L52 L53 L57 L58 L59 R59 R58 R57 R53 R52 R51
 
-/*
-[weights]
-5.0 3.6 2.4 1.8 2.2 3.5 3.5 2.2 1.8 2.4 3.6 5.0
-4.0 1.6 1.2 1.0 1.0 3.0 3.0 1.0 1.0 1.2 1.6 4.0
-5.0 3.4 2.6 2.2 1.8 4.0 4.0 1.8 2.2 2.6 3.4 5.0
-1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0
-*/
-
 [weights]
 10.0  7.0 2.0 1.0 1.0 4.0 4.0 1.0 1.0 2.0  7.0 10.0
 16.0 12.0 1.0 0.5 0.5 1.5 1.5 0.5 0.5 1.0 12.0 16.0
  9.0  5.0 2.5 2.0 1.5 5.0 5.0 1.5 2.0 2.5  5.0  9.0  // rest pinkie on lower row of corne!
  0.5  0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5  0.5  0.5
-
-/*
-[weights]
-16.0 12.0 2.0 1.0 1.0 4.0 4.0 1.0 1.0 2.0 12.0 16.0
-10.0  7.0 1.0 0.5 0.5 1.5 1.5 0.5 0.5 1.0  7.0 10.0
- 9.0  5.0 2.5 2.0 1.5 5.0 5.0 1.5 2.0 2.5  5.0  9.0  // rest pinkie on lower row of corne!
- 0.5  0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5  0.5  0.5
-
-[weights]
-16.0 12.0 2.0 1.0 1.0 4.0 4.0 1.0 1.0 2.0 12.0 16.0
- 9.0  5.0 1.0 0.5 0.5 1.5 1.5 0.5 0.5 1.0  5.0  9.0
-10.0  7.0 2.5 2.0 1.5 5.0 5.0 1.5 2.0 2.5  7.0 10.0
- 0.5  0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5  0.5  0.5
-
-[weights]
-16.0 12.0 2.5 1.5 2.0 4.0 4.0 2.0 1.5 2.5 12.0 16.0
- 9.0  5.0 1.5 1.0 1.0 3.0 3.0 1.0 1.0 1.5  5.0  9.0
-10.0  7.0 3.0 2.0 1.5 5.0 5.0 1.5 2.0 3.0  7.0 10.0
- 1.0  1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0  1.0  1.0
-
-[weights]
-16.0 12.0 1.0 1.0 1.0 5.0 5.0 1.0 1.0 1.0 12.0 16.0
- 9.0  5.0 0.5 0.5 0.5 1.5 1.5 0.5 0.5 0.5  5.0  9.0
-10.0  7.0 2.0 5.0 1.5 7.0 7.0 1.5 5.0 2.0  7.0 10.0
- 0.5  0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5  0.5  0.5
-*/
-
-/*
-Weights should:
-- limit weak fingers
-- limit bottom row
-- increase home row
-- limit finger travel distance
-
-https://colemakmods.github.io/mod-dh/compare.html
-*/
-
-/*
-[penalties]
-  ,same_row,row_jump1,row_jump2,row_jump3
-ii,      2.5,     3.5,      4.5,      0.0  // same finger
-im,      0.5,     1.0,      2.0,      0.0 
-ir,      0.5,     0.8,      1.5,      0.0 
-ip,      0.5,     0.8,      1.1,      0.0 
-mi,     -1.5,    -0.5,      1.5,      0.0  // inward roll
-mm,      2.5,     3.5,      4.5,      0.0  // same finger
-mr,      0.5,     1.0,      2.0,      0.0 
-mp,      0.5,     0.8,      1.5,      0.0 
-ri,     -1.5,    -0.5,      1.5,      0.0  // inward roll
-rm,     -2.0,    -0.5,      1.2,      0.0  // inward roll
-rr,      2.5,     3.5,      4.5,      0.0  // same finger
-rp,      1.0,     1.5,      2.5,      0.0 
-pi,     -1.0,     0.0,      1.0,      0.0  // inward roll
-pm,     -1.0,     0.0,      1.5,      0.0  // inward roll
-pr,     -1.0,     0.0,      1.5,      0.0  // inward roll
-pp,      3.0,     4.0,      5.5,      0.0  // same finger
-it,      0.5,     1.5,      0.5,      1.0 
-ti,      0.5,     1.5,      0.5,      1.0 
-mt,      0.5,     1.5,      0.5,      1.0 
-tm,      0.5,     1.5,      0.5,      1.0 
-rt,      0.5,     1.5,      0.5,      1.0 
-tr,      0.5,     1.5,      0.5,      1.0 
-pt,      0.5,     1.5,      0.5,      1.0 
-tp,      0.5,     1.5,      0.5,      1.0 
-tt,      2.0,     3.0,      2.0,      2.5  // same finger
-
-[penalties]
-  ,same_row,row_jump1,row_jump2,row_jump3
-ii,      2.5,     3.5,      4.5,      0.0  // same finger
-im,      0.5,     1.0,      2.0,      0.0 
-ir,      0.5,     1.0,      1.5,      0.0 
-ip,      0.5,     1.0,      1.5,      0.0 
-mi,     -1.5,    -0.5,      1.5,      0.0  // inward roll
-mm,      2.5,     3.5,      4.5,      0.0  // same finger
-mr,      0.5,     1.0,      2.0,      0.0 
-mp,      1.0,     1.5,      2.5,      0.0 
-ri,     -1.5,    -0.5,      1.5,      0.0  // inward roll
-rm,      1.0,     1.5,      2.5,      0.0  // inward roll
-rr,      3.0,     4.0,      5.0,      0.0  // same finger
-rp,      3.0,     4.5,      7.0,      0.0 
-pi,     -1.0,     0.0,      1.0,      0.0  // inward roll
-pm,      1.0,     2.0,      3.0,      0.0  // inward roll
-pr,      4.0,     5.0,      6.5,      0.0  // inward roll
-pp,      5.0,     6.0,      8.0,      0.0  // same finger
-it,      0.5,     1.5,      0.5,      1.0 
-ti,      0.5,     1.5,      0.5,      1.0 
-mt,      0.5,     1.5,      0.5,      1.0 
-tm,      0.5,     1.5,      0.5,      1.0 
-rt,      0.5,     1.5,      0.5,      1.0 
-tr,      0.5,     1.5,      0.5,      1.0 
-pt,      0.5,     1.5,      0.5,      1.0 
-tp,      0.5,     1.5,      0.5,      1.0 
-tt,      2.0,     3.0,      2.0,      2.5  // same finger
-
-[penalties]
-  ,same_row,row_jump1,row_jump2,row_jump3
-ii,      2.5,     3.5,      4.5,      0.0  // same finger
-im,      0.5,     1.0,      2.0,      0.0 
-ir,      0.5,     1.0,      1.5,      0.0 
-ip,      0.5,     1.0,      1.5,      0.0 
-mi,     -1.5,    -0.5,      1.5,      0.0  // inward roll
-mm,      2.5,     3.5,      4.5,      0.0  // same finger
-mr,      0.5,     1.0,      2.0,      0.0 
-mp,      1.0,     1.5,      2.5,      0.0 
-ri,     -1.5,    -0.5,      1.5,      0.0  // inward roll
-rm,      1.0,     1.5,      2.5,      0.0  // inward roll
-rr,      3.0,     4.0,      5.0,      0.0  // same finger
-rp,      3.0,     4.5,      7.0,      0.0 
-pi,     -1.0,     0.0,      1.0,      0.0  // inward roll
-pm,      1.0,     2.0,      3.0,      0.0  // inward roll
-pr,      4.0,     5.0,      6.5,      0.0  // inward roll
-pp,      5.0,     6.0,      8.0,      0.0  // same finger
-it,      0.5,     1.5,      0.5,      1.0 
-ti,      0.5,     1.5,      0.5,      1.0 
-mt,      0.5,     1.5,      0.5,      1.0 
-tm,      0.5,     1.5,      0.5,      1.0 
-rt,      0.5,     1.5,      0.5,      1.0 
-tr,      0.5,     1.5,      0.5,      1.0 
-pt,      0.5,     0.5,      1.0,      1.5  // lazy pinkie position
-tp,      0.5,     0.5,      1.0,      1.5  // lazy pinkie position
-tt,      2.0,     3.0,      2.0,      2.5  // same finger
-*/
 
 [penalties]
   ,same_row,row_jump1,row_jump2,row_jump3
@@ -175,19 +38,6 @@ tr,      0.5,     1.5,      0.5,      1.0
 pt,      0.5,     0.5,      1.5,      1.0  // lazy pinkie position
 tp,      0.5,     0.5,      1.5,      1.0  // lazy pinkie position
 tt,      2.0,     3.0,      2.0,      2.5  // same finger
-
-/*
-Only apply if not the same letter, and both letters on the same hand.
-
-i, m, r, and p refer to the fingers (index, middle, ring, pinky)
-The columns refer to how many rows separate the two keys
-
-Penalties should:
-- limit same finger typing (except same key twice)
-- balance hands
-- favor inward rolling
-(last 2 in opposition with each other)
-*/
 
 [layouts]
 
@@ -435,13 +285,6 @@ x a u e i , c t s r n h
 è b z x c v k m , . / -
 # # # # # # # # # # # #
 
-// https://sites.google.com/alanreiser.com/handsdown/home
-> Hands down
-# q c h g b y f o j ' #
-# s r n t p w u e i a #
-# x m l d z v k , . / #
-# # # # i # # # # # # #
-
 // http://thedarnedestthing:8000/corne
 >>BEAKL Zi
 # z y o u : g d n m x #
@@ -469,4 +312,12 @@ x a u e i , c t s r n h
 # q h e a w c t r s z #
 # j , . k ' b p l f v #
 # # # # i # # # # # # #
+
+// http://thedarnedestthing:8000/corne
+>>BEAKL Wi-27
+# : y o u - g c n m x #
+# q h e a w d s t r z #
+# j , . k ' b p l f v #
+# # # # i # # # # # # #
+
 
