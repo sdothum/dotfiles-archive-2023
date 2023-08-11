@@ -54,7 +54,7 @@ init() {
     case $1 in
       1) thirds     '1' ;;
       2) thirds     '2' ;;
-      3) thirds     '3' ;;
+      3) spread     '3' ;;
       4) one2three  '4' ;;
       5) max        '5' ;;
       6) quarters   '6' ;;

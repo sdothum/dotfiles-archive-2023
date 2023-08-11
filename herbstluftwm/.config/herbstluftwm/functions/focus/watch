@@ -19,9 +19,9 @@ count=0
 
 # trap application closes that bypass herbstluftwm window close
 while : ;do
-  if [ $tag = $(herbstclient attr monitors.focus.tag) ] ;then
+  if [ $tag -eq $(herbstclient attr monitors.focus.tag) ] ;then
     tcount=$(herbstclient attr tags.focus.client_count)
-    if [ $count != $tcount ] ;then
+    if [ $count -ne $tcount ] ;then
       [ $count -gt $tcount ] && herbstclient emit_hook focus_window
       count=$tcount 
     fi

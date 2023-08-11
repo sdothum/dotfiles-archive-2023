@@ -145,10 +145,10 @@ if [ ! -e $COLOR ] && [ -z $blackboard ]  ;then
   is display +1920 && draw conky
 fi
 
-# overlay panel with new theme to avuid panel flicker
+# overlay panel with new theme to avoid panel flicker
 panel=$(pgrep -f 'draw panel')
 echo '!panel:stat' >$(cat $PANEL_FIFO)  # save cpu_stats
-draw panel                              # draw over old theme
+draw panel overlay                      # draw over old theme
 sleep $delay                            # frame latency window
 [ "$panel" ] && kill $panel
 

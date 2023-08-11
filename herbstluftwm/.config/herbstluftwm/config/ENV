@@ -41,7 +41,7 @@ export MONOCLE=$HLWM:monocle
 export PANEL=$HLWM:panel
 export PMARGIN=$HLWM:margin
 export PANEL_FIFO=${PANEL_FIFO:-${PANEL}-fifo}
-# herbstluftwm is not fully stared yet, so assume monitor 0 focus
+# herbstluftwm is not fully started yet, so assume monitor 0 focus
 # echo $PANEL_FIFO:$(herbstclient attr monitors.focus.index) >$PANEL_FIFO  # set by draw panel but needed beforehand
 echo $PANEL_FIFO:0 >$PANEL_FIFO  # set by draw panel but needed beforehand
 
@@ -99,7 +99,7 @@ export PULSAR=$SSPINE:pulsar
 # ..................................................................... Desktops
 
 # desktops, see config/tags
-export TAG_NAMES='DESK DEV COMMS MEDIA VIDEO SYSTEM'
+export TAG_NAMES='DESK PROJECT MESSAGE MEDIA VIDEO SYSTEM'
 export TAGS="$(seq 1 $(echo $TAG_NAMES | sed 's/ /\n/g' | wc -l))"
 # export TAG_NAME = TAG
 for key in $TAGS ;do export $(echo $TAG_NAMES | awk "{ print \$$key }")=$key ;done

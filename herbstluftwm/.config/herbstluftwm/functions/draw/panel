@@ -6,14 +6,17 @@
 
 # ................................................................... Draw panel
 
-# Usage: draw panel <fifo>, see restore panel
+# Usage: draw panel [overlay] [<fifo>], see restore panel
 # NOTE:  adjustments made to accomodate alpine linux differences
 
 [ -e $SPANEL ] || exit  # no panel
 which lemonbar >/dev/null 2>&1 || exit
 
+[ "$1" = overlay ] && { overlay=true; shift; }  # avoid draw root flicker with panel stats overwrite
+
 [ $1 ] && fifo=${1#:} || fifo=$(herbstclient attr monitors.focus.index)
-pstat "^lemonbar -d -n lemonbar:$fifo " && exit
+[ $overlay ] || { pstat "lemonbar -d -n lemonbar:$fifo " && exit; }
+ditto panel "lemonbar:$fifo"
 
 # .................................................................. Panel theme
 
@@ -41,7 +44,7 @@ case $(query display width) in
   *   ) TAG_PAD='    '  ; STATPAD='  '  ;;
 esac
 [ $(query display width) -lt 1920 ] && scaledown=true
-[ $scaledown ] && { TAG_PAD='  '; LSEP=${LSEP# }; LSEP=${LSEP% }; RSEP=${RSEP# }; RSEP=${RSEP% }; STATPAD=$TAG_PAD; }
+[ $scaledown ] && { LSEP=${LSEP# }; LSEP=${LSEP% }; RSEP=${RSEP# }; RSEP=${RSEP% }; }
 TRIANGLES="▶ ◢ ▼ ◣ ◀ ◤ ▲ ◥"
 
 # panel theme
@@ -185,7 +188,7 @@ active_window() {
       else
         title="${title}${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}$name%{F$DEFAULT_FG}"
       fi
-      echo $line | grep -q '.*_changed' || {  # neven caught this in void.. dunno why!
+      echo $line | grep -q '.*_changed' || {  # never caught this in void.. dunno why!
         desc=$(asciititle ${line#?})
         [ "$desc" ] && title="${title}${LSEP}${desc}%{B-}%{F-}"
       }

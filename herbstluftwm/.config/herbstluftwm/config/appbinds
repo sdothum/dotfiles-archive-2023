@@ -43,7 +43,8 @@ hc keybind Super-Control-d            spawn dmenu thesaurus
 hc keybind Super-e                    spawn dmenu scripts
 hc keybind Super-Control-e            spawn dmenu edit
 hc keybind Super-$Mod-e               spawn hardcopy eject
-hc keybind Super-h                    spawn dmenu shistory
+hc keybind Super-h                    spawn hangouts
+hc keybind Super-Control-h            spawn dmenu shistory
 hc keybind Super-Control-k            spawn clack toggle
 hc keybind Super-$Mod-k               spawn clack swap
 hc keybind Super-l                    spawn lock_screen
