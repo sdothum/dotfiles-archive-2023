@@ -21,6 +21,7 @@ if alpine
   abbr svd  'sv delete'
   abbr svi  'sv status'
   abbr svl  'sv list'
+  abbr svq  'sv status'
   abbr svr  'sv restart'
   abbr svs  'sv start'
   abbr svx  'sv stop'

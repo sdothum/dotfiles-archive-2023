@@ -146,7 +146,7 @@ set -x GOOGLE_DEFAULT_CLIENT_ID no
 set -x GOOGLE_DEFAULT_CLIENT_SECRET no
 
 # for chatgpt https://platform.openai.com/account/api-keys
-set -x OPENAI_API_KEY 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
+set -x OPENAI_API_KEY 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
 set -x AICHAT_API_KEY $OPENAI_API_KEY
 
 # source nnn environment (and LS_COLORS)
