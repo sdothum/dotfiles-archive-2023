@@ -161,6 +161,7 @@ dw* ) xexec dwm ;;
 
 he* ) pkill -KILL -f 'herbst'
       # export ROOT=$HOME/tmp
+      cp /tmp/herbstluftwm.log /tmp/herbstluftwm.last.log
       rm -f /tmp/herbstluftwm:* 2>/dev/null
       export PANEL_BOTTOM=true
       export SETROOT=$(cat $HOME/.setroot 2>/dev/null)  # setroot last wallpaper or wall, otherwise random wall
