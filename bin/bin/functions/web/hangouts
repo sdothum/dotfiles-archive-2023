@@ -7,8 +7,9 @@
 # .............................................................. Google hangouts
 
 HANGOUTS=$SESSION/hangouts
-# surf -z1.15 $(cat $HANGOUTS) &
-surf -z1.15 -C $(dirname $0)/.hangouts:stylesheet.css $(cat $HANGOUTS) &  # fit input field
-sleep 1
+# surf -z1.15 -C $(dirname $0)/.hangouts:stylesheet.css $(cat $HANGOUTS) &  # fit input field
+$BROWSER $(cat $HANGOUTS) &
+xsync 'Gmail'
+notify 15 critical 'MESSAGE \ hangouts' '"Permission request" response required'
 
 # vim: set ft=sh: #

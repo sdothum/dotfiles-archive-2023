@@ -9,7 +9,7 @@
 # Usage: [RUNOPT='-s <option> <value> ..'] qutebrowser <url>
 
 QUTEBROWSER='/usr/bin/qutebrowser --target tab --override-restore'
-FONT=Ypsilon
+FONT=mu
 
 STARTPAGE=$SESSION/startpage
 # pong $SERVER && TTRSS=$SERVER || TTRSS=localhost

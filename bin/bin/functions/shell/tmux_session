@@ -17,7 +17,7 @@ if tmux -S /tmp/tmux:$TMUX has-session -t $TMUX ;then
   term "${TMUX}" VERTICAL tmux -S /tmp/tmux:$TMUX attach -d -t $TMUX 2>/dev/null
 else
   term "${TMUX}" $fortune VERTICAL tmux -S /tmp/tmux:$TMUX "new-session -n '' -s $TMUX $@"
-  sleep 3  # wait suitably for application to launch to set window name..
+  xsync $TMUX
   tmux -S /tmp/tmux:$TMUX rename-window "$1*"
 fi
 

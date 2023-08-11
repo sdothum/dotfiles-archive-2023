@@ -17,7 +17,7 @@ if [ "${1% *}" != "$1" ] ;then
   [ "${1%|*}" = "$1"                ] || instance=$(( $instance - 1 ))
   [ $(pgrep -cf "$1") -gt $instance ]
 else
-  pgrep -x $1 >/dev/null
+  pgrep -x "$1" >/dev/null
 fi
 
 # vim: set ft=sh: #

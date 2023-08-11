@@ -1,13 +1,16 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Log
+# Process
 # ══════════════════════════════════════════════════════════════════════════════
 
-# .................................................................... Highlight
+# ..................................................................... x11 sync
 
-# mark notation point
-console && drawline '  • ' ${red} || drawline '  ‧‧••●⬤ ' ${teal}
-attention $@
+# Usage: xsync [class | name] "<pattern>"
+
+[ "$2" ] && { attr=--${1##*-}; shift; } || attr=--name
+
+# wait for uniquely named window to process to startup
+xdotool search --onlyvisible --sync $attr "$@" >/dev/null
 
 # vim: set ft=sh: #

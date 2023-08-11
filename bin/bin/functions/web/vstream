@@ -29,7 +29,7 @@ videomode on
 
 if [ $BROWSER = chromium ] || [ $BROWSER = google-chrome ] ;then
   RUNOPT=$options $BROWSER $SERVICE &
-  xdotool search --sync --onlyvisible --class "$BROWSER"
+  xsync class "$BROWSER"
   xdotool key Alt+Shift+s  # set right full "window"
   sleep $delay
   xdotool key F11
@@ -38,7 +38,7 @@ if [ $BROWSER = chromium ] || [ $BROWSER = google-chrome ] ;then
 elif [ $BROWSER = firefox ] ;then
   $BROWSER $SERVICE &
   sleep 4
-  xdotool search --sync --onlyvisible --class 'Firefox'
+  xsync class 'Firefox'
   xdotool key Alt+Shift+s  # set right full "window"
   sleep $delay
   xdotool key Control+Shift+period

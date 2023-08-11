@@ -32,12 +32,12 @@ if cpu arm ;then
     term youtube-dl FLOAT SHELL "ditto youtube-dl "$1" && ssh $SERVER youtube-dl -o $YOUTUBE "$1""
     pwait "$YOUTUBE"
     title=$YOUTUBE
-    VIDEO=$(find ${YOUTUBE%/youtube-dl} -name 'youtube-dl*')
-    if [ ${VIDEO##*.} = webm ] ;then
-      term youtube-dl FLOAT SHELL "ditto youtube-dl "$1" && ssh $SERVER ffmpeg -y -i "$VIDEO" "${VIDEO%.*}.mp4""
-      ssh $SERVER ffmpeg -i "$VIDEO" "${VIDEO%.*}.mp4"
-      pwait "${VIDEO%.*}.mp4"
-      VIDEO="${VIDEO%.*}.mp4"
+    STREAM=$(find ${YOUTUBE%/youtube-dl} -name 'youtube-dl*')
+    if [ ${STREAM##*.} = webm ] ;then
+      term youtube-dl FLOAT SHELL "ditto youtube-dl "$1" && ssh $SERVER ffmpeg -y -i "$STREAM" "${STREAM%.*}.mp4""
+      ssh $SERVER ffmpeg -i "$STREAM" "${STREAM%.*}.mp4"
+      pwait "${STREAM%.*}.mp4"
+      STREAM="${STREAM%.*}.mp4"
     fi
   fi
 
@@ -45,15 +45,15 @@ if cpu arm ;then
 fi
 
 # check for attached usb drive
-if [ -z $VIDEO ] ;then
+if [ -z $STREAM ] ;then
   [ -d "$1" ] && path=$1 || path=${1%/*}
   # attached usb drive?
   libext=$(find /run/media/$USER -maxdepth 3 -type d -name "$(basename $(dirname "$path"))" 2>/dev/null)
   if [ -n "$libext" ] ;then
-    VIDEO=$(find "$libext" -maxdepth 1 -type d -name "${path##*/}")
-    VIDEO=$(find "$VIDEO" -regextype posix-extended -regex ".*($ext)" | grep -v sample)
+    STREAM=$(find "$libext" -maxdepth 1 -type d -name "${path##*/}")
+    STREAM=$(find "$STREAM" -regextype posix-extended -regex ".*($ext)" | grep -v sample)
   else
-    VIDEO=$1
+    STREAM=$1
   fi
 fi
 
@@ -66,11 +66,11 @@ while : ;do
     # sv stop syncthing@$USER
 
     # omxplayer keyboard shortcuts only available through terminal emulator
-    # eval term 'omxplay' BLACKBOARD omxplayer $geometry --subtitles "${VIDEO%.*}.srt" --align center "$VIDEO"
+    # eval term 'omxplay' BLACKBOARD omxplayer $geometry --subtitles "${STREAM%.*}.srt" --align center "$STREAM"
     # media filenames with embedded blanks are messy to handle, use symbolic link instead!
-    ln -sf "$VIDEO" /tmp/play:link
+    ln -sf "$STREAM" /tmp/play:link
     eval term 'omxplay' BLACKBOARD omxplayer $geometry --align center /tmp/play:link
-    echo "$title -> $VIDEO" >>/tmp/omxplay.log
+    echo "$title -> $STREAM" >>/tmp/omxplay.log
     # accomodate arm term omxplayer lag time variance
     sleep 1
     pwait /tmp/play:link
@@ -82,7 +82,7 @@ while : ;do
   else
     notify 0 blackboard "$title" "$(printf '1/2^Contrast\n3/4^Brightness\n5/6^Gamma\n7/8^Saturation\n9/0^Volume^m^Mute\n-/+^Audio Delay^ #^Language\nj/J^Subtitles^ v^Toggle\nx/z^Subtitle Delay' | column -s^ -t)"
     focus frame
-    mpv --vf=eq "$VIDEO" --sub-font-size=$fontsize >/dev/null 2>&1 &
+    mpv --vf=eq "$STREAM" --sub-font-size=$fontsize >/dev/null 2>&1 &
     # clear notification
     pwait "mpv --vf=eq"
     xdotool key Ctrl+space
@@ -103,7 +103,7 @@ while : ;do
 
     quit  ) pkill -f 'dmenu'; blackboard; videomode off; exit ;;  # restore dynamic windows
     replay) pulse; continue ;;
-    sonarr) sonarr $VIDEO; break ;;
+    sonarr) sonarr $STREAM; break ;;
     *     ) break ;;
   esac
 done

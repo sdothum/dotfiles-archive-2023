@@ -155,7 +155,7 @@ backup() { for i in /net/* ;do trace -- backup $i; rsync -r --delete --exclude='
 EXCLUDE_TRASH='--exclude=Trash --exclude=Logs --exclude="*.corrupted" --exclude=sync-conflict'
 
 home() {
-  [ $1 ] && HOME=/home/$1 || { ifyes "backup $HOME to /net/archive" || exit; }
+  [ $1 ] && HOME=/home/$USER || { ifyes "backup $HOME to /net/archive" || exit; }
   mkdir -pv /net/archive/home || exit 1
   trace -- backup $HOME
   rsync -r --delete --exclude='VirtualBox VMs' $EXCLUDE_TRASH $HOME /net/archive/home/

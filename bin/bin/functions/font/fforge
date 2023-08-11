@@ -9,12 +9,12 @@
 
 usage() { 
   echo "usage: $(basename $0) Q_hook | q_hook | descending <shape>
-       $(basename $0) I_descending <shape> [raw]
+       $(basename $0) I_descending <shape>
        $(basename $0) Q_custom <shape>
        $(basename $0) Q_horizontal <shape>
-       $(basename $0) T_descending <shape> [raw]
+       $(basename $0) T_descending <shape>
        $(basename $0) t_descending <shape>
-       $(basename $0) Y_descending <shape> [raw]
+       $(basename $0) Y_descending <shape>
        $(basename $0) FP_descending <shape>
        $(basename $0) punctuation <emdash> <shape>
        $(basename $0) ligature <width> <shape>
@@ -29,7 +29,6 @@ MAKE_INSTALL=/tmp/iosevka:make_install
 REPO=/net/depot/Iosevka
 ANGLE=-9       # iosevka italic angle (verify with fontforge)
 Xshift=-40     # italic descending capital left side bearing shift
-Yadjust=32     # caps tweak visual alignment for eink rendering at small fontsizes
 # Yshrink=50   # elongation bar percent (original large overlap spec)
 # Yshift=-174  # descending capital elongation
 # yshift=-140  # lower case t elongation
@@ -240,8 +239,6 @@ Generate(\$1);
   done
 }
 
-move_up()   { [ $raw ]  || echo "Move(0,$Yadjust);"; }  # visual alignment at small fontsizes
-
 descender() {
   # create regular descender
   confirm "$1"
@@ -257,7 +254,6 @@ Transform(100,0,0,$Yshrink,0,0);
 Select($2);
 PasteWithOffset($3,$4);
 RemoveOverlap();
-# $(move_up)  # move up a smidgen for small fontsize font (engine) rendering alignment
 Select(0u0001);
 Clear();
 Generate(\$1);
@@ -466,10 +462,10 @@ Generate(\$1);
 fforge=$1
 case $1 in
   baseline     ) shape=$2; shift ;;
-  I_descending ) shape=$2; [ $3 = raw ] && { raw=true; shift; }; shift ;;
-  T_descending ) shape=$2; [ $3 = raw ] && { raw=true; shift; }; shift ;;
-  t_descending ) shape=$2; raw=true; shift ;;
-  Y_descending ) shape=$2; [ $3 = raw ] && { raw=true; shift; }; shift ;;
+  I_descending ) shape=$2; shift ;;
+  T_descending ) shape=$2; shift ;;
+  t_descending ) shape=$2; shift ;;
+  Y_descending ) shape=$2; shift ;;
   FP_descending) shape=$2; shift; ;;
   q_hook       ) ;;
   Q_hook       ) ;;

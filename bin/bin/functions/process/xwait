@@ -6,14 +6,16 @@
 
 # ..................................................................... x11 wait
 
-# Usage: xwait "<pattern>"
+# Usage: xwait [class | name] "<pattern>"
+
+[ "$2" ] && { attr=--${1##*-}; shift } || attr=--name
 
 cycle=0.05  # loop window
 [ $(pgrep -af "xwait.*$@" | wc -l) -gt 2 ] && exit  # don't instantiate duplicate applications
 
 # wait for uniquely named window to process to startup
-xdotool search --onlyvisible --sync --name "$@" >/dev/null
+xsync $attr "$@"
 # wait for uniquely named window to close before proceeding
-while xdotool search --onlyvisible --name "$@" >/dev/null ;do sleep $cycle ;done
+while xdotool search --onlyvisible $attr "$@" >/dev/null ;do sleep $cycle ;done
 
 # vim: set ft=sh: #
