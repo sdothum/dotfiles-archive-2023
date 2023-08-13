@@ -10,7 +10,7 @@
 
 usage() {
   echo "usage: $(basename $0) [<stowdir>] add [-f] <package>[/<filespec>]* | comment [<comment>] | edit | ignore | init | list | log | undo | rm <dir> | sync"
-  ditto rules "$(dirname $0)/.dotfiles:folders"
+  ditto rules "$DOTFILES"
   exit 1
 }
 
@@ -22,7 +22,8 @@ usage() {
 # git rm --cached -r <dir>
 
 # list of folders under stow root
-DOTFILES=$(cat $(dirname $0)/.dotfiles:folders)
+DOTFILES=$(dirname $0)/.dotfiles:folders
+FILES=$(cat $DOTFILES)
 cd $STOW
 git reset >/dev/null  # undo any previous aborted dotfiles
 # syncthing housekeeping
@@ -66,11 +67,9 @@ add() {
       pending=$(git add -v $force "$file" )
     else
       ditto notfound "$file"
-      notfound=true
     fi
   done
   [ "$pending" ] && pending
-  [ $notfound ] && usage
 }
 
 rm() {
@@ -97,7 +96,7 @@ sync() {
 unset pending
 case $1 in
   help   ) usage ;;
-  ''     ) for i in $DOTFILES ;do add $i ;done ;;
+  ''     ) for i in $FILES ;do add $i ;done; ditto rules "$DOTFILES" ;;
   add    ) shift; [ "$1" = '-f' ] && { force=-f; shift; }
            add $@ ;;
   
