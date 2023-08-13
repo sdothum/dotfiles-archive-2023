@@ -88,8 +88,8 @@ overrides:
     FeatureSettings - BookSpecificStats: no
     FeatureSettings - ShowFacebookShare: no
     FeatureSettings - FullScreenBrowser: no
-    FeatureSettings - MyWords: no
-    FeatureSettings - ExportHighlights: no
+    FeatureSettings - MyWords: yes
+    FeatureSettings - ExportHighlights: yes
     DeveloperSettings - AutoUsbGadget: no
     PowerSettings - UnlockEnabled: no
     Unify font sizes: no
