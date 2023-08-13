@@ -6,10 +6,17 @@
 
 # ...................................................................... Browser
 
-# Usage: [RUNOPT='-s <option> <value> ..'] qutebrowser <url>
+# Usage: [RUNOPT='-s <option> <value> ..'] qutebrowser <url> | closeall
 
 QUTEBROWSER='/usr/bin/qutebrowser --target tab --override-restore'
 FONT=mu
+
+if [ "$1" = closeall ] ;then
+  while : ;do  # excluding gmail hangouts window
+    xdotool search --onlyvisible --name "^[^G].*qutebrowser" windowclose && continue
+    exit
+  done
+fi
 
 STARTPAGE=$SESSION/startpage
 # pong $SERVER && TTRSS=$SERVER || TTRSS=localhost
@@ -51,11 +58,11 @@ else
   eval $QUTEBROWSER $RUNOPT $font $startpage 2>/dev/null & 
 fi
 
-# pin tab to prevent last page close
-keyboard off  # disable keyboard to prevent disrupting following :command
-sleep 2       # pause long enough for window focus
-xdotool type ':tab-pin'
-xdotool key  'Return'
-keyboard on   # enable keyboard
+# pin tab to prevent last page close (no longer necessary with bind ctrl-d
+# keyboard off  # disable keyboard to prevent disrupting following :command
+# sleep 2       # pause long enough for window focus
+# xdotool type ':tab-pin'
+# xdotool key  'Return'
+# keyboard on   # enable keyboard
 
 # vim: set ft=sh: #
