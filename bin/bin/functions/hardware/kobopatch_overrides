@@ -1,0 +1,74 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Media
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................... kobopatch override rules
+
+usage() { echo "usage: $(basename $0) kobopatch_<new>"; exit 1; }
+
+# create kobopatch.yaml overrides: section
+# configure $RULES (yes/no)
+# run ./kobopatch.sh to generate out/KoboRoot.tgz from within new kobopatch folder
+# assumes kobopatch symlink in stow/kobo to default kobopatch level
+
+RULES=kobopatch.yaml
+
+cd $HOME/stow/kobo
+[ $1 ] || usage
+[ -L kobopatch ] || { ditto ERROR master "ln -s kobopatch_<old>"; exit; }
+master=$(readlink -f kobopatch)
+master=${master##*/}
+[ $1 = $master ] && { ditto ERROR master "ln -s kobopatch_<old>"; exit; }
+[ -d $1 ] && cd $1 || usage
+
+# musl diversion
+[ -L bin/kobopatch-linux-64bit ] || {
+  mv -v bin/kobopatch-linux-64bit bin/kobopatch-linux-64bit.glibc
+  cp -v /net/depot/kobopatch/build/kobopatch-linux-64bit.musl bin/
+  cd bin
+  ln -s kobopatch-linux-64bit.musl kobopatch-linux-64bit
+  cd -
+}
+
+[ -e $RULES.original ] && { ifno "overwrite $RULES" && exit; } || original $RULES
+[ -e src/nickel.yaml ] || { ditto dir "yaml files not found"; exit 1; }
+dos2unix $RULES.original 2>/dev/null
+sed -i '/^overrides:/,$d' $RULES.original  # prune overrides
+cp -f $RULES.original $RULES
+cd src >/dev/null
+RULES=../$RULES
+echo "overrides:" >>$RULES
+
+for i in *yaml ;do
+  [ $i = $RULES ] && continue
+  dos2unix $i 2>/dev/null
+  echo "\n  src/$i:" >>$RULES
+  perl -0777 -pe 's/([[:alpha:]].*)\n.*Enabled:(.*)/\1\2/g' $i | grep '^[[:alpha:]]' | sed 's/^/    /' >>$RULES
+done
+
+cd ..
+RULES=${RULES#../}
+cp -f $RULES $RULES.new
+cat $RULES
+ditto yaml $RULES
+ditto diff $RULES.new ../kobopatch/kobopatch.yaml.new
+diff $RULES.new ../kobopatch/kobopatch.yaml.new
+
+ifyes "vimdiff $(pwd)" || exit
+vim -g -d --role=gvimdiff -f $RULES ../kobopatch/kobopatch.yaml
+for i in src/*.yaml ;do vim -g -d --role=gvimdiff -f $i ../kobopatch/$i ;done
+DIR=$(pwd)
+cd ..
+ifyes "ln $(pwd)" || exit
+rm -f kobopatch
+ln -svf $DIR kobopatch
+
+ditto cd "kobopatch"
+ditto run "./kobopatch.sh"
+ditto telnet "kobo device"
+ditto cd "/usr/local/Qt-5.2.1-arm/lib/fonts"
+ditto rm  "Amasis* Caecilia* GillSans* Malabor* OpenDyslexic* Rakuten*"
+
+# vim: set ft=sh: #

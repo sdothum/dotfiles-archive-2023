@@ -6,10 +6,21 @@
 
 # .............................................................. Google hangouts
 
+QUTEBROWSER='/usr/bin/qutebrowser --target tab --override-restore'
 HANGOUTS=$SESSION/hangouts
+
 # surf -z1.15 -C $(dirname $0)/.hangouts:stylesheet.css $(cat $HANGOUTS) &  # fit input field
-$BROWSER $(cat $HANGOUTS) &
+$QUTEBROWSER $(cat $HANGOUTS) &
 xsync 'Gmail'
-notify 15 critical 'MESSAGE \ hangouts' '"Permission request" response required'
+
+if [ -e $HLWM:hangouts ] ;then
+  keyboard off  # disable keyboard to prevent disrupting following :command
+  sleep 1       # pause long enough for window focus
+  xdotool key 'Y'
+  keyboard on   # enable keyboard
+else
+  notify 15 critical 'MESSAGE \ hangouts' '"Permission request" response required'
+  touch $HLWM:hangouts
+fi
 
 # vim: set ft=sh: #
