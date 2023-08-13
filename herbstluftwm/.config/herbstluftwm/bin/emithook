@@ -35,8 +35,8 @@ herbstclient --idle '(focus_.*|rule|tag_.*)' | while read hook rule winid ;do
 
   case $hook in
     focus_*) case $hook in
-               focus_changed) ([ -e $FULLSCREEN ] && draw refresh || draw root) &
-                              if herbstclient compare monitors.focus.index != $monitor ;then
+               # focus_changed) ([ -e $FULLSCREEN ] && draw refresh || draw root) &  # deprecated with alpine
+               focus_changed) if herbstclient compare monitors.focus.index != $monitor ;then
                                 monitor=$(herbstclient attr monitors.focus.index)
                                 restore panel &
                               fi ;;

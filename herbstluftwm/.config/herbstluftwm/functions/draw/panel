@@ -13,9 +13,10 @@
 which lemonbar >/dev/null 2>&1 || exit
 
 [ "$1" = overlay ] && { overlay=true; shift; }  # avoid draw root flicker with panel stats overwrite
-
 [ $1 ] && fifo=${1#:} || fifo=$(herbstclient attr monitors.focus.index)
+
 [ $overlay ] || { pstat "lemonbar -d -n lemonbar:$fifo " && exit; }
+# [ $overlay ] && { pstat + "draw overlay" && exit; } || { pstat "lemonbar -d -n lemonbar:$fifo " && exit; }
 ditto panel "lemonbar:$fifo"
 
 # .................................................................. Panel theme
