@@ -6,20 +6,17 @@
   build
   chimera/qmk_firmware/keyboards/chimera_ergo_42
   corne/qmk_firmware/keyboards/crkbd
-  compton
   conky
   dunst
   fish
-  georgi/qmk_firmware/keyboards/georgi
+  georgi/qmk_firmware/keyboards/gboards/georgi
   herbstluftwm
   kindle
   kobo/kobopatch_*/*yaml
   kobo/kobopatch_*/src/*yaml
   kobo/fonts
-  kobo/calibre_sync_columns.mkd
+  kobo/calibre:config
   kobo/Nickel*
-  kobo/calibre_sync_columns
-  kobo/sideloadmode
   kustom
   picom
   planck/qmk_firmware/keyboards/planck
@@ -29,5 +26,4 @@
   sxhkd
   tt-rss
   vim
-  weechat
   zsh
