@@ -61,6 +61,7 @@ pending() {
 # add !**<path> to .gitignore for any <path> force warnings
 add() {
   for i in $@ ;do
+    ditto add $i
     file=$STOW/$i
     if [ -e "$file" ] ;then
       pending=$(git add -v $force "$file" )
