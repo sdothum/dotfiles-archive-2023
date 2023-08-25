@@ -9,7 +9,7 @@
   conky
   dunst
   fish
-  font/.fonts/iosevka*
+  fonts/.fonts/Iosevka*
   georgi/qmk_firmware/keyboards/gboards/georgi
   herbstluftwm
   kindle
