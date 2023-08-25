@@ -1,0 +1,135 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="autostart $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+HLWMTRACE=$SESSION/trace
+CONKY=$SESSION/conky
+hook=1  # emit_hook initialization window
+
+# chain herbstclient commands (note: keybind chains use ".")
+hc() {
+  # cannot chain parameters "'containing spaces'"
+  chain=true
+  for i ;do [ "${i% *}" != "$i" ] && { unset chain; break; } ;done
+  [ $chain ] && cmds="$cmds , $@" || { [ $TRACE ] && echo herbstclient $@ >>$TRACE; eval herbstclient $@; }
+}
+
+dohc() {
+  if [ $TRACE ] ;then
+    echo -n '> herbstclient chain' >>$TRACE
+    echo "$cmds" | sed 's/ , /\n -> /g' >>$TRACE
+    # echo herbstclient chain $cmds >>$TRACE
+  fi
+  herbstclient chain $cmds &
+  unset cmds
+}
+
+# ................................................................... Initialize
+
+# re-entrant (startx) cleanup
+pkill -TERM -f 'panel' &
+pkill -TERM -f 'pulsar' &
+# cleanup errant socket locations
+find $HOME/.config/herbstluftwm -name scratchpad -type s -exec rm {} \;
+
+# unlock, just to be sure
+hc emit_hook reload
+hc unlock
+
+# remove all existing keybindings and rules
+hc keyunbind --all
+hc unrule -F
+# split/remove frame created by herbstluftwm on startup to allow custom default_frame_layout
+hc split vertical 0.5 && hc remove
+dohc
+
+# ...................................................... Configuration framework
+
+# for i in $HOME/.config/herbstluftwm/config/*
+for i in $(dirname $0)/config/* ;do
+  ditto "loading herbstluftwm config ${i##*/}"
+  . $i
+  # add dummy hc cmd for any sources that don't e.g. ENV
+  hc echo done ${i##*/}
+  dohc
+done
+
+# monitor dependent env must be set after detect monitors
+. $XDG_CONFIG_HOME/herbstluftwm/config/ENV
+# env
+
+# ...................................................................... Desktop
+
+# appropriately wild herbstluftwm background color! see .xinitrc
+restore root
+toggle picom on
+
+# initialize tag layouts
+# load cannot be chained due to shell expansion limitation with quoted '(layout spec)'
+draw layout tags
+
+# ..................................................................... Monitors
+
+if [ -e $CONKY ] ;then
+  toggle conky
+  # deprecated with primary:secondary as left:right..
+  # if is multihead ;then
+  #   draw monitor secondary
+  #   # enable panel for secondary monitor by default
+  #   touch $PANEL:1
+  # fi
+else
+  draw monitor fullframe
+  # toggle panel
+fi
+
+# ................................................................ Startup suite
+
+[ -e $HLWMTRACE ] && [ $TRACE ] && term 'Trace' tail -f $ROOT/herbstluftwm.log
+
+# session startup stuff, see .xinitrc
+if [ ! -e $HLWM:autostart ] ;then
+  # fresh installation has yet to install X apps!
+  if which xdotool >/dev/null 2>&1 ;then
+    # lock out desktop switching flickering
+    herbstclient lock
+    $HOME/bin/autostart
+    herbstclient unlock
+  fi
+fi
+touch $HLWM:autostart
+
+sleep $hook  # wait for slowest process launch before selecting monitor / tag
+
+if [ $(herbstclient list_monitors | wc -l) -gt 1 ] ;then
+  herbstclient chain . focus_monitor 1 . use 2
+  # xdotool search --sync --onlyvisible --limit 1 --classname IRC >/dev/null
+  herbstclient chain . focus_monitor 0 . use 1
+  # xdotool search --sync --onlyvisible --limit 1 --classname $BROWSER >/dev/null
+else
+  herbstclient use 1
+fi
+
+# .................................................................... Emit hook
+
+# add window management extensions
+emithook &
+
+# ................................................................ Final touches
+
+# emit hook stalled otherwise until a new window action.. in pre 0.9.4 releases (old patch)
+# focus frame
+# focus window
+is multihead || draw panel  # normally the responsibilty of draw root but requires draw monitor to complete
+
+# pseudo screen saver
+# cpu arm || conky clock auto
+conky clock auto
+
+sleep 4  # what dynamic window handling?
+[ -e $DYNAMIC ] && toggle focus status || toggle focus
+
+# vim: set ft=sh: #

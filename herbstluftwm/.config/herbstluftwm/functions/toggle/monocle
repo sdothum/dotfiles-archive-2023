@@ -1,0 +1,90 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="toggle/monocle $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .......................................................... Toggle monocle view
+
+# Usage: toggle monocle [fullscreen]
+#        toggle monocle fullscreen, to suppress laptop conky view
+# Note:  monocle view mode and fullscreen switching have been tightly integrated
+#        to provide an IMO more seamless use of this distraction free mode
+#        see draw monitor, switch frames, toggle fullscreen
+#        windows opened over a fullscreen view exhibit the same characteristics
+#        regardless of the monitor setting, monocle or normal display
+
+fullscreen=$1
+
+# calculate pseudo golden ratio margins
+if is primary ;then
+  restore tiled
+  TAG=$(herbstclient attr monitors.focus.tag)
+  if [ -e $MONOCLE ] ;then
+    rm -f $MONOCLE
+    rm -f $MONOCLE:$TAG
+  else
+    # current layout, see draw layout
+    [ -e $LAYOUT:$TAG ] && herbstclient dump >$LAYOUT:$TAG:$(cat $LAYOUT:$TAG)
+    touch $MONOCLE
+    set -- $(query display)
+    # monocle margins only useful for large displays..
+    case $1 in
+        3440) width=$(( $1 * 5 / 9 )) ;;
+        2560) width=$(( $1 * 3 / 5 )) ;;
+        1920) width=$(( $1 * 2 / 3 )) ;;
+        *   ) width=$1
+    esac
+    # [ $1 -gt 2560 ] && D=3 || { [ $1 -gt 1440 ] && D=2 || D=16; }
+    # echo "$(( ($1 - $2) / $D * 10 / 11 ))" >$MONOCLE
+    echo $(( ($1 - $width) / 2 )) >$MONOCLE
+    cp $MONOCLE $MONOCLE:$TAG
+  fi
+
+  winid=$(herbstclient attr clients.focus.winid)
+  lock
+  # toggle out of fullscreen before entering monocle
+  if is fullscreen ;then
+    herbstclient fullscreen toggle
+    fullscreen=true
+  fi
+
+  # toggle out of conky for distraction free mode on laptop screens
+  if [ -e $MONOCLE ] && [ -e $CONKY ] && is display -2560 ;then
+    toggle conky
+    touch $MONOCLE:conky
+  elif [ -e $MONOCLE:conky ] && [ -z $fullscreen ] ;then
+    toggle conky
+    rm -f $MONOCLE:conky
+  else
+    draw refresh
+  fi
+
+  # monocle rules presented here represent a personal workflow preference
+  # toggling in, collapse frames to single frame max view of window in focus
+  # toggling out, exlode to side by side frames, window in focus to left frame
+  if [ -e $MONOCLE ] ;then
+    # allow toggling fullscreen (width) and monocle frame, else just max current window
+    restore mono
+    herbstclient chain . set_layout max . jumpto $winid
+    rm -f $FULLSCREEN:$TAG
+  else
+    # allow transitioning to full fullscreen, see draw monitor
+    if ! is fullscreen ;then
+      # restore mono
+      if [ -e $LAYOUT:$TAG ] ;then
+        draw layout -- $(cat $LAYOUT:$TAG)
+      # tag layouts shouldn't ever be undefined, but just in case..
+      elif is multihead ;then
+        if   is display =3440 ;then draw layout -- 1:1:1
+        elif is display =2560 ;then draw layout -- 1:1  
+        else                        draw layout -- grid 
+        fi
+      fi
+    fi
+  fi
+  unlock
+  restore panel
+fi
+
+# vim: set ft=sh: #

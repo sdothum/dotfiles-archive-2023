@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="is/fullscreen $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .............................................................. Fullscreen mode
+
+herbstclient compare clients.focus.fullscreen = true 2>/dev/null
+
+# vim: set ft=sh: #

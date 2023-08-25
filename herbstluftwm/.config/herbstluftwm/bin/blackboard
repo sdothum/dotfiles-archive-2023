@@ -1,0 +1,25 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="bin/blackboard $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................ Setroot color
+
+# Usage: blackboard [<hexcolor>]
+
+if [ -e $BLACKBOARD ] ;then
+  herbstclient set frame_bg_normal_color "$(cat $BLACKBOARD)"
+  rm -f $BLACKBOARD
+  exec restore root  # complete (see) restore root
+fi
+
+draw root color ${1:-000000}
+
+herbstclient get frame_bg_normal_color >$BLACKBOARD  # must follow (see) draw root
+herbstclient set frame_bg_normal_color '#000000'
+
+[ -e $SPICOM:toggle ] && toggle picom off
+
+# vim: set ft=sh: #

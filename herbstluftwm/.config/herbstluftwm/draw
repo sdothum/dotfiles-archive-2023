@@ -1,0 +1,37 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="draw $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .............................................................. Draw operations
+
+# Usage: draw <msg>, see functions/draw
+
+# match (visual) margins of secondary monitors to primary cinema/4K display
+# laptops are arbitrary ratios of
+# see draw monitor for manual .session/<settings>
+margins() {
+  case $1 in
+    3440) echo $(( $SHADOW + $(herbstclient get window_gap) )) ;;
+    2560) echo 86 ;;
+    1920) echo 0 ;;
+    1680) is multihead && margins 3440 || echo 42 ;;
+    1440) echo 8 ;;
+    1360) echo 0 ;;
+    *   ) echo 0 ;;
+  esac
+}
+
+TAG=$(herbstclient attr monitors.focus.tag)
+
+msg=$1
+[ $msg ] && shift || usage $0
+if [ -e $(dirname $0)/functions/draw/$msg ] ;then
+  . $(dirname $0)/functions/draw/$msg $@
+else
+  usage $0
+fi
+
+# vim: set ft=sh: #

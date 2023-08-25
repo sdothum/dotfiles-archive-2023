@@ -1,0 +1,155 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="draw/root $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .............................................................. Draw background
+
+# Usage: draw root [color [<color>] | restore | save]
+#        draw root [select | shuffle | blur | wallpaper]
+#        draw root, refresh background if necessary, shuffling if set
+#        draw root color, draw random background color
+#        draw root restore, restore background color
+#        draw root invert, switch contrast
+#        draw root select, select default background and disable shuffling
+#        draw root shuffle, enable random background shuffling
+#        draw root blur, toggle background blur mode
+#        draw root wallpaper, draw background
+
+[ -e $BLACKBOARD ] && exit
+alpine && XSETROOT=xwallpaper || XSETROOT=setroot  # alpine wallpaper
+
+# cpu arm && exit
+SETBLUR=$HLWM:setblur
+SHUFFLE=$HLWM:shuffle
+blur=50     # blur radius, brightness (to slightly darken and enhance transparency)
+brighten=-0.025
+modulo=3    # modulo of random number for random desktop wallpaper
+delay=0.25  # frame latency window
+
+# set background image
+pick_image() { /usr/bin/feh -B black --scale-down -r --start-at $(lname $WALLPAPER) -A "ln -sf %f $WALLPAPER && xdotool type 'q'" $1 2>/dev/null; }  # ignore .theme file warnings
+
+# ............................................................. Per monitor blur
+
+[ -e $SETBLUR ] || echo '0: :0: ' >$SETBLUR
+[ "$1" = blur ] && { [ -e $NOBLUR ] && rm -f $NOBLUR || touch $NOBLUR; }
+
+# occupied or empty desktop, setroot record structure: 1: occupied (blurred image) 0: empty (raw image)
+root() {
+  if [ ! -e $NOBLUR ] && is nonempty $(herbstclient attr monitors.$1.tag) ;then
+    [ $XSETROOT = xwallpaper ] && echo "1: --screen $1 --zoom $WALLPAPER" || echo "1: --on $1 --blur $blur --brighten $brighten --zoom $WALLPAPER"
+  else
+    [ $XSETROOT = xwallpaper ] && echo "0: --screen $1 --zoom $WALLPAPER" || echo "0: --on $1 --zoom $WALLPAPER"
+  fi
+}
+
+setblur() {
+  if [ ! -e $COLOR ] && [ -z $blackboard ] ;then
+    primary=$(root 0)
+    is multihead && secondary=$(root 1)
+  fi
+  echo "${primary}:${secondary}"
+}
+
+unblur() { expr $1 '<' $(cut -d: -f$2 $SETBLUR); } # (0) ignore, (1) change of state to unblurred
+
+# ....................................................... Set colored background
+
+color() {
+  if [ $1 ] ;then
+    color=$1
+    [ $color = 000000 ] && blackboard=true || echo color >$SETROOT  # blackboard reserved for media
+  else
+    color=$(rice randomc -#)
+    rm -f $SETROOT
+  fi
+  setroot --blank-color "#$color" 2>/dev/null
+  [ $blackboard ] || echo $color >$COLOR                                       # blackboard reserved for media playback background
+  [ $2 ] || { luminance -$color && echo light >$THEME || echo dark >$THEME; }  # luminance set by dmenu root
+  herbstclient attr theme.normal.color "#00000000"                             # make inactive border invisible!
+}
+
+select_color() {
+  notify time=5 low 'Root Background' '<Space>  Show next\n<Enter>  Select color'
+  lname $WALLCOLOR >/dev/null || ln -sf $(find $PALETTE -name '*.png' | head -1) $WALLCOLOR
+  ln -sf $WALLCOLOR $BACKGROUND
+  pick_image $(find $PALETTE -name '*.png')
+  color $(basename $(readlink -f $WALLCOLOR) .png)
+}
+
+# ................................................................ Set wallpaper
+
+wallpaper() {
+  [ -e $WALLPAPER ] || ln -sf $(find ${WALLPAPER%/default} -iname '*.png' | head -1) $WALLPAPER
+  ln -sf $WALLPAPER $BACKGROUND
+  rm -f $COLOR
+  rm -f $THEME
+}
+
+select_wallpaper() {
+  notify time=5 low 'Desktop Wallpaper' '<Space>  Show next\n<Enter>  Select image'
+  wallpaper
+  pick_image ${WALLPAPER%/default}/${WALL#.} 2>/dev/null  # ignore .theme file warnings
+}
+
+shuffle() {
+  ln -sf $(find ${WALLPAPER%/default} -name '*.png' | shuf -n1) $WALLPAPER
+  rm -f $COLOR
+  rm -f $THEME
+}
+
+# ...................................................................... Setroot
+
+# remember current background state for autostart
+case $1 in
+  color    ) color $2 $3 ;;  # $3, see dmenu root
+  restore  ) select_color ;;
+  invert   ) grep -q dark $THEME && echo light >$THEME || echo dark >$THEME; cp $THEME $(query theme) ;;
+  wallpaper) wallpaper ;;
+  
+  select   ) rm -f $SHUFFLE
+             select_wallpaper
+             echo wallpaper >$SETROOT
+             notify 5 'Panel Contrast' '&lt;Mod-Control-Shift-P&gt; to invert contrast';;
+  
+  shuffle  ) touch $SHUFFLE
+             shuffle
+             echo wallpaper >$SETROOT ;;
+  
+  *        ) [ "$(setblur)" = "$(cat $SETBLUR)" ] && exit
+             # echo "= setblur -> $(setblur)\n= setroot -> $(cat $SETBLUR)" >>$TRACE
+             # random background selection on un-blur change of state
+             if [ -e $SHUFFLE ] ;then
+               if [ $(unblur ${primary%%:*} 1) ] || [ $(unblur ${secondary%%:*} 3) ] ;then
+                 one_in $modulo && shuffle  # increase modulo to reduce frequency of shuffle
+               fi
+             fi ;;
+esac
+
+# .................................................................. Apply theme
+
+setblur >$SETBLUR
+[ $blackboard ] || [ -e $COLOR ] || $XSETROOT ${primary#?:} ${secondary#?:} &
+
+# apply rice conky to .conkyrc, $THEME unset above if new background
+if [ ! -e $COLOR ] && [ -z $blackboard ]  ;then
+  background=$(query theme)
+  # load theme or generate a theme from the border colour
+  if [ -e "$background" ] ;then
+    cp $background $THEME
+  else
+    echo light >$THEME
+  fi
+  is display +1920 && draw conky
+fi
+
+# overlay panel with new theme to avoid panel flicker
+panel=$(pgrep -f 'draw panel')
+echo '!panel:stat' >$(cat $PANEL_FIFO)  # save cpu_stats
+draw panel overlay                      # draw over old theme
+sleep $delay                            # frame latency window
+[ "$panel" ] && kill $panel
+
+# vim: set ft=sh: #

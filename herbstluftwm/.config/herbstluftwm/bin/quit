@@ -1,0 +1,25 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="bin/quit $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................... Housekeeping before quit
+
+# session oriented apps that may complain on herbstluftwm restart
+apps="
+  chromium
+  firefox
+  qutebrowser
+  vimb
+  vimbt
+  xautolock
+"
+
+nohup kill -KILL $(xdotool search --maxdepth 1 --name 'the darnedest thing' getwindowpid) 2>/dev/null &
+nohup killall -KILL $apps 2>/dev/null &
+
+herbstclient quit
+
+# vim: set ft=sh: #

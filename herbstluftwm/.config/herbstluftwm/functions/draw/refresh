@@ -1,0 +1,30 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="draw/refresh $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................... Redraw desktop padding
+
+# Usage: draw refresh [force] [shuffle | select | toggle], see draw root
+#        draw refresh force, refresh (regardless of monitor focus)
+#        draw refresh [shuffle | select | toggle], see draw root
+
+if is display +min ;then
+  if is primary || [ "$1" = force ] ;then
+    if [ -e $CONKY ] ;then
+      # dynamic desktop width with conky panel
+      is fullscreen && draw monitor conky fullscreen || draw monitor conky
+    else
+      is fullscreen && draw monitor fullscreen || draw monitor fullframe
+    fi
+  else
+    is fullscreen && draw monitor secondary fullscreen || draw monitor secondary
+  fi
+fi
+
+# optionally shuffle background
+[ "$1" = force ] && shift
+draw root $1
+
+# vim: set ft=sh: #

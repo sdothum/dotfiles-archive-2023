@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="is/multihead $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................... Multihead
+
+herbstclient compare monitors.count gt 1
+
+# vim: set ft=sh: #

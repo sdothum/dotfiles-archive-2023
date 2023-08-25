@@ -1,0 +1,38 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="toggle/border $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................ Toggle window borders
+
+# Usage: toggle border [overlap]
+
+# toggle overlap border, see draw border
+if [ $1 ] ;then
+  if [ -e $OSPINE ] ;then
+    rm $OSPINE
+    notify Borders "Gradient colour on overlap"
+  else
+    touch $OSPINE
+    notify Borders "Static colour on overlap"
+  fi
+  exit
+fi
+
+# no borders focusing aid
+pstat + 'focus border' && exit
+
+# no borders
+if herbstclient compare theme.border_width gt 0 ;then
+  herbstclient chain . lock . attr theme.normal.color $(cat $NSPINE) \
+                     . attr theme.border_width 0                     \
+                     . attr theme.padding_left $(cat $SPINE) . unlock
+else
+  # with solid background colour, make inactive border invisible!
+  herbstclient chain . lock . attr theme.normal.color "#00000000"    \
+                     . attr theme.border_width $(cat $SPINE)         \
+                     . attr theme.padding_left 0 . unlock
+fi
+
+# vim: set ft=sh: #

@@ -1,0 +1,41 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="switch/monitor $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .............................................................. Switch monitors
+
+# switch tag and focus to monitor retaining layout (fullscreen or monocle)
+switch_to() {
+  # view tag on selected monitor
+  swap_monitors=$(herbstclient get swap_monitors_to_get_tag)
+  lock set swap_monitors_to_get_tag 1
+
+  case $1 in
+    0) herbstclient chain . focus_monitor 1 . use $tag0
+       restore fullscreen $tag0 secondary
+       herbstclient chain . focus_monitor 0 . use $tag1
+       restore fullscreen $tag1 primary
+       restore monocle $tag1 ;;
+  
+    1) herbstclient chain . focus_monitor 0 . use $tag1
+       restore fullscreen $tag1 primary
+       restore monocle $tag1
+       herbstclient chain . focus_monitor 1 . use $tag0
+       restore fullscreen $tag0 secondary ;;
+  esac
+  unlock set swap_monitors_to_get_tag $swap_monitors
+}
+
+# opposing direction switches monitor focus
+direction=$1
+focus=$(herbstclient attr monitors.focus.index)
+tag0=$(herbstclient attr monitors.0.tag)
+tag1=$(herbstclient attr monitors.1.tag)
+
+if [ $focus -eq $direction ] ;then [ $focus -eq 0 ] && switch_to 0 || switch_to 1
+else                               [ $focus -eq 0 ] && switch_to 1 || switch_to 0
+fi
+
+# vim: set ft=sh: #

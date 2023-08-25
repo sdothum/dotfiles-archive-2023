@@ -1,0 +1,74 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="draw/border $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................... Draw active border color
+
+# Usage: draw border [<width> | pulsar]
+
+# below 0.045 can cause (hw dependent) resource hogging
+# frequency=0.066
+frequency=0.15
+# light/dark range to add (betwenn 0.0 - 1.0)
+darken=0.125
+lighten=0.275
+
+gradient() { pastel gradient --number 15 $(pastel darken $1 $color) $(pastel lighten $2 $color) | pastel format hex; }
+contrast() { pastel $1 $2 $color | pastel format hex; }
+
+pulsar() {
+  color=$(cat $PULSAR)
+  luminance -${color#?} && colors=$(gradient $darken $lighten) || colors=$(gradient $lighten $darken)
+  colors="$colors $(echo $colors | reverse)"
+
+  while : ;do
+    for i in $colors ;do
+      # don't let processes queue up on a slower system..
+      pkill -KILL -f 'herbstclient attr theme.active.color'
+      # disable spawning as bg process if desktop resource issues occur
+      herbstclient attr theme.active.color "$i" &
+      sleep $frequency
+    done
+  done
+}
+
+# a bit of trickery here.. draw border pulsar is executed by draw border
+# so a subsequent emit_hook can kill the pulsar instance!
+if [ "$1" = pulsar ] ;then
+  # trap concurrent requests to create pulsating borders
+  pstat + 'draw border pulsar' && exit
+  pulsar
+  exit
+fi
+
+[ -e $SPINE ] || return
+pkill -KILL -f 'draw border pulsar'
+
+# dynamic spine decoration
+herbstclient compare tags.focus.client_count = 1 && { herbstclient attr theme.active.color '#00000000'; exit; }
+
+# kill any previous instance of border highlighting
+herbstclient compare theme.border_width = 0 && herbstclient compare theme.padding_left = 0 && exit
+
+is fullscreen && exit  # fullscreen does not alter layout
+
+# visually highlight border for stacked windows
+if herbstclient compare tags.focus.curframe_wcount gt 1 && is layout max ;then
+  [ -e $OSPINE ] || exec draw border pulsar
+  if [ -e $OSPINE:color ] ;then
+    herbstclient attr theme.active.color $(cat $OSPINE:color)
+  else
+    color=$(cat $CSPINE)
+    luminance -${color#?} && color=$(contrast lighten $lighten) || color=$(contrast darken $darken)
+    herbstclient attr theme.active.color $color
+  fi
+  exit
+fi
+
+# restore defaults
+herbstclient attr theme.active.color $(cat $CSPINE)
+herbstclient compare theme.border_width = 0 && herbstclient attr theme.normal.color $(cat $NSPINE)
+
+# vim: set ft=sh: #

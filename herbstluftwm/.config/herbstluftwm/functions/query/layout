@@ -1,0 +1,12 @@
+# sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="query/layout $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................. Query layout
+
+# return layout of focused frame
+herbstclient dump '' '@' | sed -r 's/[^ ]* ([^:]*).*/\1/'
+
+# vim: set ft=sh: #

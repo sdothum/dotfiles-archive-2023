@@ -1,0 +1,32 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="pin/monitor $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................... Smart shift to monitor
+
+# move window to non-empty tag subframe (and focus next window)
+switch_frame() {
+  lock
+  # don't pin fullscreen windows
+  restore windowed
+  herbstclient focus_monitor $1
+  focus frame
+  herbstclient chain . bring $winid . focus_monitor $2
+  focus window
+  unlock
+  # required for && .. || construct below
+  return 0
+}
+
+# move window and focus to monitor (0,1)
+direction=${1:-0}
+focus=$(herbstclient attr monitors.focus.index)
+winid=$(herbstclient attr clients.focus.winid)
+
+if [ $focus -eq $direction ] ;then [ $focus -eq 0 ] && switch_frame 1 0 || switch_frame 0 1
+else                               [ $focus -eq 0 ] && switch_frame 1 1 || switch_frame 0 0
+fi
+
+# vim: set ft=sh: #

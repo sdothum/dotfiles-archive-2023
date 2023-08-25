@@ -1,0 +1,13 @@
+# sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="query/theme $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................... Wallpaper
+
+[ $WALLPAPER ] || . $XDG_CONFIG_HOME/herbstluftwm/config/ENV
+
+ls -l $WALLPAPER | awk '{ gsub(".(png|jpg)", ".theme", $NF); print $NF }'
+
+# vim: set ft=sh: #

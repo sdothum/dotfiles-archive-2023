@@ -1,0 +1,35 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="focus/watch" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Watch tag activity
+
+exec 3>"/tmp/flock:$(basename $0)"
+if flock -n 3 2>/dev/null ;then
+  echo $$ 1>&3
+else
+  echo 1>&2 "$(basename $0) watch already running: exiting."
+  exit 1
+fi
+
+tag=0 
+count=0
+
+# trap application closes that bypass herbstluftwm window close
+while : ;do
+  if [ $tag -eq $(herbstclient attr monitors.focus.tag) ] ;then
+    tcount=$(herbstclient attr tags.focus.client_count)
+    if [ $count -ne $tcount ] ;then
+      [ $count -gt $tcount ] && herbstclient emit_hook focus_window
+      count=$tcount 
+    fi
+  else
+    tag=$(herbstclient attr monitors.focus.tag) 
+    count=$(herbstclient attr tags.focus.client_count)
+  fi
+  sleep 1
+done &
+
+# vim: set ft=sh: #
