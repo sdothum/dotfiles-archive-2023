@@ -67,7 +67,7 @@ ln -svf $DIR kobopatch
 
 ditto cd "kobopatch"
 ditto run "./kobopatch.sh"
-ditto telnet "kobo device"
+ditto telnet "<kobo device IP>"
 ditto cd "/usr/local/Qt-5.2.1-arm/lib/fonts"
 ditto rm  "Amasis* Caecilia* GillSans* Malabor* OpenDyslexic* Rakuten*"
 

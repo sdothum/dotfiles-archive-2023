@@ -124,8 +124,8 @@ Select(0u2014);
 Transform($width,0,0,100,0,0);
 Select(0u2026);
 Transform($width,0,0,$width,0,0);
-ChangeWeight(-35);
-Move(0,-15);
+ChangeWeight(-40);
+Move(0,-18);
 Generate(\$1);
 " >/tmp/fontforge:punctuation.script
 

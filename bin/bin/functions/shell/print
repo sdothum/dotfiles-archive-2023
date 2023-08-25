@@ -1,13 +1,16 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Log
+# Shell
 # ══════════════════════════════════════════════════════════════════════════════
 
-# .................................................................... Highlight
+# ........................................................... term print wrapper
 
-# mark notation point
-console && drawline '  • ' ${red} || drawline '  ‧‧‧••● ' ${teal}
-attention $@
+# Usgae: .. | print [<file>]
+
+OUTPUT=/tmp/print:output
+
+[ $1 ] && OUTPUT=$1 || cat >$OUTPUT
+[ $(tput lines) -gt $(wc -l $OUTPUT | cut -d' ' -f1) ] && cat $OUTPUT || less $OUTPUT
 
 # vim: set ft=sh: #

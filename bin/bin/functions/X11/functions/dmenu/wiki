@@ -14,7 +14,7 @@ WIKIS="$HOME/vimwiki"
 [ $1 ] && prompt=Diary || { option=-v; prompt=Wiki; menu="\n$(X $DIARY)"; }
 
 files() { fcache f $WIKIS | grep $option '/diary/' | grep '\.wiki$' | sed 's/\.wiki$//' | grep -E -v '/(diary|index)$'; }
-dirs()  { find -L $WIKIS -maxdepth 2 -type d | exclude 'mail|templates|xref' | grep $option '/diary' | sed "s,$WIKIS/,,; 1d"; }
+dirs()  { find -L $WIKIS -maxdepth 2 -type d | sort | exclude 'mail|templates|xref' | grep $option '/diary' | sed "s,$WIKIS/,,; 1d"; }
 
 # recover full pathname
 expand() {

@@ -275,7 +275,7 @@ while [ $1 ] ;do
     extended     ) shape $extended; sb 0.7000 ;;                                                 # extended width (tighter than expanded)
     heading      ) shape 650; sb 0.8000; leading 1.2500; weight 300 light; ebook monolegible ;;  # web heading
     kindle       ) leading 1.5; shape $extended; sb 0.6150 ;;
-    kobo         ) leading 1; shape $extended; sb 0.6850 ;;                        # any value >= 1 (but have retained setting for interested kindle users)
+    kobo         ) leading 1; shape $extended; sb 0.6850 ;;
     menu         ) leading 1.5000; sb 0.9000; build=-menu ;;                                     # rofi menu
     normal       ) shape 500; sb 0.7000 ;;                                                       # normal width
     proof        ) leading 2.0000; sb 0.8000; build=${build}-proof ;;                            # for pure writing :)
@@ -361,18 +361,18 @@ while [ $1 ] ;do
     book+regular ) adjust="book+regular" ;;                                        # see fforge bookweight
     descenders   ) variant 'FP=DESCENDING'; FP_descending=true; baseline=true ;;
     double       ) unset mono ;;
+    emdash       ) emdash $2    || usage; shift ;;                                 # emdash width
     family       ) family $2    || usage; shift ;;
     open         ) variant B-open P-open R-open ;;
+    space        ) space $2     || usage; shift; [ $space = 1 ] && unset space ;;  # space width
     
     # geometry
     ascender     ) ascender $2  || usage; shift ;;                                 # affects descender as well
     cap          ) cap $2       || usage; shift ;;                                 # H height
-    emdash       ) emdash $2    || usage; shift ;;                                 # emdash width
     leading      ) leading $2   || usage; shift ;;                                 # line spacing > 1.0
     noround      ) unset sb ;;
     sb           ) sb $2        || usage; shift ;;                                 # side bearing (spacing)
     shape        ) shape $2     || usage; shift ;;                                 # cell width
-    space        ) space $2     || usage; shift; [ $space = 1 ] && unset space ;;  # space width
     weight       ) weight $2 $3 || usage; shift 2 ;;                               # custom font weight
     xheight      ) xheight $2   || usage; shift ;;                                 # height of x (experimental for larger fontsizes)
 

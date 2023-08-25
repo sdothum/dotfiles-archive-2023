@@ -9,6 +9,7 @@
 usage() { echo "usage: $(basename $0) <epub> | <dir> | ."; exit 1; }
 
 CATLG=/tmp/epubcheck:catlg
+LOG=/tmp/epubcheck.log
 
 case $1 in
   ''   ) usage ;;
@@ -17,8 +18,10 @@ case $1 in
 esac
 
 while read file <&3 ;do
-  ditto epubcheck "$file"
-  java -jar $HOME/.local/bin/epubcheck.jar "$file"
+  
+  java -jar $HOME/.local/bin/epubcheck.jar -v 2.0 "$file" 2>$LOG >/dev/null
+  grep -q -E '(FATAL|ERROR)' $LOG || { ditto epubcheck "$file"; continue; }
+  ditto ERROR epubcheck "$file ${NOCOLOR}$(grep -E '(FATAL|ERROR)' $LOG | cut -d: -f1 | sort -u | sed 's/ERROR(RSC-/E-/; s/)//'| tr '\n' ' ')"
 done 3< $CATLG
 
 # vim: set ft=sh: #

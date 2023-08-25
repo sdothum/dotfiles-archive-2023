@@ -16,6 +16,8 @@ if [ "$1" = closeall ] ;then
     xdotool search --onlyvisible --name "^[^G].*qutebrowser" windowclose && continue
     exit
   done
+else
+  xdotool search --onlyvisible --name ".*Miniflux - qutebrowser" || tabpin=true  # first miniflux instance
 fi
 
 STARTPAGE=$SESSION/startpage
@@ -58,11 +60,13 @@ else
   eval $QUTEBROWSER $RUNOPT $font $startpage 2>/dev/null & 
 fi
 
-# pin tab to prevent last page close (no longer necessary with bind ctrl-d
-# keyboard off  # disable keyboard to prevent disrupting following :command
-# sleep 2       # pause long enough for window focus
-# xdotool type ':tab-pin'
-# xdotool key  'Return'
-# keyboard on   # enable keyboard
+# pin tab to prevent last page close
+if [ $tabpin ] ;then
+  keyboard off  # disable keyboard to prevent disrupting following :command
+  sleep 2       # pause long enough for window focus
+  xdotool type ':tab-pin'
+  xdotool key  'Return'
+  keyboard on   # enable keyboard
+fi
 
 # vim: set ft=sh: #

@@ -53,6 +53,6 @@ case $1 in
   -uk ) shift; eval $OXFORD  $@ | sed '1d' ;;
   -di*) shift; eval $DICT    $@ | sed '1d' ;;
   *   ) $SDCV -c $@ ;;
-esac
+esac | sed -z 's/\n\n\n/\n/g' | print  # null (-z) line terminator to remove '\n\n\n'
 
 # vim: set ft=sh: #
