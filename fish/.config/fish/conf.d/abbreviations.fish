@@ -101,11 +101,11 @@ set -l HUMAN h
 
 abbr dus "/usr/bin/du -hs * | sort -h"
 abbr l 'ls -A'
-abbr l1 'ls -1'
-abbr ldot "ls -lAd$HUMAN .*"
+abbr l1 'ls -1 | print'
+abbr ldot "ls -lAd$HUMAN .* | print"
 abbr ll "ls -lA$HUMAN"
-abbr llr "ls -lAR$HUMAN"
-abbr lr "ls -LAR"
+abbr llr "ls -lAR$HUMAN | print"
+abbr lr "ls -LAR | print"
 abbr ls "ll -S$HUMAN"
 abbr lt "ll -t$HUMAN"
 abbr path 'echo $PATH'
@@ -201,6 +201,8 @@ end
 abbr dot 'rlwrap dotfiles'
 abbr gif 'nsxiv -a'
 abbr handbrake 'ghb'
+abbr hdel 'history delete'
+abbr hv "v $HOME/.local/share/fish/fish_history"
 abbr hex 'hexdump -C'
 abbr kc "kconvert '*epub'"
 abbr kindle 'dmenu econvert azw3'

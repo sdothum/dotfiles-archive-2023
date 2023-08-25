@@ -48,7 +48,7 @@ set -x TERM xterm-256color
 
 set -x QT_QPA_PLATFORMTHEME qt5ct
 
-# .......................................................... Network environment
+# .......................................................................... LAN
 
 # default printer
 set -x PRINTER HP_LaserJet_1320_series
@@ -64,6 +64,9 @@ set -x SELF_URL_PATH http://$SERVER:8000/tt-rss/
 # [ -z (pidof privoxy) ] ;or set -x HTTP_PROXY localhost:8118
 # [ -z (pidof squid) ] ;or set -x HTTP_PROXY http://localhost:3128/
 # pong luna ;and set -x HTTP_PROXY http://luna:3128/
+
+test -n $HTTP_PROXY
+and set -x http_proxy $HTTP_PROXY
 
 set -x XDG_DOWNLOAD_DIR /net/downloads/http
 set -x NNTPSERVER news.sunnyusenet.com
@@ -86,8 +89,11 @@ set -x PAGER less
 
 # lua
 set -x LUA_INIT "@$HOME/.luarc"
+# python
+set -x PYTHONPATH '/usr/lib/python3.11'
 # ruby
 set -x RI '--format ansi --no-pager'
+
 # for xmonad onhost
 set -x HOST (hostname)
 # commom configurations (dotfiles)
@@ -112,10 +118,7 @@ sudo chmod 700 $XDG_RUNTIME_DIR
 
 set -x NNTPSERVER news.sunnyusenet.com
 
-# ..................................................................... Defaults
-
-test -n $HTTP_PROXY
-and set -x http_proxy $HTTP_PROXY
+# ..................................................................... Browsers
 
 # default browser changes require login (Ctrl-d) for X11 autostart
 # test (cpu) = celeron
