@@ -9,12 +9,13 @@
   conky
   dunst
   fish
+  font/.fonts/iosevka*
   georgi/qmk_firmware/keyboards/gboards/georgi
   herbstluftwm
   kindle
   kobo/kobopatch_*/*yaml
   kobo/kobopatch_*/src/*yaml
-  kobo/fonts
+  kobo/fonts*
   kobo/calibre:config
   kobo/Nickel*
   kustom
