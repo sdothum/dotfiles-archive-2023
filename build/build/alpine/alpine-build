@@ -539,6 +539,8 @@ stage_33() {
   doas ln -s /usr/bin/chromium-browser /usr/bin/chromium
   doas apk add firefox
   # doas apk add lynx
+  doas apk add luakit
+  doas sed -i 's/monospace/mu/g' /etc/xdg/luakit/theme.lua  # statusbar
   doas apk add qutebrowser
   stow qutebrowser
   apk testing surf
