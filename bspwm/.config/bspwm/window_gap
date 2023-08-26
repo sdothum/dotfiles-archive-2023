@@ -1,0 +1,63 @@
+#!/bin/sh
+
+# bspwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................... Dynamic desktop window gap
+
+# linear or binary window_gap calculation
+# mode='binary'
+mode='linear 15'
+
+# linear window gap
+linear() {
+  [[ $M = DVI-1 ]] && factor=$@ || factor=$(dotpitch $@)
+  # echo "($margin + $factor) - ($windows - 1) * $factor" | bc
+  echo $(dotpitch $(( ($margin + $factor) - ($windows - 1) * $factor )) )
+}
+
+# binary window gap
+binary() {
+  # echo "($margin * 2) / (2 ^ ($windows -1))" | bc
+  echo $(dotpitch $(( ($margin * 2) / (2 ** ($windows -1)) )) )
+}
+
+# dot pitch adjustment of secondary monitor to primary 30" monitor
+dotpitch() {
+  # echo "$@ * 0.25 / 0.282" | bc
+  # match visual gap and padding to the pixel (with rounding)!
+  [[ $M = DVI-0 ]] && echo $@ | awk '{ print int($1 * 0.25 / 0.282 + 0.5) }' || echo $@
+}
+
+# refresh desktop
+window_gap() {
+  # dual window gap width
+  M=$(bspc query --monitors --desktop focused)
+  margin=$(dotpitch $(desktop_margin))
+  windows=$(bspc query --desktop focused --windows | wc -l)
+  G=$($mode)
+  [[ $G -lt 1 || ! -f ~/.config/bspwm/.window_gap ]] && G=1
+  # calculate window_gap and set constant desktop padding
+  if bspc query --tree --monitor $M | grep -q ' T - \*'; then
+    [[ $windows -eq 1 ]] && G=0
+    bspc config --desktop focused window_gap $G
+    P=$(( $margin - $G ))
+    [[ $P -lt 0 ]] && P=0
+  else
+    [[ $M = DVI-0 && $windows -eq 1 ]] && P=0 || P=$margin
+  fi
+  bspc config -m $M top_padding $P
+  bspc config -m $M left_padding $P
+  bspc config -m $M bottom_padding $P
+  [[ $M = DVI-0 ]] && bspc config -m $M right_padding $P
+  conky_padding
+}
+
+case $@ in
+  --daemon)   bspc control --subscribe | while read line
+              do
+                window_gap
+              done
+              ;;
+         *)   window_gap ;;
+esac

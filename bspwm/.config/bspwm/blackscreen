@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# X11 System
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... Terminal
+
+SHELL=/bin/sh urxvt -sh 1 -fg black -bg black -cr black -title 'blackscreen' -name 'blackscreen'

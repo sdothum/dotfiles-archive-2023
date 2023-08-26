@@ -1,0 +1,75 @@
+#!/bin/sh
+
+# bspwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................ Conky desktop padding
+
+# dynamic desktop width with conky panel (see sxhkdrx)
+maximum_width=$(grep 'maximum_width' ~/.conkyrc | cut -d' ' -f2)
+border_margin=$(grep 'border_outer_margin' ~/.conkyrc | cut -d' ' -f2)
+
+# compositing shadow compensation
+shadow() {
+  # single digit shadow-radius and shadow-offset
+  if pidof compton >/dev/null; then
+    R=$(grep 'shadow-radius' ~/.compton.conf | sed 's/.*\([0-9]\);/\1/')
+    X=$(grep 'shadow-offset-x' ~/.compton.conf | sed 's/.*[^-]\(.*[0-9]\);/\1/')
+    echo $(( $R - $X ))
+  else
+    echo 0
+  fi
+}
+
+# make right tiled window flush with conky panel with no right hand window gap
+tiled() {
+  D=$(bspc query --tree --monitor DVI-1 | grep 'T - \*' | awk '{ print $1; }')
+  G=$(bspc config --desktop $D window_gap)
+  # echo "$maximum_width + $border_margin * 2 - $G + 2 + $(shadow)" | bc
+  echo $(( $maximum_width + $border_margin * 2 - $G + 2 + $(shadow) ))
+}
+
+# adjust full screen padding to conky panel 
+monocle() {
+  # echo "$maximum_width + $border_margin * 2 + $(shadow)" | bc
+  echo $(( $maximum_width + $border_margin * 2 + $(shadow) ))
+}
+
+# conky desktop
+desktop() {
+  if [[ $(bspc query --monitors --monitor focused) = DVI-0 ]]; then
+    bspc query --tree --monitor last | grep $'^\t*[0-9].*\*' | sed 's/\t\([0-9]\) .*/\1/'
+  else
+    bspc query --desktops --desktop focused
+  fi
+}
+
+# full desktop is available when conky is hidden
+case "$@" in
+  monocle)  bspc config -m DVI-1 right_padding $(monocle) ;;
+  tiled)    bspc config -m DVI-1 right_padding $(tiled) ;;
+  *)        if xdotool search --onlyvisible --classname 'Conky'; then
+              if bspc query --tree --monitor DVI-1 | grep -q ' M - \*'; then
+                P=$(desktop_margin)
+                bspc config -m DVI-1 top_padding $P
+                bspc config -m DVI-1 left_padding $P
+                bspc config -m DVI-1 bottom_padding $P
+                bspc config -m DVI-1 right_padding $(monocle)
+              else
+                bspc config -m DVI-1 right_padding $(tiled)
+              fi
+            else
+              if bspc query --tree --monitor DVI-1 | grep -q ' M - \*'; then
+                bspc config -m DVI-1 top_padding 0
+                bspc config -m DVI-1 left_padding 0
+                bspc config -m DVI-1 bottom_padding 0
+                bspc config -m DVI-1 right_padding 0
+              else
+                bspc config -m DVI-1 right_padding $(( $(desktop_margin) - $(bspc config --desktop $(desktop) window_gap) ))
+              fi
+            fi
+            ;;
+esac
+
+
+

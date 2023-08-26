@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# X11 Window Manager
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ bspwm
+
+# Current multi-head monitor desktops (see .conkyrc)
+[[ $@ = focus ]] && bspc query -D -d focused \
+                 || bspc query -T -m last|grep $'^\t*[0-9].*\*'|sed 's/\t\([0-9]\) .*/\1/'

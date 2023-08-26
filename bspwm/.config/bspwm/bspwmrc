@@ -1,0 +1,163 @@
+#!/bin/sh
+
+# bspwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Desktop attributes
+
+# border width and window gap has to be set before (monitor) desktops are defined
+case $(hostname) in
+  monad)  window_gap=1
+          layout=monocle
+          border_width=1
+          ;;
+  # dynamic window gaps handled by window_gap poller
+  luna)   [[ -e ~/.config/bspwm/.window_gap ]] && window_gap=$(desktop_margin) || window_gap=1
+          layout=tiled
+          border_width=3
+          ;;
+esac
+bspc config window_gap                  $window_gap
+bspc config border_width                $border_width
+
+if [[ $(hostname) = luna ]]; then
+  bspc monitor DVI-0 -d 2 3 5 9 0
+  bspc monitor DVI-1 -d 1 4 6 7 8
+  # reserve panel space for conky (see sxhkdrc)
+  # see .xinitrc and conkyrc
+  conky_padding 'tiled'
+else
+  bspc monitor LVDS1 -d 2 3 4 5 6 7 8 9 0 1
+fi
+
+# bias split ratio to favour left hand side for maximum window area
+# bspc config split_ratio               0.525
+bspc config split_ratio                 0.5003
+bspc config focus_follows_pointer       true
+bspc config auto_alternate              true
+
+# ............................................................ Window attributes
+
+# bspc config focused_border_color        cyan
+# bspc config focused_border_color        "#25C0EF"
+bspc config focused_border_color          "#ef255b"
+# bspc config active_border_color         "#EF5A29"
+# bspc config focused_border_color        "#EF5A29"
+# bspc config focused_sticky_border_color "#444444"
+# bspc config focused_sticky_border_color  red
+bspc config focused_sticky_border_color   "#25C0EF"
+# bspc config focused_sticky_border_color "#8E2C0A"
+# bspc config normal_sticky_border_color  "#505050"
+# bspc config active_sticky_border_color  "#505050"
+bspc config normal_sticky_border_color    "#468395"
+bspc config active_sticky_border_color    "#468395"
+# bspc config normal_border_color         grey
+bspc config normal_border_color           "#4d6600"
+bspc config presel_border_color           green
+bspc config urgent_border_color           yellow
+bspc config borderless_monocle            true
+bspc config gapless_monocle               true
+
+# ............................................................... External rules
+
+# bspc config rule_command "$(which rule_command)"
+# bspwm_rules
+# bspc config external_rules_command      /home/shum/.config/bspwm/external_rules
+
+# ......................................................................... Loop
+
+# if [[ -e "$BSPWM_TREE" ]] ; then
+#     bspc restore -T "$BSPWM_TREE" -H "$BSPWM_HISTORY" -S "$BSPWM_STACK"
+#     rm "$BSPWM_TREE" "$BSPWM_HISTORY" "$BSPWM_STACK"
+# fi
+
+# .......................................................... Overlapping borders
+
+# border_width=3
+# bspc config border_width $border_width
+# bspc config window_gap -$border_width
+# for side in top right bottom left ; do
+#     bspc config ${side}_padding $border_width
+# done
+
+# ........................................................................ Panel
+
+# panel dzen2 &
+# [[ $(hostname) = luna ]] && ( panel & )
+panel &
+
+# ...................................................................... Layouts
+
+bspc desktop 2 --layout $layout
+bspc desktop 4 --layout $layout
+bspc desktop 5 --layout $layout
+
+# ........................................................................ Rules
+
+bspc rule --add tabbed --one-shot desktop=1
+bspc rule --add dwb desktop=1
+# bspc rule --add luakit floating=true center=true
+bspc rule --add luakit desktop=1
+bspc rule --add qutebrowser desktop=1
+bspc rule --add RSS desktop=1
+bspc rule --add Minitube desktop=1
+bspc rule --add IRC desktop=2
+bspc rule --add Messenger desktop=2
+bspc rule --add Pidgin desktop=2
+bspc rule --add Twitter desktop=2
+bspc rule --add Geary desktop=3 follow=true
+bspc rule --add IMAP desktop=3
+bspc rule --add Mail desktop=3
+bspc rule --add TODO desktop=3
+bspc rule --add Usenet desktop=3
+bspc rule --add Gvim --one-shot desktop=4
+# bspc rule --add Surf desktop=4
+bspc rule --add Text desktop=4
+bspc rule --add Vimb --one-shot desktop=4
+bspc rule --add mplayer2 desktop=5
+bspc rule --add Pavucontrol desktop=5
+bspc rule --add Xfce4-mixer desktop=5
+bspc rule --add Mixer desktop=5
+bspc rule --add Music desktop=5
+bspc rule --add Radio desktop=5
+bspc rule --add Rrip_gui desktop=5 follow=true
+bspc rule --add Smplayer desktop=6 follow=true
+bspc rule --add Umplayer desktop=6 follow=true
+bspc rule --add Kodi desktop=6 follow=true
+bspc rule --add Vlc desktop=6 follow=true
+bspc rule --add Gimp desktop=7 follow=true
+bspc rule --add Darktable desktop=7 follow=true
+bspc rule --add Digikam desktop=7 follow=true
+bspc rule --add com-lightcrafts-platform-linux-LinuxLauncher desktop=7 follow=true
+bspc rule --add VirtualBox desktop=7 follow=true
+# bspc rule --add Thunar desktop=8 follow=true
+bspc rule --add Tixati desktop=8
+bspc rule --add Transmission-gtk desktop=8
+bspc rule --add NZB desktop=8
+
+# rox dialogue windows
+bspc rule --add ROX-Filer floating=false
+bspc rule --add savebox floating=false
+
+bspc rule --add blackscreen monitor=DVI-0 fullscreen=true
+bspc rule --add pseudoframe border=false focus=false
+# bspc rule --add scratchpad floating=true sticky=true
+# bspc rule --add scratchpad pseudo_tiled=true sticky=true
+bspc rule --add scratchpad sticky=true
+# bspc rule --add terminal pseudo_tiled=true
+# bspc rule --add xpad floating=true sticky=true
+bspc rule --add xpad sticky=true
+
+# ................................................. Startup default applications
+
+# startup bspwm window_gap daemon
+[[ $(hostname) = luna ]] && ( window_gap --daemon & )
+
+[[ -e /tmp/bspwm.lock ]] || autostart
+touch /tmp/bspwm.lock
+waitfor 'Messenger'
+case $(hostname) in
+  luna)   sleep 6s ;;
+  monad)  sleep 6s ;;
+esac
+bspc desktop 1 --focus

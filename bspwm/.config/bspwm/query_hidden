@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# X11 Window Manager
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ bspwm
+
+# Current multi-head monitor desktops (see .conkyrc)
+D=$(query_desktop $@)
+bspc query --desktops | grep -q "'$D" && echo "hidden"
+

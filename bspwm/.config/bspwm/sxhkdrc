@@ -1,0 +1,520 @@
+
+# bspwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................ bspwm hotkeys
+
+# Exit startx
+# kill panel processes (to suppress fifo messages)
+# super + alt + Escape
+alt + shift + q
+  pkill -x panel; \
+  bspc quit
+
+# Make sxhkd reload its configuration files:
+# alt + Escape
+alt + q
+  pkill -USR1 -x sxhkd
+
+# ............................................................... Window hotkeys
+
+# Toggle floating/fullscreen state of selected window
+# alt + {f,z,s}
+alt + {s,f,p}
+  bspc window --toggle {floating,fullscreen,pseudo_tiled}
+
+# Focus previously focused window/desktop
+# alt + {grave,Tab}
+{alt,super} + Tab
+  bspc {window,desktop} --focus last
+
+# Focus next/previous window
+# alt + {_,shift + }c
+#   bspc window --focus {next,prev}
+alt + {comma,period}
+  bspc window --focus {prev,next}
+
+# Swap selected window with previously focused window
+# whilst retaining focus of current window frame
+alt + apostrophe
+  M=$(bspc query --monitors --window last); \
+  bspc window --swap last; \
+  [[ $M = $(bspc query --monitors --monitor focused) ]] && bspc window --focus last
+
+# Swap selected window with biggest window on current desktop
+# or next biggest window (if already biggest)
+# alt + m
+#   bspc window --swap biggest
+alt + x
+  if [ -z "$(bspc query -W -w last.manual.local)" ]; then \
+    bspc window -s biggest.unfocused; \
+  else \
+    bspc window -f last.manual.local; \
+    bspc window -p cancel; \
+    bspc window -s last; \
+  fi 
+
+# Hide selected window
+# alt + m
+alt + h
+  D=$(bspc query --desktops --desktop focused); \
+  W=$(bspc query --windows --window focused); \
+  bspc query --desktops | grep -q "'$D" || bspc monitor --add-desktops \'$D; \
+  bspc window $W --to-desktop \'$D
+
+# Unhide (hidden) desktop window
+# alt + ctrl + m
+alt + ctrl + h
+  D=$(bspc query --desktops --desktop focused); \
+  if bspc query --desktops | grep -q "'$D"; then \
+    for i in $(bspc query --windows --desktop \'$D); do \
+      bspc window $i --to-desktop $D; \
+      break; \
+    done; \
+    bspc window $i --focus; \
+    bspc window --swap biggest; \
+    (( $(bspc query --windows --desktop \'$D | wc -l) )) || bspc desktop \'$D --remove; \
+  fi
+
+# Unhide (all hidden) desktop windows
+# alt + shift + m
+alt + shift + h
+  D=$(bspc query --desktops --desktop focused); \
+  if bspc query --desktops | grep -q "'$D"; then \
+    for i in $(bspc query --windows --desktop \'$D); do \
+      bspc window $i --to-desktop $D; \
+      bspc window $i --focus; \
+      bspc window --swap biggest; \
+    done; \
+    bspc desktop \'$D --remove; \
+  fi
+
+# Focus/swap selected window in cursor direction
+# alt + {_,shift + }{h,j,k,l}
+alt + {_,shift + }{m,n,l,e}
+  bspc window --{focus,swap} {left,down,up,right}
+
+# Set split ratio of selected window 0.1..0.9
+alt + ctrl + {1-9}
+  bspc window --ratio 0.{1-9}
+
+# Preselect split area of selected window in cursor direction
+# and populate with application
+# alt + ctrl + {h,j,k,l}
+alt + ctrl + {m,n,l,e}
+  bspc window --presel {left,down,up,right}; \
+  dmenu_run || bspc window --presel cancel
+
+# Preselect split area of selected window in cursor direction
+# alt + ctrl + shift + {h,j,k,l}
+alt + ctrl + shift + {m,n,l,e}
+  bspc window --presel {left,down,up,right}
+
+# Cancel preselection of window/(all windows of) desktop
+alt + ctrl + {_,shift + }space
+  bspc {window --presel cancel,desktop --cancel-presel}
+
+# Transplant selected window to previously focused (manually split) desktop
+alt + y
+  bspc window --to-window last.manual
+
+# Push edge of selected window in cursor direction
+# alt + super + {h,j,k,l}
+alt + super + {m,n,l,e}
+  bspc window --edge {left,down,up,right} +40
+
+# Pull edge of selected window in cursor direction
+# super + alt + shift + {h,j,k,l}
+super + alt + shift + {m,n,l,e}
+  bspc window --edge {right,up,down,left} -40
+
+# # Enable window focus history of monitor older/newer than focused monitor in history
+# alt + {o,i}
+#   bspc control --record-history off; \
+#   bspc window {older,newer} --focus; \
+#   bspc control --record-history on
+
+# CLose selected window
+alt + w
+  bspc window --close
+
+# Move floating windows (requires baskerville's xdo)
+super + {Left,Right,Up,Down}
+    xdo move {-x -40,-x +40,-y -40,-y +40}
+
+# Resize floating windows
+super + shift + {Left,Right,Up,Down}
+    xdo resize {-w -40,-w +40,-h -40,-h +40}
+
+# .............................................................. Desktop hotkeys
+
+# Cycle layout of selected desktop
+# alt + t
+alt + space
+  bspc desktop --layout next; \
+  # conky_padding
+
+# Circulate leaves of tree of selected desktop backward/forward (counter/clockwise)
+# alt + {comma,period}
+alt + shift + {comma,period}
+  bspc desktop --circulate {backward,forward}
+
+# Flip desktop
+alt + ctrl + {minus,backslash}
+  bspc desktop --flip {horizontal,vertical}
+
+# Rotate desktop
+alt + ctrl + {comma,period}
+  bspc desktop --rotate {-90,90}
+
+# Balance/equalize split ratios (window areas) of tree of selected desktop
+alt + {b,e}
+  bspc desktop --{balance,equalize}
+
+# Toggle dynamic window gap
+# (bang) !window_gap to enable dynamic window gap
+alt + g
+  [[ -f ~/.config/bspwm/!window_gap ]] && rm -f ~/.config/bspwm/!window_gap \
+                                       || touch ~/.config/bspwm/!window_gap; \
+  window_gap
+
+# Reset desktop to default layout by repopulating it
+# alt + shift + e
+alt + shift + equal
+  D=$(bspc query --desktops --desktop focused); \
+  W=$(bspc query --windows --window focused); \
+  bspc desktop --rename $D\'; \
+  bspc monitor --add-desktops $D; \
+  for i in $(bspc query --windows --desktop $D\'); do \
+    bspc window $i --to-desktop $D; \
+  done; \
+  bspc desktop $D --flip vertical; \
+  bspc desktop $D --equalize; \
+  bspc desktop $D --focus; \
+  bspc window $W --focus; \
+  bspc window --swap biggest; \
+  bspc desktop $D\' --remove
+
+# Focus previous/next desktop
+# maximize current window in case of sticky scratchpad
+# alt + bracket{left,right}
+# alt + {Down,Up}
+alt + {minus,equal}
+  bspc desktop --focus {prev,next}; \
+  # if xdotool search --onlyvisible --classname 'scratchpad'; then \
+  #     bspc window --swap biggest; \
+  # fi; \
+  # conky_padding
+
+# Focus desktop/send selected window to desktop
+# bspc {desktop --focus,window --to-desktop} ^{1-9,0}
+# alt + {_,shift + }{1-9,0}
+#   bspc {desktop --focus,window --to-desktop} {1-9,0}
+
+# Focus desktop
+super + alt + {1-9,0}
+  bspc desktop --focus {1-9,0}
+
+# Focus virtual desktop
+# note: desktop from unary desktop (monitor) must be replaced with another
+# maximize current window in case of sticky scratchpad
+alt + {1-9,0}
+  D={1-9,0}; \
+  M=$(bspc query --monitors --desktop $D); \
+  if [[ $(bspc query --desktops --monitor $M | wc -l) -gt 1 ]]; then \
+    if [[ $(bspc query --desktops --desktop focused) != $D ]]; then \
+      bspc desktop $D --to-monitor focused; \
+      bspc desktop $D --focus; \
+    fi; \
+  elif [[ $(bspc query --monitors --monitor focused) != $M ]]; then \
+    bspc desktop DVI-0:focused --swap DVI-1:focused; \
+  fi; \
+  # if xdotool search --onlyvisible --classname 'scratchpad'; then \
+  #     bspc window --swap biggest; \
+  # fi; \
+  # conky_padding
+
+# Send selected window to desktop
+# alt + shift + {1-9,0}
+#   D={1-9,0}; \
+#   W=$(bspc query --windows --window focused); \
+#   bspc window --to-desktop $D; \
+#   bspc window $W --swap biggest
+alt + shift + {1-9,0}
+  D={1-9,0}; \
+  M=$(bspc query --monitors --monitor focused); \
+  N=$(bspc query --monitors --desktop $D); \
+  W=$(bspc query --windows --window focused); \
+  [[ $M != $N ]] && bspc monitor $N --focus; \
+  E=$(bspc query --desktops --desktop focused); \
+  bspc window $W --to-desktop $D; \
+  bspc window $W --focus; \
+  bspc window --swap biggest; \
+  bspc desktop $E --focus; \
+  [[ $M != $N ]] && bspc monitor $M --focus
+
+# .............................................................. Monitor hotkeys
+
+# Focus monitor
+# alt + {Left,Right}
+alt + bracket{left,right}
+  bspc monitor DVI-{0,1} --focus
+
+# Send selected window to monitor
+# focus and scratchpad follow desktop if key direction points to opposite monitor
+# alt + ctrl + {Left,Right}
+# alt + ctrl + bracket{left,right}
+alt + shift + bracket{left,right}
+  D=DVI-{0,1}; \
+  M=$(bspc query --monitors --monitor focused); \
+  W=$(bspc query --windows --window focused); \
+  S=$(bspc query --tree | grep 'scratchpad' | grep $W); \
+  bspc monitor $D --focus; \
+  if [[ -z $S ]]; then \
+    bspc window $W --to-desktop $(bspc query --desktops --desktop focused); \
+    bspc window $W --focus; \
+  else \
+    xdotool search --onlyvisible --classname 'scratchpad' windowunmap; \
+    xdotool search --classname 'scratchpad' windowmap; \
+  fi; \
+  bspc window --swap biggest; \
+  [[ $M = $D ]] && bspc monitor $D --focus
+
+# Swap monitor desktops
+# focus and scratchpad follow desktop if key direction points to opposite monitor
+# hide/restore scratchpad else stickiness irregularities occur
+# alt + shift + {Left,Right}
+# alt + shift + bracket{left,right}
+#   S=$(bspc query --tree | grep 'scratchpad'); \
+#   xdotool search --onlyvisible --classname 'scratchpad' windowunmap; \
+#   M=$(bspc query --monitors --monitor focused); \
+#   bspc desktop DVI-0:focused --swap DVI-1:focused; \
+#   [[ -z $S ]] || xdotool search --classname 'scratchpad' windowmap; \
+#   [[ $M = DVI-{1,0} ]] && bspc monitor --focus last; \
+#   conky_padding
+# alt + shift + bracket{left,right}
+# super + bracket{left,right}
+alt + ctrl + bracket{left,right}
+  S=$(bspc query --tree | grep 'scratchpad'); \
+  M=$(bspc query --monitors --monitor focused); \
+  bspc desktop DVI-0:focused --swap DVI-1:focused; \
+  [[ $M = DVI-{1,0} ]] && bspc monitor --focus last; \
+  # conky_padding
+
+
+# ......................................................... Mouse button hotkeys
+
+~button1
+  bspc pointer --grab focus
+
+# alt + button{1-3}
+#   bspc pointer --grab {move,resize_side,resize_corner}
+alt + button{1-3}
+  bspc pointer --grab {move,resize_corner,resize_side}
+
+# deprecated usage
+# alt + !button{1-3}
+#   bspc pointer --track %i %i
+
+alt + @button{1-3}
+  bspc pointer --ungrab
+
+# .................................................................. Conky panel
+
+# Smart conky panel
+# see .xinitrc and conkyrc
+alt + backslash
+  if [[ $(xrandr | grep '*' | cut -dx -f1 | sort | tail -1) -gt 1024 ]]; then \
+    if xdotool search --onlyvisible --classname 'Conky' windowunmap; then \
+      bspc config -m DVI-1 right_padding 10; \
+    else \
+      if ! xdotool search --classname 'Conky' windowmap; then \
+        conky -q -c ~/.conkyrc & \
+        xdotool search --sync --onlyvisible --classname 'Conky'; \
+      fi; \
+    fi; \
+    conky_padding; \
+  else \
+    xdotool search --onlyvisible --classname 'Conky' windowunmap \
+    || xdotool search --classname 'Conky' windowmap \
+    || conky -q -c ~/.conkyrc & \
+  fi
+
+# Overlapping conky panel
+# see .xinitrc and conkyrc
+alt + shift + backslash
+  xdotool search --onlyvisible --classname 'Conky' windowunmap \
+  || xdotool search --classname 'Conky' windowmap \
+  || conky -q -c ~/.conkyrc &
+
+# Reset conky
+# see .xinitrc and conkyrc
+alt + ctrl + shift + backslash
+  killall conky && conky -q -c ~/.conkyrc & \
+  conky_padding
+
+# .......................................................... Compositing shadows
+
+# Toggle window shadows
+# state is persistent for next bspwm session
+alt + ctrl + super + backslash
+  if pidof compton; then \
+    killall compton; \
+    rm -f ~/.compton; \
+  else \
+    touch ~/.compton; \
+    compton; \
+    while ! pidof compton; do sleep 0.1s; done; \
+  fi; \
+  conky_padding
+
+# ................................................................... Fifo panel
+
+# Toggle status line panel
+# note: order of panel/panel_bar kill
+# cannot "killall panel" as this kills most other session applications
+super + alt + ctrl + backslash
+  if pgrep 'panel$'; then \
+    kill -9 $(pgrep 'panel$'); \
+    killall panel_bar; \
+    bspc config bottom_padding 0; \
+  else \
+    [[ $(hostname) = luna ]] && M='-m DVI-0'; \
+    bspc config $M bottom_padding 0; \
+    panel & \
+  fi
+
+# .......................................................... Application hotkeys
+
+# Open/close scratchpad (in biggest window if floating=false)
+# alt + o
+#   [[ $(hostname) = monad ]] && geometry=100x20 || geometry=200x30; \
+#   if ! xdotool search --onlyvisible --classname 'scratchpad' windowunmap; then \
+#     if ! xdotool search --classname 'scratchpad' windowmap; then \
+#       urxvt -title 'scratchpad' -name 'scratchpad' -geometry $geometry -e byobu; \
+#       bspc window --swap biggest; \
+#     fi; \
+#   fi
+# made into script for dmenu_run
+alt + Return
+  scratchpad
+
+# Open pseudo frame
+alt + shift + o
+  pseudoframe
+
+# Open black screen
+alt + ctrl + o
+  blackscreen
+
+# Post-it notes
+super + p
+  ! pidof xpad && xpad || xpad --quit
+
+# Terminal
+alt + shift + Return
+  urxvt -title 'terminal' -name 'terminal'
+
+# File manager
+alt + grave
+  rox
+
+# Alternate keyboart layout
+ctrl + shift + F1
+  zsh -c keymap
+
+# ......................................................... Sound volume +/- 3db
+
+super + minus
+  pactl set-sink-volume 0 -5%
+
+super + shift + minus
+  pactl set-sink-volume 0 +5%
+
+super + 0
+  pactl set-sink-mute 0 toggle
+
+# ................................................................ dmenu hotkeys
+
+super + space
+  dmenu_run
+
+super + shift + space
+  dsystemd
+
+super + equal
+  dcalc
+
+super + Return
+  dman
+
+super + slash
+  dfiles
+
+super + shift + slash
+  dfolders
+
+super + F1
+  dtest
+
+super + a
+  dabook
+
+super + b
+  dbookmarks
+
+super + shift + b
+  gbookmarks
+
+super + c
+  dconfigs
+
+super + d
+  ddict
+
+super + e
+  dedit
+
+super + f
+  dzsh
+
+super + h
+  dhistory
+
+super + l
+  dlogs
+
+super + shift + l
+  dtail
+
+super + m
+  dmusic
+
+super + shift + p
+  dpass
+
+super + q
+  clack  
+
+super + shift + q
+  clack swap
+
+super + s
+  dscripts
+
+super + t
+  typingtutor amphetype
+
+super + shift + t
+  typingtutor klavaro
+
+super + x
+  dhalt
+
+super + z
+  dzshist
+
+super + shift + z
+  dzshelp
+
+# vim: set ft=sh: #
