@@ -1,0 +1,32 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Log
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ${COLORS} defined in env
+
+# .......................................................................... Log
+
+usage() { echo "usage: $(basename $0) [<level>] [--]** [<message> [<detail>]], ** [--] start/stop elapse time"; exit 1; }
+
+CHRONO=/tmp/trace:chrono
+
+[ "$1" ] || usage
+echo $1 | grep -q '^[0-9]$' && { level=$1; shift; }
+if [ "$1" = '--' ] ;then
+  shift
+  [ "$1" ] && chrono >$CHRONO || { [ -e $CHRONO ] && chrono $(cat $CHRONO) $(chrono); rm -f $CHRONO; exit; }  # elapsed time
+fi
+[ $# -eq 2 ] && { msg=$1; detail=$2; } || msg=$@ 
+
+message() {
+  [ $# -eq 2 ] && [ -n "$2" ] && { echo -n "${YELLOW}$1 ${yellow}"; shift; } || color=${YELLOW}
+  echo "$color$@"
+}
+
+log -n "$(timestamp)"
+[ $level ] && log -n " ${RED}$level>"
+log "${NOCOLOR}$(message "$msg" "$detail")${NOCOLOR}"  # message passed may contain colors
+
+# vim: set ft=sh: #

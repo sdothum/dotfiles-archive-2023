@@ -1,0 +1,21 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ Audio
+
+[ -e $MUSIC ] && exec dmenu music
+[ -e $RADIO ] && exec dmenu radio
+
+# meta dmenu menu!
+audio=$(previous audio)
+audio=$(echo "music\nradio" | rmenu 'Listen to' $audio -no-custom) || exit
+
+mhistory audio $audio
+case $audio in
+  music) dmenu music ;;
+  radio) dmenu radio ;;
+esac
+
+# vim: set ft=sh: #

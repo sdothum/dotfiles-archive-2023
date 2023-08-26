@@ -1,0 +1,67 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# UI
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ${COLORS} defined in env
+
+# ..................................................................... Notifier
+
+usage() { echo "usage: $(basename $0) [time=<seconds> | <seconds> | console | X | low | normal | critical | blackboard]* [<color>] \"<summary>\" [[<color>] \"<body>\"]"; exit 1; }
+
+SESSION=${SESSION:-$HOME/.session}
+LOG=/tmp/notify.log
+color1=${YELLOW}
+color2=${BLUE}
+
+# enable cron notifications, see .xinitrc
+[ -r $HOME/.dbus/Xdbus ] && . $HOME/.dbus/Xdbus >/dev/null
+
+while : ;do
+  case $1 in
+    # long form required for handling numeric summary field
+    time=*) expire="--expire-time=$(( ${1#time=} * 1000 ))" ;;
+    cons* ) console=true ;;
+    X     ) X=true ;;
+  
+    low     |\
+    norm*   |\
+    crit* ) urgency="-u $1" ;;
+  
+    blac* ) urgency="-h string:bgcolor:#000000" ;;
+    [0-9]*) echo "$1" | grep -q '[^0-9]' && break || expire="--expire-time=$(( $1 * 1000 ))" ;;
+    *     ) break ;;
+  esac
+  shift
+done
+
+[ "$(echo $1 | nocolor)" = '' ] && { color1=$1; shift; }
+ONE=${1#\\}
+[ "$2" ] && [ "$(echo $2 | nocolor)" = '' ] && { color2=$2; shift; }
+TWO=${2#\\}
+
+[ "$TWO" ] && echo "$(timestamp) $USER:${urgency#-u} \"$ONE\" \"$TWO\"" >>$LOG || echo "$(timestamp) $USER:${urgency#-u} \"$ONE\"" >>$LOG
+
+if [ $console ] ;then
+  [ "$TWO" ] && echo "${color1}==> $ONE\n${color2}  -> $TWO${NOCOLOR}" || echo "${color1}==> $ONE${NOCOLOR}"
+else
+  [ $X ] || { console && exit; }
+  [ -e $SESSION/display ] && DISPLAY=$(cat $SESSION/display)  # allow cron jobs to  display to X
+
+  case $# in
+    1) if [ $(echo "$ONE" | wc -l) -eq 1 ] ;then
+         DISPLAY=${DISPLAY:-:0} notify-send $expire $urgency --icon=help-info "$ONE" &
+       else
+         # set first line as heading for a single multiline message
+         heading=$(echo "$ONE" | sed '2,$d')
+         body=$(echo "$ONE" | sed '1d')
+         DISPLAY=${DISPLAY:-:0} notify-send $expire $urgency --icon=help-info "$heading" "$body" &
+       fi ;;
+  
+    2) DISPLAY=${DISPLAY:-:0} notify-send $expire $urgency --icon=help-info "$ONE" "$TWO" & ;;
+    *) usage ;;
+  esac
+fi
+
+# vim: set ft=sh: #

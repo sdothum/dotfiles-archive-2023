@@ -1,0 +1,13 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................... Calculator
+
+# cli calculator to precision
+xdotool key s c a l e equal ${1:-4} Return
+bc
+
+# vim: set ft=sh: #

@@ -1,0 +1,74 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... Edit
+
+# shell scripts excluding .man (see dmenu man)
+
+REFRESH='refresh cache'  # catalogue, see ffcache
+EXCLUDE='(AppImage|.service|-module|.mp3|-multilib)$'
+
+# search these project library folders..
+sources=$(cat $CONFIG/.scriptsrc | sed "s|\$HOME|$HOME|g")  # manual eval of $HOME
+
+# shorten path references for menu
+for i in $sources ;do echo $i | grep -q "^$HOME" && trim="$trim s,$i/,${i##*/}/,;" ;done
+
+files() { ffcache $refresh scripts $sources | grep -E -v "$EXCLUDE" | sed "$trim"; unset refresh; }
+
+# recover full pathname
+expand() {
+  for i in $sources ;do
+    echo $i | grep -q "^$HOME" && path=${i%/*} || unset path
+    [ -e $path/$1 ] && { echo $path/$1; return 0; }
+  done
+  return 1
+}
+
+# list of user scripts and functions
+script_history() { mhistory scripts "${file##*/}^$SEP $(echo ${file%/*} | sed "s,^stow/[^/]*/,,")"; }
+series()         { sed -r "s,(.*)/([^/]*)$,\2^$SEP \1," | sort | mhistory scripts | column -s^ -t | sed "2i$(X $REFRESH)"; }
+
+while : ;do
+  file=$(files | series | rmenu "Edit Script$error" $file) || exit
+  if [ "${file#$(X)}" = "$REFRESH" ] ;then
+    refresh=-
+    unset file
+    continue
+  elif echo $file | grep -q "$SEP" ;then
+    mhistory scripts "$(echo $file | sed "s/ *$SEP/^$SEP/")"
+    file=$(echo $file | sed -r "s,([^ ]*)  *$SEP  *([^ ]*),\2/\1,")
+  else
+    # (tic) 'script for quick menu action
+    tick=$(files | grep "/$(unquote $file)$" | head -1 | sed "s,^$HOME/,,")
+    if [ $tick ] ;then
+      file=$tick
+      script_history
+    # explicit /ROOT file spec
+    elif [ ${file%${file#?}} = / ] && [ -e "$file" ] ;then
+      script_history
+    # relative $HOME file spec
+    elif [ -e "$HOME/$file" ] ;then
+      file=$HOME/$file
+      script_history
+    else
+      exec dmenu scripts  # not found
+    fi 
+  fi
+
+  if expand $file >/dev/null ;then
+    v $(expand $file)
+    # history file cleanup usually precedes impending edit
+    expand $file | grep -q 'dmenu/\.history' && { pwait "vim.*$(expand $file)"; dmenu edit; }
+  else
+    error=": ${file##*/} ∉ ${file%/*}"
+    sed -i "\|${file##*/}.$SEP ${file%/*}$|d" $HISTORY/scripts
+    file=${file##*/}
+    continue
+  fi
+  break
+done
+
+# vim: set ft=sh: #

@@ -1,0 +1,24 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ Files
+
+# Usage: dmenu logs [watch]
+
+# view log files
+[ $1 ] && mode=Watch || mode=View
+cd /tmp
+ln_logs
+
+file=$(previous logs)
+file=$(ls *.log | sort | sed 's/.log//' | rmenu "$mode Log" $file -no-custom) || exit
+
+mhistory logs $file
+case $mode in
+  View ) [ $file ] && term "$file" MAX less $file.log ;;
+  Watch) [ $file ] && term "$file" tail -f $file.log ;;
+esac
+
+# vim: set ft=sh: #

@@ -1,0 +1,43 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# File
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... Copy
+
+usage() { echo "usage: $(basename $0) <link> | <file> <file>"; exit 1; }
+
+# swap file file
+swap() {
+  target=${1%/}
+  destination=${2%/}
+  hold=$RANDOM.$target
+  if ([ -e $target ] && [ -e $destination ]) || ([ -d $target ] && [ -d $destination ]) ;then
+    sudo mv $target $hold
+    sudo mv $destination $target
+    sudo mv $hold $destination
+    ditto swap "$destination  <<-- -->>  $target" 
+  fi
+}
+
+# swap link (-> source) 
+reverse() {
+  symlink=$(realpath $1)
+  source=$(readlink ${1##*/}) || usage
+  relpath=$(realpath --relative-to=${source%/*} $PWD)
+  rm ${1##*/}
+  cp $source .
+  cd ${symlink%/*}
+  rm ${symlink##*/}
+  ln -s $relpath/${symlink##*/} ${1##*/}
+  ditto link "${symlink##*/}  <<--  ${source%/*}/${1##*/}" 
+}
+
+case $# in
+  1) reverse $1 ;;
+  2) swap $1 $2 ;;
+  *) usage ;;
+esac
+
+# vim: set ft=sh: #

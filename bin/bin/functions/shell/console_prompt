@@ -1,0 +1,28 @@
+#!/usr/bin/python
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................... restore console prompt
+
+# Usage: sudo console_prompt
+
+import fcntl
+import sys
+import termios
+import curses
+import os
+
+# cosmetic fix for backgrounded process output during console login!
+if os.ttyname(sys.stdout.fileno()) == '/dev/tty1':
+    curses.initscr()
+    (y, x) = curses.getsyx()
+    if x == 0:
+        with open('/dev/tty1', 'w') as fd:
+            # funny kludge to restore right fish prompt
+            fcntl.ioctl(fd, termios.TIOCSTI, '\b')
+            # issue newline to refresh command prompt, see we
+            fcntl.ioctl(fd, termios.TIOCSTI, '\n')
+
+# vim: set ft=python: #

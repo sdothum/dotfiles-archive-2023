@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Package management
+
+# package already installed check
+xbps-query -S $@ >/dev/null || exit 1
+
+query=$(xbps-query -S $@ | grep "pkgver")
+installed_heading ${query#* }
+exit 0
+
+# vim: set ft=sh: #

@@ -1,0 +1,13 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# File
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................... Attribute
+
+# give USER access
+sudo chown -cR $USER:users $1
+sudo chmod -cR 775 $1
+
+# vim: set ft=sh: #

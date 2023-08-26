@@ -1,0 +1,21 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .............................................................. Timeout command
+
+# Usage: tmout [<seconds>] command [args]
+
+delay=10
+
+echo $1 | grep '^[[:digit:]]*$' && { delay=$1; shift; }
+
+# e.g. useful for timed ifno/ifyes prompt requests
+TMPPID=$PPID timeout --foreground $delay $@
+
+rcode=$?
+[ $rcode = 124 ] && exit 0 || exit $rcode
+
+# vim: set ft=sh: #

@@ -1,0 +1,86 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... E-mail
+
+SEND='send'
+EDIT='edit drafts'
+PURGE='purge drafts'
+
+# list of potential writing tools, verified by dmenu apps
+editors="
+  emacs
+  focuswriter
+  nano
+  pyroom
+  rubyroom
+  vim
+  wordgrinder
+"
+
+# unordered message headings
+heading='^((Subject|From|To|Cc):.*\n(Subject|From|To|Cc):.*\n(Subject|From|To|Cc):.*\n)\n'
+
+format_message() {
+  # insert 2 line feed characters into reply for vim cursor positioning and spacing
+  # note required search order(?)
+  if pcregrep -Mq "${heading}Forwarded message from " $1 ;then
+    sed -i '/^Forwarded message from /i\
+\
+' $1
+  elif pcregrep -Mq "${heading}Excerpts from .* message of " $1 ;then
+    sed -i '/^Excerpts from .* message of /i\
+\
+' $1
+  elif pcregrep -Mq "${heading}Quoting .* (.*)" $1 ;then
+    sed -i '/^Quoting .* (.*)/i\
+\
+' $1
+  fi
+  # composing new email message needs no blank lines added
+}
+
+compose_with() {
+  format_message $2
+  folded=$(mktemp -p $HOME/drafts)
+  $1 $2
+  fold -s -w 72 $2 >$folded
+  cp $folded $2
+  mv $folded $folded.draft
+  mhistory compose $editor
+}
+
+compose_vim() {
+  SHELL=/usr/bin/dash
+  DRAFT=$HOME/drafts/${1#/tmp/}.draft
+  format_message $1
+  cp $1 $DRAFT
+  vim -g -f -c 'set filetype=mail' $DRAFT  # must set filetype to invoke ftplugin composeMail()
+  cp $DRAFT $1
+  # cleanup sup mail draft histories
+  # find $HOME/.vim/undo -name '*tmp*sup.*' -exec sudo rm {} \;
+  clean_drafts &
+  mhistory compose $editor
+}
+
+editors() { apps "$editors" | sed "1i$(X $SEND)\n$(X $EDIT)\n$(X $PURGE)"; }
+
+editor=$(previous compose)
+while editor=$(editors | rmenu 'Compose' $editor -no-custom) || exit ;do
+  case ${editor#$(X)} in
+    "$SEND"    ) ;;
+    "$EDIT"    ) dmenu notes draft;                 continue ;;
+    "$PURGE"   ) mv $HOME/drafts/alot.*.draft /tmp; continue ;;
+    focuswriter) compose_with focuswriter $1 ;;
+    nano       ) compose_with pyroom $1 ;;
+    pyroom     ) compose_with pyroom $1 ;;
+    rubyroom   ) compose_with rubyroom $1 ;;
+    wordgrinder) compose_with wordgrinder $1 ;;
+    vim        ) compose_vim $1 ;;
+  esac
+  exit
+done
+
+# vim: set ft=sh: #

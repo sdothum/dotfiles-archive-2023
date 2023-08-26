@@ -1,0 +1,25 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# File
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .............................................................. watchman daemon
+
+usage() { echo "usage: $(basename $0) <path> <name> <command>"; exit 1; }
+
+# watchman
+[ $# -lt 3 ] && usage
+ROOT=$1; shift
+NAME=$1; shift
+CMD=$@
+
+WATCH=$CACHEDIR/$NAME
+>$WATCH
+
+pretty() { sed '/[{}]/d; s/^ *//g; s/"//g; s/,$//'; }
+
+watchman watch-project $ROOT | pretty
+notify X low 'Watchman' "$(watchman -- trigger $ROOT $NAME -- $CMD | pretty)"
+
+# vim: set ft=sh: #

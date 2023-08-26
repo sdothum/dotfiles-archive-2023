@@ -1,0 +1,22 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# File
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Update web gallery
+
+usage() { echo "usage: $(basename $0) [-100] <jpeg> [<name>]*"; exit 1; }
+
+GALLERY=/srv/http/thedarnedestthing.com/application/public/images
+[ "$1" = '-100' ] && { quality=100; shift; } || quality=92
+[ $1 ] || usage
+
+for i in $@ ;do
+  [ "$i" ] && jpeg=$i
+  [ "${i##*.}" = jpg ] && name=$jpeg || name="${i%.*}.jpg"
+  ditto add "$(basename $GALLERY)/$name"
+  convert $jpeg -resize 1600 -quality $quality $GALLERY/$name
+done
+
+# vim: set ft=sh: #

@@ -1,0 +1,78 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................ Console login
+
+PIXELSERV=$SESSION/pixelserv
+REFRESH=$SESSION/refresh
+WMAIL=$SESSION/wmail
+BOOTWM=$SESSION/boot:wm
+SEAT=/tmp/console:width
+
+DELAY=180  # unattended wm startup if set
+
+# bootstrap SSD scheduler
+if [ $USER != root ] ;then
+  if console && [ ! -e /tmp/login:console ] ;then
+    for i in $(find /tmp -mtime +1 2>/dev/null | grep -v '/tmp/adblock') ;do sudo rm -rf $i 2>/dev/null ;done  # clear out stale entries
+    tty >/tmp/login:console
+    [ -e /var/log/journal ] && sudo rm /var/log/journal  # systemd
+    # SERVER=$(grep 10.1.0.10 /etc/hosts | awk '{ print $2 }')
+
+    # assign deadline scheduler to SSD boot drive
+    if [ $(hostname) = $SERVER ] ;then
+      if [ ! -e /tmp/ssd:scheduler ] ;then
+        ssd=$(ls -l /dev/disk/by-id/*ata* | grep Samsung_SSD | head -1 | cut -d/ -f7)
+        if [ $ssd ] ;then
+          # virtual block devices must be referenced explicitly
+          case $ssd in
+            sda)  echo deadline | sudo tee /sys/block/sda/queue/scheduler >/dev/null ;;
+            sdb)  echo deadline | sudo tee /sys/block/sdb/queue/scheduler >/dev/null ;;
+            sdc)  echo deadline | sudo tee /sys/block/sdc/queue/scheduler >/dev/null ;;
+            sdd)  echo deadline | sudo tee /sys/block/sdd/queue/scheduler >/dev/null ;;
+            sde)  echo deadline | sudo tee /sys/block/sde/queue/scheduler >/dev/null ;;
+          esac
+          notify "Assigned [deadline] scheduler to SSD" "/dev/$ssd"
+          echo "/dev/$ssd [deadline]" >/tmp/ssd:scheduler
+        fi
+      fi
+      [ -e /var/tmp/adblock ] || adblock &
+      nohup hg serve --cwd $STOW --port 8213 >/tmp/hg:server.log 2>&1 &
+    fi
+
+    [ -e $PIXELSERV ] && post_install pixelserv >/dev/null &
+    # sv start ntpd >/dev/null 2>&1 &
+
+    # pre-initialize arm fuzzy searches
+    nohup fcache + $HOME >/dev/null 2>&1
+    [ -e $WMAIL ] && nohup wmail >/dev/null 2>&1
+
+    # gtd calendar
+    echo
+    exists remind && reminder
+
+    if cpu arm ;then
+      nohup arm_clock >/dev/null 2>&1 &
+      # in case pi is offline during development on main server
+      if [ -e $REFRESH ] ;then
+        nohup refresh -q arm >/dev/null 2>&1 &
+        sleep 1
+        pstat 'refresh arm' || notify critical 'Failed to update stow' "Check nfs share & rerun 'refresh arm'"
+      else
+        wsync -v
+      fi
+    fi
+
+    # wm startup
+    stty size | cut -d' ' -f2 >$SEAT
+    [ $DELAY ] && [ -d $SESSION ] && echo $DELAY >$BOOTWM
+  fi
+
+  # reset keyboard layout
+  [ -e /etc/vconsole.conf ] && grep -q colemak /etc/vconsole.conf && keymap qwerty
+fi
+
+# vim: set ft=sh: #

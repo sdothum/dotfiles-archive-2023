@@ -1,0 +1,24 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................... dmenu launcher
+
+CACHE=$CACHEDIR/dmenu:run
+
+# see /usr/bin/dmenu_run
+IFS=:
+# colon in cache variable
+# stest -dqr -n $CACHE $PATH && stest -flx $PATH | sort -u | tee "$CACHE" >/dev/null
+PATHS=$(echo $PATH)
+unset IFS
+stest -dqr -n $CACHE $PATHS && stest -flx $PATHS | sort -u | tee "$CACHE" >/dev/null
+
+# no text prompt message (unique to run vs other menu functions)
+cmd=$(cat $CACHE | mhistory run | rmenu '""' -no-custom) || exit
+mhistory run "$cmd"
+focus $cmd
+
+
+# vim: set ft=sh: #

@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Sysadmin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................. Systemd log
+
+if void ;then
+  [ $1 ] && cat /var/log/socklog/everything/current | ack $@ | less -MRX || less -MRX /var/log/socklog/everything/current 
+else
+  [ $1 ] && sudo journalctl -b | ag --regexp "\"$@\"" | less -MRX || sudo journalctl -b
+fi
+
+# vim: set ft=sh: #

@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Regex
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... no ansi
+
+# Usage: stdin | nocolor
+
+# strip out all ansi escape sequences (colours)
+# sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"
+perl -pe 's/\e\[?.*?[\@-~]//g'
+
+# vim: set ft=sh: #

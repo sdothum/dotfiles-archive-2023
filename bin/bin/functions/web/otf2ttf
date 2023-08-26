@@ -1,0 +1,25 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Web
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................. Convert font
+
+usage() { echo "usage: $(basename $0) <otf> [<fontname>]"; exit 1; }
+
+FORGE=/tmp/otf2ttf.py
+
+[ $1 ] && otf=${1%.otf}.otf || usage
+[ $2 ] && ttf=$2.ttf || ttf=${1%.otf}.ttf
+
+echo "import fontforge
+print('Opening $otf');
+otf = fontforge.open('$otf');
+print('Saving $ttf');
+otf.generate('$ttf');
+" >$FORGE
+
+python $FORGE
+
+# vim: set ft=sh: #

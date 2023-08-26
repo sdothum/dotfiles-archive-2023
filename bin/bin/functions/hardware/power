@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Hardware
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ Power
+
+# UPS battery status
+sudo pwrstat -test
+sleep 3
+sudo pwrstat -config
+sudo pwrstat -status
+
+# vim: set ft=sh: #

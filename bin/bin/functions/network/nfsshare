@@ -1,0 +1,13 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Network
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................... NFS share
+
+# nfs automount unreliable on arm with btrfs
+mount | grep -q nfs4 && exit 1
+for i in $(grep nfs4 /etc/fstab | cut -d' ' -f1) ;do sudo mount $i ;done
+
+# vim: set ft=sh: #

@@ -1,0 +1,16 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................... Force vimb tabbed close
+
+# list open vimb tabs
+urls() { for i in $(pgrep -f 'vimb .* http') ;do echo "$i ^$SEP $(p $i | sed 's/.*http/http/')" ;done }
+
+while [ "$(urls)" ] ;do
+  url=$(urls | column -s^ -t | sort | rmenu 'Close URL' -no-custom) || exit
+  kill $(echo $url | cut -d' ' -f1)
+done
+
+# vim: set ft=sh: #

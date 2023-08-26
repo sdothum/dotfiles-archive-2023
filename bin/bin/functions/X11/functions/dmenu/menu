@@ -1,0 +1,16 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... Menu
+
+# meta dmenu menu!
+while : ;do
+  script=$(ls -1 $(dirname $0)/functions/dmenu | grep -E -v 'browser|compose|help|menu|urlib' |
+      rmenu 'Menu' "$script" -no-custom) || exit
+
+  dmenu $script
+done
+
+# vim: set ft=sh: #

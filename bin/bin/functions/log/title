@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Log
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ${COLORS} defined in env
+
+# ...................................................................... Heading
+
+# mark content division
+heading '━' $@
+echo
+
+# vim: set ft=sh: #

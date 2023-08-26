@@ -1,0 +1,25 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................... Distribution install
+
+# git on with it!
+heading : $1
+
+uri=$(source_install $1)
+if [ -z $uri ] ;then
+  ditto -- "missing pre_install/$1 \"echo git://uri\""
+  exit
+fi
+
+repo=/net/depot/$1
+# mkdir -pv ${repo%$1} || exit 1
+git clone $uri $repo
+
+# do post install for previously installed package dependencies
+post_install $1
+
+# vim: set ft=sh: #

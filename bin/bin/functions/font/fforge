@@ -1,0 +1,493 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Font
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................. monolegible font adjustments
+# see make_install iosevka
+
+usage() { 
+  echo "usage: $(basename $0) Q_hook | q_hook | descending <shape>
+       $(basename $0) I_descending <shape>
+       $(basename $0) Q_custom <shape>
+       $(basename $0) Q_horizontal <shape>
+       $(basename $0) T_descending <shape>
+       $(basename $0) t_descending <shape>
+       $(basename $0) Y_descending <shape>
+       $(basename $0) FP_descending <shape>
+       $(basename $0) punctuation <emdash> <shape>
+       $(basename $0) ligature <width> <shape>
+       $(basename $0) space <space>
+       $(basename $0) bookweight [book+regular]
+       $(basename $0) copy <family> <name>, font alias via commandline only
+       $(basename $0) map  <family> <glyph> <glyph>, map U+<glyph> via commandline only"
+  exit 1
+}
+
+MAKE_INSTALL=/tmp/iosevka:make_install
+REPO=/net/depot/Iosevka
+ANGLE=-9       # iosevka italic angle (verify with fontforge)
+Xshift=-40     # italic descending capital left side bearing shift
+# Yshrink=50   # elongation bar percent (original large overlap spec)
+# Yshift=-174  # descending capital elongation
+# yshift=-140  # lower case t elongation
+Yshrink=25.5   # elongation bar percent
+Yshift=-210    # descending capital elongation
+yshift=-176    # lower case t elongation
+
+confirm() { [ -e $MAKE_INSTALL ] && ditto "$(basename $0)" "$1" || { ifyes "$1" || exit; }; }
+percent() { echo "$1 * 100" | bc | cut -d. -f1; }
+regular() { ls -1 | grep -Ev 'italic|oblique|extended'; }
+italic()  { ls -1 | grep -E  'italic'; }
+
+replace() {
+  echo "
+Select($2);
+Copy();
+Select($1);
+Paste();
+"
+}
+
+# substitute curly tail q
+q_hook() {
+  # copy char 0u024b and paste to char 0u0071
+  # confirm 'atkinson q-hook'  # see iosevka
+  echo "
+Open(\$1);
+$(replace 0u0071 0u024b)
+Generate(\$1);
+" >/tmp/fontforge:q_hook.script
+
+  for i in *ttf ;do
+    ditto q_hook $i
+    fontforge --script /tmp/fontforge:q_hook.script $i
+  done
+}
+
+Q_hook() {
+  # copy char 0u024a and paste to char 0u0051
+  # confirm 'Q-hook'  # see iosevka
+  echo "
+Open(\$1);
+$(replace 0u0051 0u024a)
+Generate(\$1);
+" >/tmp/fontforge:Q_hook.script
+
+  for i in *ttf ;do
+    ditto Q_hook $i
+    fontforge --script /tmp/fontforge:Q_hook.script $i
+  done
+}
+
+overlay() {
+  echo "
+Select($2);
+CopyReference();
+Select($1);
+PasteWithOffset($3,$4);
+RemoveOverlap();
+"
+}
+
+Q_custom() {
+  # copy char 0u03d8 and paste to char 0u0051
+  # confirm 'Q-custom'  # see iosevka
+  # $(overlay 0u0051 0u0325 $(( $shape / 3 * 4 )) 35)  # circle to cell edge
+  # $(overlay 0u0051 0u0325 $(( $shape / 4 * 5 )) 35)  # circle to glyph edge
+  Q_offset() {
+    echo "
+Open(\$1);
+$(replace 0u0051 0u004f)
+$(overlay 0u0051 0u2035 $x -650)
+Generate(\$1);
+" >/tmp/fontforge:Q_offset.script
+}
+
+  for i in *ttf ;do
+    ditto Q_custom $i
+    echo $i | grep -E -q 'italic|oblique' && x=-$(( $shape / 13 )) || x=$(( $shape / 10 ))
+    Q_offset  # offset dependencies
+    fontforge --script /tmp/fontforge:Q_offset.script $i
+  done
+}
+
+# wide cell width punctuation emdash and ellipsis (both are same extended proportional width)
+punctuation() {
+  width=$(percent $emdash)
+  confirm "${emdash}x width emdash"
+  
+  echo "
+Open(\$1);
+Select(0u2014);
+Transform($width,0,0,100,0,0);
+Select(0u2026);
+Transform($width,0,0,$width,0,0);
+ChangeWeight(-40);
+Move(0,-18);
+Generate(\$1);
+" >/tmp/fontforge:punctuation.script
+
+  for i in *.ttf ;do
+    ditto emdash $i
+    fontforge --script /tmp/fontforge:punctuation.script $i
+  done
+}
+
+# double width ligatures
+explode() {
+  if [ $shape ] ;then
+    # explode monospace ligature
+    echo "
+Select($2);
+CopyReference();
+Select($1);
+Paste();
+Select($3);
+CopyReference();
+Select($1);
+PasteWithOffset($shape,0);
+RemoveOverlap();
+Select($4);
+CopyReference();
+Select($1);
+PasteWithOffset($5,$6);
+RemoveOverlap();
+SetWidth($(( $shape * 2 )));
+"
+  else
+    # stretch proportional ligature
+    echo "
+Select($1);
+Transform(${width:-200},0,0,100,0,0);
+ChangeWeight(-15);
+"
+  fi
+}
+
+ligature() {
+  confirm 'add exploded double width ligatures'
+  grep -q '^cap =' $REPO/private-build-plans.toml && adjust=21 || adjust=0  # cap extended adjustment
+  echo "
+Open(\$1);
+$(explode 0u00e6 0u0061 0u0065 0u0335 $(( ${shape:-0} / 2 * 3 + 10 )) 0)
+$(explode 0u0152 0u004f 0u0045 0u0335 $(( ${shape:-0} / 2 * 3 + 10 )) $(( 118 + $adjust )) )
+$(explode 0u0153 0u006f 0u0065 0u0335 $(( ${shape:-0} / 2 * 3 + 10 )) 0)
+$(explode 0u01fc 0u0041 0u0045 0u0301 $(( ${shape:-0} / 2 * 3 )) $(( 208 + $adjust )) )
+$(explode 0u01fd 0u0061 0u0065 0u0301 $(( ${shape:-0} / 2 * 3 )) 0)
+Generate(\$1);
+" >/tmp/fontforge:ligature.script
+
+  for i in *.ttf ;do
+    ditto ligature $i
+    fontforge --script /tmp/fontforge:ligature.script $i
+  done
+}
+
+# descending glyphs
+
+baseline() {
+  confirm "baseline"
+  # [ $shape -eq 600 ] && xshift=-253 || xshift=-242  # if 100% width
+  [ $shape -eq 600 ] && xshift=-2 || xshift=-1
+  echo "
+Open(\$1);
+Select(0u007c);
+CopyReference();
+Select(0u0001);             # temporary cell to avoid modifying original glyph
+Paste();
+Select(0u0001);
+# Transform(2,0,0,1,0,0);   # test position
+Transform(0.0001,0,0,0.0001,0,0);
+CopyReference();
+SelectGlyphsSplines();
+SelectFewer(0u0001);
+PasteWithOffset($xshift,$(( $Yshift - 37)));
+Select(0u0001);
+Clear();
+Generate(\$1);
+" >/tmp/fontforge:baseline.script
+
+  for i in $(regular) ;do
+    ditto baseline $i
+    fontforge --script /tmp/fontforge:baseline.script $i
+  done
+
+  # do similar for italics (though, appears to be unnecessary)
+  xshift=$(( $xshift + $Xshift ))
+  echo "
+Open(\$1);
+Select(0u007c);
+CopyReference();
+Select(0u0001);             # temporary cell to avoid modifying original glyph
+Paste();
+Select(0u0001);
+Transform(0.0001,0,0,0.0001,0,0);
+CopyReference();
+SelectGlyphsSplines();
+SelectFewer(0u0001);
+PasteWithOffset($xshift,$(( $Yshift - 37)));
+Select(0u0001);
+Clear();
+Generate(\$1);
+" >/tmp/fontforge:baseline:italic.script
+
+  for i in $(italic) ;do
+    ditto baseline:italic $i
+    fontforge --script /tmp/fontforge:baseline:italic.script $i
+  done
+}
+
+descender() {
+  # create regular descender
+  confirm "$1"
+  echo "
+Open(\$1);
+Select(0u007c);
+CopyReference();
+Select(0u0001);  # temporary cell to avoid modifying original glyph
+Paste();
+Select(0u0001);
+CopyReference();
+Transform(100,0,0,$Yshrink,0,0);
+Select($2);
+PasteWithOffset($3,$4);
+RemoveOverlap();
+Select(0u0001);
+Clear();
+Generate(\$1);
+" >/tmp/fontforge:descender.script
+
+  for i in $(regular) ;do
+    ditto $1 $i
+    fontforge --script /tmp/fontforge:descender.script $i
+  done
+
+  # italicize descender from regular glyph and shift to left of cell
+  echo "
+Open(\$2);
+Select($2);
+Italic($ANGLE);
+Copy();
+Open(\$1);
+Select($2);
+Paste();
+Move($Xshift,0);  # adjust for italic side bearing shift towards left 
+SetWidth($shape);
+Generate(\$1);
+" >/tmp/fontforge:descender:italic.script
+
+  for i in $(italic) ;do
+    ditto $1:italic $i
+    echo $i | grep -q '[-]italic.ttf' && regular=${i%italic*}regular.ttf || regular=${i%italic*}.ttf
+    fontforge --script /tmp/fontforge:descender:italic.script $i $regular
+  done
+}
+
+I_descending() {
+  descender I_descending '0u0049' 0 $Yshift
+}
+
+T_descending() {
+  descender T_descending '0u0054' 0 $Yshift
+}
+
+t_descending() {
+  descender t_descending '0u0074' 0 $yshift  # f descender depth
+}
+
+Y_descending() {
+  descender Y_descending '0u0059' 0 $Yshift
+}
+
+FP_descending() {
+  descender F_descending '0u0046' -162 $Yshift
+  descender P_descending '0u0050' -176 $Yshift
+}
+
+Q_horizontal() {
+  confirm 'extend horizontal Q'
+  echo "
+Open(\$1);
+$(overlay 0u0051 0u0335 $(( $shape / 4 * 5 )) -225)
+Generate(\$1);
+" >/tmp/fontforge:Q_horizontal.script
+
+  for i in *.ttf ;do
+    ditto Q_horizontal $i
+    fontforge --script /tmp/fontforge:Q_horizontal.script $i
+  done
+}
+
+# set book weights as regular (for kindle use with bold weights)
+regularweight() {
+  echo "
+Open(\$2);
+Select($1);
+Copy();
+Open(\$1);
+Select($1);
+Paste();
+Generate(\$1);
+"
+}
+
+weight() {
+  confirm "set $regular weights as regular"
+  rm -f *\#1.ttf
+  rm -f *.ttx
+
+  # bold **must** be converted too
+  fonts="*-$regular *-${regular}italic *-bold *-bolditalic"
+
+  # dump to ttx
+  for i in $fonts ;do
+    file=$i.ttf
+    ditto ttx $file
+    ttx $file
+  done
+
+  # assign book weights as regular (normal)
+  family=${FONT##*/}
+  sed -i -e "s/$family ${regular} Version/$family Regular Version/i"       \
+      -e "s/$family[ -]${regular}/$family/i"                               \
+      -e "s/${regular}/Regular/i"                                          \
+      *-${regular}.ttx 
+
+  sed -i -e "s/$family ${regular} Italic Version/$family Italic Version/i" \
+      -e "s/$family[ -]${regular}/$family/i"                               \
+      -e "s/${regular} Italic/Italic/i"                                    \
+      *-${regular}italic.ttx 
+
+  # generate new ttf
+  for i in $fonts ;do
+    file=$i.ttx
+    ditto ttf $file
+    ttx $file
+  done
+  rm -f *.ttx
+
+  if [ $adjust ] ;then
+  # optically adjust M W w (to regular weight to narrow stroke width for better small font contrast match)
+    echo "
+$(regularweight 0u004d)
+$(regularweight 0u0057)
+$(reglarweight 0u0077)
+" >/tmp/fontforge:weight.script
+
+    echo
+    for i in *${regular}*\#1.ttf ;do
+      ditto tweak_MWw $i
+      case $i in
+        *italic*) file=*-italic.ttf ;;
+        *       ) file=*regular.ttf ;;
+      esac
+      fontforge --script /tmp/fontforge:weight.script $i $file
+    done
+  fi
+
+  for i in $(find . -iname '*#1.ttf') ;do ditto weight "$(mv -v $i ${i%#1.ttf}.ttf | cut -d"'" -f4 | sed 's|.*/||')" ;done
+}
+
+# double cell width space
+space() {
+  if [ $space = "M" ] ;then
+    confirm '"M" width space character'
+    echo "
+Open(\$1);
+Select(0u004d);
+w = GlyphInfo('Width');
+Select(0u0020);
+SetWidth(w);
+Generate(\$1);
+" >/tmp/fontforge:space.script
+  else
+    width=$(percent $space)
+    confirm "${space}x width space character"
+    echo "
+Open(\$1);
+Select(0u0020);
+Transform($width,0,0,100,0,0);
+Generate(\$1);
+" >/tmp/fontforge:space.script
+  fi
+
+  for i in *.ttf ;do
+    ditto space $i
+    fontforge --script /tmp/fontforge:space.script $i
+  done
+}
+
+copy() {
+  confirm "copy $family to $alias"
+  rm -f $family*.ttx
+  rm -f $alias*.ttf
+
+  # dump to ttx
+  for i in $family*.ttf ;do
+    ditto ttx $i
+    ttx $i
+  done
+
+  # new alias
+  for i in $family*.ttx ;do
+    sed "s/$family/$alias/" $i >$alias${i#$family}
+  done
+
+  # generate new ttf
+  for i in $alias*.ttx ;do
+    ditto ttf $i
+    ttx $i
+  done
+  rm -f *.ttx
+}
+
+# map glyph
+map() {
+  confirm "map $from to $to"
+  echo "
+Open(\$1);
+$(replace 0u$to 0u$from)
+Generate(\$1);
+" >/tmp/fontforge:map.script
+
+  for i in $family.ttf ;do
+    ditto map $i
+    fontforge --script /tmp/fontforge:map.script $i
+  done
+}
+
+# main, see iosevka
+fforge=$1
+case $1 in
+  baseline     ) shape=$2; shift ;;
+  I_descending ) shape=$2; shift ;;
+  T_descending ) shape=$2; shift ;;
+  t_descending ) shape=$2; shift ;;
+  Y_descending ) shape=$2; shift ;;
+  FP_descending) shape=$2; shift; ;;
+  q_hook       ) ;;
+  Q_hook       ) ;;
+  Q_horizontal ) shape=$2; shift ;;
+  Q_custom     ) shape=$2; shift ;;
+  ligature     ) [ $4 ] && { width=$2; shift 2; } || { shape=$2; shift; } ;;               # see iosevka for tricky bits
+  punctuation  ) emdash=$2; shape=$3; shift 2 ;;
+  space        ) [ $2 ] && { space=$2; shift; } || space=2 ;;
+  *weight      ) regular=${1%weight}; fforge=weight; [ "$2" = 'book+regular' ] && { adjust=true; shift; } ;;
+  copy         ) [ $3 ] && { family=$2; alias=$3; shift 2; copy; exit; }      || usage ;;  # pwd commandline only!
+  map          ) [ $4 ] && { family=$2; from=$3; to=$4; shift 3; map; exit; } || usage ;;  # pwd commandline only!
+  *            ) usage ;;
+esac
+shift
+[ $2 ] && usage
+
+FONT=$HOME/.fonts/${1:-Iosevka}
+[ $shape ] && HAlF=$(( $shape / 2 ))  # half cell width (see punctuation)
+cd $FONT || usage
+
+$fforge
+
+rm -f *.ttx
+
+# vim: set ft=sh: #

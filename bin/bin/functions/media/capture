@@ -1,0 +1,18 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Media
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................. Media player
+
+# record media
+destination=/net/media
+video=$@
+video=${video##*/}
+
+notify low 'Starting Recording' "$video"
+mpv --no-resume-playback --stream-dump="$destination/$video" "$@" >/dev/null 2>&1
+notify low 'Finished Recording' "$video""
+
+# vim: set ft=sh: #

@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................ Random chance
+
+usage() { echo "usage: $(basename $0) <number>"; exit 1; }
+
+[ $1 ] || usage
+
+[ $(expr $(hexdump -n 2 -e '/2 "%u"' /dev/random) % $1 = 0) -eq 1 ]
+
+# vim: set ft=sh: #

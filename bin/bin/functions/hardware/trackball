@@ -1,0 +1,19 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Hardware
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ Mouse
+
+# set trackball sensitivity
+xinput --set-prop 'Logitech USB Trackball' 'Device Accel Velocity Scaling' 8.0
+xinput --set-prop 'Logitech USB Trackball' 'Device Accel Constant Deceleration' 0.5
+xinput --set-prop 'Logitech USB Trackball' 'Device Accel Adaptive Deceleration' 1.5
+xinput --set-button-map 'Logitech USB Trackball' 1 2 3 4 5 6 7 8 9
+xinput set-prop 'Logitech USB Trackball'  'Evdev Wheel Emulation Axes' 6 7 4 5
+xinput set-prop 'Logitech USB Trackball'  'Evdev Wheel Emulation' 1
+xinput set-prop 'Logitech USB Trackball'  'Evdev Wheel Emulation Button' 8
+xinput set-prop 'Logitech USB Trackball'  'Evdev Middle Button Emulation' 1
+
+# vim: set ft=sh: #

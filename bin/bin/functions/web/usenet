@@ -1,0 +1,21 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Web
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................... Newsgroups
+
+usage() { echo "usage: $(basename $0) 'start | f'orce | I'nitialize"; exit 1; }
+
+# reader
+host=$(grep '^nnrpaccess' $HOME/.slrnrc | awk '{ print $2 }' | sed 's/"//g')
+
+case $i in
+  '') pstat slrn || exec slrn -h $host ;;
+  f*) killall slrn 2>/dev/null; usenet ;;
+  I*) slrn -h $host --create; slrn -h $host -d; usenet ;;
+  * ) usage ;;
+esac
+
+# vim: set ft=sh: #

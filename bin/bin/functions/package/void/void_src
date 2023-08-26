@@ -1,0 +1,21 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................ Void src repo
+
+[ -d /net/depot/void-packages ] || {
+  cd /net/depot
+  git clone --depth 1 https://github.com/void-linux/void-packages.git
+  cd void-packages
+  ./xbps-src binary-bootstrap
+  cd /usr/bin
+  echo XBPS_CHROOT_CMD=uchroot | sudo tee -a etc/conf
+  chown root:xbuilder xbps-uchroot
+  chmod 4750 xbps-uchroot
+  usermod -a -G xbuilder $USER
+}
+
+# vim: set ft=sh: #

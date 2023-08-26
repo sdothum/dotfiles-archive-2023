@@ -1,0 +1,12 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Hardware
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... Keyboard
+
+# enlarge left shift key (effective size) with acer netbook (extra) backslash key
+[ -e /etc/X11/Xmodmap ] && xmodmap /etc/X11/Xmodmap
+
+# vim: set ft=sh: #

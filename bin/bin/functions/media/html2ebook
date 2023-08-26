@@ -1,0 +1,24 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Media
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ ebook
+
+usage() { echo "usage: $(basename $0) <stow> <title> <author> [<format>]"; exit 1; }
+
+format=${4:-azw3}
+
+[ $# -lt 3 ] || usage
+htmlz=$(ls $STOW/$1/*.htmlz)
+[ -e "$htmlz" ] || usage
+
+kindle=/run/media/$USER/Kindle
+[ -d $kindle ] && sudo mount -o remount,rw $(mount | grep $kindle | cut -d' ' -f1) $kindle
+
+ebook-convert $htmlz "$kindle/documents/$2 - $3.$format" --chapter '//h:h2' --page-breaks-before '//h:h2' \
+              --title "$2" --authors "$3"
+sync
+
+# vim: set ft=sh: #

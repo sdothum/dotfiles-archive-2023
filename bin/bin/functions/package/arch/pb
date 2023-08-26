@@ -1,0 +1,21 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Package management
+
+# when pa/pacaur fails on aur packages
+wrappaur=$(aurwrapper)
+
+sudo pacman -Sy
+$wrappaur -Qu
+ifyes 'upgrade system' || exit
+
+for i in $($wrappaur -Qu | nocolor | awk '{ print $3 }') ;do
+  heading $i
+  $wrappaur -S $i
+done
+
+# vim: set ft=sh: #

@@ -1,0 +1,23 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# File
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... Rename
+
+usage() { echo "usage: $(basename $0) filename"; exit 1; }
+
+[ $1 ] || usage
+
+# rename current file/folder with parent (directory) name
+parent=$(dirname $@)
+file=$(basename $parent)
+
+# if renaming file, preserve extension
+[ -e $@ ] && ext=$(echo $@ | awk -F . '{ print $NF }')
+
+echo "$@ :: $parent/$file.$ext"
+mv $@ $parent/$file.$ext
+
+# vim: set ft=sh: #

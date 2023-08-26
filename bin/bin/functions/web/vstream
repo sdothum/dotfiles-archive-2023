@@ -1,0 +1,52 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Web
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... Browser
+
+usage() { echo "usage: $(basename $0)  dust | netflix | prime"; exit 0; }
+
+BROWSER=firefox
+BROWSER=chromium-browser          # alpine
+options='-s statusbar.hide true'  # see web/qutebrowser
+delay=1
+
+case $1 in
+    dust   ) SERVICE='https://www.youtube.com/c/watchdust/videos' ;;
+    iai    ) SERVICE='https://www.youtube.com/c/TheInstituteOfArtAndIdeas/videos' ;;
+    netflix) SERVICE='http://www.netflix.com/ca'; BROWSER=google-chrome ;;
+    prime  ) SERVICE='primevideo.com'; BROWSER=google-chrome ;;
+    *      ) usage ;;
+esac
+
+pkill -f $BROWSER 2>/dev/null
+# void && pulseaudio --start --log-target=syslog  # browser doesn't autostart pulseaudio
+void && pulse
+videomode on
+# is display -1920 && draw layout max || { is display -=2560 && draw layout 2:3 || draw layout spread; }
+
+if [ $BROWSER = chromium ] || [ $BROWSER = google-chrome ] ;then
+  RUNOPT=$options $BROWSER $SERVICE &
+  xsync class "$BROWSER"
+  xdotool key Alt+Shift+s  # set right full "window"
+  sleep $delay
+  xdotool key F11
+  sleep $delay
+  xdotool key Alt+space
+elif [ $BROWSER = firefox ] ;then
+  $BROWSER $SERVICE &
+  sleep 4
+  xsync class 'Firefox'
+  xdotool key Alt+Shift+s  # set right full "window"
+  sleep $delay
+  xdotool key Control+Shift+period
+  switch layout max
+fi
+herbstclient shift_edge right
+pwait "$SERVICE"
+
+videomode off
+
+# vim: set ft=sh: #

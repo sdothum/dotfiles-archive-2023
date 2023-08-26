@@ -1,0 +1,138 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Sysadmin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................... Init service wrapper
+
+openrc() {
+  usage() {
+    echo "usage: $(basename $0) [add | delete | show | start | stop | restart | status | list] <service> [runlevel]"
+    exit 1
+  }
+
+  sv() { eval doas rc-update  $1 $2 $3; }
+  rc() { eval doas rc-service $1 $2 $3; }
+
+  # configure openrc daemon
+  case $1 in
+    ''     ) sv show; usage                 ;;
+    add    ) sv add $2 $3                   ;;
+    delete ) sv delete $2 $3                ;;
+    show   ) sv show                        ;;
+    start  ) rc $2 start                    ;;
+    restart) rc $2 stop; doas killall -q $2; rc $2 start ;; 
+    stop   ) rc $2 stop; doas killall -q $2 ;;  # kill dangling daemons
+    status ) rc $2 status                   ;;
+    list   ) rc --list | column; usage      ;;
+    *      ) [ $2 ] && usage || rc $1 status || usage ;;
+  esac
+  exit
+}
+
+runit() {
+  usage() {
+    echo "usage: $(basename $0) [UP | [status | disable | enable | up | down | restart | mask] <service>]"
+    exit 1
+  }
+
+  check()   { [ $service ] && [ -e /etc/sv/$service ] || usage; }
+  enabled() { [ -L /var/service/$service ]; }
+  status()  { sleep 1; enabled && sudo sv status $service || ditto service "$service unavailable"; }
+
+  service=$2
+  case $1 in
+    ''     ) ls /etc/sv; exit ;;
+    UP     ) ls /var/service; sudo find /etc/sv -name down; exit ;;  # running services
+    disable) check ;;
+    down   ) check ;;
+    stop   ) check ;;  # alias
+    enable ) check ;;
+    mask   ) check ;;
+    restart) check ;;
+    status ) check ;;
+    up     ) check ;;
+    start  ) check ;;  # alias
+    *      ) service=$1; check; cat /etc/sv/$service/run; underline ;;
+  esac
+
+  # configure runit daemon
+  case $1 in
+    disable) sudo rm -fv /var/service/$service ;;
+    stop   |\
+    down   ) enabled && sudo sv down $service; status ;;
+    enable ) sudo ln -sfv /etc/sv/$service /var/service/; sudo rm -f /etc/sv/$service/down; status ;;
+    mask   ) enabled && sudo touch /etc/sv/$service/down; status ;;  # down at boot
+    restart) enabled && sudo sv restart $service || service enable $service; status ;;
+    status ) status ;;
+    start  |\
+    up     ) enabled && sudo sv up $service; status ;;
+    *      ) enabled && status || usage ;;
+  esac
+  exit
+}
+
+s6() {
+  usage() {
+    echo "usage: $(basename $0) [info | disable | enable | start | stop | restart | toggle] <service>"
+    exit 1
+  }
+
+  sv() { eval sudo 66-$1 $2 $3; }
+
+  # configure s6 daemon
+  case $1 in
+    ''     ) usage ;;
+    disable) sv disable -S $2 ;;
+    enable ) sv enable -S $2 ;;
+    info   ) ;;
+    restart) sv stop $2; sv start $2 ;;
+    up     |\
+    start  ) sv start $2 ;;
+    status ) ;;
+    down   |\
+    stop   ) sv stop $2 ;;
+    toggle ) sv info -S $2 | grep -v 'Enabled, up' && sv stop $2 || sv start $2 ;;
+    *      ) [ $# -eq 1 ] || usage ;;
+  esac
+
+  sv info -S ${2:-$1}
+  exit
+}
+
+systemd() {
+  usage() {
+    echo "usage: $(basename $0) [status | disable | enable | start | stop | restart | toggle | [-f] mask | unmask | reload] <service>"
+    exit 1
+  }
+
+  sv() { eval sudo systemctl $@; }
+
+  # configure systemd daemon
+  [ "$1" = '-f' ] && { force=true; shift; }
+  case $1 in
+    ''     ) usage ;;
+    disable) sv disable $2; sv stop $2 ;;
+    enable ) sv enable $2; sv start $2 ;;
+    info   ) ;;
+    mask   ) [ $force ] || { ifno "mask $2" && exit || true; } && sv mask $2; exit ;;
+    reload ) sv daemon-reload; exit ;;
+    restart) sv restart $2 ;;
+    up     |\
+    start  ) sv start $2 ;;
+    status ) ;;
+    down   |\
+    stop   ) sv stop $2 ;;
+    toggle ) sv status $2 >/dev/null 2>&1 && sv stop $2 || sv start $2 2>/dev/null ;;
+    unmask ) sv unmask $2; exit ;;
+    *      ) [ $# -eq 1 ] || usage ;;
+  esac
+
+  sv --no-pager status ${2:-$1}
+  exit
+}
+
+exists openrc && openrc $@ || exists runit && runit $@ || exists s6 && s6 $@ || systemd $@
+
+# vim: set ft=sh: #

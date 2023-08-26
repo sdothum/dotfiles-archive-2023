@@ -1,0 +1,164 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................... Distribution install
+
+# Usage: bundle_install [alpine | check | init | list] <bundle>*
+#
+# format: [<action>] <package> [<condition>] [#<comment>] 
+#         # comment
+#         = title
+#         " quote
+#         + package                    (to manually install afterwards)
+#         - package        [condition] (to remove)
+#         ? package        [condition] (confirm)
+#           package        [condition] (noconfirm)
+#         @ aur            [condition] (aur makepkg)
+#         a arm            [condition] (aur makepkg for raspberry pi)
+#         d action package [condition] (deferred install)
+#         g gem            [<version>] (gem_install)
+#         m make           [condition] (make_install)
+#         p make           [condition] (pkg_install)
+#         s source         [condition] (xbps-src)
+#         ! command        [options]   (execute)
+#
+#         where, condition = [command] or [[[expression]]] as short form for test
+#                     e.g. package [[[ $(hostname) = server ]]]
+#                make script may contain options with double backslashes
+#                     e.g. m iosevka\\ amphetype [server]
+#                use '\' as default (space) action placeholder for deferred rule
+#                     e.g. d \ package [condition]
+
+[ $1 ] || exit
+console && export VISUAL='vim -f'
+unset HTTP_PROXY      # ignore local network proxy
+
+# distro package manager
+if exists pacman ;then
+  INSTALL=pm_install    # arch
+  QUERY='pacman -Q'
+else
+  INSTALL='xb_install'  # void
+  QUERY='xbps-query -S'
+fi
+
+case $1 in
+  alpine) check=true; alpine=true;                      shift ;;
+  check ) check=true; gems=$(gem list | cut -d' ' -f1); shift ;;
+  list  ) list=true;                                    shift ;;
+  init  ) init=--init;                                  shift ;;
+esac
+
+echo $1 | grep -q '/' && BDIR=${1%/*} || BDIR=.
+deferred=$BDIR/900-deferred
+missing=$BDIR/910-missing
+[ $check ] && rm -f $missing
+echo $@ | grep -q 900-deferred && unset deferred || {
+  [ $list ] || [ $alpine ] || { [ -e $deferred ] && { ifno 'clear last defer bundle' || rm $deferred; } }
+}
+
+rule() { echo "$@" | sed 's/\[//; s/\]//' || echo true; }
+
+# bundle file -> [<action>] <package> [<condition>]
+parse() {
+  case $action in
+    ''       ) return 1 ;;
+    '#'      ) return 1 ;;
+    '='      ) [ $list ] || { echo $package | grep -q '^[[:alpha:]]' && title "$package $condition"; }; return 1 ;;
+    '"'      ) [ $check ] || ditto "$package $condition";                                               return 1 ;;
+    '!'      ) [ $check ] || $package $condition;                                                       return 1 ;;
+    '+'      ) [ $list ] || { [ -z $check ] && { heading "[ Manual install required.. ]  $package";     return 1; } } ;;
+    d        ) rule=true ;;
+    g        ) version=$condition ;;
+    [-?@amps]) rule=$(rule "$condition") ;;
+  
+    *        ) set -- $package $condition
+               package=$action
+               condition=$@
+               rule=$(rule "$condition") ;;
+  esac
+  return 0
+}
+
+check() {
+  # check deferred actions
+  [ $action = d ] && [ "${package#?}" = '' ] && { action=$package; package=${condition%% *}; condition=${condition#* }; }
+  unset installed
+  if [ $alpine ] ;then
+    package=$(echo $package | sed 's/^python3-/py3-/; s/-devel$/-dev/')  # prefix/suffix name mapping
+    curl --silent "https://pkgs.alpinelinux.org/packages?name=$package&branch=edge&repo=main&arch=x86_64&maintainer=" 2>/dev/null | grep -q "No item found..." && 
+    curl --silent "https://pkgs.alpinelinux.org/packages?name=$package&branch=edge&repo=community&arch=x86_64&maintainer=" 2>/dev/null | grep -q "No item found..." && 
+    ditto ERROR "${RED}!match" $package || ditto alpine $package
+    return
+  fi
+  set -- $action $package $condition
+  action=$1;              shift
+  package=$1; [ "$1" ] && shift
+  condition=$@
+  parse || return
+  [ "$package" = "$action" ] && unset action
+  [ "$package" = "$condition" ] && unset condition
+
+  case $action in
+    '-') return ;;
+    '"') return ;;
+    g  ) echo "$gems" | grep -q "^$package$" && installed=true ;;
+    m  ) ;;  # cannot verify a make_install
+    *  ) $QUERY $package >/dev/null 2>&1 && installed=true ;;
+  esac
+
+  [ $installed ] && echo $package || { echo $line >>$missing ; ditto ERROR missing "$package"; }
+}
+
+decomment() { echo "$@" | sed 's/#.*//'; }
+
+for i in $@ ;do
+  [ $list ] || subject $(basename $i | cut -d- -f2-9)
+
+  # preserve stdin fd for package manager prompts
+  # Note: (action package) map to (package condition) for default noconfirm install
+  #       (package condition) map to (command options) for ! execute
+  while read action package condition <&3 ;do
+    # echo "action=$action package=$package condition=$condition"
+    [ "$package" = '#' ] && unset package condition || condition=$(decomment $condition)
+    line="$action $package $condition"
+    parse || continue
+
+    [ $list ] && { echo "$action $package $condition" | sed -r '/^d "/d; s/^([-?*@"adgm] )*//; s/ *([^ ]*).*/\1/'; continue; }
+    [ $alpine ] || { eval $rule || continue; }
+    [ $check ] && { check; continue; }
+
+    # package management
+    case $action in
+      '-') heading "--Uninstalling--  $package"; pm R $package ;;
+      '?') $INSTALL --confirm $package ;;
+      '@') aur_install $package ;;
+      a  ) arm_install $package ;;
+      d  ) echo "$package $condition" >>$deferred ;;
+      g  ) gem_install $package $version ;;
+      m  ) make_install $package ;;
+      p  ) pkg_install $package ;;
+      s  ) src_install $package ;;
+      *  ) $INSTALL $init $package ;;
+    esac
+  done 3< $i
+done
+
+[ $list ] || [ $alpine ] && exit
+if [ $check ] && [ -e $missing ] ;then
+  # sort -u -o $missing $missing
+  sed -i 's/^d //' $missing
+  ditto ERROR missing "$(wc -l $missing | cut -d' ' -f1) packages"
+  cat $missing
+  ditto INFO "m make_install packages cannot be verified"
+  ifno "bundle_install $missing" || exec bundle_install $missing
+elif [ $deferred ] && [ -e $deferred ] ;then
+  # sort -u -o $deferred $deferred
+  cat $deferred
+  ifno "bundle_install $deferred" || exec bundle_install $deferred
+fi
+
+# vim: set ft=sh: 

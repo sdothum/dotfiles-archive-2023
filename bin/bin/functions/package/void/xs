@@ -1,0 +1,12 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Package management
+
+# xbps fuzzy search with preview window
+xpkg -a | fZf -m --preview \'xq {1}\'  --preview-window=right:66%:wrap | xargs -ro xi
+
+# vim: set ft=sh: #

@@ -1,0 +1,19 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................. AUR install
+
+package=$@
+heading : $package
+cd /tmp
+trap "sudo rm -r /tmp/$package*" EXIT
+
+git clone https://aur.archlinux.org/$package.git
+cd $package
+makepkg -s
+sudo pacman -U --noconfirm $package*pkg.tar.xz
+
+# vim: set ft=sh: #

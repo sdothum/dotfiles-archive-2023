@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... Fortunes
+
+# preselect default fortune database
+# fortune=chucknorris 
+arch && fortune=all 
+
+# strip off utf-8 characters
+/usr/bin/fortune $fortune | ascii
+
+# vim: set ft=sh: #

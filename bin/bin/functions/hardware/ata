@@ -1,0 +1,37 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Hardware
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... Device
+
+# list ata device number mapping
+# lifted from http://serverfault.com/questions/244944/linux-ata-errors-translating-to-a-device-name
+
+# save original IFS
+OLDIFS=$IFS
+for i in /sys/block/s* ;do
+  readlink $i |
+      sed -e 's^\.\./devices^/sys/devices^' \
+          -e 's^/host[0-9]\{1,2\}/target^ ^' \
+          -e 's^/[0-9]\{1,2\}\(:[0-9]\)\{3\}/block/^ ^' |
+      while IFS=' ' read Path HostFull ID ;do
+        count=0
+        IFS=:
+        for i in $HostFull ;do
+          count=$(( $count + 1 ))
+          eval host$count=$i
+        done
+
+        if echo $Path | grep -q '/usb[0-9]*/' ;then
+          echo "$ID:  =>  is not an ATA device but a USB device e.g. a pen drive.."
+        else
+          echo $ID: ata$(cat "$Path/host$host1/scsi_host/host$host1/unique_id").$host2$host3
+        fi
+      done
+done
+# restore original IFS
+IFS=$OLDIFS
+
+# vim: set ft=sh: #

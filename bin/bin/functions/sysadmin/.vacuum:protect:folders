@@ -1,0 +1,43 @@
+#
+# user / project directories
+#
+  adblock
+  attachments
+  bin
+  .cache
+  .config
+  build
+  Desktop
+  documents
+  downloads
+  drafts
+  .fonts
+  .gem
+  .icons
+  images
+  .local
+  .local/bin
+  .local/lib
+  .local/share
+  .local/tmp
+  log
+  Maildir
+  media
+  .molecule
+  music
+  notes
+  .password-store
+  qmk_firmware
+  .reminders
+  sandbox
+  scratch
+  .session
+  .ssh
+  stow
+  thedarnedestthing.com
+  .themes
+  .thumbnails
+  tmp
+  .todo
+  tt-rss
+  vimwiki

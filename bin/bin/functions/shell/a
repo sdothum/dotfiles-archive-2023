@@ -1,0 +1,18 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... Search
+
+usage() { echo "usage: $(basename $0) [-w] <regex>"; exit 1; }
+
+[ "$1"      ] || usage
+[ "$1" = -w ] && { w=-w; shift; }
+
+# see .agignore and al
+ag --color --color-path='1;32' --color-line-number='1;37' --color-match='1;33' \
+   --nobreak --noheading --smart-case --follow --hidden --skip-vcs-ignores $AG $w "$@"
+
+# vim: set ft=sh: #

@@ -1,0 +1,14 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Hardware
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Raspberry pi clock
+
+# sync clockless arm
+sudo systemctl stop ntpd
+sudo ntpd -q -g 2>/dev/null
+sudo systemctl start ntpd
+
+# vim: set ft=sh: #

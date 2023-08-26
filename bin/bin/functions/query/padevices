@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Query
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ Audio
+
+# what we got here?
+underline Sources
+pactl list | grep -A2 'Source #' | grep 'Name: ' | cut -d' ' -f2
+underline Sinks
+pactl list | grep -A2 'Sink #' | grep 'Name: ' | cut -d' ' -f2
+
+# vim: set ft=sh: #

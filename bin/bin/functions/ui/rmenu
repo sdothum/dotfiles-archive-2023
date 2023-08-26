@@ -1,0 +1,160 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# UI
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................... GUI/ncurses menu wrapper
+
+# Usage: ... | rmenu '<prompt>' [['<select>' | <row>]] [<option>]*
+#              where, select - rofi select highlight
+#                     row    - rofi row highlight
+#                     option - rofi options e.g. -filter <filter> -no-custom
+#
+# Note:
+#   - Temporary ncurses mode set with variable TERMINAL, see X11/dmenu
+#   - rofi matching method can be set with env variable "matching"
+
+usage() { echo "usage: $(basename $0) '<prompt>' [['<select>' | <row>]] [<option>]*"; exit 1; }
+
+. $(which dmenu)  # to outdent X() menu options
+
+# version 1.6.x
+# unset fzf query highlight to list all
+# hilite=true
+# FONT='Iosevka-menu'
+# wbg=argb:B0000000
+# bg=argb:00000000
+# fg=argb:FFFDF6E3
+# abg=$bg
+# hbg=$bg
+# hfg=argb:FF20bbfc
+
+# version 1.7.x
+THEME=$HOME/.config/rofi/themes/rofi.theme
+font='Iosevka-menu'
+wbg='#000000B0'
+bg='#000000FF'
+fg='#FDF6E3FF'
+abg=$bg
+hbg=$bg
+hfg='#20bbfcFF'
+
+# leader left or right (prompt case Right, RIGHT, right)
+lead=Right
+leader='—————— '
+indent='     '  # for fzf
+outdent='   '
+
+# .......................................................................... GUI
+
+if [ -z $TERMINAL ] ;then
+  if gui ;then
+    display=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1)
+    is multihead && { [ $display -eq 0 ] && display=1 || display=0; }  # because of display position swap in xrandr 
+    width=$(query display width)
+  else
+    width=$(tput cols)
+  fi
+
+  # fullscreen only fills the herbstluftwm (virtual) monitor coordinates, so to
+  # fill the actual physical display area, tweak rofi padding and fontsize
+  # for 2560, 1680 (secondary), 1440, 1024 displays
+
+  # set padding and fontsize
+  padsize() {
+    # padding calculation = displaywidth / fontsize * factor
+    padding=$(( $1 / $2 * $3 ))
+    fontsize=$2
+  }
+
+  # tune padding to displaywidth / (font * factor) for current monitor resolutions in system
+  if [ $width -gt 1920 ] ;then
+    padsize $width 13 '3 / 2'
+  elif [ $width -gt 1680 ] ;then
+    padsize $width 12 '5 / 3'
+  elif [ $width -gt 1440 ] ;then
+    padsize $width 11 2
+  elif [ $width -gt 1024 ] ;then
+    padsize $width 11 '3 / 2'
+  else
+    padsize $width 11 1
+  fi
+fi
+
+# ....................................................................... Prompt
+
+if [ "$1" ] ;then
+  title=$1
+  prompt="$1  "
+  shift
+else
+  usage
+fi
+# convert prompt right to lower case
+[ $lead = left ] && prompt="${prompt}$leader   " || case $lead in
+    RIGHT) prompt="$leader $(echo "$prompt" | uppercase)" ;;
+    right) prompt="$leader $(echo "$prompt" | lowercase)" ;;
+    *    ) prompt="$leader $(echo "$prompt" | sed -r 's/([^ ]*)/\u\1/g')" ;;
+  esac
+
+
+# ....................................................................... Select
+
+if [ "$1" ] ;then
+  # if not parameter
+  if [ "${1%%-*}" != '' ] ;then
+    if echo "$1" | grep -q '^[0-9]*$' ;then
+      select="-selected-row $1"
+    else
+      # use ctrl-u to clear query and list all
+      [ $hilite ] && query=$1
+      select="-select '$1'"
+    fi
+    shift
+  fi
+fi
+
+# fzf --print-query
+parms=$@
+[ "${parms#*-no-custom}" = "$parms" ] && print=--print-query
+
+# ......................................................................... Read
+
+rofi_stub() {
+  eval PADDING=$padding                                        \
+       SPACING="${fontsize}px"                                 \
+       FONT=\"$font $fontsize\"                                \
+       BG=$bg FG=$fg WBG=$wbg                                  \
+       rofi -upgrade-config                                    \
+            -font \"$font $fontsize\"                          \
+            -matching ${matching:-fuzzy}                       \
+            -monitor -1                                        \
+            -eh 1                                              \
+            -theme $THEME                                      \
+            -theme-str "'inputbar { padding: 1.2em; }'"        \
+            -theme-str "'textbox-prompt-colon { str: \"\"; }'" \
+            -theme-str "'* { highlight: none; }'"              \
+            -dmenu -p "\"$prompt\"" -i $select                 \
+            $@
+}
+
+stdin=$(mktemp)
+trap "rm -f $stdin" EXIT
+# ... | rmenu
+sed "s/^/$indent/; s/$outdent$(X)/$(X)/" >$stdin  # cache stdin
+
+# menu UI
+if [ $display ] ;then
+  indent='          '
+  input=$(cat $stdin| rofi_stub $@)
+else
+  input=$(cat $stdin | fZf $print --prompt="\"$prompt\"" | tail -1)
+  [ -n "$input" ]  # see sh test below
+fi
+
+[ $? -ne 0 ] && exit 1
+# strip indent from input!
+echo "$input" | sed "s/^ *//"
+
+# vim: set ft=sh: #

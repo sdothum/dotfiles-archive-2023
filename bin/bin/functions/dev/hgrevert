@@ -1,0 +1,23 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Dev
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................... Commit to repo
+
+usage() { echo "usage: $(basename $0) <rev>"; exit 1; }
+
+REPO=${REPO:-$STOW}
+QUEUE=$(date '+%y%m%d%H%M%S')
+JOB=$HOME/.vim/job/$QUEUE
+
+[ $1 ] || usage
+cd $REPO
+hg revert --all --no-backup --rev $1 || usage
+hg status | grep '^[MARC] ' | sed 's/^. //' >$JOB
+
+# reusing the vim hg update mechanism
+vhg $QUEUE
+
+# vim: set ft=sh: #

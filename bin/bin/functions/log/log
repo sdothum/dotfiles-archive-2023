@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Log
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ${_colors_} defined in env
+
+# .......................................................................... Log
+
+# use -n option to suppress line break
+[ $logfile ] || export logfile=/tmp/session.log
+
+echo "$@" | tee -a $logfile 2>/dev/null  # suppress sudo log "permission denied" error 
+
+# vim: set ft=sh: #

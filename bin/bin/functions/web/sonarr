@@ -1,0 +1,18 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Web
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... Sonarr
+
+# Usage: sonarr [video], of 'anime' or 'series'
+
+BROWSER=/usr/bin/surf
+SONARR=http://$SERVER:8989
+
+[ $1 ] && page=$(dirname $1 | tr '[:upper:]' '[:lower:]' | sed -r 's/.*(anime|series)/series/; s/[.]/-/g') || page=calendar
+$BROWSER $SONARR/$page &
+pwait "$BROWSER.*$SONARR"  # see dmenu media [series]
+
+# vim: set ft=sh: #

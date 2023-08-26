@@ -1,0 +1,26 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Desktop
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ Conky
+
+# btrfs filesystem disk free stats
+usage() { echo "usage: $(basename $0) btrfs fs [decimal | percent]"; exit 1; }
+
+[ $1 ] || usage
+
+stat()    { sudo /usr/bin/btrfs filesystem usage -g $1 | grep "^ *$2" | cut -d: -f2 | cut -dG -f1; }
+decimal() { echo "$1 .05 + 1 k 1 / p" | dc; }
+percent() { echo "$1 .5 + 0 k 1 / p" | dc; }
+
+used=$(stat $1 'Used:')
+case $2 in
+  ''     ) decimal $used ;;
+  
+  percent) free=$(stat $1 'Free (estimated):')
+           capacity=$(echo "$used $free + p" | dc)
+           percent $(echo "$used 100 * $capacity / p" | dc) ;;
+esac
+
+# vim: set ft=sh: #

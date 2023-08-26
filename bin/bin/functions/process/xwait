@@ -1,0 +1,21 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Process
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... x11 wait
+
+# Usage: xwait [class | name] "<pattern>"
+
+[ "$2" ] && { attr=--${1##*-}; shift } || attr=--name
+
+cycle=0.05  # loop window
+[ $(pgrep -af "xwait.*$@" | wc -l) -gt 2 ] && exit  # don't instantiate duplicate applications
+
+# wait for uniquely named window to process to startup
+xsync $attr "$@"
+# wait for uniquely named window to close before proceeding
+while xdotool search --onlyvisible $attr "$@" >/dev/null ;do sleep $cycle ;done
+
+# vim: set ft=sh: #

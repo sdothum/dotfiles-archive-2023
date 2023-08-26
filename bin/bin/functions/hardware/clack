@@ -1,0 +1,28 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Hardware
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... Keyboard
+
+usage() { echo "usage: $(basename $0) [on | off | toggle | swap]"; exit 1; }
+
+hint() {
+    notify 'Typewriter Sounds' '↑ Super-Shift Minus\n↓ Super-Minus'
+    # confirm enter key sound :-)
+    mpg123 -o pulse /usr/share/qwertickle/typewriter-return.mp3 &
+}
+
+case $1 in
+  ''    ) ;;
+  on    ) pstat qwertickle || qwertickle & ;;
+  off   ) killall qwertickle ;;
+  toggle) pstat qwertickle && clack off || clack on ;;
+  swap  ) sudo swap /usr/share/qwertickle/typewriter-return.mp3 /usr/share/qwertickle/typewriter-return.mp3.swap ;;
+  *     ) usage ;;
+esac
+
+pstat qwertickle && hint || notify low 'Typewriter Sounds' 'Off'
+
+# vim: set ft=sh: #

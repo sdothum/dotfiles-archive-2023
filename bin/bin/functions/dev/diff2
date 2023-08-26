@@ -1,0 +1,18 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Dev
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... diff
+
+while [ $1 ] ;do
+  [ -e $1 ] && break
+  opts="$opts $1"
+  shift
+done
+
+# 2 column ouptut if any diff..
+[ $2 ] && cmp $1 $2 || /usr/bin/diff -y --color $opts $1 $2 | less -R
+
+# vim: set ft=sh: #

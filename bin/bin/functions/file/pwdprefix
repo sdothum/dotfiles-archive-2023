@@ -1,0 +1,24 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# File
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... Rename
+
+usage() { echo "usage: $(basename $0) filename [<directory>]"; exit 1; }
+
+# rename files with parent (directory) name
+# thunar custom action can pass file and directory names
+[ $1       ] || usage
+[ $# -eq 1 ] && parent=$(basename $PWD) || parent=$(basename $2)
+[ -e $1    ] && prefix=$(echo $1 | sed -r 's/(.*)\..*/\1/')
+
+echo "$prefix => $parent"
+cd $parent
+for i in $prefix* ;do
+  suffix=$(echo $i | sed "s/^$prefix//")
+  mv -i $i $parent$suffix
+done
+
+# vim: set ft=sh: #

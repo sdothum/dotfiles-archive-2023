@@ -1,0 +1,21 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... Edit
+
+# meta dmenu menu!
+edit=$(previous edit)
+edit=$(echo "projects\nscripts\nconfigs\nfiles\nfolders" | rmenu 'Edit' $edit -no-custom) || exit
+
+mhistory edit $edit
+case $edit in
+  projects) dmenu projects ;;
+  scripts ) dmenu scripts ;;
+  configs ) dmenu configs ;;
+  files   ) dmenu files ;;
+  folders ) dmenu folders ;;
+esac
+
+# vim: set ft=sh: #

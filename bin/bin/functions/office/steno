@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................... Steno practice
+
+pstat plover.AppImage && notify keyboard 'enable steno layer' || { notify steno 'start plover'; exit; }
+file=$(mktemp /tmp/steno.XXX)
+vim -g -f -c 'set filetype=steno' $file
+rm -f $file
+notify keyboard 'exit steno layer'
+
+# vim: set ft=sh: #

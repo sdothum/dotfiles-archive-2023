@@ -1,0 +1,13 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................... Random number generator
+
+# Usage: rand [<width>]
+
+cat /dev/urandom | tr -dc 0-9 | fold -w${1:-5} | head -1 | sed 's/^0*//'
+
+# vim: set ft=sh: #

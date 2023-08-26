@@ -1,0 +1,17 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# UI
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ${COLORS} defined in env
+
+# ....................................................................... Prompt
+
+# standardized terminal prompt
+[ $1 ] && cue="$@" || cue="to continue"
+echo
+echo "${YELLOW}━━━━━━━━━  Press [enter] $cue  ━━━━━━━━━${NOCOLOR}\n"
+read CONTINUE
+
+# vim: set ft=sh: #

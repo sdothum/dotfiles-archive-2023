@@ -1,0 +1,52 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .......................................................... the darnedest thing
+
+# convert vimwiki headers and bold/italics to viki highlighting (see vim config)
+# note necessary changes to thedarnedestthing.com/application markup conversion
+
+NONWORD='[^a-zA-Z0-9*]'
+# regex \w doesn't expand well as passed parameter (messy backslash escaping required)
+W='[a-zA-Z0-9]'
+
+[ $1      ] && dir=$1 || dir=$PWD
+[ -d $dir ] || exit 1
+ifno "convert $dir" && check=true
+wikis=$(mktemp)
+trap "rm -f $wikis" EXIT
+[ $check ] && find -L $dir -name '*wiki' | grep -E -v '\.deprecated|diary' >$wikis ||
+  find -L $dir -name '*wiki' | grep -v '\.deprecated' >$wikis
+
+gs() {
+  action=$(grep -E "$(echo "$1" | sed -r 's,.*s/([^/]*)/.*,\1,')" "$wiki" | sed -r "$1")
+  [ "$action" ] || return
+  ditto -- "$1"
+  echo "$action"
+  [ $check ] || sed -i -r "$1" "$wiki"
+}
+
+while read wiki <&3 ;do
+  [ -d "$wiki" ] && continue
+  heading "$wiki"
+  gs "s/^[*][*]($W)/__\1/g"
+  gs "s/($NONWORD)[*][*]($W)/\1__\2/g"
+  gs "s/($W)[*][*]($NONWORD)/\1__\2/g"
+  gs "s/($W)[*][*]$/\1__/g"
+  gs "s/^[*]($W)/''\1/g"
+  gs "s/($NONWORD)[*]($W)/\1''\2/g"
+  gs "s/($W)[*]($NONWORD)/\1''\2/g"
+  gs "s/($W)[*]$/\1''/g"
+  gs '/^====== /s/^====== (.*) ======/****** \1/'
+  gs '/^===== /s/^===== (.*) =====/***** \1/'
+  gs '/^==== /s/^==== (.*) ====/**** \1/'
+  gs '/^=== /s/^=== (.*) ===/*** \1/'
+  gs '/^== /s/^== (.*) ==/** \1/'
+  gs '/^= /s/^= (.*) =/* \1/'
+  [ $check ] && { ifyes "$wiki" || exit 1; }
+done 3< $wikis
+
+# vim: set ft=sh: #

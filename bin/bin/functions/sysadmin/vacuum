@@ -1,0 +1,137 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Sysadmin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................... Housekeeping cleaner
+
+# Usage: vacuum g'enerate | [-f] [clean|CLEAN] [<file>, default=.vacuum]
+#
+# format: # comment
+#         = title
+#         ! file         (noconfirm) USE AT YOUR OWN RISK!
+#           file         (confirm)
+#           file package (noconfirm)
+#
+#         where, if package exists, do not purge file
+#         e.g. .asoundrc alsa-utils
+#         where, file is relative to current directory by default
+#
+#         clean == move files to ~/tmp/vacuum/
+#         CLEAN == remove files
+
+usage() { echo "usage: $(basename $0) g'enerate | [-f] [clean|CLEAN] [file, default=.$(basename $0)]"; exit 1; }
+
+# .vacuum:protect:<type> regex post scan filters (based on 'generated' .vacuum file :-)
+protect='folders files configs'
+
+rules=.$(basename $0)
+vacuum=$HOME/tmp/$(basename $0)
+
+candidates() {
+  # handle spaces in filenames with 'while read' vs 'for loop' tokenizing
+  find $1 -maxdepth 1 | sort --ignore-case >$vacuum:find
+  while read path <&3 ;do
+    unset exclude
+    # strip '.' prefix and 'conf|rc' postfix for package name
+    pkg=$(echo ${path##*/} | lowercase | sed -r 's/^\.//; s/(\.?conf|rc)$//')
+    pacman -Q "$pkg" >/dev/null 2>&1 && exclude=true ||
+      { unset pkg; echo "$path" | grep -E -q "^$HOME/*($filter)$" && exclude=true; }
+    [ $exclude ] && echo "# $path $pkg" >>$rules || { ditto check "$path"; echo "  $path" >>$rules; }
+  done 3< $vacuum:find
+}
+
+generate() {
+  [ -e $rules ] && { ifno "overwrite $rules" || rm $rules; }
+  # handle regex with 'while read' vs 'for loop' expansion
+  for i in $protect ;do
+    file=$(dirname $0)/.vacuum:protect:$i
+    [ -s $file ] || continue
+    while read path <&3 ;do
+      [ ${path%${path#?}} = '#' ] && continue
+      filter="$filter|$path"
+    done 3< $file
+  done
+
+  candidates $HOME
+  candidates $HOME/.cache
+  candidates $HOME/.config
+  for i in $HOME/.local/* ;do candidates $i ;done
+
+  sed -i "s,$HOME/,,; \,$HOME,d" $rules
+  notify "$rules" 'Backup $HOME and review before proceeding!!'
+}
+
+while [ $1 ] ;do
+  case $1 in
+    clean | CLEAN) clean=$1; shift ;;
+    -f           ) force=$1; shift ;;
+    g*           ) generate; usage ;;
+    h*           ) usage ;;
+    *            ) break ;;
+  esac
+done
+
+[ $1        ] && rules=$@
+[ -e $rules ] || usage
+# remove broken symlinks
+brokeln rm
+
+clean() {
+  [ -d "$vacuum/$file" ] && rm -r "$vacuum/$file"
+  target=$(dirname "$file")  # [ $(dirname) = . ] is always true!
+  [ "$target" = . ] && target=$vacuum || target="$vacuum/$target"
+  [ -d "$target"  ] || mkdir -p "$target"
+  sudo mv -f "$file" $target
+}
+
+vacuum() {
+  unset target
+  case $clean in
+    clean) clean ;;
+    CLEAN) sudo rm -rf "$file" ;;
+  esac
+  [ "$target" ] && ditto vacuum "[${vacuum#$HOME/}] $file" || ditto vacuum "$file"
+}
+
+sync() {
+  if [ $package ] ;then
+    pacman -Q $package >/dev/null 2>&1 && unset package
+  elif [ $clean ] ;then
+    if [ $force ] ;then
+      package=true
+    else
+      ifno "remove $file" || package=true
+    fi
+  else
+    ditto "remove ? $file"
+    unset package
+  fi
+}
+
+# preserve stdin fd for package manager prompts
+while read action file package <&3 ;do
+  # echo "action=$action file=$file package=$package"
+  case $action in
+    '' ) continue ;;
+    '#') continue ;;
+    '=') title "$file $package"; continue ;;
+    '!') ;;
+  
+    *  ) file=$(echo $action $file $package | sed 's/ *$//')
+         [ -e "$file" ] || [ -L "$file" ] && unset package || { package=$file; file=$action; } ;;
+  esac
+
+  [ -e "$file" ] || [ -L "$file" ] || continue
+  echo "$file" | grep -q "^\($HOME\)*[./]*$" && continue
+
+  case $action in
+    '!') vacuum; continue ;;
+    *  ) sync ;;
+  esac
+
+  [ $package ] && vacuum
+done 3< $rules
+
+# vim: set ft=sh: #

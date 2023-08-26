@@ -1,0 +1,18 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... dotfiles
+
+EXCLUDE="--exclude='lost+found' --exclude='sync-conflict' --exclude='*.AppImage' --exclude='.deprecated' --exclude='.git' --exclude='.hg' --exclude='arch' --exclude='debian' --exclude='nixos' --exclude='obarun' --exclude='void'"
+
+list=$(echo " $@" | sed "s|  *| $USER@$SERVER:$HOME/stow/|g")
+ditto "$SERVER" "rsync of ... $@ ... in progress"
+mkdir -p $HOME/stow/
+
+rsync -a $EXCLUDE $list $HOME/stow/
+
+# vim: set ft=sh: #
+

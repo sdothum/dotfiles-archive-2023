@@ -1,0 +1,49 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# X11 Demo
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... Demo
+
+# Playback format:
+#   # comment
+#   ! command (some xdotool key triplets are problematic)
+#   xdotool key command (everything else)
+
+TRACE=true
+DELAY=1.5
+
+# demo key sequence playback
+PLAYBACK='
+  alt+bracketright
+  alt+4
+  alt+1
+  # super+ctrl+Tab  # 4 gvim Return
+  ! focus hlwm bring
+  alt+Shift+space
+  alt+Shift+space
+  alt+4
+  alt+BackSpace
+  alt+Shift+4
+  alt+4
+  alt+BackSpace
+  # super+e  # herb theme Return
+  ! dmenu edit
+  # super+s # emit hook Return
+  ! dmenu scripts
+  # alt+Shift+Return
+  ! term 'terminal'
+  c d space slash d a t a slash d e p o t slash d o t f i l e s slash h e r b s t l u f t w m slash period c o n f i g slash h e r b s t l u f t w m Return
+  g v i m d i f f space e m i t underscore h o o k space Shift+grave slash period c o n f i g slash h e r b s t l u f t w m slash e m i t underscore h o o k Return
+  ! sleep 1.5
+  alt+w
+  alt+Shift+space
+  alt+w
+  alt+w
+  alt+w
+  alt+w
+  alt+bracketleft
+'
+
+# vim: set ft=sh: #

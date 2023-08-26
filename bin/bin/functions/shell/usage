@@ -1,0 +1,18 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................ Usage message
+
+# Usage: usage $0
+#        assumes dir/script/functions/script folder hierarchy
+
+name=$(basename $1)
+dir=$(dirname $1)
+funcs=$(ls -1 $dir/functions/$name)
+echo "usage: $name $(echo $funcs | sed 's/ / \| /g')"
+exit 1
+
+# vim: set ft=sh: #

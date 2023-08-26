@@ -1,0 +1,18 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Dev
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................... Commit to repo
+
+REPO=${REPO:-$STOW}
+QUEUE=$(date '+%y%m%d%H%M%S')
+JOB=$HOME/.vim/job/$QUEUE
+
+hg status | grep '^[MARC] ' | sed 's/^. //' >$JOB
+
+# reusing the vim hg update mechanism
+vhg $QUEUE
+
+# vim: set ft=sh: #

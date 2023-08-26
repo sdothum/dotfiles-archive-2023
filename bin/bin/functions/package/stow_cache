@@ -1,0 +1,29 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................. update stow repo
+#
+# Note: this is additive only, permitting multiple <repo> paths with successive calls
+#       restored wita a single stow call!
+
+usage() { echo "usage: $(basename $0) <repo> <path[/file]> [<hostname>]"; exit 1; }
+
+STOW=$HOME/stow          # update master
+
+[ $2 ] || usage
+FILE=${2##*/}
+DIR=${2%/*}
+echo "$DIR" | grep -q "$HOME" && DIR=$(echo "$DIR" | sed "s|$HOME/*||")
+[ $FILE ] || [ $DIR ] || usage  # trap ~/
+[ "$DIR" = /home ] && usage     # trap ~
+
+[ $3 ] && BRANCH=$STOW/$1/$3 || BRANCH=$STOW/$1
+BRANCH=$BRANCH/${DIR#/}
+mkdir -p $BRANCH
+
+ditto copy "$(sudo cp -rvf --preserve=mode --no-preserve=ownership $2 $BRANCH)"
+
+# vim: set ft=sh: #

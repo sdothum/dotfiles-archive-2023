@@ -1,0 +1,72 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Edit
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... Editor
+
+# Usage: v [--role <role> | -f | -c <command>]* [<file>]*
+
+# va va voom
+SHELL=/usr/bin/dash
+export QUEUE=$(date '+%y%m%d%H%M%S')
+VIMTRACE=$HOME/.session/vim:trace
+
+LOG=/tmp/vim:trace
+echo >$LOG
+[ $DISPLAY ] && [ -e $VIMTRACE ] && { term 'vim:trace' tail -f $LOG; }
+
+while : ;do
+  case $1 in
+    --role) role="--role $2"; shift ;;
+    -f    ) fg=-f ;;
+    -c    ) cmd="-c '$2'";    shift ;;
+     *    ) break ;;
+  esac
+  shift
+done
+
+if [ -z "$1" ] ;then
+  [ $PWD = $HOME ] && depth=1 || depth=9
+  # force ncurses mode, see fzf wrapper
+  file=$(find -maxdepth $depth -type f 2>/dev/null | exclude | TERMINAL=true rmenu 'Edit' --multi) || exit
+else
+  if [ ! -e "$1" ] ;then
+    unset sudo
+  elif [ -w "$1" ] ;then
+    unset sudo
+  else
+    [ -L /root/.vim ] && sudo='sudo -Es' || {
+      doas test -L /root/stow || {
+        doas ln -sv $HOME/stow /root
+        ditto root "stow session/$(hostname)"
+        ditto root "stow vim"
+      }
+    }
+  fi
+fi
+
+# escape filenames containing spaces
+count=0
+[ "$file" ] || while : ;do 
+file="$file $(escape $1)"
+  count=$(( $count + 1 ))
+  shift
+  [ $# -gt 0 ] || break 
+done
+
+[ $count -gt 1 ] && notify low 'Gvim' "$count files to edit"
+
+console || { gui=-g; [ -e $DYNAMIC ] && focus frame; }
+[ -e $SESSION/vim ] && fg=-f
+# --quote used for single space separated filename
+session="vim $gui $role $fg $cmd $file"
+eval $sudo $session 2>>$LOG
+
+if exists hg ;then
+  cpu arm && sleep 5  # prevent premature startup termination on slower processors
+  (pwait "vim.*$file" && vhg $QUEUE) &
+fi
+
+# vim: set ft=sh: #

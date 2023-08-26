@@ -1,0 +1,31 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... Edit
+
+# Format: <tag> :: [ <filename> | $(<eval>) ]*
+#               where, tag      - dmenu search tag
+#                      filename - posix filename expression
+#                      eval     - posix shell expression that evaluates to a list of *non-blank* filenames
+
+EDIT='edit tags'
+
+# tag file containing project specs
+PROJECTS=$CONFIG/.projectsrc
+history=$HISTORY/projects
+
+projects() { sed "s/  *::  */^$SEP /" $PROJECTS | mhistory projects | column -s^ -t | sed "2i$(X $EDIT)"; }
+
+while files=$(projects | rmenu 'Edit Project' -no-custom) || exit ;do
+  case ${files#$(X)} in
+    "$EDIT") vim -g -f $PROJECTS $history ;;
+  
+    *      ) mhistory projects "$(echo $files | sed "s/ *$SEP/^$SEP/")"
+             eval echo ${files#*$SEP} | tr ' ' '\n' | exclude | sort | xargs -r v
+             break ;;  # required to prevent duplicate eval execution
+   esac
+done
+
+# vim: set ft=sh: #

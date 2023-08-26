@@ -1,0 +1,17 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Sysadmin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................... Flash usb
+
+usage() { echo "usage: $(basename $0) <drive> <iso>, where <drive> is [a-z]"; exit 1; }
+
+[ -e /dev/sd$1 ] || usage
+[ $2 ] || usage
+
+cmd="dd bs=4M if=$2 of=/dev/sd$1 status=progress oflag=sync"
+ifno "$cmd" || sudo $cmd
+
+# vim: set ft=sh: #

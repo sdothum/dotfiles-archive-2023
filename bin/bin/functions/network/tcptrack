@@ -1,0 +1,13 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Network
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... Monitor
+
+# monitor network traffic
+ditto "tcptrack -i $1 \ (eth0, wlan0, ..)"
+sudo /usr/bin/tcptrack -i $1
+
+# vim: set ft=sh: #

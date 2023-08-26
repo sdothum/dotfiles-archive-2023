@@ -1,0 +1,44 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Sysadmin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................. Boot splash
+
+usage() { echo "usage: $(basename $0) [<theme> | <file.png>]"; exit 1; }
+
+theme=enterprise  # default images/grub/<theme>
+# set loglevel to (3) critical messages only (4) warning messages e.g. acpi missing symbol
+# NOTE: loglevel 3 appears to disable small console font
+LOGLEVEL=${loglevel:-4}
+
+[ -e "$1" ] && splash=$1
+[ -e "$HOME/images/grub/$1" ] && splash=$HOME/images/grub/$1
+
+original /etc/default/grub
+if [ -d "$splash" ] ;then
+  [ "$1" ] && splash=$1 || splash=$theme
+
+  # my current monitor resolutions
+  case $(query display width) in
+    *1024) rez=-1024x600 ;;
+    *1366) rez=-1366x768 ;;
+    *1680) rez=-1680x1050 ;;
+    *1920) rez=-1920x1080 ;;
+    *3440) rez=-1920x1080 ;;
+  esac
+
+  [ -e "$HOME/images/grub/$splash$rez.png" ] && splash="$HOME/images/grub/$splash$rez.png" || splash="$HOME/images/grub/$splash.png"
+  [ -e "$splash" ] || splash="$HOME/images/grub/$theme$rez.png"
+  [ -e "$splash" ] || splash="$HOME/images/grub/$theme.png"
+fi
+
+sudo sed -i -e '/^GRUB_TIMEOUT=/s/[0-9]/3/'                                                      \
+         -e '/^GRUB_GFXMODE=auto/s/auto/1024x768x32,1366x768x32,1680x1050x32,1920x1080x32,auto/' \
+         -e "s,#*GRUB_BACKGROUND=.*,GRUB_BACKGROUND=$splash,"                                    \
+         -e "s/loglevel=[0-9]/loglevel=$LOGLEVEL/"                                                           \
+         /etc/default/grub
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+# vim: set ft=sh: #

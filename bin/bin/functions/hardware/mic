@@ -1,0 +1,14 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Hardware
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ Audio
+
+# instead of gui, mute microphone via pulseaudio
+pacat -r --latency-msec=1 -d alsa_input.pci-0000_00_1b.0.analog-stereo |
+    pacat -p --latency-msec=1 -d alsa_output.pci-0000_00_1b.0.analog-stereo
+notify 'Pulseaudio' 'Mute microphone'
+
+# vim: set ft=sh: #

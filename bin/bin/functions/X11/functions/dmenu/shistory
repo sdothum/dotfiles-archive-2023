@@ -1,0 +1,37 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ Shell
+
+# Usage: dmenu shistory [bash | fish | zsh]
+
+# shell=$(previous shistory)
+# shell=$(echo "fish\nsh\nzsh" | rmenu 'Shell' $shell -no-custom) || exit
+if [ "$1" ] ;then shell=$1
+else              shell=fish  # other shells no longer actively supported
+fi
+
+mhistory shistory $shell
+case $shell in
+  bash) ;;
+  dash) ditto dash "history not available"; exit ;;
+  fish) ;;
+  sh  ) ;;
+  zsh ) grep -E --text -v '^[^:]|[\]$' $HOME/.zhistory >$HOME/.zhistory.vacuum; mv $HOME/.zhistory.vacuum $HOME/.zhistory ;;
+esac
+
+cmd=$(h shell=$shell | sed -r "s/^([^ ]*)  */\1 $SEP $UTF/" | column -s$UTF -t | rmenu 'History' -no-custom) || exit
+cmd=$(echo $cmd | sed "s/^[^ ]*  *$SEP  *//")
+
+# history references only make sense if the active window is a term
+if console ;then
+  echo "$cmd" | cut -d' ' -f2-
+else
+  notify 'Ctrl-Alt-V' "$(echo $cmd | sed 's/[&][&]/and/g; s/[&]/ampersand/')"
+  clipboard "$cmd"
+  herbstclient compare clients.focus.class = "Alacritty" && xdotool type --delay 0 "$cmd"
+fi
+
+#* vim: set ft=sh: #

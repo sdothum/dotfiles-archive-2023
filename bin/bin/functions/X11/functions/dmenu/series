@@ -1,0 +1,130 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................ Television series
+
+# Usage: dmenu series [cache | <series>]
+
+# Library structure:
+# ../videos
+#        ../series
+#               ../show
+#                    ../*S01E01*  (episode)
+
+NAME='sort by name'
+DATE='sort by date'
+FILE='file manager'
+SONARR='sonarr'
+CATALOGUE='catalogue new episodes'
+
+# preload cache option
+[ "$1" = cache ] && { shift; cache=true; }
+
+# video library
+category=${1:-series}
+PASSPORT="/run/media/$USER/My Passport/$category"
+catlg=$CACHEDIR/dmenu:$category
+[ -d "$PASSPORT" ] && { library=$PASSPORT; usb=true; } || library=${LIBRARY:-/net/media/videos/$category}
+preprocess=$(dirname $0)/functions/dmenu/.preproc/$category
+RETITLE="$library"/.retitle
+cd $library
+
+# exclude directory kludge of .anime links in main series folder
+permissions() {
+  if server || $usb ;then
+    find "$library" -maxdepth 2 -type d  -user sonarr -exec sudo chmod -R 755 {} \; 2>/dev/null
+    find "$library" -maxdepth 2 -type d  -user sonarr -exec sudo chown -R shum:users {} \; 2>/dev/null
+  else
+    ssh $SERVER "find '$library' -maxdepth 2 -type d  -user sonarr -exec sudo chmod -R 755 {} \\;"
+    ssh $SERVER "find '$library' -maxdepth 2 -type d  -user sonarr -exec sudo chown -R shum:users {} \\;"
+  fi
+  find "$library" -name '*sample*' -exec rm {} \;
+}
+
+permissions &
+
+# list latest television series additions first
+episodes=/tmp/dmenu:episodes
+gui && monitor=$(herbstclient attr monitors.focus.index)
+shows() {
+  # clean up episodes
+  ls -1 "$series" | sed -r 's/.*\.((S[0-9][0-9]E[0-9][0-9])([E.][0-9][0-9])?)(\..*)*/\U\1/I' | sort >$episodes
+  playlist $episodes "$playlist"
+}
+
+# list latest movie additions first (-- parm to cycle series)
+T=t
+cache() {
+  # stest -qr -n $catlg $(find "$library" -maxdepth 2 -type d) || return
+  notify low 'Series' 'Caching library..'
+  rm -f $catlg
+  [ -e $preprocess ] && . $preprocess  # special title format clean up
+  retitle "$library" >>$RETITLE
+  for i in $(ls -1$T "$library" | grep -v ' ') ;do [ -L $i ] || echo $i | sed 's/\./ /g' >>$catlg; done
+  [ $1 ] || unset show
+}
+
+episodes() { find -maxdepth 1 -regex '.*S[0-9][0-9]E[0-9][0-9].*'; }
+
+# move episodes to series folders
+catalogue() {
+  for i in $(episodes) ;do
+    series=$(echo $i | sed 's/\.S[0-9][0-9]E[0-9][0-9].*//; s/\.[0-9][0-9][0-9][0-9]$//')
+    [ -d $series ] || mkdir $series  # nzbget puts *all* series (including anime) into series directory, hence, link to anime directory
+    mv $i $series
+  done
+  unset show
+}
+
+# any new media added?
+cache
+[ $cache ] && exit
+
+# initial row is most current show vs last viewed
+while : ;do
+  # rebuilding catalogue?
+  [ ! -s $catlg ] && { sleep 0.1; continue; }
+  [ $(episodes | wc -l) -gt 0 ] && CATLG="\\n$(X $CATALOGUE)" || unset CATLG
+  [ $show ] || show=3
+
+  show=$(cat "$catlg" | sed "1i$(X $SONARR)\n$(X $FILE)$CATLG" | sed "1i$(X $(sortlist $T))" | rmenu 'Series' "$show" -no-custom) || break
+  # force dmenu focus (continue within do loop doesn't guarantee focus)
+  case "${show#$(X)}" in
+    "$NAME"     ) unset T; cache; continue ;;
+    "$DATE"     ) T=t; cache; continue ;;
+    "$SONARR"   ) sonarr; unset show; continue ;;
+    # "$FILE"   ) killall 'ROX-Filer'; rox "$library"; pwait "ROX-Filer"; cache; continue ;;
+    "$FILE"     ) killall 'nnn' 2>/dev/null; term 'series' WAIT nnn "$library"; cache; continue ;;
+    "$CATALOGUE") catalogue; cache; continue ;;
+  
+    *           ) series=""$library"/$(echo $show | sed 's/ /./g')"
+                  playlist="$series/.playlist"
+                  [ -e "$playlist" ] || echo >"$playlist" ;;
+  esac
+
+  while : ;do
+    # focus monitor menu originally presented on
+    [ $monitor ] && herbstclient focus_monitor $monitor
+    # highlight last episode viewed
+    [ $episode ] || { [ -e "$playlist" ] && episode=$(head -1 "$playlist") || unset playlist; }
+    episode=$(shows | rmenu "$show" "$episode" -no-custom) || break
+    [ "$episode" ] || break
+
+    episode=$(echo "$episode" | sed "s/^$SEP //")
+    video=$(find "$series" -maxdepth 1 -type d -regex ".*$episode.*")
+    [ -z "$video" ] && video=$(find "$series" -maxdepth 1 -type f -regex ".*$episode.*")
+    if [ $(echo "$video" | wc -l) -gt 1 ] ;then
+      notify 3 critical "$show" "Duplicate episodes found"
+      sleep 3
+      break
+    fi
+
+    mhistory "$playlist" "$episode"
+    play "$video" "$show $episode"
+    cache --  # update deletes
+  done
+done
+
+# vim: set ft=sh: #

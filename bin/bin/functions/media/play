@@ -1,0 +1,113 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Media
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................. Media player
+
+# Usage: play <url> | [-q] <path> [<title>]
+#
+# Note: <path> may be a media file or folder containing such
+
+fontsize=36
+ext='avi|Avi|divx|Divx|m4v|M4v|mkv|Mkv|mp4|Mp4|wmv|Wmv'
+delay=1  # for "next" xdotool key sequence
+
+pgrep -f 'dmenu series' && next='next\n'
+
+YOUTUBE=/net/downloads/http/youtube-dl
+# cleanup accidental screenshots and youtube-dl
+trap "rm -f $HOME/mpv-shot*.jpg" EXIT
+
+[ "$1" = '-q' ] && { quiet=true; shift; }
+# play media (see rox, dmenu movies, dmenu series, browsers..)
+[ "$2" ] && title=$2 || title=${1##*/}
+
+if cpu arm ;then
+  # youtube playback on raspberry pi architecture is unsupported
+  if echo $1 | grep -q http ;then
+    rm -f $YOUTUBE*
+    # leverage cpu power of network server for download and media conversion
+    term youtube-dl FLOAT SHELL "ditto youtube-dl "$1" && ssh $SERVER youtube-dl -o $YOUTUBE "$1""
+    pwait "$YOUTUBE"
+    title=$YOUTUBE
+    STREAM=$(find ${YOUTUBE%/youtube-dl} -name 'youtube-dl*')
+    if [ ${STREAM##*.} = webm ] ;then
+      term youtube-dl FLOAT SHELL "ditto youtube-dl "$1" && ssh $SERVER ffmpeg -y -i "$STREAM" "${STREAM%.*}.mp4""
+      ssh $SERVER ffmpeg -i "$STREAM" "${STREAM%.*}.mp4"
+      pwait "${STREAM%.*}.mp4"
+      STREAM="${STREAM%.*}.mp4"
+    fi
+  fi
+
+  geometry=$(dmenu geometry "$title") || exit
+fi
+
+# check for attached usb drive
+if [ -z $STREAM ] ;then
+  [ -d "$1" ] && path=$1 || path=${1%/*}
+  # attached usb drive?
+  libext=$(find /run/media/$USER -maxdepth 3 -type d -name "$(basename $(dirname "$path"))" 2>/dev/null)
+  if [ -n "$libext" ] ;then
+    STREAM=$(find "$libext" -maxdepth 1 -type d -name "${path##*/}")
+    STREAM=$(find "$STREAM" -regextype posix-extended -regex ".*($ext)" | grep -v sample)
+  else
+    STREAM=$1
+  fi
+fi
+
+videomode on
+
+while : ;do
+  if cpu arm ;then
+    notify 0 blackboard "$title" '1/2  Speed\n+/-  Volume\nj/k  Language\nm/n  Subtitles\ns    Toggle'
+    # syncthing cpu usage can exacerbate video stuttering
+    # sv stop syncthing@$USER
+
+    # omxplayer keyboard shortcuts only available through terminal emulator
+    # eval term 'omxplay' BLACKBOARD omxplayer $geometry --subtitles "${STREAM%.*}.srt" --align center "$STREAM"
+    # media filenames with embedded blanks are messy to handle, use symbolic link instead!
+    ln -sf "$STREAM" /tmp/play:link
+    eval term 'omxplay' BLACKBOARD omxplayer $geometry --align center /tmp/play:link
+    echo "$title -> $STREAM" >>/tmp/omxplay.log
+    # accomodate arm term omxplayer lag time variance
+    sleep 1
+    pwait /tmp/play:link
+
+    # sv start syncthing@$USER
+    # clear notification
+    xdotool key Ctrl+space
+    touch $MENU
+  else
+    notify 0 blackboard "$title" "$(printf '1/2^Contrast\n3/4^Brightness\n5/6^Gamma\n7/8^Saturation\n9/0^Volume^m^Mute\n-/+^Audio Delay^ #^Language\nj/J^Subtitles^ v^Toggle\nx/z^Subtitle Delay' | column -s^ -t)"
+    focus frame
+    mpv --vf=eq "$STREAM" --sub-font-size=$fontsize >/dev/null 2>&1 &
+    # clear notification
+    pwait "mpv --vf=eq"
+    xdotool key Ctrl+space
+  fi
+
+  echo "$1" | grep -q http && break
+  [ $quiet ] && break
+  # only purges server files (arm redirected usb files remain untouched)
+  action=$(echo "${next}quit\nskip\nreplay\ndelete\nsonarr" | rmenu "$title" -no-custom)
+  case $action in
+    delete) [ "$(echo 'no\nyes' | rmenu "Delete $title" -no-custom)" = yes ] || break
+            mhistory play:delete "$title $1"
+            rm -rf "$1"
+            break ;;
+  
+    next  ) (sleep $delay; xdotool key Down; xdotool key Return;) &  # key presses for episodes menu
+            break ;;
+
+    quit  ) pkill -f 'dmenu'; blackboard; videomode off; exit ;;  # restore dynamic windows
+    replay) pulse; continue ;;
+    sonarr) sonarr $STREAM; break ;;
+    *     ) break ;;
+  esac
+done
+
+videomode off
+
+# vim: set ft=sh: #

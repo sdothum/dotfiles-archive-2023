@@ -1,0 +1,19 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# File
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... Date
+
+usage() { echo "usage: $(basename $0) <wiki> <yy-mm-dd>"; exit 1; }
+
+[ $# -eq 2 ] || usage
+[ -e "$1" ]  || usage
+date -d "$2" || usage
+echo $2 | grep -q '^[[:digit:]]*-[[:digit:]]*-[[:digit:]]*$' || usage 
+
+touch -d "$2" "$1.touch"
+ditto "$BROWSER http://thedarnedestthing:8000/admin/:restore" "http://thedarnedestthing.com/admin/:restore"
+
+# vim: set ft=sh: #

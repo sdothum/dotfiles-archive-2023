@@ -1,0 +1,17 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... Search
+
+usage() { echo "usage: $(basename $0) [-w] <regex>"; exit 1; }
+
+[ "$1"      ] || usage
+[ "$1" = -w ] && { w=-w; shift; }
+
+# pass parms via env
+AG="$w -l --nocolor --silent" a "$@"
+
+# vim: set ft=sh: #

@@ -1,0 +1,34 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................ Configurable launcher
+
+EDIT='edit menu'
+
+# run list format: <command> [# <comment>]
+#             e.g. term 'title' program
+#                  program  # description
+
+pgms=$CONFIG/.appsrc
+
+apps() {
+  while read app <&3 ;do
+    if echo $app | grep -q '#' ;then
+      echo $(echo $app | cut -d'#' -f2)
+    else
+      echo $app | rev | cut -d' ' -f1 | rev
+    fi
+  done 3< $pgms
+}
+
+pgm=$(previous apps)
+while pgm=$(apps | sed  "1i$(X $EDIT)" | rmenu 'open' $pgm -no-custom) || exit ;do
+  case ${pgm#$(X)} in
+    "$EDIT") vim -g -f $pgms ;;
+    *      ) mhistory apps "$pgm"; eval exec $(grep "$pgm" $pgms | cut -d'#' -f1) ;;
+  esac
+done
+
+# vim: set ft=sh: #

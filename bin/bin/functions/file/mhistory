@@ -1,0 +1,50 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# File
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................. Playback history
+
+# Usage: mhistory <name | path> <string> (update history with string)
+#        ** OR **
+#          .. | mhistory <file> | ..  (append history content)
+# Note:  echo | mhistory <file> | ..  (must use echo if not prepending content)
+#        <string> assumes no dmenu function has a valid null select value
+#
+#        Under dash, scripts can execute this command, but shells with in-built
+#        command history tracking cannot without full pathname reference
+
+usage() { echo "usage: $(basename $0) <name> | <path> [<string>]"; exit 1; }
+
+HISTORY=${HISTORY:-$HOME/tmp/.history}
+
+[ "$1" ] || usage
+echo $1 | grep -qv '/' && history="$HISTORY/$1" || history="$1"
+shift
+
+# usage: inject item file
+inject() {
+  update=$(mktemp).history
+  if [ ! -e "$2" ] ;then
+    mkdir -p "${2%/*}" || exit 1
+    touch "$2"
+  fi
+  # remove duplicate and empty history entries
+  echo "$1\n$(grep -iv "$(echo "$1" | sed -r 's/([.*?$])/\\\1/g')" "$2")" | sed '/^$/d' >$update
+  mv $update "$2"
+  sed -i '/^[\^]/d; /^ *$/d' "$2"
+}
+
+# update history or show it
+if [ "$1" ] ;then
+  inject "$@" "$history"
+else
+  [ -e "$history" ] || touch "$history"
+  # create uniq list by subtracting history from stdin
+  cat "$history" | sed -r 's/(.*)/^\1$/' >/tmp/history:regex
+  grep -vf /tmp/history:regex - >/tmp/history:nonmatch
+  cat "$history" /tmp/history:nonmatch
+fi
+
+# vim: set ft=sh: #

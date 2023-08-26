@@ -1,0 +1,19 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................... Distribution install
+
+# non-arch application installer
+heading : $1
+PATH=$2:$PATH
+
+if exists $1 ;then
+  pre_install $1
+  $1
+  post_install $1
+fi
+
+# vim: set ft=sh: #

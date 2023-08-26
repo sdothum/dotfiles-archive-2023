@@ -1,0 +1,26 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Network
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... Connect
+
+usage() { echo "usage: $(basename $0) [confirm]"; exit 1; }
+
+# see wego and console_login
+site=www.google.com
+timeout=5
+
+count=0
+while ! pong $site ;do
+  sleep 1
+  count=$(( $count + 1 ))
+  if [ $count -gt $timeout ] ;then
+    [ $1 ] && notify critical 'Internet Access' 'Connection failed'
+    return 1
+  fi
+done
+return 0
+
+# vim: set ft=sh: #

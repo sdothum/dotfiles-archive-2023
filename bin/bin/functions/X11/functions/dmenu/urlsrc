@@ -1,0 +1,14 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... Browser
+
+browser=$(previous urlsrc)
+browser=$(echo 'chromium\nluakit\nqutebrowser\nvimb' | rmenu 'Use URLs From' $browser -no-custom) || exit
+
+history urlsrc $browser
+echo $browser
+
+# vim: set ft=sh: #

@@ -1,0 +1,75 @@
+#!/usr/bin/ruby
+# sdothum - 2016 (c) wtfpl
+# encoding: UTF-8
+
+# File
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................. Print email
+
+require 'term/ansicolor'
+require 'sanitize'
+require 'mail'
+require 'time'
+
+class String
+  include Term::ANSIColor
+end
+
+def parse_mail(mail)
+  body = ''
+  if mail.multipart?
+    mail.parts.each do |part|
+      print "> #{part.mime_type}\n"
+      body = 
+        case part.mime_type
+          when 'text/plain' then part.body
+          when 'text/html' then part.body
+          when /multipart.*/ then part.body
+        end if body == ''
+    end
+  else
+    print "> #{mail.mime_type}\n"
+    body = 
+      case mail.mime_type
+        when 'text/plain' then mail.body
+        when 'text/html' then mail.body
+        when /multipart.*/ then mail.part.body
+      end
+  end
+  body = Sanitize.clean(body).split("\n")
+  part = body[1]
+  body = body.drop(6)
+  chop = body.index(part) - 1
+  body = body[0..chop].join("\n").gsub(/=20\n/, '').gsub(/ =\n/, "\n").gsub(/\s*\n\s*\n(\s*\n)+/, "\n\n\n")
+  body.gsub(/&amp;/, '&').gsub('&nbsp;', ' ').gsub(/=E2=80=93/, '--').gsub(/=E2=80=99/, "'")
+end
+
+# view email (see rox)
+begin
+  mail = Mail.read(ARGV[0])
+  to = mail.to[0]
+  from = mail.from[0]
+  subject = mail.subject.gsub(/%20/, ' ').sub(/.*\/\/\/([^\/]*)\/\/\/.*/, '\1').downcase.strip.squeeze(' ')
+  date = mail.date.strftime("%Y-%m-%d %H:%M:%S")
+  print "Date: #{date}\n".green
+  print "To: #{to}\n".green
+  print "From: #{from}\n".green
+  print "Subject: #{subject}\n".green
+  begin
+    text = parse_mail(mail)
+    raise if text.length == 0
+    raise if text.split("\n")[0] =~ /^-- *$/
+    print "\nBody: ".green
+    if text > ''
+      text.split("\n").each do |line|
+        break if line =~ /^-- *$/
+        print "#{line}\n"
+      end
+    end
+  rescue
+    print "==> empty mime type #{mail.mime_type.yellow.bold}\n"
+  end
+rescue
+  print "==> invalid mail #{ARGV[0].yellow.bold}\n" unless not ARGV[0]
+end

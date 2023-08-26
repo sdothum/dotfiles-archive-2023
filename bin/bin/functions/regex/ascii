@@ -1,0 +1,14 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Regex
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................... UTF-8 to ascii
+
+# Usage: stdin | ascii
+#        ascii <file>
+
+iconv -c -f utf-8 -t ascii $@
+
+# vim: set ft=sh: #

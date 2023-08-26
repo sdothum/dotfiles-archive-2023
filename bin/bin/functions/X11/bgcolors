@@ -1,0 +1,17 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# X11 Desktop
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................. Root backgrounds
+
+# clean up root background library
+for i in $(find $PALETTE -name '*.png') ;do
+  color=$(echo $i | sed -r 's,.*/(.*).png,\1,')
+  setroot --blank-color "#$color" 2>/dev/null
+  echo ${i#*colors/}
+  ifno 'delete this background' || rm -f $i
+done
+
+# vim: set ft=sh: #

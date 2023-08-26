@@ -1,0 +1,44 @@
+#!/usr/bin/bash
+# sdothum - 2016 (c) wtfpl
+
+# Media
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................... Screencast
+
+usage() { echo "usage: $(basename $0) DVI-'0 | DVI-'1 | k'ill | l'eft | r'ight | a'll [<demo>]"; exit 1; }
+
+# Usage: record action [script]
+#        action = display (see below) | kill
+#        script = optional demo application
+
+# create .webm screencast
+
+target=/net/media/videos/recordings
+pidname=recording
+framerate=25
+
+if server ;then
+  case $1 in
+    ''     ) xy=3440x1440 ;;
+    l* | *0) xy=1680x1050 ;;
+    r* | *1) xy=2560x1600; offset=+1680,0 ;;
+    a*     ) xy=4240x1600 ;;
+    k*     ) kill -TERM $(pidof -s $pidname); exec ls -l /tmp/*.webm ;;
+    *      ) usage ;;
+  esac
+
+  webm=$(mktemp).webm
+  trap "rm -f $webm" EXIT
+  exec -a $pidname ffmpeg -b:v 5M -crf 10 -c:v libvpx -f x11grab -i :0.0$offset -loglevel quiet \
+                          -quality realtime -r $framerate -s $xy -an -y $webm &  # bash shell exec -a
+  shift
+  [ $1 ] && $@
+
+  ifyes 'stop recording and save' && {
+    kill -TERM $(pidof -s $pidname)
+    mv -v $webm $target
+  }
+fi
+
+# vim: set ft=sh: #

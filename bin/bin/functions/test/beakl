@@ -1,0 +1,13 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Test
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... BEAKL Zi
+
+BEAKL=$SESSION/beakl
+
+[ -e $BEAKL ] || xinput list --name-only | grep -E -q 'Chimera|Corne|Planck|Splitography' 2>/dev/null
+
+# vim: set ft=sh: #

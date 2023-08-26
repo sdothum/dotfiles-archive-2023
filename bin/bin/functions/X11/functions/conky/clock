@@ -1,0 +1,39 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Desktop
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ Conky
+
+# Usage: conky clock
+usage() { echo "usage: $(basename $0) clock [auto | stop | on | off]"; exit 1; }
+
+CONKYRC=$HOME/.conkyrc.qclocktwo
+[ -e $CONKYRC ] || exit
+
+clock() { pstat "conky -c $CONKYRC"; }
+
+case $1 in
+  auto) xset s off -dpms
+        pstat xautolock && exit
+        xautolock -time 10 -locker 'conky clock on' &
+        notify low 'Que Clock Two' 'Auto' ;;
+  
+  stop) xset s on -dpms
+        pstat xautolock || exit
+        killall xautolock
+        notify low 'Que Clock Two' 'Stopped' ;;
+  
+  on  ) clock && exit
+        /usr/bin/conky -c $CONKYRC 2>/dev/null &
+        rm -rf /tmp/qclocktwo ;;  # clear qclock buffers
+  
+  off ) clock || exit
+        pkill -f "conky -c $CONKYRC"
+        [ -e $SPANEL ] || weather ;;
+  
+  ''  ) if clock ;then conky clock off ;else conky clock on ;fi ;;
+  *   ) usage ;;
+esac
+
+# vim: set ft=sh: #

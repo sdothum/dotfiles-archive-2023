@@ -1,0 +1,18 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................. aur wrapper
+
+# Usage: aurwrapper [options]
+
+if [ $1 ] ;then
+  exists yay && echo '--noconfirm' || echo '--noconfirm --noedit'
+else
+  sudo chmod a+wx,+t /tmp                      # convenient fix for unknown package change
+  exists pacaur && echo pacaur || echo yay     # pacaur has systemd dependency
+fi
+
+# vim: set ft=sh: #

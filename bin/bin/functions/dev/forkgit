@@ -1,0 +1,25 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Dev
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ${COLORS} defined in env
+
+# .......................................................................... Git
+
+usage() { echo "usage: $(basename $0) <repo>"; exit 1; }
+
+[ $1 ] || usage
+GIT=${1%.git}.git
+
+# to be able to own (update) local clone of forked git repo..
+cd /net/depot
+git clone git@github.com:$USER/$GIT
+git remote add upstream git@github.com:$USER/$GIT
+git fetch upstream
+git checkout master
+git rebase upstream/master
+git push -f origin master
+
+# vim: set ft=sh: #

@@ -1,0 +1,44 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Media
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ${COLORS} defined in env
+
+# ................................................................... Screencast
+
+usage() { echo "usage: $(basename $0) DVI-'0 | DVI-'1 | l'eft | r'ight | a'll"; exit 1; }
+
+target=/net/media/videos/recordings
+delay=${delay:-1}
+
+if server ;then
+  case $@ in
+    l* | *0) opts='-s 1680x1050 -i :0.0' ;;
+    r* | *1) opts='-s 2560x1600 -i :0.0+1680,0' ;;
+    a*     ) opts='-s 4240x1600 -i :0.0' ;;
+    *      ) usage ;;
+  esac
+else
+  set -- $(query display)
+  opts="-s $1x$2 -i :0.0"
+fi
+
+mkv=$(mktemp).mkv
+trap "rm -f $mkv" EXIT
+sleep $delay
+echo
+echo "${YELLOW}━━━━━━━━━  Press [q] to stop recording  ━━━━━━━━━${NOCOLOR}"
+echo
+ffmpeg -f x11grab -r 25 $opts -vcodec libx264 -preset ultrafast -crf 0 $mkv
+echo
+echo "${YELLOW}━━━━━━━━━  Converting to .webm  ━━━━━━━━━${NOCOLOR}"
+echo
+
+ffmpeg -i $mkv -b:v 1M -c:a libvorbis -crf 0 -c:v libvpx -deadline good \
+       -g 120 -lag-in-frames 0 -qmax 50 -qmin 0 -slices 8 ${mkv%.mkv}.webm
+
+mv -v ${mkv%.mkv}.webm $target
+
+# vim: set ft=sh: #

@@ -1,0 +1,44 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Process
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... Kill
+
+usage() { echo "usage: $(basename $0) [sig=<signal>] <regex>"; exit 1; }
+
+case $1 in
+  sig=*) eval $1; shift ;;
+  *    ) sig=${sig:--TERM} ;;
+esac
+
+# persistent storage for regex to subvert nested shell expansion
+REGEX=/tmp/k:regex
+
+# kill by process set
+abort() {
+  for i in $(pgrep -f "$@") ;do
+    p $i | grep -v $0 || continue
+    ifno "kill $i" && continue || sudo kill $sig $i
+    # break
+  done
+}
+
+case $1 in
+  ''   ) usage ;;
+  REGEX) process=$(cat $REGEX) ;;
+  vimb ) process='vimb .* http' ;;
+  *    ) process=$@ ;;
+esac
+
+# launched from dmenu run or within terminal session?
+if [ "$(. parent)" = "[$(hostname).local]" ] ;then
+  echo $process >$REGEX
+  term "k" SHELL k REGEX
+else
+  abort "$process"
+  rm -f $REGEX
+fi
+
+# vim: set ft=sh: #

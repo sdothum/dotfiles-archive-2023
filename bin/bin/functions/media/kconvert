@@ -1,0 +1,14 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Media
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................ ebook convert
+
+# Usage: [dropcap=<class>] kconvert <epub>*
+
+dmenu econvert azw3 "$@"  # kindle
+dmenu econvert epub "$@"  # kobo
+
+# vim: set ft=sh: #

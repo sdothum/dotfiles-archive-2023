@@ -1,0 +1,85 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................... Word frequency
+
+usage() { echo "usage: [GT=<count>] $(basename $0) [list | ls | <[-]length>] [<regex>]"; exit 1; }
+
+# WORDS=${WORDS:-$HOME/.config/Amphetype/100K-word.database}
+WORDS=${WORDS:-$HOME/.config/Amphetype/google-books-common-words.txt}
+# WORDS=${WORDS:-$HOME/.config/Amphetype/10K-word.sort}  # top 10K words for detailed frequency function
+GT=${GT:-0}
+
+alphabet='e t a o i n s r h l d c u m f p g w y b v k x j q z'
+digraph='in on an es re te en ti ar at le ra al or ed nt is ro de co se it to io as he ha nd et ve ea th ou rt sa em'
+trigraph='ing ion tio ent and men nde nce for the tis tha'
+double='ss ee tt ff ll mm oo rr nn pp'
+
+[ $1 ] || usage
+[ $2 ] && [ "$1" = list ] || [ "$1" = ls ] && { shift; list=true; }
+[ $2 ] && { length="${1#-}";  [ "$1" = ${1#-} ] || le=true; shift; list=true; }  # print all words <= length
+[ $length ] && length=$(( $length - 1 ))
+
+frequency() {
+  for i in $(ugrep -i $i $WORDS | cut -f2) ;do
+    echo $i
+  done | awk '{ freq += $1 } END { print freq }'
+}
+
+# including frequency within word (cpu intensive).. does not alter overall letter frequency order
+# frequency() {
+  # ugrep -i $i $WORDS | while read word count ;do
+    # match=$(echo -n $word | sed "s/$i/\n/gi" | wc -l)
+    # echo $(( $match * $count ))
+  # done | awk '{ freq += $1 } END { print freq }'
+# }
+
+# :<letter> and <letter>: expansion
+iterate() {
+  [ ${1%${1#?}} = : ] && { for k in $alphabet ;do echo $k${1#?}; done; return; }
+  [ ${1#${1%?}} = : ] && { for k in $alphabet ;do echo ${1%?}$k; done; return; }
+  echo $1
+}
+
+corpus() {
+  underline
+  unset words
+  for i in $@ ;do words="$words $(iterate $i)" ;done
+  for i in $words ;do
+    [ $(ugrep -i $i $WORDS | wc -l) -gt $GT ] && echo $i $(ugrep -i $i $WORDS | wc -l) $(frequency $i)
+  done | sort -nr -k3 |
+      awk '{ cnt += $2; freq += $3; printf("%s %d %'"'"'d\n", $1, $2, $3); gsub(/./, "-", $1); hdg = length($1) > length(hdg) ? $1 : hdg } END { printf("%s %d %'"'"'d\n", hdg, cnt, freq) }' |
+      column -s' ' -t
+}
+
+list() {
+  for i in $@ ;do
+    underline
+    [ $length ] && [ $le ] && ugrep -i $i $WORDS | awk '{ print $1 }' | grep -Eow "\b\w{1,$length}\b"       | sed 's/$/ /' | sort | columns ||  # add space to widen column separator
+      [ $length ] &&          ugrep -i $i $WORDS | awk '{ print $1 }' | grep -Eow "\b\w{$length,$length}\b" | sed 's/$/ /' | sort | columns ||
+      ugrep -i $i $WORDS | awk '{ print $1 }' | sort | columns
+    echo
+  done
+}
+
+dump() {
+  corpus $double
+  corpus $trigraph
+  corpus $digraph
+  corpus $alphabet
+  echo
+  usage
+}
+
+if [ $1 ] ;then
+  corpus $@
+  # list really only makes sense for single inquiry
+  [ $list ] && list $@ | tr '[:upper:]' '[:lower:]'
+else
+  dump | print
+fi
+
+# vim: set ft=sh: #

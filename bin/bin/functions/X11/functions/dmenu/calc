@@ -1,0 +1,55 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................ Ribbon calculator
+
+# initialize varname table
+VARS='a b c d e f g h i j k l m n o p q r s t u v w x y z'
+count=0
+for i in $VARS ;do
+  count=$(( $count + 1 ))
+  eval VAR$count=$i
+done
+
+# clean up input equation
+eqn() {
+  echo $eqn | 
+    sed -re 's/([a-z])/$\1/g' \
+        -e 's/([()])/\\\1/g' \
+        -e 's/([<>])/../g' \
+        -e 's/[$](.)[$]/$\1..$/g'
+}
+
+count=0
+while eqn=$(echo $ribbon | column -s$UTF -t | rmenu "Solve$error") || break ;do
+  eqn=$(unquote $eqn)
+  if ans=$(calc -pd "$(eval echo $(eqn))") ;then
+    if [ $ans ] ;then
+      if echo $ans | grep -qv 'Error|Warning' ;then
+        clipboard "$ans"
+        count=$(( $count + 1 ))
+        [ $count -gt 26 ] && count=0
+        # initialize alpha variable (eval associative array, note export command)
+        eval export \$VAR$count=$ans
+        # ribbon defines alpha=value for subsequent calculations
+        if echo "$eqn" | grep -q '[^0-9.]' ;then
+          ribbon="$(eval echo "\$VAR$count = $eqn '$UTF->' $ans")\n$ribbon"
+        else
+          ribbon="$(eval echo "\$VAR$count = $eqn")\n$ribbon"
+        fi
+        unset error
+      else
+        unset ans
+      fi
+    fi
+  else
+    unset ans
+  fi
+  [ $ans ] || echo "$eqn" | grep -q '=' || error="    f($eqn) ?"
+done
+
+[ $ans ] && { clipboard "$ans"; notify 'Ctrl-Alt-V' "$ans"; }
+
+# vim: set ft=sh: #

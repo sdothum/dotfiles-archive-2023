@@ -1,0 +1,59 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Web
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... Syncing
+
+usage() {
+  echo "usage: $(basename $0)(server) 'start/show | c'lient | I'nitialize | l'ist | q'uit | r@'te <queue>"
+  echo "usage: $(basename $0)(queue) B|b'ottom | D|d'elete | P|p'ause | R|r'esume | s'earch | T|t'op <queue>"
+  echo "usage: $(basename $0)(queue) C'lear"
+  echo ' -> nzb d <GID,GID-GID,..>'
+  echo ' -> nzb D <title>'
+  echo ' -> nzb C == nzb D queue'
+  exit 1
+}
+
+# curses nzb control
+list_delay=60
+action=$1
+[ $1 ] && shift
+queue=$@
+
+init() {
+  killall nzbget 2>/dev/null
+  # delay required for server shutdown (cannot use "nzb q")
+  sleep 1
+  rm -rf /net/downloads/nzbs/inter
+  rm -rf /net/downloads/nzbs/queue
+  rm -rf /net/downloads/nzbs/tmp
+  # restart to create subdirectories
+  nzb
+}
+
+case $action in
+  '') pstat nzbget || sv start nzbget@$USER; underline $(timestamp); nzbget -L G ;;
+  @ ) nzbget --rate $queue ;;
+  B*) nzb b $(nzb S $queue) ;;
+  b*) nzbget -E G B $queue; nzb ;;
+  C*) nzb; ifyes 'clear entire download queue' && nzbget -E G D 1-999999 ;;
+  c*) nzbget -o OutputMode=curses -C ;;
+  D*) nzb d $(nzb S $queue) ;;
+  d*) nzbget -E G D $queue; nzb ;;
+  I*) ifyes 'clear history and queue' && init ;;
+  l*) while : ;do nzb; sleep $list_delay; done ;;
+  P*) nzb p $(nzb S $queue) ;;
+  p*) nzbget -E G P $queue; nzb ;;
+  q*) sv stop nzbget@$USER ;;
+  R*) nzb r $(nzb S $queue) ;;
+  r*) nzbget -E G U $queue; nzb ;;
+  S*) nzb s $queue | cut -d']' -f1 | cut -d'[' -f2 ;;
+  s*) [ "$queue" = queue ] && nzb | grep -E '^\[' || nzb | grep -E -i $queue ;;
+  T*) nzb t $(nzb S $queue) ;;
+  t*) nzbget -E G T $queue; nzb ;;
+  * ) usage ;;
+esac
+
+# vim: set ft=sh: #

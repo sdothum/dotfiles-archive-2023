@@ -1,0 +1,29 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................. Screensaver
+
+# Usage: dmenu screensaver [on | off | 0 | 1]
+#        dmenu screensaver, interactive mode
+#        dmenu Screensaver [on | 1], turn screensaver on
+#        dmenu Screensaver [off | 0], turn screensaver off
+
+# toggle monitor display settings
+if [ $1 ] ;then
+  toggle=$1
+else
+  xset q | grep -q 'DPMS is Enabled' && toggle=off || toggle=on
+  toggle=$(echo "$toggle\nlock" | rmenu 'Toggle Screensaver' -no-custom) || exit
+fi
+
+screensaver() { xset s on +dpms; pstat xscreensaver || xscreensaver -no-splash &; }
+
+case $toggle in
+  off | 0) pstat xscreensaver && killall xscreensaver; xset s off -dpms; notify low 'Screensaver' Off ;;
+  on  | 1) screensaver; notify low 'Screensaver' On ;;
+  lock   ) screensaver; xscreensaver-command -lock ;;
+esac
+
+# vim: set ft=sh: #

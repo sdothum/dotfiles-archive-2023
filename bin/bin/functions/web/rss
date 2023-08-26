@@ -1,0 +1,26 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Web
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................. Syndication
+
+usage() { echo "usage: $(basename $0) 'start | I'nitialize | i'mport <opml>"; exit 1; }
+
+rss() {
+  if pong $SERVER ;then
+    sed -i "s,http://localhost/tt-rss,http://$SERVER/tt-rss," $HOME/.newsbeuter/config
+  else
+    sed -i "s,http://$SERVER/tt-rss,http://localhost/tt-rss," $HOME/.newsbeuter/config
+  fi
+}
+
+case $1 in
+  '') pstat newsbeuter && p newsbeuter || { rss; newsbeuter -C $HOME/.newsbeuter/config; }
+  I*) rm -f $HOME/.newsbeuter/cache.db; rss ;;
+  i*) pstat newsbeuter || { rss; newsbeuter -C $HOME/.newsbeuter/config -i $2; }
+  * ) usage ;;
+esac
+
+# vim: set ft=sh: #

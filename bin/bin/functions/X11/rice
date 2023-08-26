@@ -1,0 +1,19 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# X11 Desktop
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................... Rice utilities
+
+# Usage: rice [<message>], see functions/rice
+
+msg=$1
+[ $msg ] && shift || usage $0
+if [ -e $(dirname $0)/functions/rice/$msg ] ;then
+  . $(dirname $0)/functions/rice/$msg $@
+else
+  usage $0
+fi
+
+# vim: set ft=sh: #

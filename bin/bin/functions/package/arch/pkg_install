@@ -1,0 +1,19 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... PKGBUILD
+
+[ -d /net/depot ] && cd /net/depot || cd /tmp
+[ -d auracle ] || mkdir auracle
+cd auracle
+curl -o PKGBUILD https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=$1
+makepkg PKGBUILD
+sudo pacman -U $1*.tar.xz --noconfirm
+
+# do post install for previously installed package dependencies
+post_install $1
+
+# vim: set ft=sh: #

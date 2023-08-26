@@ -1,0 +1,28 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Kobo
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................ Sideload Mode
+
+usage() { echo "usage: $(basename $0) on | true | off | false"; exit 1; }
+
+CONF="/run/media/$USER/KOBOeReader/.kobo/Kobo/Kobo eReader.conf"
+
+[ -e "$CONF" ] && original "$CONF" || { ditto ERROR device "not connected"; exit 1; }
+
+mode() {
+  case "$2" in
+    '') grep -q $1 "$CONF" && ditto $1 $(grep $1 "$CONF" | cut -d= -f2) || ditto $1 false ;;
+    * ) grep -q "$1=$2" "$CONF" || { grep -v $1 "$CONF" | sed "/\[ApplicationPreferences\]/a$1=$2" >"$CONF.tmp"; mv "$CONF.tmp" "$CONF"; } ;;
+  esac
+}
+
+case $1 in
+on|true  ) mode SideLodeMode true  ;;
+off|false) mode SideLodeMode false ;;
+*        ) mode SideLodeMode; usage ;;
+esac
+
+# vim: set ft=sh: #

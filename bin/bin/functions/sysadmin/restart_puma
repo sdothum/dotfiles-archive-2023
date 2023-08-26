@@ -1,0 +1,18 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Sysadmin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... puma
+
+delay=1.5  # restart delay window
+
+# import user path
+. $HOME/bin/functions/shell/user_path colors  # bash shell required for cron colors
+
+sv stop puma
+sleep $delay
+sv start puma
+
+# vim: set ft=sh: #

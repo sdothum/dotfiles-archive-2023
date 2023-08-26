@@ -1,0 +1,19 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Edit
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... Editor
+
+usage() { echo "usage: $(basename $0) <search>"; exit 1; }
+
+# v by content
+[ "$1" ] || usage
+
+files=$(a "$@" | fZf --multi | nocolor | cut -d: -f1 | uniq | quote)
+[ "$files" ] || exit
+
+v $files
+
+# vim: set ft=sh: #

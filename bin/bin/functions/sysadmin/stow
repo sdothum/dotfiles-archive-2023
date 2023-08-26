@@ -1,0 +1,46 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Sysadmin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................. Stow wrapper
+
+usage() { echo "usage: $(basename $0) sync | clean | check | [D | R] <directory[/<subdirectory>]>*"; exit 1; }
+
+STOW=$HOME/stow
+
+link() {
+  for i in $STOW/* ;do
+    [ -d $i ] || continue
+    # on directory == application, apply link action
+    rule="exists ${i##*/} $@ ${i##*/}"
+    eval $rule
+  done
+}
+
+dir() { cd $STOW; echo $1 | grep -q '/' && { [ -d $1 ] && echo $STOW/${1%/*} || usage; } || echo $STOW; }
+pkg() { echo $1 | grep -q '/' && echo ${1#*/} || echo $1; }
+
+case $1 in
+  ''   ) find $STOW -maxdepth 1 -type d | sed 's|.*/||' | grep -v '^\.' | sort | column; echo; usage ;;
+  sync ) link '&& stow' ;;
+  clean) link '|| stow D' ;;
+  check) link '&& ditto' ;;
+  
+  D | R) if [ $2 ] ;then   # delete/restore a singleton
+           cd $(dir $2) 2>/dev/null || usage
+           /usr/bin/stow -v -t $HOME -d $STOW -$1 $(pkg $2) 2>&1 | grep -v BUG
+         else usage 
+         fi ;;             # suppress stow path bugs
+  
+  *    ) while [ $1 ] ;do  # link a list
+           cd $(dir $1) 2>/dev/null || usage
+           [ -d $(pkg $1) ]         || usage
+           ls -1 $(pkg $1) | grep -E -q 'etc|opt|root|usr|var' && { target=/; super=doas; } || target=$HOME
+           $super /usr/bin/stow -v -t $target -S --ignore=.deprecated $(pkg $1)
+           shift
+         done ;;
+esac
+
+# vim: set ft=sh: #

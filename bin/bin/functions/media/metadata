@@ -1,0 +1,13 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Media
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................... check calibre metadata
+
+# Usage: find -iname 'metadata.opf' -exec metadata {} \; | sort
+
+grep -q 'dc:description' "$1" || ditto incomplete "$1"
+
+# vim: set ft=sh: #

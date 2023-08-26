@@ -1,0 +1,64 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Network
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .......................................................... Connman autoconnect
+
+usage() { echo "usage: $(basename $0) [quiet] [service]"; exit 1; }
+
+# for really poor wifi connections
+SERVICE=$HOME/.session/service
+dns=8.8.8.8
+delay=5
+
+# import user path
+. $HOME/bin/functions/shell/user_path
+
+slock $(basename $0) $$ || exit 1
+while [ $1 ] ;do
+  case $1 in
+    force       ) rm -f $flock; shift ;;
+    quiet       ) quiet=true; shift ;;
+    *managed_psk) service=$i; shift ;;
+  esac
+done
+[ $service ] || { [ -e $SERVICE ] && service=$(cat $SERVICE); }
+[ $service ] || usage
+
+connected() { pong $dns; }
+
+# login to web portal if required
+if ! connected ;then
+  sudo systemctl restart connman
+  echo 'agent on' | connmanctl 2>/dev/null
+  cmst
+fi
+
+trace 'Autoconnect started'
+while : ;do
+  sleep 1
+  connected && continue
+  unset outage
+
+  # brute force restart on local network that frequently drops connection
+  while ! connected ;do
+    trace 'Re-establishing network connection..'
+    [ $quiet ] || notify X $delay critical 'Network unreachable' "Reconnecting $service"
+    connmanctl connect $service 2>/dev/null
+    for i in $(seq 1 $delay) ;do
+      sleep 1
+      outage=$(( ${outage:-0} + 1 ))
+      connected && break
+    done
+  done
+
+  # trap connman autoconnect that bypasses while loop
+  if [ $outage ] ;then
+    [ $quiet ] || notify X $delay low 'Network established' "$outage seconds"
+    trace 'Connected'
+  fi
+done
+
+# vim: set ft=sh: #

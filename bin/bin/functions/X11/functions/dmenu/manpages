@@ -1,0 +1,84 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... Man help
+
+# Note: hilighting a word in the manpage display (terminal) will automatically
+#       lookup that manpage when the terminal window is closed
+#       adding an apostrophe (') to the input word allows lookup of word tokens already
+#       in the manpage history with the apostrophe being removed (useful when
+#       the name is part of several descriptions)
+
+REBUILD='rebuild cache'
+
+while : ;do
+  if [ "$selection" ] ;then
+    echo "$selection" | grep -q ' ' && unset selection
+    echo "$selection" | grep -qv '[[:alpha:]]' && unset selection
+  fi
+
+  # highlighted lookup
+  if [ "$selection" ] ;then
+    man=$selection
+    [ $(echo "$man" | wc -w) -ne 1 ] && unset man || { [ $(whatis "$man" | wc -l) -eq 0 ] && unset man; }
+    [ -z $man ] && exec notify 3 critical "$selection" "No manual entry found"
+  else
+    # initial lookup
+    man=$(apropos . | cut -d' ' -f1 | sort -d | uniq | mhistory man | sed "1i$(X $REBUILD)" | 
+        rmenu 'Manpage' | cut -d':' -f3-)
+
+    if [ "${man#$(X)}" = "$REBUILD" ] ;then
+      notify low 'Updating manpage index cache' 'Please be patient..'
+      sudo mandb 2>/dev/null
+      continue
+    fi
+    [ $man ] && man=$(unquote $man) || exit
+    whatis $man >/dev/null || exec dmenu manpages
+  fi
+
+
+  # loop where multiple entries
+  while : ;do
+    # list possible man sections!
+    if [ $(whatis $man | wc -l) -gt 1 ] ;then
+      page=$(whatis $man | sed "s/) *-/)^$SEP/" | column -s^ -t | rmenu 'Section' -no-custom) || exit
+    else
+      page=$(whatis $man)
+      singleton=true
+    fi
+
+    page=$(echo $page | cut -d')' -f1 | sed -r 's/(.*) \((.*)/\2 \1/')
+
+    # display man page
+    if [ "$page" ] ;then
+      mhistory man $man
+      # xsel -c
+      term "$page" MAX $stack WAIT man "$page"
+
+      # subsequent manpages open on same frame
+      stack=STACK
+      # # selection highlighting does not appear to work
+      # highlighted man page entry?
+      # selection=$(xsel -o)
+      # [ "$selection" ] && break
+
+      # print hard copy?
+      set -- $page
+      if [ "$(echo 'no\nyes' | rmenu "Print $2 ($1)" -no-custom)" = yes ] ;then
+        # see http://www.cyberciti.biz/tips/how-do-i-print-out-a-linux-man-or-info-page.html
+        manpage=$(find /usr/share/man -name "$2.$1.gz")
+        if [ "$manpage" ] ;then
+          zcat "$manpage" | groff -man -Tps | lpr -P $PRINTER
+          pr eject
+        else
+          notify 3 critical "$page" "man $1 section not found"
+        fi
+      fi
+    fi
+    [ $singleton ] && exit
+  done
+done
+
+# vim: set ft=sh: #

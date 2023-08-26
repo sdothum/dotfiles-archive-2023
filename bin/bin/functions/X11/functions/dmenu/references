@@ -1,0 +1,19 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... E-books
+
+# ebook library
+library=${LIBRARY:-/net/media/ebooks/${1:-references}}
+cd $library
+
+# open file
+while book=$(ls -1 | grep -E '\.(epub|pdf)$' | sed -r 's/\.(epub|pdf)$//' | mhistory references | rmenu 'Document') || exit ;do
+  mhistory references "$book"
+  [ $focus ] || { focus frame; focus=true; }
+  zathura "$book".* 2>/dev/null
+done
+
+# vim: set ft=sh: #

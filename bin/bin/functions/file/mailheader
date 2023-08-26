@@ -1,0 +1,27 @@
+#!/usr/bin/ruby
+# sdothum - 2016 (c) wtfpl
+# encoding: UTF-8
+
+# File
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................. Email header
+
+require 'sanitize'
+require 'mail'
+require 'time'
+
+# view email (see rox)
+begin
+  mail = Mail.read(ARGV[0])
+  to = mail.to[0]
+  from = mail.from[0]
+  subject = mail.subject.gsub(/%20/, ' ').sub(/.*\/\/\/([^\/]*)\/\/\/.*/, '\1').downcase.strip.squeeze(' ')
+  date = mail.date.strftime("%Y-%m-%d %H:%M:%S")
+  print "Date: #{date}\n"
+  print "To: #{to}\n"
+  print "From: #{from}\n"
+  print "Subject: #{subject}\n"
+rescue
+  print "==> invalid mail #{ARGV[0]}\n" unless not ARGV[0]
+end

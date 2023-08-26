@@ -1,0 +1,27 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Media
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................ Media session
+
+usage() { echo "usage: $(basename $0) on | off"; exit 1; }
+
+V_DYNAMIC=/tmp/$(basename $0):dynamic
+
+case $1 in
+  on ) [ -e $DYNAMIC ] && mv $DYNAMIC $V_DYNAMIC
+       rm -f $MENU
+       conky clock stop
+       [ -e $BLACKBOARD ] || blackboard  # bypass blackboard toggling if already on
+       hdmi && pulse ;;                  # check hdmi audio
+  
+  off) [ -e $V_DYNAMIC ] && mv $V_DYNAMIC $DYNAMIC
+       conky clock auto
+       focus window                      # refresh panel title on close
+       pstat 'dmenu (media|movies|series)' || restore root
+       xdotool key Ctrl+space ;;         # clear potential pulse message
+  
+  *  ) usage ;;
+esac

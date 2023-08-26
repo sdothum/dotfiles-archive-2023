@@ -1,0 +1,55 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... Edit
+
+# update .pacnew system configs
+copy=$(mktemp)
+trap "rm -f $copy" EXIT
+while : ;do
+  file=$(sudo find /etc -name '*.pacnew' | sed 's,^/etc/,,; s/.pacnew$//')
+  if [ -z "$file" ] ;then
+    [ -e $copy ] && ditto WARNING 'zero (0) outstanding .pacnew files'
+    break
+  fi
+
+  file=$(echo "$file" | rmenu 'Merge .pacnew' -no-custom) || break
+  if [ $file ] ;then
+    pacnew=$(sudo find /etc -wholename "/etc/$file.pacnew")
+    cp $pacnew $copy
+    current=${pacnew%.pacnew}
+    echo $current
+    # gvimdiff for colorscheme, role for herbstluftwm rule
+    sudo vim -g -d --role=gvimdiff --nofork $pacnew $current
+
+    # use updated .pacnew
+    action='keep\ndelete\nuse'
+    if ! sudo cmp $pacnew $copy ;then
+      if [ "$(echo 'no\nyes' | rmenu "Update $file" -no-custom)" = yes ] ;then
+        sudo cp $current /tmp
+        sudo mv $pacnew $current
+        continue
+      else
+        action='restore\ndelete'
+      fi
+    fi
+
+    # keep / restore / delete / use .pacnew
+    while : ;do
+      action=$(echo "$action" | rmenu " $file.pacnew" -no-custom) || break
+      case $action in
+        keep   ) ;;
+        restore) sudo cp $copy $pacnew ;;
+        delete ) sudo mv $pacnew /tmp ;;
+        use    ) sudo cp $current /tmp; sudo mv $pacnew $current ;;
+      esac
+      break
+    done
+  else
+    break
+  fi
+done
+
+# vim: set ft=sh: #

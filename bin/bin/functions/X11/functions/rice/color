@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# X11 Desktop
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................. Conky colorN
+
+usage() { echo "usage: rice $(basename $0) <color>"; exit 1; }
+
+COLORS=$PALETTE/.theme
+
+[ $1 ] && grep "^$1.$(cat $THEME)" $COLORS | cut -d= -f2 || usage
+
+# vim: set ft=sh: #

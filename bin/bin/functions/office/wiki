@@ -1,0 +1,22 @@
+#!/usr/bin/fish
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .......................................................... the darnedest thing
+
+function usage; echo "usage: "(basename (status filename))" <search>"; exit 1; end
+
+test "$argv[1]" || usage
+cd $HOME/vimwiki
+set -g query (echo "$argv[1]" | sed -r 's/([{}])/\\1/g')
+
+for i in (al "$query")
+  set url http://thedarnedestthing:8000/(basename $i | sed 's/ /%20/g; s/.wiki//')
+  ditto url $url
+  qutebrowser $url
+  pwait qutebrowser
+end
+
+#  vim: set ft=sh: #

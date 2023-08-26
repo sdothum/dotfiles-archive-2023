@@ -1,0 +1,35 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... Session
+
+default=reboot
+
+# disconnect nfs to prevent shutdown wait..
+disconnect() {
+  if ! server ;then
+    pstat rsync && notify 3 critical 'Rsync in progress' 'Waiting..'
+    pwait rsync
+  fi
+  rm -f /tmp/login:console
+  quit
+}
+
+actions() { echo "lock\nlogout\nsuspend\nreboot\nshutdown"; }
+
+# quit!
+cmd=$default
+while cmd=$(actions | rmenu 'Session' $cmd -no-custom) || exit ;do
+  case $cmd in
+    lock    ) lock_screen ;;
+    logout  ) sudo kill -TERM X ;;
+    suspend ) [ -e /sbin/systemctl ] && sudo systemctl suspend || sudo pm-suspend ;;
+    reboot  ) disconnect; [ -e /sbin/systemctl ] && sudo systemctl reboot || sudo /bin/reboot ;;
+    shutdown) disconnect; [ -e /sbin/systemctl ] && sudo systemctl poweroff || { [ -e /sbin/poweroff ] && sudo poweroff || sudo shutdown -h now; } ;;
+  esac
+  break
+done
+
+# vim: set ft=sh: #

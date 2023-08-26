@@ -1,0 +1,33 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Web
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .............................................................. Google hangouts
+
+BROWSER=luakit  # has better input handling than qutebrowser
+HANGOUTS=$SESSION/hangouts
+
+# surf -z1.15 -C $(dirname $0)/.hangouts:stylesheet.css $(cat $HANGOUTS) &  # fit input field
+if [ $BROWSER = luakit ] ;then
+  luakit $(cat $HANGOUTS) &
+else
+  /usr/bin/qutebrowser --target tab --override-restore $(cat $HANGOUTS) &
+fi
+
+xsync 'Gmail'
+
+if [ $QUTEBROWSER ] ;then
+  if [ -e $HLWM:hangouts ] ;then
+    keyboard off  # disable keyboard to prevent disrupting following :command
+    sleep 2       # pause long enough for window focus
+    xdotool key 'Y'
+    keyboard on   # enable keyboard
+  else
+    notify 15 critical 'MESSAGE \ hangouts' '"Permission request" response required'
+    touch $HLWM:hangouts
+  fi
+fi
+
+# vim: set ft=sh: #

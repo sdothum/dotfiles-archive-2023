@@ -1,0 +1,43 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# X11 Demo
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... Xdotool
+
+# Usage: demo [<message> [record]], see functions/demo
+#        msg scripts set PLAYBACK
+
+TRACE=true
+DELAY=1
+
+# Playback format:
+#   # comment
+#   ! command (some xdotool key triplets are problematic)
+#   xdotool key command (everything else)
+
+demo() {
+  echo "$PLAYBACK" | while read line ;do
+    [ $TRACE ] && echo $line
+    set -- $(echo $line)
+    case $1 in
+      '#') continue ;;
+      '!') shift; $@ ;;
+      *  ) [ "$line" ] && xdotool key --delay 5 $line ;;
+    esac
+    sleep $DELAY
+  done
+}
+
+msg=$1
+shift
+if [ -e $(dirname $0)/functions/demo/$msg ] ;then
+  [ "$1" = capture ] && { capture DVI-1 & sleep $DELAY; }
+  . $(dirname $0)/functions/demo/$msg
+  demo
+else
+  usage $0
+fi
+
+# vim: set ft=sh: #

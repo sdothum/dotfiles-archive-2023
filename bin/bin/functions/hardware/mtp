@@ -1,0 +1,35 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Hardware
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... Device
+
+# Usage: mtp [mount | umount | mounted | ls], see nnn, eject (plugin)
+
+MTP=$HOME/mtp              # mount point
+
+name()    { ls -1 $MTP; }  # device mount name
+device()  { jmtpfs -l | grep -q '^Device [0-9]'; }
+mounted() { mount | grep -q "^jmtpfs on $MTP "; }
+
+case $1 in
+  mount  ) if $(device) ;then
+             [ "$(name)" = '' ] && { jmtpfs $MTP >/dev/null && notify "$(name)" "$MTP mounted" || notify critical "$MTP" "mount failed"; } || notify "$(name)" 'already mounted'
+           else
+             exit 1
+           fi ;;
+  
+  u*mount) if mounted ;then
+             name=$(name)
+             echo $(pwd) | grep -q "$MTP/$name" && { notify critical "$name" "$MTP busy"; exit 1; }
+             fusermount -u $MTP && notify "$name" "$MTP unmounted" || notify critical "$name" "$MTP umount failed"
+           fi ;;
+  
+  mounted) mounted ;;
+  ls     ) $(device) && jmtpfs -l ;;
+  *      ) echo $MTP ;;
+esac
+
+# vim: set ft=sh: #

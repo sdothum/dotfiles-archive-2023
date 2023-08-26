@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Network
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... Monitor
+
+alpine && BIN=/bin || BIN=/usr/bin
+
+# network statistics
+echo "netstat -tnp $1"
+sudo $BIN/netstat -tnp $1
+
+# vim: set ft=sh: #

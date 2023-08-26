@@ -1,0 +1,59 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Package management
+
+# Note: ignorepkg any packages that abort upgrade
+
+# update aur kludge to prevent pacupg --aur from re-installing aur package updates
+# $wrappaur=true
+
+country=Canada
+wrappaur=$(aurwrapper)
+
+# AUR package manager
+if [ -z $1 ] ;then
+  if cpu arm ;then
+    $wrappaur -Syuu
+    exit
+  fi
+  # mirrorlist
+  ifno "mirrorlist $country" || { mirrorlist $country; sudo pacman-key -u; }
+
+  # see post_install grub-btrfs-git
+  [ -x /etc/grub.d/41_snapshots-btrfs ] || sudo chmod -c 755 /etc/grub.d/41_snapshots-btrfs
+  snapper --verbose cleanup number
+
+  # ifno && (a) || (b) shortform cannot be used because return of (a) may be false
+  ifno 'upgrade --devel packages' && aur=--aur || aur=--devel
+
+  # pacupg $aur doen't create new boot snapshot, see $wrappaur
+  if [ $wrappaur ] ;then
+    $wrappaur -Syuu --aur
+    pacupg
+  else
+    pacupg $aur
+  fi
+
+  # update any .pacnew configs
+  pacnew=$(sudo find /etc -name '*.pacnew')
+  if [ "$pacnew" ] ;then
+    echo "$pacnew"
+    ifno 'merge .pacnew files' || dmenu pacnews
+  fi
+  orphans
+  ifno 'apply post arch install updates and cleanup' || $HOME/build/arch/archlinux-update
+else
+  $wrappaur $@
+fi
+
+# prune snapper logs
+rollback=$(sudo grep 'NUMBER_LIMIT=' /etc/snapper/configs/root | cut -d\" -f2 | cut -d- -f2)
+sudo rm -fv $(ls -1 /var/local/log/pacupg/*.log | head -n -$rollback)
+# clear status
+exit 0
+
+# vim: set ft=sh: #

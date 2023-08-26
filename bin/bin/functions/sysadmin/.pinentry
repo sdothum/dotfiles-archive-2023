@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Sysadmin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... Password
+
+PINENTRY=/usr/bin/pinentry
+
+# set appropriate pinentry UI
+console && sudo ln -sf $PINENTRY-curses $PINENTRY || sudo ln -sf $PINENTRY-qt $PINENTRY
+ls -l --color $PINENTRY
+
+# vim: set ft=sh: #

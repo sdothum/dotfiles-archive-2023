@@ -1,0 +1,46 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................... 
+
+# Note: any hilighted word (clipboard entry) upon launch will be automatically looked up
+#       hilighting a word in the dictionary display (terminal) will automatically
+#       lookup that word when the terminal window is closed
+#       adding an apostrophe (') to the input word allows lookup of word tokens already
+#       in the dictionary history with the apostrophe being removed
+
+# lookup selection (unless it is a non-word), else present history tape
+
+THESAURUS='thesaurus'
+
+selection=$(xsel -o | head -1)
+xsel -c
+if [ "$selection" ] ;then
+  echo "$selection" | grep -q ' ' && unset selection
+  echo "$selection" | grep -q '^[[:alpha:]]*$' || unset selection
+fi
+
+if [ "$selection" ] ;then word=$selection
+else                      word=$(echo | mhistory dictionary | sed "1i$(X $THESAURUS)" | rmenu 'Dictionary') || exit
+fi
+[ "${word#$(X)}" = "$THESAURUS" ] && exec dmenu thesaurus
+word=$(unquote $word)
+
+# swap stderr with stdout to capture dict word not found hints
+while hints=$(dict "$word" >/dev/null 2>&1 | cut -d: -f2 | xargs -n1 | sort -uf) ;do
+  [ "$hints" ] || break
+  # "No definitions found for $word" sorted above, hence, ordered match..
+  echo "$hints" | tr '\n' ' ' | grep -E -q 'definitions.*for.*found.*No'
+  if [ $? -eq 0 ] ;then word=$(echo | rmenu "No definitions found for \"$word\"") || exit
+  else                  word=$(echo "$hints" | rmenu 'Spelling Hints')            || exit
+  fi
+  word=$(unquote $word)
+done
+
+# spawn ddict within terminal command to select (hilight) next word
+mhistory dictionary "$word"
+term "$word" STACK SHELL "dict \"$word\" | less && dmenu dict"
+
+# vim: set ft=sh: #

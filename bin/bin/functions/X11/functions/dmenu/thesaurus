@@ -1,0 +1,42 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................... Thesaurus
+
+# Note: any hilighted word (clipboard entry) upon launch will be automatically looked up
+#       hilighting a word in the thesaurus display (terminal) will automatically
+#       lookup that word when the terminal window is closed
+#       adding an apostrophe (') to the input word allows lookup of word tokens already
+#       in the thesaurus history with the apostrophe being removed
+
+DICTIONARY='dictionary'
+
+# lookup selection (unless it is a non-word), else present history tape
+selection=$(xsel -o) && xsel -c
+if [ "$selection" ] ;then
+  echo "$selection" | grep -q ' ' && unset selection
+  echo "$selection" | grep -q '^[[:alpha:]]*$' || unset selection
+fi
+
+if [ "$selection" ] ;then word=$selection
+else                      word=$(echo | mhistory dictionary | sed "1i$(X $DICTIONARY)" | rmenu 'Thesaurus') || exit
+fi
+[ "${word#$(X)}" = "$DICTIONARY" ] && exec dmenu dict
+word=$(unquote $word)
+
+# swap stderr with stdout to capture thesaurus word not found hints
+while hints=$(aiksaurus "$word" 2>/dev/null) ;do
+  echo $hints
+  echo "$hints" | grep -q '\*\*\* No synonyms known. \*\*\*' || break
+  word=$(echo "$hints" | sed '1,2d; s/\t//' | rmenu 'Similar words') || exit
+  word=$(unquote $word)
+done
+
+# spawn thesaurus within terminal command to select (hilight) next word
+mhistory dictionary "$word"
+lastword=$word
+term "$word" STACK SHELL "aiksaurus \"$word\" | less && dmenu thesaurus"
+
+# vim: set ft=sh: #

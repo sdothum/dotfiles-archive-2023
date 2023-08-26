@@ -1,0 +1,17 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Package management
+
+# remove orphans
+orphans=$(pacman -Qdtq)
+
+if [ "$orphans" ] ;then
+  echo $orphans
+  ifno 'remove orphan packages' || { for i in $orphans ;do sudo pacman -Rsn $i ;done }
+fi
+
+# vim: set ft=sh: #

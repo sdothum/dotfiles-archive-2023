@@ -1,0 +1,12 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Dev
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .............................................................. ripgrep wrapper
+
+# wrapper for notational-fzf-vim
+/usr/bin/rg --unrestricted --ignore-file $HOME/.agignore $@
+
+# vim: set ft=sh: #

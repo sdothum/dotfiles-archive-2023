@@ -1,0 +1,57 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .......................................................... Getting things done
+
+# Usage: reminder [<date string>], see date --date
+#        reminder [<weeks>], (default) 4 weeks (0) current month
+#        reminder alarms
+
+REMINDERS=${REMINDERS:-$HOME/.reminders}  # required by cron (root invocaion)
+
+# import user path
+. $HOME/bin/functions/shell/user_path
+
+list() {
+  # ignore daily reminders
+  pgrep -f 'dmenu reminder' >/dev/null || ditto today "$(date)"
+  remind -s$1 $REMINDERS | grep '[ap]m' | nocolor | cut -d' ' -f1,6- |
+      sed "s/ /^/; s/ /  ^$SEP /; s,/,.,g" | column -R2 -s^ -t
+}
+
+alarms() {
+  now=$(( $(date -d now +%s) - 60 ))  # report matching times (minute adjustment)
+  remind -s+1 $REMINDERS | grep '[ap]m' | nocolor | grep "$1" | cut -d' ' -f6- | while read time todo ;do
+    period=$(echo $time | sed 's/.*[0-9]//')
+    start=${time%%-*}
+    [ "$start" = "${start%m}" ] && start=${start}$period
+    [ $(date -d $start +%s) -ge $now ] && notify X critical "Reminder $time" "$todo"
+  done
+}
+
+reminders() {
+  cp $REMINDERS $HOME/tmp
+  # Note: cannot substitute $@ in date --date
+  day=$@
+  date --date "$day" >/dev/null 2>&1 || day=tomorrow
+  echo $day | grep -E -q ':|[ap]m' && M=%M || M=00
+  sed --follow-symlinks -i "$ aREM $(date "+%b %d %Y AT %H:$M" --date "$day") DURATION 1:00 MSG " $REMINDERS
+  v -f -c 'normal|G' $REMINDERS
+}
+
+case $1 in
+  ''        ) list +4 ;;
+  0         ) list ;;
+  
+  [1-9]     |\
+  [0-9][0-9]) list +$1 ;;
+  
+  alarm*    ) alarms ${2:-$(date "+%Y/%m/%d")} ;;
+  *         ) reminders $@ ;;
+esac
+
+
+# vim: set ft=sh: #

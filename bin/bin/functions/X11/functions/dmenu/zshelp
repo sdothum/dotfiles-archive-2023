@@ -1,0 +1,13 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... Help
+
+# dmenu zsh help pages
+page=$(zsh -c 'run-help' | sed '1,2d; s/ /\n/g' | grep -v '^$' | sort -d | rmenu 'Help' -no-custom) || exit
+
+term "$page" SHELL "run-help $page | less"
+
+# vim: set ft=sh: #

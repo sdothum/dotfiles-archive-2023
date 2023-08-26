@@ -1,0 +1,17 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ${COLORS} defined in env
+
+# ......................................................... Distribution install
+
+# apply user specific configuration, see post_install
+if [ -s $HOME/build/$(dist)/user_install/$1 ] ;then
+  ditto user_install "$1"
+  . $HOME/build/$(dist)/user_install/$1
+fi
+
+# vim: set ft=sh: #

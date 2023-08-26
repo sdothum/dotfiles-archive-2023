@@ -1,0 +1,24 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# X11 Desktop
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ Conky
+
+# Usage: conky [<message>], see functions/conky
+#        conky, start daemon
+
+if [ $1 ] ;then
+  msg=$1
+  shift
+  if [ -e $(dirname $0)/functions/conky/$msg ] ;then
+    . $(dirname $0)/functions/conky/$msg $@
+  else
+    usage $0
+  fi
+else
+  /usr/bin/conky -q &
+fi
+
+# vim: set ft=sh: #

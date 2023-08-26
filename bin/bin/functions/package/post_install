@@ -1,0 +1,19 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ${COLORS} defined in env
+
+# ......................................................... Distribution install
+
+# complete package configuration
+if [ -s $HOME/build/$(dist)/post_install/$1 ] ;then
+  ditto post_install "$1"
+  . $HOME/build/$(dist)/post_install/$@  # manual post_install to pass optional parameters
+fi
+
+user_install $1
+
+# vim: set ft=sh: #

@@ -1,0 +1,27 @@
+# sdothum - 2016 (c) wtfpl
+# see xb, .xb_actions
+
+keep=3  # last n kernels
+
+# prune kernel versions
+prune() {
+  cpu atom && sudo vkpurge rm '5.*' # has 4.x and 5.x versions updates but runs 4.x only
+  kernels=$(vkpurge list | sort -V | head -n -$keep)
+  [ "$kernels" ] || return && { echo ${YELLOW}$kernels; ifyes 'prune kernels' || return; }
+  sudo vkpurge rm $kernels
+}
+
+# trim branches of older kernels
+trim() {
+  cd /boot
+  for i in $(xbps-query -l | cut -d' ' -f2 | grep '^linux' | grep -E -v 'headers|firmware|linux-' | sort -V | head -n -1 ) ;do
+    version=${i#linux*-}
+    leaves=$(ls -1 *${version%.*}.* | grep -v $version)
+    [ "$leaves" ] && sudo rm -v $leaves
+  done
+} 
+
+[ $keep ] && { prune; trim; }
+reboot
+
+# vim: set ft=sh: #

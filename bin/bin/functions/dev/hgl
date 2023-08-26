@@ -1,0 +1,23 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Dev
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................... Backup log
+
+# Usage: hgl [<query>]
+
+REPO=${REPO:-$STOW}
+
+log() { hg --color=always log --cwd $REPO | grep -E -v '^(user|date|tag|parent)' | tac; }
+
+if [ "$1" ] ;then
+  # sed remove trailing blank line
+  log | pcregrep -M ".*$1.*\n.*\n.*\n*" | sed ':a;/^\n*$/{$d;N;};/\n$/ba'
+else
+  # sed remove leading blank line.. yes, this is anal
+  log | sed '/./,$!d'
+fi
+
+# vim: set ft=sh: #

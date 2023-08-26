@@ -1,0 +1,25 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................... Distribution install
+
+usage() { echo "usage: $(basename $0) <regex> <crontab>"; exit 1; }
+
+cron() {
+  entry=$(sudo grep "$1" /var/spool/cron/$USER 2>/dev/null)
+  [ "$entry" ] || return 1
+  ditto cron "$entry"
+  return 0 
+}
+
+[ $# -eq 2 ] || usage
+cron "$1" && exit 
+
+echo "$(crontab -l)
+$2" | sudo crontab -u $USER -
+cron "$1"
+
+# vim: set ft=sh: #

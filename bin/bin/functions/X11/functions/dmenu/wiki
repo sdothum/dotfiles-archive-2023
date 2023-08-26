@@ -1,0 +1,72 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... Wiki
+
+# Usage: dmenu wiki [diary]
+
+EDIT='new'
+DIARY='diary'
+
+WIKIS="$HOME/vimwiki"
+[ $1 ] && prompt=Diary || { option=-v; prompt=Wiki; menu="\n$(X $DIARY)"; }
+
+files() { fcache f $WIKIS | grep $option '/diary/' | grep '\.wiki$' | sed 's/\.wiki$//' | grep -E -v '/(diary|index)$'; }
+dirs()  { find -L $WIKIS -maxdepth 2 -type d | sort | exclude 'mail|templates|xref' | grep $option '/diary' | sed "s,$WIKIS/,,; 1d"; }
+
+# recover full pathname
+expand() {
+  [ -e "$WIKIS/$1.wiki" ] || return 1
+  echo "$WIKIS/$1.wiki"
+  return 0
+}
+
+# apostrophes in filename cannot be handled by duochrome statusline..
+apostrophe_check() {
+  # so substitute a linked file with carets
+  [ "${file%\'*}" = "$file" ] || { link=/tmp/$(echo "${file##*/}" | tr \' ^); ln -sf "$file" "$link"; file=$link; }
+}
+
+add() {
+  wiki=$(dirs | rmenu "$prompt" -no-custom) || exit
+  [ $1 ] || { [ $prompt = Diary ] && title=$(date '+%Y-%m-%d'); } || title=$(echo | rmenu 'Title') || exit
+  mhistory wiki$1 "$title^$SEP $wiki"
+  file=$WIKIS/$wiki/$title.wiki
+  # prepend h1 title
+  echo "# $title\n\n" >$file
+  apostrophe_check
+  v -c ':normal! G' "$file"
+}
+
+wiki() {
+  mhistory wiki$1 "$(echo $file | sed "s/ *$SEP/^$SEP/")"
+  file=$(echo $file | sed -r "s,(.*)  *$SEP  *(.*),\2/\1,")
+  if expand "$file" >/dev/null ;then
+    file="$(expand "$file")"
+    apostrophe_check
+    v "$file"
+    # history file cleanup usually precedes impending edit
+    # expand "$file" | grep -q dmenu/.history && { pwait "vim.*"$(expand "$file")""; dmenu edit; }
+  else
+    error=": ${file##*/} ∉ ${file%/*}"
+    sed -i "\|${file##*/}.$SEP ${file%/*}$|d" $HISTORY/wiki
+    file=${file##*/}
+    return 1
+  fi
+}
+
+while : ;do
+  file=$(files | sed "s,$WIKIS/,," | sed -r "s,(.*)/([^/]*)$,\2^$SEP \1," | sort | mhistory wiki$1 | column -s^ -t |
+      sed  "2i$(X $EDIT)$menu" | rmenu "Edit $prompt$error" -no-custom) || exit
+
+  case ${file#$(X)} in
+    "$DIARY") exec dmenu wiki diary ;;
+    "$EDIT" ) add ;;
+    *       ) wiki || continue ;;
+  esac
+  break
+done
+
+# vim: set ft=sh: #

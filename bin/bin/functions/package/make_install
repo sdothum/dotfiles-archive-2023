@@ -1,0 +1,20 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................... Distribution install
+
+BUILDIR=$HOME/build/$(dist)
+DEPENDENCIES=$BUILDIR/bundle/deps:$1
+
+heading : $1
+
+[ -e $DEPENDENCIES ] && sudo xbps-install -y $(cat $DEPENDENCIES)  # dependencies
+cd /tmp
+. $BUILDIR/make_install/$1
+
+post_install $1
+
+# vim: set ft=sh: #

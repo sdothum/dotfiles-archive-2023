@@ -1,0 +1,24 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Network
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... Connect
+
+usage() { echo "usage: $(basename $0) off | on | [--properties]"; exit 1; }
+
+# wireless interface
+if [ $1 ] ;then wifi=$1; shift
+else            wifi=Ravens-5G
+fi
+
+network=$(connmanctl services | grep $wifi | awk '{ print $3 }')
+
+case $1 in
+  off) wireless | grep 'address=' && connmanctl disconnect $network ;;
+  on ) wireless | grep 'address=' || connmanctl connect $network ;;
+  *  ) connmanctl services --properties $network; echo; usage ;;
+esac
+
+# vim: set ft=sh: #

@@ -1,0 +1,35 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Log
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... Heading
+
+# heading eye candy specifically for install logs
+delimeter=':'
+
+# dash shell registers utf-8 characters as 3 bytes so can't test ${#1} = 1
+if echo "$1" | grep -q '^.$' ;then
+  if echo "$1" | grep -qv '[[:alnum:]]' ;then
+    # specifying default leader character adds timestamp!
+    if [ "$1"q = : ] ;then
+      trace=true; echo
+    else
+      delimeter=$1
+    fi
+    shift
+  fi
+fi
+
+message=$@
+
+# leader=$(head -c $(echo "($(tput cols) - $(echo "   $message   " | wc -L)) / 2" | bc) </dev/zero | tr '\0' 'X')
+leader=$(head -c $(( ($(tput cols) - $(echo "   $message   " | wc -L)) / 2 )) </dev/zero | tr '\0' '^')
+leader=$(echo $leader | sed "s/[\^]/$delimeter/g")
+[ $(echo "$leader   $message   $leader" | wc -L) -lt $(tput cols) ] && pad=$delimeter || unset pad
+
+attention "$leader   $message   $leader$pad"
+[ $trace ] && { echo "$(timestamp)"; unset trace; }
+
+# vim: set ft=sh: #

@@ -1,0 +1,14 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# UI
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................... Clipboard
+
+# gpaste history add not available on raspberry pi, and xsel hangs(?) script
+# cpu arm && echo -n "$@" | xsel -b || gpaste-client file "$@"
+cpu arm && exit
+[ $1 ] && gpaste-client file "$@" || gpaste-client | head -1 | cut -d' ' -f2
+
+# vim: set ft=sh: #

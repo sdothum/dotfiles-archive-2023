@@ -1,0 +1,19 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Hardware
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... Keyboard
+
+# between colemak (backspace) and normal
+if [ "$_backspace_" = Caps_Lock ] ;then
+  unset _backspace_
+  xmodmap -e 'keycode 22 = BackSpace'
+else
+  # undo initial colemak assignment
+  export _backspace_=Caps_Lock
+  xmodmap -e 'keycode 22 = Caps_Lock'
+fi
+
+# vim: set ft=sh: #

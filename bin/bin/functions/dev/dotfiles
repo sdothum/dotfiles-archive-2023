@@ -1,0 +1,139 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Dev
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ${COLORS} defined in env
+
+# .......................................................................... Git
+
+usage() {
+  echo "usage: $(basename $0) [<stowdir>] add [-f] <package>[/<filespec>]* | rm <filespec>
+                comment [<comment>] | redo | undo
+                init | bulk <comment> | sync
+                folders | ignore | errors | warning | list | log"
+  ditto rules "$DOTFILES"
+  exit 1
+}
+
+# list of folders under stow root
+DOTFILES=$(dirname $0)/.dotfiles:folders
+
+[ -d "$1" ] && { STOW="$1"; shift; }  # see config.fish
+[ -e $HOME/.git/stow ] && ln -sf $HOME/.git/stow $HOME/stow/.git
+# update github dotfiles
+# see .gitignore, to remove items from remote repository
+# git rm --cached <filespec>
+# git rm --cached -r <dir>
+
+cd $STOW
+git reset >/dev/null  # undo any previous aborted dotfiles
+# syncthing housekeeping
+find . -name '*.sync-conflict-*' -exec rm {} \;
+find . -name '*.syncthing.hsts.tmp' -exec rm {} \;
+sudo find . -name '.uuid' -exec rm {} \;
+
+init() {
+  git init
+  git add README.md
+  git commit --message="refresh commit"
+  git branch -M main
+  git remote add origin git+ssh://git@github.com/sdothum/dotfiles.git
+  git push -u origin main
+  git remote set-url origin git+ssh://git@github.com/sdothum/dotfiles.git
+
+  dotfiles bulk "fresh commit"
+}
+
+commit() {
+  echo
+  git commit --message="$DESC"
+  git push --force --set-upstream origin main
+}
+
+pending() {
+  echo $pending | sed -r "s/' (add|remove) '/\n\1 /g; s/^(add|remove) '/\1 /; s/'$//" | while read pending ;do
+    action=$(echo $pending | cut -d' ' -f1)
+    [ $action = remove ] && info=INFO || unset info
+    ditto $info $action "$(echo $pending | cut -d' ' -f2-)"
+  done
+  if [ $NOPROMPT ] ;then
+    commit
+  else
+    printf "commit? [Abort]/comment.. : ${WHITE}"
+    read DESC
+    printf "${NOCOLOR}"
+    [ "$DESC" ] || exit 1
+    ifyes "Push: $DESC" && commit
+  fi
+}
+
+# add !**<path> to .gitignore for any <path> force warnings
+add() {
+  file="$STOW/$1"
+  if [ $(ls -Ar $file | wc -l) -gt 0 ] ;then
+    pending=$(git add -v $force "$file" )
+  else
+    ditto notfound "$file"
+    read reply
+  fi
+  [ "$pending" ] && pending
+}
+
+rm() {
+  if [ $1 ] ;then
+    DESC=$@
+    git rm -r --cached $DESC
+    git commit --message="Remove directory \"$DESC\""
+    git push origin main
+  fi
+}
+
+sync() {
+  for i in * ;do
+    ifno "sync $i" || dotfiles add $i
+  done
+}
+
+# any updates to push?
+# changes=$(git diff --name-only)
+# [ -z "$changes" ] && [ -z $1 ] && exit
+# [ "$changes" ] && echo "$changes"
+
+repo() { while read file <&3 ;do add "$file" ;done 3< $DOTFILES; }
+
+# $@ substitution within complex expressions is more predictably handled by var substitution
+unset pending
+case $1 in
+  help   ) usage ;;
+  ''     ) repo ;;  # input file descriptor to handle filename spaces
+  bulk   ) NOPROMPT=true; DESC="${2:-bulk commit}"; repo ;;
+  add    ) shift; [ "$1" = '-f' ] && { force=-f; shift; }
+           while [ "$1" ] ;do add "$1"; shift ;done ;;                # handle filename spaces
+  
+  amend    |\
+  comment) shift; DESC=$@
+           [ "$DESC" ] && git commit --amend --no-edit --message="$DESC" || git commit --amend ;;
+  
+  error*   |\
+  warn*  ) git commit -m "warning messages" >/tmp/dotfiles:messages
+           vim -g /tmp/dotfiles:messages ;;
+
+  folder*) vim -g $DOTFILES .gitignore ;;
+  ignore ) vim -g .gitignore $DOTFILES ;;
+  init   ) init ;;
+  list   ) git log --pretty=format:"%h - %an, %ar : %s" ;;
+  log    ) git log | less ;;
+  
+  redo     |\
+  undo   ) git reset --soft HEAD~
+           dotfiles ;;
+  
+  reset  ) git reset ;;
+  rm     ) shift; rm $@ ;;
+  sync   ) sync ;;
+  *      ) add $@ ;;
+esac
+
+# vim: set ft=sh: #

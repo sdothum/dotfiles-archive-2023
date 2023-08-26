@@ -1,0 +1,130 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... Movies
+
+# Usage: dmenu movies [cache] [animation]
+
+# Library structure:
+# ../videos
+#        ../movies
+#               ../title.YEAR.*  (movie)
+
+LAST='last watched'
+NAME='sort by name'
+DATE='sort by date'
+TOGGLE='toggle date order'
+USENET='usenet'
+FILE='file manager'
+CATALOGUE='catalogue new movies'
+
+# preload cache option
+[ "$1" = cache ] && { shift; cache=true; }
+
+category=${1:-movies}
+PASSPORT="/run/media/$USER/My Passport/$category"
+catlg=$CACHEDIR/dmenu:$category
+[ -d "$PASSPORT" ] && { library=$PASSPORT; rm -rf $catlg; usb=true; } || library=${LIBRARY:-/net/media/videos/$category}
+nzb=/net/downloads/nzbs/completed
+playlist="$library/.playlist"
+retitle="$library/.retitle"
+rm -f "$retitle"
+
+movies="/run/media/$USER/My Passport"  # create symlinks to avoid space parsing errors
+passport=/tmp/movies:passport
+# pathname containing spaces cannot override link, hence rm+ln vesus ln -sf
+[ -d "$movies/movies" ] && { rm -f $passport; ln -s "$movies/movies" $passport; } || { [ -d "$movies/Movies" ] && { rm -f $passport; ln -s "$movies/Movies" $passport; } }
+[ -L $passport ] && copy='copy\n'
+
+# unset debug to remove exit from menu items
+debug='\nexit'
+find "$library" -name '*sample*' -exec rm {} \; &
+
+# list latest movie additions first
+T=t
+cache() {
+  notify low 'Movies' 'Caching library..'
+  retitle "$library" >>$retitle
+  [ -e "$playlist" ] || echo >"$playlist"
+  cat /dev/null >$catlg
+  ls -1$T$R "$library" | sed -r 's/\./ /g; s/(.*) ([12][0-9][0-9][0-9])( .*)*/\1  (\2)/' >/tmp/dmenu:$category
+  playlist /tmp/dmenu:$category "$playlist" >$catlg &
+  unset movie
+}
+
+toggle()   { [ $T ] && echo "\\\\\\n$(X $TOGGLE)"; }
+uncatlgd() {  [ $(find $nzb -maxdepth 1 -type d | wc -l) -gt 1 ]; }
+
+# move downloads to media folder
+catalogue() {
+  for i in $(find $nzb -maxdepth 3 -regex '.*\(avi\|mkv\|mp4\)') ;do
+    mv ${i%/*} $library
+  done
+  unset movie
+}
+
+# any new media added?
+if [ -s $catlg ] ;then
+  stest -dqr -n $catlg "$library" && cache
+else
+  cache force
+fi
+[ $cache ] && exit
+
+options() {
+  uncatlgd && edit="\\\\\\n$(X $CATALOGUE)" || unset edit
+  grep -q '[^ ]' "$playlist" && echo "$(X $LAST)\\\n$(X $USENET)\\\n$(X $FILE)\\\n$(X $(sortlist $T))$(toggle)$edit" || echo "$(X $(sortlist $T))$(toggle)$edit"
+}
+
+playback() {
+  while : ;do
+    action=$(echo "${copy}play\nmrqe\nimdb\nmanage\ndelete\nmark$debug" | rmenu "$movie" -no-custom) || break
+    title=$(echo "$movie" | sed 's/  (\([12][0-9][0-9][0-9]\))$/ \1/; s/ /./g')
+    video=$(find "$library" -maxdepth 1 -type d -regex ".*/${title}.*")
+
+    case $action in
+      play  ) if [ $(echo "$video" | wc -l) -gt 1 ] ;then
+                notify 3 critical "$movie" "Duplicate movie files found"
+                term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger "$library"
+              fi
+              mhistory "$playlist" "$movie"
+              play "$video" "$movie"
+              cache  # update deletes
+              break ;;
+  
+      copy  ) cp -rf "$video" $passport; break ;;
+      mrqe  ) surf "http://www.mrqe.com/search?q=$movie"; pwait "surf http://www.mrqe.com/search?q=$movie" ;;
+      imdb  ) surf "http://www.imdb.com/find?s=all&q=$movie"; pwait "surf http://www.imdb.com/find?s=all&q=$movie" ;;
+      manage) term 'movies' WAIT nnn "$video" || term 'movies' WAIT nnn "$library"; cache; break ;;
+      delete) rm -rf "$video"; cache; break ;;
+      mark  ) mhistory "$playlist" "$movie"; cache; break ;;
+      exit  ) exit ;;
+    esac
+  done
+}
+
+while : ;do
+  # rebuilding catalogue?
+  [ ! -s $catlg ] && { sleep 0.1; continue; }
+  # focus monitor menu originally presented on
+  [ $monitor ] && herbstclient focus_monitor $monitor
+
+  uncatlgd && movie=5  # highlight update catalogue
+  movie=$(cat "$catlg" | sed "1i$(options)" | rmenu 'Movie' "$movie" -no-custom) || break
+
+  [ "$movie" = "$(X $LAST)" ] && movie=$(grep '^[a-zA-Z0-9]' $playlist | head -1)
+  case ${movie#$(X)} in
+    "$NAME"     ) unset T; cache ;;
+    "$DATE"     ) T=t; cache ;;
+    "$TOGGLE"   ) [ $R ] && unset R || R=r; cache ;;
+    "$USENET"   ) nzbgeek; unset movie ;;
+    # "$FILE"   ) killall 'ROX-Filer'; rox $nzb; rox "$library"; pwait "ROX-Filer"; cache ;;
+    "$FILE"     ) killall 'nnn' 2>/dev/null; term 'movies' WAIT nnn -s movies; cache; continue ;;
+    "$CATALOGUE") catalogue; cache; movie=4; continue ;;  # highlight added movie
+    *           ) movie=$(echo "$movie" | sed "s/^$SEP //"); playback ;;
+  esac
+done
+
+# vim: set ft=sh: #

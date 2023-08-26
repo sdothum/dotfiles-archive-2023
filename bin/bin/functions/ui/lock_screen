@@ -1,0 +1,13 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# UI
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................. Lock screen
+
+conky clock on
+alock -a pam -b none -i frame:width=2
+conky clock
+
+# vim: set ft=sh: #

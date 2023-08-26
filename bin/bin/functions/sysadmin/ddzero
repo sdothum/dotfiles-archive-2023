@@ -1,0 +1,21 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Sysadmin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................... Zero drive
+
+usage() { echo "usage: $(basename $0) <drive>, $(ls /dev/sd? | sed 's,/dev/sd,,' | tr '\n' ' ')"; exit 1; }
+
+case $1 in
+  [a-z]) [ -b /dev/sd$1 ] || usage ;;
+  *    ) usage ;;
+esac
+
+ifno "zero /dev/sd$1" && exit
+ifno 'are you sure'   && exit
+
+sudo dd if=/dev/zero of=/dev/sd$1 bs=1M
+
+# vim: set ft=sh: #

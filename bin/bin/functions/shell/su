@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................... su
+
+alpine || SU=/usr
+
+# manually pass ssh env to su session (see prompt shum)
+[ "$SSH_CLIENT" ] && echo $SSH_CLIENT >/tmp/.ssh_client
+$SU/bin/su $@
+
+# vim: set ft=sh: #

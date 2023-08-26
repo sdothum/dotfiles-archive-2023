@@ -1,0 +1,17 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Process
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................... Shell proc
+
+# Usage: . ancestor
+#
+# Note: must be sourced in order to obtain correct parent id or called within a
+#       script that is itself sourced, see log/parent as called from herbstluftwm
+#       scripts
+
+ps -ef | grep $PPID | sort | head -1 | awk '{ ps=$NF; sub(/.*\//, "", ps); print ps }'
+
+# vim: set ft=sh: #

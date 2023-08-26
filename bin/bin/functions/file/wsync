@@ -1,0 +1,52 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# File
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................ watchman sync
+
+# Usage: wsync [-a | -s | -v]
+
+# watchman
+ROOT=$STOW
+NAME=wsync
+CMD=wsync
+
+WATCH=$CACHEDIR/$NAME
+LOG=/tmp/$NAME.log
+
+# arm hosts, syncthing for everybody else
+ARM=pi
+
+# server is always online but satellite arm device may be offline (and sync on boot)
+# cpu arm || { pong pi || exit; }
+cpu arm && target=$SERVER: || target=$ARM:
+
+info() {
+  name=$(echo $file | exclude | sed "s,$ROOT/,,")
+  if [ -n "$name" ] ;then
+    trace "$1 ${target}${ROOT##*/}" "$name" >>$LOG
+    notify X "$1 ${target}${ROOT##*/}" "$name"
+  fi
+}
+
+archive() {
+  while read file <&3 ;do
+    info Sync
+    to="${target}${file%/*}/"
+    echo rsync -d "$file" "$to" >>$LOG
+    # rsync -avz --update -d --delete "$file" "$to" >>$LOG 2>&1
+  done 3< $WATCH
+  cat $WATCH >>/tmp/$NAME:history; >$WATCH
+}
+
+case $1 in
+  '') cpu arm && pstat syncthing && sv stop syncthing@$USER; watchd $ROOT $NAME $CMD & ;;
+  -a) archive & ;;
+  -s) archive && (watchman watch-del $ROOT; watchman shutdown-server; pkill -f "watchd $ROOT $NAME $CMD"; pstat syncthing || sv start syncthing@$USER &) ;;
+  -v) pstat syncthing || watch & ;;
+  * ) watchq d $ROOT $NAME $@; archive & ;;
+esac
+
+# vim: set ft=sh: #

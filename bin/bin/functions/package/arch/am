@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Package management
+
+usage() { echo "usage: $(basename $0) <package>"; exit 1; }
+
+[ $1 ] || usage
+
+wrappaur=$(aurwrapper)
+$wrappaur -Ss $@
+
+# vim: set ft=sh: #

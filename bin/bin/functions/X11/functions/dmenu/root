@@ -1,0 +1,87 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................... Background
+
+# Usage: dmenu root [cache] [save]
+
+VIEWER='viewer'
+UPDATE='update'
+PICK='pick'
+SAVE='save as'
+INVERT='invert panel'
+COLORS='palette'
+
+delay=3  # invert panel pause
+
+# catalogue of root background colors
+root()   { find $PALETTE -name '*png' | grep -E '(dark|light)/' | sed -r "s,.*/(.*)/(.*)/(.*).png,\3^$SEP \1 \2," | sort -r -k2 >$HISTORY/root; }
+themes() { find $PALETTE -type d | cut -d/ -f7 | sort -u | grep '[^ ]'; }
+hex()    { echo $1 | grep -E -q '^[0-9A-Fa-f]{6}$'; }
+theme()  { [ $1 = dark ] && echo light >$THEME || echo dark >$THEME; }
+menu()   { menu="$(X $SAVE)\n$(X $INVERT)"; }
+
+save() {
+  [ $hue ] && hue="$hue\n"
+  hue=$(echo "$hue$(themes)" | rmenu 'Colour (name)') || exit
+  contrast=$(cat $THEME)  # see draw root color
+  theme $contrast
+  mhistory root "$bg^$SEP $contrast $hue"
+  rice swatch $bg $hue
+  root
+  ln -sf $PALETTE/$contrast/$hue/$bg.png $WALLCOLOR
+  ln -sf $WALLCOLOR $BACKGROUND
+  notify low 'Background Color' "$bg saved"
+}
+
+# rebuild swatches
+while [ $1 ] ;do
+  case $1 in
+    cache) root ;;
+    save ) bg=$(cat $COLOR); save; exit ;;
+  esac
+  shift
+done
+
+setroot() {
+  draw root color $color
+  bg=$color
+  # overlay conky panel over rmenu screen!
+  draw conky
+  menu
+}
+
+colors() { [ "$menu" ] && echo | mhistory root | sed "1i$menu" || echo | mhistory root | sed "1i$(X $VIEWER)\n$(X $COLORS)\n$(X $PICK)\n$(X $UPDATE)"; }
+
+while color=$(colors | column -s^ -t | rmenu 'Setroot') || exit ;do
+  case ${color#$(X)} in
+    ''        ) break ;;
+    "$PICK"*  ) color=$(grabc 2>/dev/null | cut -d'#' -f2); setroot ;;
+    "$VIEWER"*) exec draw root restore ;;
+    "$COLORS"*) term "colors" trap pastel list; pwait 'trap pastel list' ;;
+    "$UPDATE"*) root ;;
+    "$SAVE"*  ) save; break ;;
+    "$INVERT"*) draw root invert; sleep $delay; menu ;;
+  
+    *\ dark*    |\
+    *\ light* ) bg=$(echo $color | cut -d' ' -f1)
+                theme $(echo $color | cut -d' ' -f3)
+                draw root color $bg $0  # $0 suppress luminance setting, see draw root
+                ln -sf $(find $PALETTE -name $bg.png | head -1) $WALLCOLOR
+                ln -sf $WALLCOLOR $BACKGROUND
+                mhistory root "$(echo $color | sed "s/ *$SEP */^$SEP /")"
+                draw conky
+                break ;;
+  
+    *         ) color=${color#\'}
+                hex $color || { hue=$color; color=$(pastel format hex $color 2>/dev/null) && color=${color#?}; } || continue
+                setroot
+                sleep $delay ;;
+  esac
+done
+
+notify 5 'Panel Contrast' '&lt;Mod-Control-Shift-D&gt; to invert contrast'
+
+# vim: set ft=sh: #

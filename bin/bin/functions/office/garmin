@@ -1,0 +1,11 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................... Garmin Express
+
+WINEPREFIX=$HOME/GarminExpress wine explorer /desktop=garmin,1366x768 "$HOME/GarminExpress/drive_c/Program Files/Garmin/Express/express.exe"
+
+# vim: set ft=sh: #

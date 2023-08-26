@@ -1,0 +1,17 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ${COLORS} defined in env
+
+# ......................................................... Distribution install
+
+# clean up environment for possible re-install of package
+if [ -s $HOME/build/$(dist)/pre_install/$1 ] ;then
+  ditto pre_install "$1"
+  . $HOME/build/$(dist)/pre_install/$1
+fi
+
+# vim: set ft=sh: #

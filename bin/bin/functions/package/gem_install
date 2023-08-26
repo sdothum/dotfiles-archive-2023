@@ -1,0 +1,25 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................... Distribution install
+
+# Usage: gem_install <gem> [<version>]
+
+# be careful of partial gem list regex matches!
+gem=$1
+[ $2 ] && version="-v $2"
+if gem list $gem | grep -q "^$gem " ;then
+  installed_heading $gem
+else
+  heading : $gem
+  time=$(chrono)
+  ditto install "$gem $version"
+  void && sudo gem install $gem --no-document $version || gem install $gem --no-document $version
+  post_install $gem
+  chrono $time
+fi
+
+# vim: set ft=sh: #

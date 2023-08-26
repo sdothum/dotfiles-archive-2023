@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# $USER PATH
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................ directory tree + PATH
+#
+# Usage: setpath <path>
+
+path=$1
+[ -d $1/bin ] && path=$path:$1/bin
+echo $(echo $path:$(echo $PATH | sed "s|$path:||g"))
+
+# vim: set ft=sh: #

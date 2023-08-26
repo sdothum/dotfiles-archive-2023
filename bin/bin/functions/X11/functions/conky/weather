@@ -1,0 +1,91 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Desktop
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ Conky
+
+# Usage: conky weather <city> [panel | debug]
+
+connect || exit
+
+# http://www.weatheroffice.gc.ca/business/index_e.html for city codes
+case $1 in
+  calgary  ) city=ab-52; shift ;;
+  halifax  ) city=ns-19; shift ;;
+  kingston ) city=on-69; shift ;;
+  nanaimo  ) city=bc-20; shift ;;
+  nelson   ) city=bc-37; shift ;;
+  vancouver) city=bc-74; shift ;;
+  victoria ) city=bc-85; shift ;;
+  ottawa   ) city=on-52; shift ;;
+  *        ) city=on-52 ;;
+esac
+
+sep=', '
+case $1 in
+  debug) debug=true ;;
+  panel) sep=$RSEP ;;
+esac
+
+# scrape weather synopsis
+WEATHER=$(curl --silent "https://weather.gc.ca/rss/city/${city}_e.xml?source=ignitionfork")
+if [ $debug ] ;then
+  echo $WEATHER >/tmp/conky:weather
+  echo Weather .. $WEATHER
+  echo
+  read input
+fi
+
+CURRENT=$(echo $WEATHER | awk '/Current Conditions:/ { gsub(/.*Current Conditions: */, "", $0); gsub(/[&°].*$/, "", $0); print }')
+if [ $debug ] ;then
+  echo Current .. $CURRENT
+  echo
+  read input
+fi
+
+# round temperature
+TEMPERATURE=$(echo $CURRENT | awk '{ gsub(/[^-0-9.]*/, "", $0); $0 = $0 + ($0 < 0 ? -0.5 : 0.5); gsub(/\.[0-9]/, "", $0); print }')
+[ $TEMPERATURE = -0 ] && TEMPERATURE=0
+CURRENT=$(echo $CURRENT | sed 's/[-0-9.]//g')
+if [ $debug ] ;then
+  echo Temperature .. $TEMPERATURE
+  echo Current .. $CURRENT
+  echo
+  read input
+fi
+
+# condense weather for monocle layout
+if [ ! -e $MONOCLE ] ;then
+  FEELSLIKE=$(echo $WEATHER | awk '/(Wind Chill|Humidex):/ { gsub(/.*(Wind Chill|Humidex):[^ ]* /, "", $0); gsub(/[ <].*$/, "", $0); print }')
+  if [ $debug ] ;then
+    echo Feels like .. \"$FEELSLIKE\"
+    echo
+    read input
+  fi
+
+  if echo $WEATHER | grep -Pq 'Wind:.*[0-9]+ km/h' ;then
+    WIND=$(echo $WEATHER | awk '/Wind:/ { gsub(/.*Wind:[^0-9]* /, "", $0); gsub(/ km.*$/, "", $0); print }')
+    if [ $debug ] ;then
+      echo Wind .. \"$WIND\"
+      echo
+      read input
+    fi
+
+    GUST=$(echo $WEATHER | awk '/Wind:.* gust / { gsub(/.*Wind:.* gust /, "", $0); gsub(/ km.*$/, "", $0); print }')
+    if [ $debug ] ;then
+      echo Gust .. \"$GUST\"
+      echo
+      read input
+    fi
+  fi
+
+  [ -n "$GUST" ] && WIND="$WIND-$GUST"
+  [ -n "$WIND" ] && CURRENT="${CURRENT}Wind $WIND km/h"
+fi
+
+if [ -z $FEELSLIKE ] ;then [ -n "$CURRENT" ] && echo "${CURRENT%, }$sep${TEMPERATURE}°"                     || echo "${TEMPERATURE}°"
+else                       [ -n "$CURRENT" ] && echo "${CURRENT%, }$sep${TEMPERATURE}° Feels ${FEELSLIKE}°" || echo "${TEMPERATURE}° Feels ${FEELSLIKE}°"
+fi
+
+# vim: set ft=sh: #

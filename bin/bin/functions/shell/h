@@ -1,0 +1,88 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... History
+
+usage() { echo "usage: $(basename $0) [shell=<shell>] [[-] <regex>]"; exit 1; }
+
+BASH=$HOME/.bash_history
+FISH=$HOME/.local/share/fish/fish_history
+ZSH=$HOME/.zhistory
+
+case $1 in
+  shell=*) eval $1; shift ;;
+  *      ) shell=fish ;;
+esac
+
+# purge from history
+filter() {
+  history=$(mktemp)
+  grep -E "$1" $2
+  grep -E -v "$1" $2 >$history
+  mv $history $2
+}
+
+if [ "$1" = '-' ] ;then
+  shift
+  [ "$1" ] || usage
+  case $shell in
+    bash | sh) filter "$@" $BASH ;;
+    dash     ) ;;
+    fish     ) filter "$@" $FISH ;;
+    zsh      ) filter "$@" $ZSH ;;
+    *        ) ;;
+  esac
+  exit
+fi
+
+# filter session history
+# filter out single word commands
+#            history commands (h)
+#            process commands (k, kk, p)
+#            list commands (l, la, ll, lr, ls, lt)
+#            shell repeat command (r)
+#            startx command (x)
+filter='^[^ ]*  *(([^ ]*)|((cd|h|kk*|l[alrst]*|pa*|r|x|z)( *| .*)))$'
+
+# discard command duplicates, see dmenu shistory
+week=$(date '+%W')
+weekof() {
+  # calculation assumes history size does not span more than one calendar year
+  awk "{ if (\$2<=$week) \$2=($week - \$2); else \$2=(53 - \$2 + $week); print \$0 }" | grep '^[0-9]* ' |
+      sort -k 3 | uniq -f 2 | sort -n $1 | sed -r 's/^[0-9]* ([0-9]*) /\1w   /g' | grep -E -v "$filter"
+}
+
+fish_history() { fish -c "history --show-time='%s %W '"; }
+zsh_history()  { zsh -c "export HISTFILE=$ZSH; export HISTSIZE=10000; fc -R; fc -l -t '%W' 1"; }
+
+# interactively paste into terminal session or pass filtered history list (see dmenu shistory)
+history() {
+  # terminal invocation?
+  if [ -t 1 ] ;then
+    # cmd=$($shell_history | cut -d' ' -f3- | fZf $(test -n "$1" && echo "-q '$@'"))
+    # gui && xdotool type --delay 0 "$cmd" || echo "$cmd"
+    exec dmenu shistory $@
+  fi
+
+  shell_history=$1_history
+  shift
+  if [ $1 ] ;then
+    # $shell_history | ack "$@" | weekof
+    $shell_history | /usr/bin/ag --ignore-case --regexp "$@" | weekof
+  else
+    $shell_history | weekof -r
+  fi
+}
+
+case $shell in
+  bash | sh) echo history | sh -i | sed 's/^ *//; s/  */ /g' | grep -E -v "$filter" | tac ;;
+  dash     ) history $shell $@ ;;
+  fish     ) history fish $@ ;;
+  zsh      ) history zsh $@ ;;
+  *        ) $shell -c history | grep "$@" ;;
+esac
+
+# vim: set ft=sh: #

@@ -1,0 +1,12 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Sysadmin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... Password
+
+# shell pass bypases notification and returns password only
+pass "$@"
+
+# vim: set ft=sh: #

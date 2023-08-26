@@ -1,0 +1,81 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................... Dmenu DSL
+
+# Usage: dmenu [-] <function>
+#              where, '-' disables in terminal command line mode
+# Note:  non-dmenu messages within $0/functions/dmenu
+#        source dmenu
+#        POSIX standard for use with dash shell
+
+CONFIG=$(dirname $0)/functions/dmenu
+export HISTORY=$CONFIG/.history
+# currently playing, see music, radia
+MUSIC=/tmp/audio:music
+RADIO=/tmp/audio:radio
+
+# content formatting items, see herbstluftwm env
+LSPACE="    $SEP"
+RSPACE="$SEP    "
+UTF='□'
+LEADER='◯►⋯  '
+LEADER='◯∘⋯  '
+LEADER='○∘⋯  '
+
+# ............................................................... Available apps
+
+# return list of existing applications
+apps() {
+  unset apps
+  for i in $@ ;do apps="$apps$(which $i >/dev/null 2>&1 && echo "$i ")" ;done
+  echo $apps | sed 's/ /\n/g'
+}
+
+# ........................................................ Media player playlist
+
+# usage: playlist library played, see dmenu series/movies
+playlist() {
+  cat "$2" | while read line ;do
+    [ "$line" ] && grep -q "$line" $1 && sed -i "/^$line/s/^$line/$SEP $line/" "$1"
+  done
+  cat "$1"
+}
+
+# ......................................................................... Main
+
+# global dmenu functions, see bin/functions/dmenu/*
+X()        { echo "$LEADER$@"; }              # menu option prefix (follow piping ".. | column .." to avoid trailing space insertion), see also rmenu
+sortlist() { [ $1 ] && echo 'sort by name' || echo 'sort by date'; }  # playlist order
+previous() { echo | mhistory $1 | head -1; }  # most recent (app) history
+unquote()  { echo $@ | sed "s/'//g"; }        # remove single quotes for subword match
+
+# if not sourced, execute dmenu message
+trap 'unset TERMINAL' EXIT
+if [ $(basename $0) = dmenu ] ;then
+  [ "$1" = '-' ] && shift || { [ -t 1 ] && export TERMINAL=true; }  # "-" toggle rofi from terminal invocation (for testing)
+  msg=$1
+  # unhide desktop
+  console || { is multihead || conky clock off; }
+  if [ -f $CONFIG/$msg ] ;then
+    case $msg in
+      econvert  |\
+      media     |\
+      scripts   |\
+      projects) ;;
+      *       ) pstat + "dmenu $msg" && { notify 3 critical "> dmenu $msg" 'Already running..'; exit 1; } ;;
+    esac
+    shift
+    . $CONFIG/$msg $@
+  else
+    usage $0
+  fi
+  # restore
+  gui && [ $fullscreen ] && toggle fullscreen
+  # pstat gpaste-client || gpaste-client &
+fi
+
+# vim: set ft=sh: #

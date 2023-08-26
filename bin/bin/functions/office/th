@@ -1,0 +1,44 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................... Dictionary
+
+usage() { echo "usage: $(basename $0) [[-=]<maxlen> | -] <word>, '-' (include phrases)"; exit 1; }
+
+alpine && exec sdcv -th $@
+
+if [ "$1" = '-' ] ;then
+  SPACES=true
+  shift
+elif [ "${1%${1#?}}" = '-' ] && echo ${1#?} | grep -q '^[0-9][0-9]*$' ;then
+  MAXLEN="$(seq -s. 0 ${1#?} | tr -d '[:digit:]')[^ ]"
+  shift
+elif [ "${1%${1#?}}" = '=' ] && echo ${1#?} | grep -q '^[0-9][0-9]*$' ;then
+  LENGTH="^$(seq -s. 0 ${1#?} | tr -d '[:digit:]' | sed 's/[.]/[^ ]/g')$"
+  shift
+fi
+[ $1 ] || usage
+[ $2 ] && usage
+
+# see dmenu dict
+[ $(/usr/bin/dict $1 | wc -l) -gt 1 ] && output=$(/usr/bin/dict $1 | grep -A9999 '^From.*Thesaurus' | sed '1,3d' | sed 's/^From/,From/' | tr '\n' ' ' | tr ',' '\n' | sed 's/^ *//g' | sed '/^From /,$d') || exit
+
+# trim trailing dictionary content following moby thesaurus
+while echo "$output" | grep -q '^From.*Dictionary' ;do
+  output=$(echo "$output" | grep -B9999 '^From.*Dictionary' | head -n -1)
+done
+
+if [ "$MAXLEN" ] ;then
+  echo "$output" | grep -v "$MAXLEN" | column  # word length cutoff
+elif [ "$LENGTH" ] ;then
+  echo "$output" | grep "$LENGTH" | column     # exact word length match
+elif [ "$SPACES" ] ;then
+  echo "$output" | column
+else
+  echo "$output" | grep -v " " | column        # words only (no phrases)
+fi
+
+# vim: set ft=sh: #

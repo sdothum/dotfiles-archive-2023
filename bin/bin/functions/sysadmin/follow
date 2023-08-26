@@ -1,0 +1,12 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Sysadmin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... Log tail
+
+# tail file in terminal window (see rox)
+term "$@" sudo tail -f $@
+
+# vim: set ft=sh: #

@@ -1,0 +1,71 @@
+#!/usr/bin/ruby
+# sdothum - 2016 (c) wtfpl
+# encoding: UTF-8
+
+# File
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... Rename
+
+# Usage: retitle [<recursions>] [<directory>]
+#        <recursions> (1) default (0) full
+
+require 'term/ansicolor'
+
+class String
+  include Term::ANSIColor
+end
+
+# word$ exclusions from file extension case conversion
+$ext = /Avi|Divx|M4v|Mkv|Mp4|Wmv/
+$media = /media\/videos\/(animation|anime|movies|series)/
+$recurse = 1
+
+def retitle(recurse, directory)
+  raise unless directory =~ $media
+  pwd = Dir.pwd
+  Dir.chdir(directory)
+  list = Dir.glob("*")
+  list.sort.each do |filename|
+    # newname = File.basename(filename, File.extname(filename))
+    newname = filename
+      .gsub(/\((\d\d\d\d)\)/, '\1')
+      .gsub(/[,._\-'()\[\]{}]/, ' ')
+      .gsub(/ s /, "'s ")
+      .gsub(/ t /, "'t ")
+      .gsub(/ +/,'.')
+      .gsub(/s(\d\d)e(\d\d)/i, 'S\1E\2')
+      .gsub(/(\d)x(\d\d)/i, 'S0\1E\2')
+      .gsub(/\.$/, '')
+      .gsub(/\w+/) { |word| word =~ /S\d+E\d+/ ? word : word.capitalize }
+      .gsub(/\w+/) { |word| (word =~ /Ii+/) ? word.upcase : word }
+      .gsub(/\w+$/) { |word| (word.length <= 4 and word.length != filename.length and word =~ $ext) ? word.downcase : word }
+    print "#{filename}".gsub(/ s /, "'s ")
+    unless filename == newname
+      print " -> #{newname}".yellow.bold
+      begin
+        File.rename(filename, newname)
+      rescue
+        print "\n.. duplicate directory #{newname.yellow.bold}".red
+      end
+    end
+    print "\n"
+    retitle(recurse - 1, newname) if recurse != 1 and File.directory?(newname)
+  end
+  Dir.chdir(pwd)
+end
+
+# cleanup media title names
+begin
+  unless ARGV[0].nil?
+    if ARGV[0] =~ /^[0-9]*$/
+      $recurse = ARGV[0].to_i
+      ARGV.shift
+    end
+  end
+  exit if File.file?(ARGV[0]) unless ARGV[0].nil?
+  directory = ARGV[0].nil? ? Dir.pwd : ARGV[0]
+  retitle($recurse, directory)
+rescue
+  print "==> invalid directory #{directory.bold}\n".yellow unless ARGV[0] =~ /\//
+end

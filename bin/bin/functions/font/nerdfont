@@ -1,0 +1,58 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Font
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................... nerd-font
+
+# Usage: nerdfont [--mono] [family]
+
+nerdfonts='--fontawesome --fontawesomeextension --octicons --material'  # powerline added below
+
+# see make_install iosevka
+REPO=/net/depot/nerd-fonts
+MAKE_INSTALL=/tmp/iosevka:make_install
+
+[ $1 = '--mono' ] && { mono=$1; shift; }
+FONT=$HOME/.fonts/${1:-iosevka}
+family=${FONT##*/}
+
+# install nerd-font patcher
+void && xb_check fontforge nodejs otfcc ttfautohint
+ditto warning 'nerd-fonts v2.x may break ligatures'
+if [ -d $REPO ] ;then
+  cd $REPO
+  if [ ! -e $MAKE_INSTALL ] ;then
+    /net/depot/nerd-fonts/font-patcher --version
+    ifno 'sync nerd-fonts repo' || git pull
+  fi
+else
+  cd ${REPO%/*}
+  git clone --depth 1 https://github.com/be5invis/Iosevka.git
+  /net/depot/nerd-fonts/font-patcher --version
+fi
+
+[ -e $MAKE_INSTALL ] || { [ -e /tmp/${FONT##*/} ] && { ifyes "replace $FONT" || exit; }; }
+mv -f $FONT /tmp/${FONT##*/} 2>/dev/null
+mkdir -p $FONT
+cd ${REPO%/*}/Iosevka
+cp -v dist/$family/ttf/* $FONT
+
+# patch font
+REGULAR=$FONT/$family-regular.ttf
+if [ -e /net/depot/nerd-fonts/font-patcher ] ;then
+  rm -f /tmp/*ttf  # nerd-font creates file by font family name (note case)
+  /net/depot/nerd-fonts/font-patcher --adjust-line-height $mono --powerline -out /tmp $REGULAR
+  mv -v /tmp/*ttf $REGULAR
+  /net/depot/nerd-fonts/font-patcher $mono $nerdfonts -out /tmp $REGULAR
+  mv -v /tmp/*ttf $REGULAR
+fi
+
+fc-cache -fv
+# update local network
+for i in $(remotehosts) ;do
+  /usr/bin/ssh $USER:$i "touch $HOME/.session/.fc-cache" 2>/dev/null &
+done
+
+# vim: set ft=sh: #

@@ -1,0 +1,15 @@
+$HOME/bin
+$HOME/build/alpine
+$HOME/build/arch
+$HOME/build/cfg
+$HOME/build/obarun
+$HOME/build/void
+$HOME/.config/fish
+$HOME/.config/herbstluftwm
+$HOME/.config/nnn/plugins
+$HOME/.vim/after
+$HOME/.vim/config
+$HOME/.vim/plugged/vim-duochrome
+$HOME/.weechat/python
+/etc/sv
+

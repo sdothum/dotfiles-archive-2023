@@ -1,0 +1,19 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# X11 Desktop
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................. Random color
+
+usage() { echo "usage: $(basename $0) randomc [-#]"; exit 1; }
+
+case $1 in
+  '' ) hash='#' ;;
+  -\#) ;;
+  *  ) usage ;;
+esac
+
+echo "$hash$(od -An -N3 -x /dev/random | sed 's/ 00//; s/ //')"
+
+# vim: set ft=sh: #

@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Media
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................ E-book author
+
+usage() { echo "usage: $(basename $0) <title - author.ext>"; exit 1; }
+
+# rox -> ebooks "$@"
+author=$(echo "${1%.*}" | sed 's/ - /:/g' | rev | cut -d: -f1 | rev)
+dmenu ebooks "$author"
+
+# vim: set ft=sh: #

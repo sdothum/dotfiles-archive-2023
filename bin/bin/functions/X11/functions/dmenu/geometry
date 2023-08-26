@@ -1,0 +1,42 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... omxplayer geometry
+
+view=$(previous geometry)
+geometry=$(echo "wide\nfullscreen\ncorner" | rmenu "$1" $view -no-custom) || exit 1
+
+# left edge = screen width * ratio
+TAG=$(herbstclient attr monitors.focus.tag)
+set -- $(sed 's/:/ /g' $LAYOUT:$TAG)
+case $# in
+  2) ratio="$1 / $(( $1 + $2 ))" ;;
+  3) ratio="$(( $1 + $2 )) / $(( $1 + $2 + $3 ))" ;;
+  *) ratio=1 ;;
+esac
+
+# window size varies with window position: fullscreen > wide > corner
+frame=$(herbstclient attr settings.frame_gap)
+window=$(herbstclient attr settings.window_gap)
+gap=$(( $frame + $window ))
+pheight=$(query pheight)
+# width depth
+set -- $(query display)
+# horizontal length = width - 2*gap
+left=$(( $gap + ($1 - $gap * 2) * $ratio + $gap / 2 ))
+right=$(( $1 - $gap ))
+# vertical length = depth - gap - panel
+middle=$(( $gap + ($2 - $gap - pheight) / 2 - $window / 2 ))
+bottom=$2
+
+case $geometry in
+  fullscreen) echo ;;
+  wide      ) echo " --win '\"$left 0 $right $bottom\"' --aspect-mode letterbox" ;;
+  corner    ) echo " --win '\"$left $gap $right $middle\"' --aspect-mode letterbox" ;;
+esac
+mhistory geometry $geometry
+exit
+
+# vim: set ft=sh: #

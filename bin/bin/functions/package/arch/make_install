@@ -1,0 +1,13 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................... Distribution install
+
+heading : $1
+cd /tmp
+. $HOME/build/$(dist)/make_install/$1
+
+# vim: set ft=sh: #

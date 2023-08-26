@@ -1,0 +1,65 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Dev
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................ Directory differences
+
+usage() { echo "usage: $(basename $0) [-b] [-d <date>] <source> [<target>] [<regex>]"; exit 1; }
+
+# ignore='backups|debian|\.history|makepkg|nixos|plugged-custom|qmk_firmware|root|snippets|undo|vps'
+ignore='backups|debian|\.history|makepkg|nixos|plugged-custom|root|snippets|undo|vps'
+
+DIRDIFF=/tmp/dirdiff
+FILES=$DIRDIFF:files
+LOG=$DIRDIFF.log
+
+while [ "$1" ] ;do
+  case $1 in
+    -b) w=-w; diffopt='set diffopt+=iwhite' ;;                   # ignore whitespace
+    -d) FILTER=$DIRDIFF:filter; touch -d "$2" $FILTER; shift ;;  # timestamp filter
+    * ) break ;;
+  esac
+  shift
+done
+
+while [ "$1" ] ;do
+  [ -d "$1" ] && { [ "$source" ] && target=$1 || source=$1; } || regex=$1
+  shift
+done
+[ "$target" ] && [ "${target%${target#?*}}" != '/' ] && target=$PWD/$target  # target must be full pathname
+[ -d "$target/${source##*/}" ] && target="$target/${source##*/}"
+
+[ -d "$source" ] && cd "$source" || usage
+source=$(pwd)
+[ -d "$target" ] || target=/net/depot/dotfiles/${source#$HOME/stow/}         # no target -> depot
+[ -d "$target" ] || usage
+[ "$regex"  ] || regex='.*'
+
+# to handle filenames containing spaces
+find -L ./ -type f | exclude | grep -E -v $ignore | grep "$regex" >$FILES
+[ -s $FILES ] || usage
+src=${source#$HOME/stow/*/}
+src=\~/${src#$HOME/}
+
+while read file <&3 ;do
+  unset blink
+  while : ;do
+    [ $FILTER ] && [ "$file" -ot $FILTER ] && break
+    clear
+    [ $title ] || { ditto -t diff "$src/$regex && $target" >>$LOG; title=true; }
+    [ -e "${target%/}/${file#./}" ] || { ditto ERROR missing "${target%/}/${file#./}" >>$LOG; break; }
+    ditto diff "${file#./}"
+    if ! diff --brief $w "${file#./}" "${target%/}/${file#./}" >/dev/null 2>&1 ;then
+      diff $w "${file#./}" "${target%/}/${file#./}" | colordiff  # reverse diff --color highlighting
+      # see herbstluftwm gvimdiff rule
+      ifno "edit ${file#./}" && break || vim -g -d -c "$diffopt" -f --role=gvimdiff "${file#./}" "${target%/}/${file#./}"
+      blink=${BLINK}
+    else
+      break
+    fi
+  done
+done 3< $FILES
+
+# vim: set ft=sh: #

@@ -1,0 +1,21 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Dev
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................ Directory differences
+
+usage() { echo "usage: $(basename $0) [<source>] <target>"; exit 1; }
+
+[ $# -eq 2 ] && { SOURCE=$1; shift; } || SOURCE=$(pwd)
+[ "$1" ] || usage
+
+ls -1 $SOURCE | sort >/tmp/lsdiff:source
+ls -1 $1      | sort >/tmp/lsdiff:target
+
+ditto source "< $SOURCE" 
+ditto target "> $1" 
+diff --color /tmp/lsdiff:source /tmp/lsdiff:target | print
+
+# vim: set ft=sh: #

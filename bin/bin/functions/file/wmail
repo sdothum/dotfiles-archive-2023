@@ -1,0 +1,52 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# File
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................ watchman mail
+
+# Usage: wmail [-s]
+
+# watchman
+ROOT=$HOME/Maildir
+NAME=wmail
+CMD=wmail
+
+WATCH=$CACHEDIR/$NAME
+HISTORY=/tmp/$NAME:history
+QUIET=$SESSION/wmail:quiet
+WIDTH=67  # 72 - "(..) ", dunst duplicate message counter
+
+activity() {
+  [ -s $WATCH ] || return
+  timestamp >>$HISTORY  # separate watchman blocks for imap analysis
+  while read file <&3 ;do
+    acct=$(echo $file | sed "s,$ROOT/,,")
+    acct=${acct%%/*}
+    imap=${file##*/}
+    echo "$ROOT/$acct:${imap%:2,*}"
+  done 3< $WATCH | sort -u
+  cat $WATCH >>$HISTORY; >$WATCH
+}
+
+mail() {
+  for i in $(activity) ;do
+    acct=$(echo $i | cut -d: -f1)
+    name=$(echo $i | cut -d: -f2-)
+    email=$(find $acct -name "${name}*")
+    [ -n "$email" ] || continue
+    hdr=$(mailheader "$email")
+    [ -e $QUIET ] || notify X critical "$(echo "$hdr" | grep Subject: | sed 's/ re://g' | trim $WIDTH)" "$(echo "$hdr" | grep From:)"
+  done
+}
+
+pretty() { sed '/[{}]/d; s/^ *//g; s/"//g; s/,$//;' | sed ':a;N;$!ba;s/\[\n//g' | sed ':a;N;$!ba;s/\n\]//g'; }
+
+case $1 in
+  '') pgrep -f "watchman watch-project $ROOT" >/dev/null && watchman watch-list $ROOT | pretty || watchd $ROOT $NAME $CMD & ;;
+  -s) watchman watch-del $ROOT | pretty; watchman shutdown-server | pretty; pkill -f "watchd $ROOT $NAME $CMD" ;;
+  * ) watchq f $ROOT $NAME $@; [ $(pgrep -cf "watchq f $ROOT $NAME") -eq 1 ] && mail & ;;  # delay for imap processing latencies
+esac
+
+# vim: set ft=sh: #

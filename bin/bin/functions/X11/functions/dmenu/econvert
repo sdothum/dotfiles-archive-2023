@@ -1,0 +1,147 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... E-books
+
+usage() { echo "usage: $(basename $0) econvert [azw3 | epub | reformat] [default | justify | noindent | poetry | all] [<file> | '<regex>', default '*epub']"; exit 1; }
+
+KINDLE=/run/media/$USER/Kindle
+[ -d $KINDLE ] && sudo mount -o remount,rw $(mount | grep $KINDLE | cut -d' ' -f1) $KINDLE
+KINDLE=$KINDLE/documents/
+
+# kobo,kindle tuples
+# enhanced em-legible spacing!
+# em_indent=2,2        # conventional paragraph indent
+# em_linespace=0,1     # conventional indent,noindent spacing
+# em_linespace=0.33,1.25
+# em_indent=1.80,1.95  # adjust indent to 3x space per rendering engine (kindle shape 600) see iosevka
+em_indent=1.80,1.80    # adjust indent to 3x space per rendering engine (kindle shape 576) see iosevka
+em_linespace=0,1.25
+
+# override device/cloud transfer and create kindle/kobo file
+case $1 in
+  azw3    ) format=$1; option=${option:-default}; em_indent=${em_indent#*,}; library=true; shift ;;  # library update
+  epub    ) format=$1; option=${option:-default}; em_indent=${em_indent%,*}; library=true; shift ;;  # epub output hack
+  reformat) format=$1; option=${option:-default}; em_indent=${em_indent%,*}; library=true; shift ;;  # epub output hack
+esac
+
+# override left justification
+case "$1" in
+  ''      ) ;;
+  default ) option=default;  shift ;;
+  justify ) option=justify;  shift ;;
+  noindent) option=noindent; shift ;;  # retain poetry formatting
+  poetry  ) option=noindent; shift ;;  # retain poetry formatting
+  all     ) option=all;      shift ;;
+  *       ) [ -e "$1" ] || { find . -iname "$1" | grep -q '[.]' || usage; } ;;
+esac
+
+# <regex> autoconvert epubs to awz3
+case "$format" in
+  azw3    ) [ "$1"    ] || { find . -iname '*epub'             -exec dmenu econvert azw3 $option {} \; ; exit; }
+            [ -e "$1" ] || { find . -iname "$1"                -exec dmenu econvert azw3 $option {} \; ; exit; } ;;
+  epub    ) [ "$1"    ] || { find . -iname '*azw3'             -exec dmenu econvert epub $option {} \; ; exit; }
+            [ -e "$1" ] || { find . -iname "$1"                -exec dmenu econvert epub $option {} \; ; exit; } ;;
+  reformat) [ "$1"    ] || { find . -iregex '.*\(azw3\|epub\)' -exec dmenu econvert reformat $option {} \; ; exit; }
+            [ -e "$1" ] || { find . -iname "$1"                -exec dmenu econvert reformat $option {} \; ; exit; }
+            format=${1##*\.}; reformat=true ;;  # for re-tweaking converted ebooks
+esac
+
+file=$1
+name=$(basename "${file%.*}")
+author=${name##* - }
+title=${name% - *}
+[ "${file%/*}" = "$file" ] && folder=./ || folder=${file%/*}/  # library
+
+# .............................................................. Amazon transfer
+
+# kindle update via email
+email() {
+  cat - <<END
+Content-Type: multipart/mixed; boundary="$boundary"
+MIME-Version: 1.0
+Subject: $title
+From: $account
+To: $address
+
+--$boundary
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+
+$title attached.
+
+--$boundary
+Content-Type: application/octet-stream
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="${mobi##*/}"
+
+END
+                base64 "$mobi"
+                cat - <<END
+
+--$boundary--
+END
+}
+
+# ...................................................................... Convert
+
+[ $library ] || { [ -d $KINDLE ] && format=azw3 || format=${format:-mobi}; }
+find /tmp -maxdepth 1 -name "*$format" -exec rm {} \;
+# cloudconvert -f azw3 -o /tmp "$file" >/tmp/cloudconvert.log 2>&1
+# use calibre conversion module
+output="/tmp/${file##*/}"
+output=ebook-convert:ebook  # flatpak ebook-convert cannot not output to path(?)
+[ $option ] || option=$(echo -n "default (ragged-right)\nnoindent\njustify\nall" | rmenu 'export options' -no-custom) || break
+justify=left
+em_linespace=${em_linespace%,*}
+case $option in
+  default ) ;;
+  noindent) em_indent=0; em_linespace=${em_linespace#*,} ;;
+  justify ) justify=justify ;;
+  all     ) unset indent; em_linespace=${em_linespace#*,}; justify=justify ;;
+esac
+
+notify low "$title" "Converting to $format..\n--change-justification="$justify" $indent"
+ditto $format "$file"
+
+# ebook-convert "$file" "${output%.*}.epub"  # test image
+# convert even .azw3 to inject folder title and author
+alpine && EBOOK_CONVERT='flatpak run --command="ebook-convert" --user com.calibre_ebook.calibre' || EBOOK_CONVERT=ebook-convert
+eval $EBOOK_CONVERT \"$file\" \"${output%.*}.$format\"                                           \
+                    $([ $reformat ] && echo || echo "--title=\"$title\" --authors=\"$author\"")  \
+                    --change-justification=\"$justify\"                                          \
+                    --remove-paragraph-spacing --remove-paragraph-spacing-indent-size=$em_indent \
+                    --insert-blank-line --insert-blank-line-size=$em_linespace                   \
+                    --filter-css=\'font-family, float\'                                          \
+                    >/tmp/ebook-convert.log 2>/dev/null || exit  # suppress plugin initialization warnings
+
+# ........................................................................ Write
+
+# usb, cloud or library update?
+if [ $library ] ;then
+  # find /tmp -maxdepth 1 -name "*$format" -exec mv -f "{}" "$folder" \;
+  mv -f "${output%.*}.$format" "${file%.*}.$format"  # alpine flatpak
+  notify low "$title" "$folder"
+elif [ -d $KINDLE ] ;then
+  find $KINDLE -maxdepth 1 -wholename "${file% - *}*.sdr" -exec rm -rf "{}" \;  # cleanup dangling sdr files
+  find /tmp -maxdepth 1 -name "*$format" -exec rm -rf "$KINDLE${file% - *}*.sdr" \; -exec mv -f "{}" $KINDLE \;
+  notify low "$title" "$KINDLE"
+  sync
+elif [ $format = mobi ] ;then
+  mobi=$(find /tmp -maxdepth 1 -name "*$format")
+  address=$(echo | mhistory kindle | rmenu 'Address <@kindle.com>') || break
+  echo "$address" | grep -q '\@' || address=${address}@kindle.com
+  mhistory kindle $address
+  account=$(grep $USER /etc/aliases | cut -d' ' -f2)
+  boundary="=-=-=-=-=-=-=-=-=-=$(od -An -N9 -i /dev/random | sed 's/ //g' | cut -b1-19)=-="
+  email | /usr/local/bin/msmtp-enqueue.sh -t &
+  notify low "$title" "$address"
+else
+  ditto epub "$(find /tmp -maxdepth 1 -name "*$format")"
+fi
+
+# vim: set ft=sh: #

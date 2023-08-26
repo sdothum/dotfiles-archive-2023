@@ -1,0 +1,20 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Package management
+
+usage() { echo "usage: $(basename $0) [core | extra | community | ..]"; exit 1; }
+
+[ "$1" = help ] && usage
+
+# packages installed
+[ $1 ] && repo=$1 || repo=core
+for i in $(expac -S '%r/%n' | grep "^$repo") ;do
+  # installed if description listed
+  echo "$i^$(expac '%d' ${i#*/})"
+done | column -s^ -t
+
+# vim: set ft=sh: #

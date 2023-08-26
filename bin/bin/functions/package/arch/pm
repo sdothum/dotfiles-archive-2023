@@ -1,0 +1,31 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Package management
+
+usage() { echo "usage: $(basename $0) S | R | -<options> [--<option>]*] <package>"; exit 1; }
+
+[ $1 ] || usage
+
+wrappaur=$(aurwrapper)
+options=$(aurwrapper options)
+
+# default (no options) to package query
+
+if [ $# -eq 1 ] ;then
+  pacman -Qs $@ || $wrappaur -Ss $@
+else
+  action=$1
+  shift
+  if [ "$action" = R ] ;then
+    sudo pacman -Rns --noconfirm $@  # see pacman -R --help, eg. -Rccssnd
+  else
+    echo $action | grep -q '^-' && { action="$action"; unset options; } || action="-$action"
+    $wrappaur $action $options $@
+  fi
+fi
+
+# vim: set ft=sh: #

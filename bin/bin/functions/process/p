@@ -1,0 +1,17 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Process
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... Process
+
+# Usage: p <name> [<name>]*
+
+# 'or' a list of process names
+list=$(echo $@ | tr ' ' '|')
+
+# drop --sort '-%cpu' (alpine compatibility)
+ps -e -o 'user,pid,ppid,etime,args' | grep -E -i "$list" 2>/dev/null | grep -E -v " e?grep |$0 |$(which !p) |<defunct>"  # trap !p call
+
+# vim: set ft=sh: #

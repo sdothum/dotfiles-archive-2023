@@ -1,0 +1,19 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................. AUR install
+
+usage() { echo "usage: $(basename $0) <package>"; exit 1; }
+
+[ $1 ] || usage
+package=$1
+cd $HOME/.cache/yay/$package 2>/dev/null || exit
+
+v -f PKGBUILD
+makepkg -Acfs
+sudo pacman -U --noconfirm $package*tar.xz
+
+# vim: set ft=sh: #

@@ -1,0 +1,46 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Web
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... Browser
+
+# prune in-browser history for performance
+histfile=$HOME/.config/vimb/history
+histsize=1000
+winid=/tmp/tabbed:winid
+
+# see dhistory for external browser history access
+prune_history() {
+  work=$(mktemp)
+  trap "rm -f $work" EXIT
+  [ -e $histfile.vimb ] || touch $histfile.vimb
+  # remove duplicate records
+  cat $histfile.vimb $histfile | perl -ne 'print unless $seen{$_}++' >$work
+  head -$(( $(cat $work | wc -l) - $histsize )) $work >$histfile.vimb
+  tail -$histsize $work >$histfile
+}
+
+vimbt() {
+  # wget -O $HOME/.config/vimb/ca-bundle.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
+  [ $(hostname) = luna ] && prune_history &
+  rm -f /run/user/1000/vimb/socket/*
+
+  # unclutter (original) causes tabbed vimb to load homepages endlessly
+  # killall -TERM unclutter 2>/dev/null
+  # (winstance 'VimbT' && toggle unclutter) &
+
+  # tabbed appends winid to expanded command arguments, see vimb
+  # vimb embed terminates this function
+  tabbed -c -n 'VimbT' -ps+1 -t '#B3431E' -T '#fdf6e3' -u '#464F52' -U '#B2BBBD' >$winid
+}
+
+# use or setup socket (with tabs)
+if ! xdotool search -classname 'VimbT' >/dev/null ;then
+  vimbt &
+  xdotool search --sync --onlyvisible --limit 1 --classname VimbT >/dev/null
+fi
+/usr/bin/vimb -e $(cat $winid) &
+
+# vim: set ft=sh:

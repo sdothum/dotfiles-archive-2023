@@ -1,0 +1,17 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ Steno
+
+# Tx Bolt usb ports
+grep -q "dialout.*$USER" /etc/group || sudo useradd -G dialout $USER
+grep -q "tty.*$USER"     /etc/group || sudo useradd -G tty $USER
+sudo chown $USER:users /dev/ttyACM*
+
+$HOME/.local/bin/plover.AppImage &
+xsync plover
+
+# vim: set ft=sh: #

@@ -1,0 +1,77 @@
+#!/usr/bin/bash
+# sdothum - 2016 (c) wtfpl
+
+# Sysadmin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .......................................................... Btrfs scrub wrapper
+
+# crontab examples..
+# 12am 1st of month <fs> scrub
+# crontab: 0 0 1 * * <path>/scrub <fs>
+# 12am file directed scrub with "echo <fs> >/tmp/scrub" (nop otherwise)
+# crontab: 0 0 * * * [ -s /tmp/scrub ] && <path>/scrub $(cat /tmp/scrub)
+
+usage() { 
+  echo "usage: $(basename $0) a'll | [[-] boot | root | net | share | backup]"
+  echo "       $(basename $0) c'ancel | s'tatus | I'nitialize  [boot | root | net | share | backup]"
+  exit 1
+}
+
+interval=${interval:-300}                     # default 5 minute interval reporting
+CRON=/tmp/scrub                               # see crontab -l
+
+# import user path
+. $HOME/bin/functions/shell/user_path colors  # bash shell required for cron colors
+
+# butterfs maintenance
+volume() {
+  case $1 in
+    boot  ) echo /boot   ;;
+    root  ) echo /boot   ;;
+    net   ) echo /net    ;;
+    share ) echo /net    ;;
+    backup) echo /backup ;;
+    *     ) ;;
+  esac
+}
+
+show() {
+  V=$(volume $@)
+  [ $V ] || usage
+  [ $interval -eq 0 ] && usage
+  ditto status "every $(( $interval / 60 )) minutes"
+  pgrep -f "btrfs scrub start -Bd $V" >/dev/null || in_progress=$@
+  while : ;do
+    trace "$@"
+    btrfs scrub status $V
+    pgrep -f "btrfs scrub start -Bd $V" >/dev/null || break
+    sleep $interval
+  done
+  [ $in_progress ] || press_enter
+  notify X critical "btrfs scrub $V" "$(btrfs scrub status $V | grep summary | sed -r 's/.*: *//g; s/^(.)/\u\1/')"
+  rm -f $CRON  # remove triggered cron scrub, see crontab -l
+}
+
+# schedule cron scrub, see crontab
+if [ "$1" = '-' ] ;then
+  volume $2 >$CRON
+  [ -s $CRON ]|| { rm $CRON; usage; }
+  ditto 'scheduled' "scrub $2"
+  exit
+fi
+
+case $1 in
+  '') [ -e $CRON ] && { ditto "$CRON" $(cat $CRON); ifno "cancel scrub?" || rm $CRON; true; } || usage ;;  # assumes scrub:<fs>.log crontab file naming
+  a*) scrub boot; scrub share; scrub backup ;;
+  c*) btrfs scrub cancel $(volume $2) ;;
+  I*) sudo rm -f /var/lib/btrfs/*.* ;;
+  s*) tail -f $CRON:$2.log ;;
+  
+  * ) nohup btrfs scrub start -Bd $(volume $1) >$CRON.log &
+      log=$CRON:$1.log
+      show $1 >$log &
+      pstat Xorg && alacritty --title "$1" -e "tail -f $log" || tail -f $log ;;
+esac
+
+# vim: set ft=sh: #

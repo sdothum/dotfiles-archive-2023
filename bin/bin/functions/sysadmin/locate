@@ -1,0 +1,13 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Sysadmin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .............................................................. Locate filtered
+
+# locate wrapper
+# see /etc/updatedb.conf prunenames exclusions
+/usr/bin/locate -Aei $@ | grep -E -v '/vim/undo/|/Trash/|/.Trash-|/.cache/|.cache$'
+
+# vim: set ft=sh: #

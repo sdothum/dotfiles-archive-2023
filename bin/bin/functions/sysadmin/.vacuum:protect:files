@@ -1,0 +1,32 @@
+#
+# system files (not matching package names)
+#
+  .bash_.*
+  .cloudconvert_api_key
+  .forward
+  .mailcap
+  public.key
+  .signature
+  typescript
+  .vacuum.*
+  .Xdefaults
+  .xinitrc
+  .xinitrc.dist
+  .xkbmap
+  .Xmodmap.*
+  .Xresources
+  .Xresources.dist
+  .xsession
+  .xsession.dist
+  .zhistory
+  .zlogin
+  .zprezto
+  .zpreztorc
+  .zsh
+  .zshenv
+  .zshrc
+  .cache/dmenu:.*
+  .cache/fcache:.*
+  .cache/gstreamer-1.0
+  .cache/vmap:.*
+  .cache/wsync

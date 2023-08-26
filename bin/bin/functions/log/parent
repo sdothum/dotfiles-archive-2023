@@ -1,0 +1,24 @@
+# sdothum - 2016 (c) wtfpl
+
+# Log
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ Trace
+
+# Usage: CHILD="<message>" . parent
+#        must be sourced in order to obtain correct parent id
+
+TRACE=${TRACE:-/tmp/trace.log}
+# set ljust=true for left justified parent name
+unset ljust
+
+parent() {
+  proc=$(ancestor)
+  [ $ljust ] &&
+    echo "$proc                  " | sed -r 's/^(..................).*/\1/' ||
+    echo "                  $proc" | sed -r 's/.*(..................)$/\1/'
+}
+
+echo "$(date "+%M'%S\"")  $(parent) -> $CHILD" >>$TRACE
+
+# vim: set ft=sh: #

@@ -1,0 +1,29 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Log
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .......................................................................... Log
+
+SESSION=$HOME/session.log
+
+# new session log
+script() {
+  ditto "saving previous to $HOME/log/${SESSION##*/}"
+  mkdir -pv $HOME/log || exit 1
+  mv $SESSION $HOME/log
+}
+
+# capture automated install script output
+[ -e $SESSION ] && { ifno 'create fresh session log' || script; }
+
+/usr/bin/script -a $SESSION
+
+# strip carriage returns at eol
+dos2unix -f $SESSION
+# strip embedded carriage returns from pacman progress bar (could turn it off instead but..)
+# sed -i '/\x0d/d; /\[[^-#cC]*\] *[0-9]*%/d' $SESSION
+sed -i '/\[[^-#cC]*\] *[0-9]*%/d' $SESSION
+
+# vim: set ft=sh: #

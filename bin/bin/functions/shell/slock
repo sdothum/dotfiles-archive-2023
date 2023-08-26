@@ -1,0 +1,19 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................. Lock script
+
+# Usage: slock <basename $0> <$$>
+
+exec 3>"/tmp/flock:$1"
+if flock -n 3 2>/dev/null ;then
+  echo $2 1>&3
+else
+  echo 1>&2 "$1 already running: exiting."
+  exit 1
+fi
+
+# vim: set ft=sh: #

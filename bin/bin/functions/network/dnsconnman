@@ -1,0 +1,19 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Network
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... Connect
+
+# import user path
+. $HOME/bin/functions/shell/user_path
+
+connect && exit
+
+trace 'Re-establishing dns..'
+sudo systemctl stop connman
+sudo systemctl restart dnsmasq
+sudo systemctl start connman
+
+# vim: set ft=sh: #

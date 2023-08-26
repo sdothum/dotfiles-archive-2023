@@ -1,0 +1,115 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... E-mail
+
+# Usage: dmenu abook [cache]
+
+PASTE='paste'
+CLIPBOARD='clipboard'
+ADD='add contacts'
+REBUILD='rebuild address book'
+EDIT='edit contacts'
+
+# select email contact addresses for insert into sup query
+maildir=${MAILDIR:-$HOME/Mail}
+cache=$maildir/addressbook
+# additional contacts
+# - name <address>
+# - tag :: name <address>,..
+contacts=$maildir/contacts
+# patricia=$maildir/addressbook.patricia
+
+# .................................................................. Build cache
+
+# build address list
+# - exclude major lists correspondence
+# - exclude news and announcement items
+# - exclude malformed addresses, unexpected characters
+# - addresses must include "display name"" (preceding <address>)
+# - proper case "user name"
+abook() {
+  notify low 'Updating dmenu addressbook cache' 'Please be patient..'
+  ack --no-filename --ignore-case --no-color '^(From|To|Cc|Bcc): .*@' $maildir |
+      sed -re 's/(\xad|\x01)/ /g' \
+          -e 's/[,;] */\n/g' \
+          -e 's/["]//g' \
+          -e "s/[']//g" \
+          -e 's/<br>//' \
+          -e 's/<mailto:[^>]*>//' \
+          -e 's/\t/ /g' \
+          -e 's/  *$//' \
+          -e 's/^  *//' \
+          -e 's/  */ /g' \
+          -e 's/^To: //I' \
+          -e 's/^From: //I' \
+          -e 's/^Cc: //I' \
+          -e 's/^Bcc: //I' \
+          -e 's/< */</' \
+          -e 's/ *>/>/' |
+      grep '^[^<].*<.*>$' | grep -v '@.*<' | grep -Eiv '(^[^a-z[]|[#])' |
+      grep -Piv '<comments(?!@thedarnedestthing)' | grep -Eiv '((hello|info)@)' |
+      grep -Eiv '(announce|automated|confirm|contact|help|invitations|market|news|notification|promo|reply|review|subscribe|welcome)' |
+      grep -Eiv '(feedspot|github|via linkedin|yahoogroups)' |
+      sed -re 's/[^< ]*[?][^< ]* //' \
+          -e 's/\b(\w*)\b/\L\u\1/g' \
+          -e 's/(<.*)/\L\1/g' |
+      sort -f | uniq -i >$cache
+  notify low 'Update of dmenu addressbook cache' '..Complete'
+  sleep 1
+}
+
+# command line initialization with: dmenu abook [init]
+[ ! -s $cache ] || [ $1 ] && { abook; [ $1 ] && exit; }
+
+# ................................................................. Send-to list
+
+ribbon() {
+  if [ -z "$addresses" ] ;then
+    echo E-mail
+  elif echo $addresses | grep -qv ',' ;then
+    echo $addresses
+  else
+    echo ".., $(echo ${addresses##*,})"
+  fi
+}
+
+contacts() { sed "s/  *::  */^$SEP /" $contacts | column -s^ -t; cat $patricia $cache; }
+
+addresslist() {
+  if [ "$addresses" ] ;then
+    contacts | sed "/^ *$/d; 1i$(X $PASTE)\n$(X $CLIPBOARD)\n$(X $ADD)"
+  else
+    contacts | sed "/^ *$/d; 1i$(X $REBUILD)\n$(X $EDIT)"
+  fi
+}
+
+# ................................................................. Address book
+
+while : ;do
+  address=$(addresslist | rmenu "$(ribbon)" -no-custom) || exit
+  address=${address#*$SEP }
+
+  case ${address#$(X)} in
+    "$PASTE"    ) clipboard "$addresses"
+                  cpu arm && sleep 2  # allow application to regain focus
+                  xdotool type --delay 0 "$addresses"
+                  break ;;
+  
+    "$ADD"      ) [ "$addresses" ] || continue
+                  tag=$(echo | rmenu 'Tags') || continue
+                  [ $tag ] || tag=Contacts
+                  echo "\n$tag :: $addresses" >>$contacts
+                  unset addresses
+                  vim -g -f $contacts ;;
+  
+    "$EDIT"     ) vim -g -f $contacts ;;
+    "$REBUILD"  ) abook; unset addresses ;;
+    "$CLIPBOARD") clipboard "$addresses"; notify 'Ctrl-Alt-V' "$(echo $addresses | sed 's/ <\S*>//g')"; break ;;
+    *           ) [ "$addresses" ] && addresses=$addresses,$address || addresses=$address ;;
+  esac
+done
+
+# vim: set ft=sh: #

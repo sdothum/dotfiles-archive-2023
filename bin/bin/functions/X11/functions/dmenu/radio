@@ -1,0 +1,44 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ Radio
+
+# Note: mpv --no-cache --quiet, are unique options used on this system for radio
+
+TOGGLE='toggle'
+CLEAR='clear'
+EDIT='edit'
+
+stations=$CONFIG/.radiorc  # access list csv format: <station>, <url>
+connect=0.5                # connection lag time
+
+playlist() {
+  if [ -e $RADIO ] ;then
+    cat $stations | sed "1i$(X $TOGGLE)\n$(X $CLEAR)\n$(X $EDIT)"
+  else
+    cat $stations | sed '1i$(X $EDIT)'
+  fi | sed 's/,.*//'
+}
+
+# url in pkill removed because "?" and "&" in some urls fail match
+stop()    { pkill -TERM -f 'mpv --no-cache --quiet' >/dev/null 2>&1; }
+station() { [ -e $RADIO ] && cat $RADIO || echo 'Radio'; }
+url()     { grep "$@" $stations | sed 's/.*, *//'; }
+
+while station=$(playlist | rmenu "$(station)" -no-custom) || exit ;do
+  case ${station#$(X)} in
+    "$TOGGLE") pstat 'mpv --no-cache --quiet' && stop || mpv --no-cache --quiet $(url $(cat $RADIO)) &; exit ;;
+    "$CLEAR" ) stop; rm -f $RADIO; exit ;;
+    "$EDIT"  ) vim -g -f $stations ;;
+  
+    *        ) pstat 'mpv --no-cache --quiet' && stop
+               url=$(url "$station")
+               [ "$url" ] || continue
+               mpv --no-cache --quiet $url &
+               sleep $connect; pstat 'mpv --no-cache --quiet' && exec echo "$station" >$RADIO || rm -f $RADIO ;;
+  esac
+done
+
+# vim: set ft=sh: #
