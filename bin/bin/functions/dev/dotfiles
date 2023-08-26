@@ -9,8 +9,9 @@
 # .......................................................................... Git
 
 usage() {
-  echo "usage: $(basename $0) [<stowdir>] add [-f] <package>[/<filespec>]* | comment [<comment>] | folders  |\
- | ignore | init | list | log | undo | rm <dir> | sync"
+  echo "usage: $(basename $0) [<stowdir>] add [-f] <package>[/<filespec>]* | rm <filespec>
+                comment [<comment>] | redo | undo
+                folders | ignore | errors | warning | list | log | init | sync"
   ditto rules "$DOTFILES"
   exit 1
 }
@@ -106,6 +107,10 @@ case $1 in
   comment) shift; DESC=$@
            [ "$DESC" ] && git commit --amend --no-edit --message="$DESC" || git commit --amend ;;
   
+  error*   |\
+  warn*  ) git commit -m "warning messages" >/tmp/dotfiles:messages
+           vim -g /tmp/dotfiles:messages ;;
+
   folders) vim -g $DOTFILES .gitignore ;;
   ignore ) vim -g .gitignore $DOTFILES ;;
   init   ) init ;;
