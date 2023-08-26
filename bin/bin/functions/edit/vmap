@@ -12,7 +12,7 @@ usage() {
   exit 1
 }
 
-vimrc="$STOW/vim/.vimrc $HOME/.vim/config/*.vim $(find $HOME/.vim/custom -regextype posix-extended -regex '.*vim')"
+vimrc="$STOW/vim/.vimrc $HOME/.vim/config/*.vim"
 index=$CACHEDIR/vmap
 vmap=/tmp/vim:map
 
@@ -52,6 +52,6 @@ vmap() {
 }
 
 # vim <S-F1> call uses more
-[ $title ] && vmap | less -RX || vmap | more
+[ $title ] && vmap | less -RX || vmap | less
 
 # vim: set ft=sh: #

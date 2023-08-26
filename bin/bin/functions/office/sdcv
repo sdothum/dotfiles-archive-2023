@@ -37,13 +37,13 @@ th() {
   done
 
   if [ "$MAXLEN" ] ;then
-    echo "$output" | grep -v "$MAXLEN" | column  # word length cutoff
+    echo "$output" | grep -v "$MAXLEN" | columns  # word length cutoff
   elif [ "$LENGTH" ] ;then
-    echo "$output" | grep "$LENGTH" | column     # exact word length match
+    echo "$output" | grep "$LENGTH" | columns     # exact word length match
   elif [ "$SPACES" ] ;then
-    echo "$output" | column
+    echo "$output" | columns
   else
-    echo "$output" | grep -v " " | column        # words only (no phrases)
+    echo "$output" | grep -v " " | columns        # words only (no phrases)
   fi
 }
 

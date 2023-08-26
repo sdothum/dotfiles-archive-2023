@@ -23,7 +23,7 @@ dir() { cd $STOW; echo $1 | grep -q '/' && { [ -d $1 ] && echo $STOW/${1%/*} || 
 pkg() { echo $1 | grep -q '/' && echo ${1#*/} || echo $1; }
 
 case $1 in
-  ''   ) find $STOW -maxdepth 1 -type d | sed 's|.*/||' | grep -v '^\.' | sort | column; usage ;;
+  ''   ) find $STOW -maxdepth 1 -type d | sed 's|.*/||' | grep -v '^\.' | sort | column; echo; usage ;;
   sync ) link '&& stow' ;;
   clean) link '|| stow D' ;;
   check) link '&& ditto' ;;

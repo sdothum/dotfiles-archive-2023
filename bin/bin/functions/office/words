@@ -58,11 +58,20 @@ corpus() {
 list() {
   for i in $@ ;do
     underline
-    [ $length ] && [ $le ] && ugrep -i $i $WORDS | awk '{ print $1 }' | grep -Eow "\b\w{1,$length}\b"       | sed 's/$/ /' | sort | column -c$(tput cols) ||  # add space to widen column separator
-      [ $length ] &&          ugrep -i $i $WORDS | awk '{ print $1 }' | grep -Eow "\b\w{$length,$length}\b" | sed 's/$/ /' | sort | column -c$(tput cols) ||
-      ugrep -i $i $WORDS | awk '{ print $1 }' | sort | column -c$(tput cols)
+    [ $length ] && [ $le ] && ugrep -i $i $WORDS | awk '{ print $1 }' | grep -Eow "\b\w{1,$length}\b"       | sed 's/$/ /' | sort | columns ||  # add space to widen column separator
+      [ $length ] &&          ugrep -i $i $WORDS | awk '{ print $1 }' | grep -Eow "\b\w{$length,$length}\b" | sed 's/$/ /' | sort | columns ||
+      ugrep -i $i $WORDS | awk '{ print $1 }' | sort | columns
     echo
   done
+}
+
+dump() {
+  corpus $double
+  corpus $trigraph
+  corpus $digraph
+  corpus $alphabet
+  echo
+  usage
 }
 
 if [ $1 ] ;then
@@ -70,11 +79,7 @@ if [ $1 ] ;then
   # list really only makes sense for single inquiry
   [ $list ] && list $@ | tr '[:upper:]' '[:lower:]'
 else
-  corpus $double
-  corpus $trigraph
-  corpus $digraph
-  corpus $alphabet
-  usage
+  dump | print
 fi
 
 # vim: set ft=sh: #
