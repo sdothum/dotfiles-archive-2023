@@ -6,8 +6,10 @@
 
 # ...................................................................... Monitor
 
+alpine && BIN=/usr/sbin || BIN=/usr/bin
+
 # monitor interface
-ditto "iftop -B -i $1 \ (eth0, wlan0, ..)"
-sudo /usr/bin/iftop -B -i $1
+ditto "iftop -B -i ${1:-wlan0} \ (eth0, wlan0, ..)"
+sudo $BIN/iftop -B -i ${1:-wlan0}
 
 # vim: set ft=sh: #

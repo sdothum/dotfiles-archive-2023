@@ -6,8 +6,10 @@
 
 # ...................................................................... Monitor
 
+alpine && BIN=/bin || BIN=/usr/bin
+
 # network statistics
 echo "netstat -tnp $1"
-sudo /usr/bin/netstat -tnp $1
+sudo $BIN/netstat -tnp $1
 
 # vim: set ft=sh: #
