@@ -1,0 +1,30 @@
+conky.config = {
+	alignment = 'top_left',
+	color1 = '#2d2d2d',
+	default_color = '#ffffff',
+	default_shade_color = '#000000',
+	double_buffer = true,
+	draw_shades = true,
+	-- font = 'Noto Sans Mono:size=18', conky.text = [[ ${voffset 208}
+	font = 'Major Mono Display:size=18',
+	gap_x = 0,
+	gap_y = 0,
+  maximum_width = 1200,
+  minimum_width = 1200, minimum_height = 720,
+  own_window_colour = '#000000',
+	own_window_hints = 'undecorated,above',
+  own_window_transparent = false,
+	own_window = true,
+	own_window_type = 'panel',
+	update_interval = 1.0,
+	uppercase = true,
+	use_xft = true,
+	xftalpha = 0.1,
+};
+
+conky.text = [[
+${voffset 194}
+${execp conky qclocktwo '{voffset 14}'}
+]];
+
+-- vim: set ft=lua : --
