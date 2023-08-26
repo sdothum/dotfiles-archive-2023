@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+    <head>
+        <title>Miniflux</title>
+        <dateCreated>Tue, 02 May 2023 07:11:19 EDT</dateCreated>
+    </head>
+    <body>
+        <outline text="Alpine Linux">
+            <outline title="Alpine Linux" text="Alpine Linux" xmlUrl="https://www.reddit.com/r/AlpineLinux/.rss" htmlUrl="https://www.reddit.com/r/AlpineLinux/"></outline>
+        </outline>
+        <outline text="Android">
+            <outline title="Android Central" text="Android Central" xmlUrl="https://www.androidcentral.com/rss.xml" htmlUrl="https://www.androidcentral.com/"></outline>
+            <outline title="R | Android" text="R | Android" xmlUrl="https://www.reddit.com/r/Android/.rss" htmlUrl="https://www.reddit.com/r/Android/"></outline>
+            <outline title="R | Apps for Android" text="R | Apps for Android" xmlUrl="https://www.reddit.com/r/androidapps/.rss" htmlUrl="https://www.reddit.com/r/androidapps/"></outline>
+            <outline title="R | kiwibrowser" text="R | kiwibrowser" xmlUrl="https://www.reddit.com/r/kiwibrowser/.rss" htmlUrl="https://www.reddit.com/r/kiwibrowser/"></outline>
+            <outline title="R | The Launcher Collective" text="R | The Launcher Collective" xmlUrl="https://www.reddit.com/r/AndroidLauncher/.rss" htmlUrl="https://www.reddit.com/r/AndroidLauncher/"></outline>
+        </outline>
+        <outline text="Anime">
+            <outline title="Kotaku" text="Kotaku" xmlUrl="https://kotaku.com/rss" htmlUrl="http://kotaku.com"></outline>
+            <outline title="R | Anime" text="R | Anime" xmlUrl="https://www.reddit.com/r/anime/.rss" htmlUrl="https://www.reddit.com/r/anime/"></outline>
+        </outline>
+        <outline text="Astronomy">
+            <outline title="NS | Space" text="NS | Space" xmlUrl="https://www.newscientist.com/subject/space/feed/" htmlUrl="https://www.newscientist.com/subject/space/feed/"></outline>
+            <outline title="NYT | Space &amp; Cosmos" text="NYT | Space &amp; Cosmos" xmlUrl="https://rss.nytimes.com/services/xml/rss/nyt/Space.xml" htmlUrl="https://www.nytimes.com/section/science/space"></outline>
+            <outline title="PHYSORG" text="PHYSORG" xmlUrl="https://phys.org/rss-feed/space-news/" htmlUrl="http://phys.org/space-news/"></outline>
+            <outline title="R | Ask Astronomy" text="R | Ask Astronomy" xmlUrl="https://www.reddit.com/r/askastronomy/.rss" htmlUrl="https://www.reddit.com/r/askastronomy/"></outline>
+            <outline title="R | Astronomy" text="R | Astronomy" xmlUrl="https://www.reddit.com/r/Astronomy/.rss" htmlUrl="https://www.reddit.com/r/Astronomy/"></outline>
+            <outline title="R | Cosmology" text="R | Cosmology" xmlUrl="https://www.reddit.com/r/cosmology/.rss" htmlUrl="https://www.reddit.com/r/cosmology/"></outline>
+            <outline title="R | Planetary Science" text="R | Planetary Science" xmlUrl="https://www.reddit.com/r/planetaryscience/.rss" htmlUrl="https://www.reddit.com/r/planetaryscience/"></outline>
+            <outline title="R | space" text="R | space" xmlUrl="https://www.reddit.com/r/space/.rss" htmlUrl="https://www.reddit.com/r/space/"></outline>
+            <outline title="Universe Today" text="Universe Today" xmlUrl="https://www.universetoday.com/feed/" htmlUrl="http://www.universetoday.com"></outline>
+        </outline>
+        <outline text="Authors">
+            <outline title="Alicorn" text="Alicorn" xmlUrl="http://alicorn.elcenia.com/rss.xml" htmlUrl="http://alicorn.elcenia.com"></outline>
+            <outline title="Pig&#39;s Pen" text="Pig&#39;s Pen" xmlUrl="https://wildbow.wordpress.com/feed/" htmlUrl="https://wildbow.wordpress.com"></outline>
+            <outline title="R | Anathem" text="R | Anathem" xmlUrl="https://www.reddit.com/r/anathem/.rss" htmlUrl="https://www.reddit.com/r/anathem/"></outline>
+            <outline title="R | Greg Egan" text="R | Greg Egan" xmlUrl="https://www.reddit.com/r/gregegan/.rss" htmlUrl="https://www.reddit.com/r/gregegan/"></outline>
+            <outline title="R | Neal Stephenson" text="R | Neal Stephenson" xmlUrl="https://www.reddit.com/r/nealstephenson/.rss" htmlUrl="https://www.reddit.com/r/nealstephenson/"></outline>
+            <outline title="R | Octavia E. Butler" text="R | Octavia E. Butler" xmlUrl="https://www.reddit.com/r/octaviabutler/.rss" htmlUrl="https://www.reddit.com/r/octaviabutler/"></outline>
+            <outline title="R | Parahumans" text="R | Parahumans" xmlUrl="https://www.reddit.com/r/Parahumans/.rss" htmlUrl="https://www.reddit.com/r/Parahumans/"></outline>
+            <outline title="R | R. Scott Bakker" text="R | R. Scott Bakker" xmlUrl="https://www.reddit.com/r/bakker/.rss" htmlUrl="https://www.reddit.com/r/bakker/"></outline>
+            <outline title="R | Robin Hobb" text="R | Robin Hobb" xmlUrl="https://www.reddit.com/r/robinhobb/.rss" htmlUrl="https://www.reddit.com/r/robinhobb/"></outline>
+            <outline title="R | Terra Ignota" text="R | Terra Ignota" xmlUrl="https://www.reddit.com/r/TerraIgnota/.rss" htmlUrl="https://www.reddit.com/r/TerraIgnota/"></outline>
+            <outline title="R | TheSunEaterSeries" text="R | TheSunEaterSeries" xmlUrl="https://www.reddit.com/r/TheSunEaterSeries/.rss" htmlUrl="https://www.reddit.com/r/TheSunEaterSeries/"></outline>
+            <outline title="R | UrsulaKLeGuin" text="R | UrsulaKLeGuin" xmlUrl="https://www.reddit.com/r/UrsulaKLeGuin/.rss" htmlUrl="https://www.reddit.com/r/UrsulaKLeGuin/"></outline>
+            <outline title="The Writing Cooperative" text="The Writing Cooperative" xmlUrl="https://writingcooperative.com/feed" htmlUrl="https://writingcooperative.com?source=rss----6e9c0c9fd682---4"></outline>
+        </outline>
+        <outline text="Birding">
+            <outline title="Backyard Birder" text="Backyard Birder" xmlUrl="http://jjthebackyardbirder.blogspot.com/feeds/posts/default" htmlUrl="http://jjthebackyardbirder.blogspot.com/"></outline>
+            <outline title="Backyard Birding" text="Backyard Birding" xmlUrl="http://backyardbirdingandbeyond.blogspot.com/feeds/posts/default" htmlUrl="http://backyardbirdingandbeyond.blogspot.com/"></outline>
+            <outline title="Birding &amp; Nature" text="Birding &amp; Nature" xmlUrl="http://feeds.feedburner.com/blogspot/ibPPY" htmlUrl="http://screech-owls.blogspot.com/"></outline>
+            <outline title="R | birding" text="R | birding" xmlUrl="https://www.reddit.com/r/birding/.rss" htmlUrl="https://www.reddit.com/r/birding/"></outline>
+            <outline title="R | Ornithology" text="R | Ornithology" xmlUrl="https://www.reddit.com/r/Ornithology/.rss" htmlUrl="https://www.reddit.com/r/Ornithology/"></outline>
+            <outline title="R | What&#39;s this bird?" text="R | What&#39;s this bird?" xmlUrl="https://www.reddit.com/r/whatsthisbird/.rss" htmlUrl="https://www.reddit.com/r/whatsthisbird/"></outline>
+        </outline>
+        <outline text="Books">
+            <outline title="NYT | Book Review" text="NYT | Book Review" xmlUrl="https://rss.nytimes.com/services/xml/rss/nyt/SundayBookReview.xml" htmlUrl="https://www.nytimes.com/section/books/review"></outline>
+            <outline title="NYT | Books" text="NYT | Books" xmlUrl="https://rss.nytimes.com/services/xml/rss/nyt/Books.xml" htmlUrl="https://www.nytimes.com/section/books"></outline>
+            <outline title="R | Book Suggestions" text="R | Book Suggestions" xmlUrl="https://www.reddit.com/r/booksuggestions/.rss" htmlUrl="https://www.reddit.com/r/booksuggestions/"></outline>
+            <outline title="R | books" text="R | books" xmlUrl="https://www.reddit.com/r/books/.rss" htmlUrl="https://www.reddit.com/r/books/"></outline>
+            <outline title="R | Suggest Me A Book" text="R | Suggest Me A Book" xmlUrl="https://www.reddit.com/r/suggestmeabook/.rss" htmlUrl="https://www.reddit.com/r/suggestmeabook/"></outline>
+            <outline title="Standard Ebooks" text="Standard Ebooks" xmlUrl="https://standardebooks.org/feeds/rss/new-releases" htmlUrl="https://standardebooks.org"></outline>
+        </outline>
+        <outline text="Canada">
+            <outline title="CTV | Canada" text="CTV | Canada" xmlUrl="https://www.ctvnews.ca/rss/ctvnews-ca-canada-public-rss-1.822284" htmlUrl="http://www.ctvnews.ca/rss/ctvnews-ca-canada-public-rss-1.822284"></outline>
+            <outline title="R | Canada" text="R | Canada" xmlUrl="https://www.reddit.com/r/canada/.rss" htmlUrl="https://www.reddit.com/r/canada/"></outline>
+            <outline title="R | Canada Politics" text="R | Canada Politics" xmlUrl="https://www.reddit.com/r/CanadaPolitics/.rss" htmlUrl="https://www.reddit.com/r/CanadaPolitics/"></outline>
+            <outline title="R | On Guard For Thee" text="R | On Guard For Thee" xmlUrl="https://www.reddit.com/r/onguardforthee/.rss" htmlUrl="https://www.reddit.com/r/onguardforthee/"></outline>
+        </outline>
+        <outline text="Cinema">
+            <outline title="/Film" text="/Film" xmlUrl="http://feeds2.feedburner.com/slashfilm" htmlUrl="http://www.slashfilm.com"></outline>
+            <outline title="Film School Rejects" text="Film School Rejects" xmlUrl="https://filmschoolrejects.com/feed/" htmlUrl="https://filmschoolrejects.com"></outline>
+            <outline title="FlickFilosopher" text="FlickFilosopher" xmlUrl="https://www.flickfilosopher.com/feed" htmlUrl="http://www.flickfilosopher.com"></outline>
+            <outline title="Metacritic" text="Metacritic" xmlUrl="https://www.metacritic.com/rss/movies" htmlUrl="http://www.metacritic.com"></outline>
+            <outline title="NYT | Movies" text="NYT | Movies" xmlUrl="https://rss.nytimes.com/services/xml/rss/nyt/Movies.xml" htmlUrl="https://www.nytimes.com/section/movies"></outline>
+            <outline title="R | Movies" text="R | Movies" xmlUrl="https://np.reddit.com/r/movies/.rss" htmlUrl="https://np.reddit.com/r/movies/"></outline>
+            <outline title="Roger Ebert" text="Roger Ebert" xmlUrl="https://www.rogerebert.com/feed" htmlUrl="http://www.rogerebert.com/"></outline>
+        </outline>
+        <outline text="Climate">
+            <outline title="Hurricane Watches" text="Hurricane Watches" xmlUrl="https://www.nhc.noaa.gov/index-at.xml" htmlUrl="http://www.nhc.noaa.gov/"></outline>
+            <outline title="R | climate" text="R | climate" xmlUrl="https://www.reddit.com/r/climate/.rss" htmlUrl="https://www.reddit.com/r/climate/"></outline>
+            <outline title="RealClimate" text="RealClimate" xmlUrl="http://feeds.feedburner.com/realclimate/HYVV" htmlUrl="http://www.realclimate.org"></outline>
+            <outline title="Tornado Watches" text="Tornado Watches" xmlUrl="https://www.spc.noaa.gov/products/spcwwrss.xml" htmlUrl="http://www.spc.noaa.gov/"></outline>
+            <outline title="Typhoon Watches" text="Typhoon Watches" xmlUrl="https://www.nhc.noaa.gov/index-ep.xml" htmlUrl="http://www.nhc.noaa.gov/"></outline>
+        </outline>
+        <outline text="Darkroom">
+            <outline title="discuss.pixls.us" text="discuss.pixls.us" xmlUrl="https://discuss.pixls.us/posts.rss" htmlUrl="https://discuss.pixls.us"></outline>
+            <outline title="R | Darktable" text="R | Darktable" xmlUrl="https://www.reddit.com/r/DarkTable/.rss" htmlUrl="https://www.reddit.com/r/DarkTable/"></outline>
+            <outline title="R | FOSS" text="R | FOSS" xmlUrl="https://www.reddit.com/r/FOSSPhotography/.rss" htmlUrl="https://www.reddit.com/r/FOSSPhotography/"></outline>
+        </outline>
+        <outline text="Dogs">
+            <outline title="R | dogs" text="R | dogs" xmlUrl="https://www.reddit.com/r/dogs/.rss" htmlUrl="https://www.reddit.com/r/dogs/"></outline>
+            <outline title="R | DogTraining" text="R | DogTraining" xmlUrl="https://www.reddit.com/r/Dogtraining/.rss" htmlUrl="https://www.reddit.com/r/Dogtraining/"></outline>
+            <outline title="R | Open Minded Training" text="R | Open Minded Training" xmlUrl="https://www.reddit.com/r/OpenDogTraining/.rss" htmlUrl="https://www.reddit.com/r/OpenDogTraining/"></outline>
+            <outline title="R | rarepuppers" text="R | rarepuppers" xmlUrl="https://www.reddit.com/r/rarepuppers/.rss" htmlUrl="https://www.reddit.com/r/rarepuppers/"></outline>
+            <outline title="R | Reactive Dogs" text="R | Reactive Dogs" xmlUrl="https://www.reddit.com/r/reactivedogs/.rss" htmlUrl="https://www.reddit.com/r/reactivedogs/"></outline>
+        </outline>
+        <outline text="E-Ink">
+            <outline title="eBook Reader" text="eBook Reader" xmlUrl="http://feeds.the-ebook-reader.com/feedburner/cmWU" htmlUrl="http://blog.the-ebook-reader.com"></outline>
+            <outline title="eReaderJoy" text="eReaderJoy" xmlUrl="http://ereaderjoy.blogspot.com/feeds/posts/default?alt=rss" htmlUrl="http://ereaderjoy.blogspot.com/"></outline>
+            <outline title="eWritable" text="eWritable" xmlUrl="https://ewritable.com/feed/" htmlUrl="https://ewritable.com"></outline>
+            <outline title="Good E-Reader" text="Good E-Reader" xmlUrl="https://goodereader.com/blog/feed" htmlUrl="http://goodereader.com/blog"></outline>
+            <outline title="R | Boox" text="R | Boox" xmlUrl="https://www.reddit.com/r/Onyx_Boox/.rss" htmlUrl="https://www.reddit.com/r/Onyx_Boox/"></outline>
+            <outline title="R | eink" text="R | eink" xmlUrl="https://www.reddit.com/r/eink/.rss" htmlUrl="https://www.reddit.com/r/eink/"></outline>
+            <outline title="R | Ereader" text="R | Ereader" xmlUrl="https://www.reddit.com/r/ereader/.rss" htmlUrl="https://www.reddit.com/r/ereader/"></outline>
+        </outline>
+        <outline text="Environment">
+            <outline title="BBC | Environment" text="BBC | Environment" xmlUrl="http://feeds.bbci.co.uk/news/science_and_environment/rss.xml" htmlUrl="http://www.bbc.co.uk/news/science_and_environment/#sa-ns_mchannel=rss&amp;ns_source=PublicRSS20-sa"></outline>
+            <outline title="Grist" text="Grist" xmlUrl="https://grist.org/feed/" htmlUrl="http://grist.org"></outline>
+            <outline title="NS | Earth" text="NS | Earth" xmlUrl="https://www.newscientist.com/subject/earth/feed/" htmlUrl="https://www.newscientist.com/subject/earth/feed/"></outline>
+            <outline title="NYT | Climate and Environment" text="NYT | Climate and Environment" xmlUrl="https://rss.nytimes.com/services/xml/rss/nyt/Climate.xml" htmlUrl="https://www.nytimes.com/section/climate"></outline>
+            <outline title="R | All things eco" text="R | All things eco" xmlUrl="https://www.reddit.com/r/EcoNewsNetwork/.rss" htmlUrl="https://www.reddit.com/r/EcoNewsNetwork/"></outline>
+        </outline>
+        <outline text="Essays">
+            <outline title="Aeon" text="Aeon" xmlUrl="https://aeon.co/feed.rss" htmlUrl="https://aeon.co"></outline>
+            <outline title="Harper&#39;s Magazine" text="Harper&#39;s Magazine" xmlUrl="https://harpers.org/feed/" htmlUrl="http://harpers.org"></outline>
+            <outline title="Longreads" text="Longreads" xmlUrl="https://longreads.com/feed/" htmlUrl="http://longreads.com/"></outline>
+            <outline title="New Yorker" text="New Yorker" xmlUrl="https://www.newyorker.com/feed/everything" htmlUrl="http://www.newyorker.com/"></outline>
+            <outline title="NYT | Sunday Review" text="NYT | Sunday Review" xmlUrl="https://rss.nytimes.com/services/xml/rss/nyt/sunday-review.xml" htmlUrl="https://www.nytimes.com/section/opinion/sunday"></outline>
+            <outline title="The Atlantic" text="The Atlantic" xmlUrl="https://www.theatlantic.com/feed/all/" htmlUrl="https://www.theatlantic.com/"></outline>
+            <outline title="The Feature" text="The Feature" xmlUrl="https://thefeature.net/rss/links" htmlUrl="http://thefeature.net/"></outline>
+            <outline title="TomDispatch" text="TomDispatch" xmlUrl="http://feeds2.feedburner.com/tomdispatch/esUU" htmlUrl="http://tomdispatch.com/"></outline>
+            <outline title="UnHerd" text="UnHerd" xmlUrl="https://unherd.com/feed/" htmlUrl="https://unherd.com/"></outline>
+            <outline title="Vanity Fair" text="Vanity Fair" xmlUrl="https://www.vanityfair.com/feed/rss" htmlUrl="https://www.vanityfair.com"></outline>
+        </outline>
+        <outline text="Fantasy">
+            <outline title="FanFiAddict" text="FanFiAddict" xmlUrl="https://fanfiaddict.com/feed/" htmlUrl="https://fanfiaddict.com"></outline>
+            <outline title="Novel Notions" text="Novel Notions" xmlUrl="https://novelnotions.net/feed/" htmlUrl="http://novelnotions.net"></outline>
+            <outline title="R | Fantasy" text="R | Fantasy" xmlUrl="https://www.reddit.com/r/Fantasy/.rss" htmlUrl="https://www.reddit.com/r/Fantasy/"></outline>
+            <outline title="SFFWorld" text="SFFWorld" xmlUrl="http://feeds.feedburner.com/Sffworld-News" htmlUrl="http://www.sffworld.com"></outline>
+        </outline>
+        <outline text="Food">
+            <outline title="R | Chinese Food" text="R | Chinese Food" xmlUrl="https://www.reddit.com/r/chinesefood/.rss" htmlUrl="https://www.reddit.com/r/chinesefood/"></outline>
+            <outline title="R | Cooking" text="R | Cooking" xmlUrl="https://www.reddit.com/r/Cooking/.rss" htmlUrl="https://www.reddit.com/r/Cooking/"></outline>
+            <outline title="R | food" text="R | food" xmlUrl="https://www.reddit.com/r/food/.rss" htmlUrl="https://www.reddit.com/r/food/"></outline>
+            <outline title="R | recipes" text="R | recipes" xmlUrl="https://www.reddit.com/r/recipes/.rss" htmlUrl="https://www.reddit.com/r/recipes/"></outline>
+            <outline title="R | Slowcooking" text="R | Slowcooking" xmlUrl="https://www.reddit.com/r/slowcooking/.rss" htmlUrl="https://www.reddit.com/r/slowcooking/"></outline>
+            <outline title="R | Sushi" text="R | Sushi" xmlUrl="https://www.reddit.com/r/sushi/.rss" htmlUrl="https://www.reddit.com/r/sushi/"></outline>
+            <outline title="R | Tea" text="R | Tea" xmlUrl="https://www.reddit.com/r/tea/.rss" htmlUrl="https://www.reddit.com/r/tea/"></outline>
+        </outline>
+        <outline text="Fountain Pens">
+            <outline title="FPN | Far East, Asia" text="FPN | Far East, Asia" xmlUrl="https://www.fountainpennetwork.com/forum/forum/132-china-korea-and-others-far-east-asia.xml/" htmlUrl="https://www.fountainpennetwork.com/forum/forum/132-china-korea-and-others-far-east-asia/"></outline>
+            <outline title="FPN | Fountain &amp; Dip Pens" text="FPN | Fountain &amp; Dip Pens" xmlUrl="https://www.fountainpennetwork.com/forum/forum/4-fountain-dip-pens-first-stop.xml/" htmlUrl="https://www.fountainpennetwork.com/forum/forum/4-fountain-dip-pens-first-stop/"></outline>
+            <outline title="FPN | Fountain Pen Reviews" text="FPN | Fountain Pen Reviews" xmlUrl="https://www.fountainpennetwork.com/forum/forum/34-fountain-pen-reviews.xml/" htmlUrl="https://www.fountainpennetwork.com/forum/forum/34-fountain-pen-reviews/"></outline>
+            <outline title="FPN | Japan" text="FPN | Japan" xmlUrl="https://www.fountainpennetwork.com/forum/forum/91-japan-asia.xml/" htmlUrl="https://www.fountainpennetwork.com/forum/forum/91-japan-asia/"></outline>
+            <outline title="Minabeko" text="Minabeko" xmlUrl="https://www.minabeko.com/blog?format=rss" htmlUrl="https://www.minabeko.com/blog/"></outline>
+            <outline title="R | Dip Pens" text="R | Dip Pens" xmlUrl="https://www.reddit.com/r/dippens/.rss" htmlUrl="https://www.reddit.com/r/dippens/"></outline>
+            <outline title="R | fountain pens" text="R | fountain pens" xmlUrl="https://www.reddit.com/r/fountainpens/.rss" htmlUrl="https://www.reddit.com/r/fountainpens/"></outline>
+        </outline>
+        <outline text="Fuji Simulations">
+            <outline title="e.fung" text="e.fung" xmlUrl="https://my.fujifilmrecipes.com/feed/" htmlUrl="https://my.fujifilmrecipes.com"></outline>
+            <outline title="Film Recipes" text="Film Recipes" xmlUrl="https://film.recipes/feed/" htmlUrl="https://film.recipes"></outline>
+            <outline title="Fuji X Weekly" text="Fuji X Weekly" xmlUrl="https://fujixweekly.com/feed/" htmlUrl="https://fujixweekly.com"></outline>
+            <outline title="IvanYolo" text="IvanYolo" xmlUrl="https://www.ivanyolo.com/reviews/photography/feed/" htmlUrl="https://www.ivanyolo.com"></outline>
+            <outline title="Piotr Skrzypek" text="Piotr Skrzypek" xmlUrl="https://piotrecipes.wordpress.com/feed/" htmlUrl="https://piotrecipes.wordpress.com"></outline>
+        </outline>
+        <outline text="Gardening">
+            <outline title="Dinchope Diary" text="Dinchope Diary" xmlUrl="https://dinchope.wordpress.com/feed/" htmlUrl="https://dinchope.wordpress.com"></outline>
+            <outline title="Gardendaze" text="Gardendaze" xmlUrl="https://gardendaze.blog/feed/" htmlUrl="https://gardendaze.blog"></outline>
+            <outline title="Rachel the Gardener" text="Rachel the Gardener" xmlUrl="https://rachel-the-gardener.blogspot.com/feeds/posts/default" htmlUrl="https://rachel-the-gardener.blogspot.com/"></outline>
+            <outline title="The Small Gardener" text="The Small Gardener" xmlUrl="https://www.thesmallgardener.co.uk/feed/" htmlUrl="https://www.thesmallgardener.co.uk"></outline>
+            <outline title="Wildlife Kate" text="Wildlife Kate" xmlUrl="https://wildlifekate.wordpress.com/feed/" htmlUrl="https://wildlifekate.wordpress.com"></outline>
+        </outline>
+        <outline text="History">
+            <outline title="History News" text="History News" xmlUrl="http://historynewsnetwork.org/rss.xml" htmlUrl="http://historynewsnetwork.org"></outline>
+            <outline title="R | Ask Historians" text="R | Ask Historians" xmlUrl="https://www.reddit.com/r/askhistorians/.rss" htmlUrl="https://www.reddit.com/r/AskHistorians/"></outline>
+            <outline title="R | History" text="R | History" xmlUrl="https://www.reddit.com/r/history/.rss" htmlUrl="https://www.reddit.com/r/history/"></outline>
+        </outline>
+        <outline text="Humour">
+            <outline title="Dilbert" text="Dilbert" xmlUrl="http://feeds.feedburner.com/DilbertDailyStrip" htmlUrl="http://feeds.feedburner.com/"></outline>
+            <outline title="Clickhole" text="Clickhole" xmlUrl="https://clickhole.com/feed/" htmlUrl="http://www.clickhole.com/search"></outline>
+            <outline title="Math with Bad Drawings" text="Math with Bad Drawings" xmlUrl="https://mathwithbaddrawings.com/feed/" htmlUrl="http://mathwithbaddrawings.com"></outline>
+            <outline title="PHD Comics" text="PHD Comics" xmlUrl="https://phdcomics.com/gradfeed.php" htmlUrl="http://www.phdcomics.com"></outline>
+            <outline title="Quotes of the Day" text="Quotes of the Day" xmlUrl="http://feeds.feedburner.com/quotationspage/qotd" htmlUrl="http://www.quotationspage.com/qotd.html"></outline>
+            <outline title="R | I never thought leopards would eat MY face" text="R | I never thought leopards would eat MY face" xmlUrl="https://www.reddit.com/r/LeopardsAteMyFace/.rss" htmlUrl="https://www.reddit.com/r/LeopardsAteMyFace/"></outline>
+            <outline title="The Beaverton" text="The Beaverton" xmlUrl="https://www.thebeaverton.com/feed/" htmlUrl="https://www.thebeaverton.com"></outline>
+            <outline title="The Onion" text="The Onion" xmlUrl="https://www.theonion.com/rss" htmlUrl="http://www.theonion.com/search"></outline>
+        </outline>
+        <outline text="Ideas">
+            <outline title="Brain Pickings" text="Brain Pickings" xmlUrl="http://feeds.feedburner.com/brainpickings/rss" htmlUrl="http://www.brainpickings.org"></outline>
+            <outline title="Charlie&#39;s Diary" text="Charlie&#39;s Diary" xmlUrl="http://www.antipope.org/charlie/blog-static/atom.xml" htmlUrl="http://www.antipope.org/charlie/blog-static/"></outline>
+            <outline title="Dangerous Minds" text="Dangerous Minds" xmlUrl="http://feeds.feedburner.com/dangerousminds/dot/net" htmlUrl="https://dangerousminds.net/"></outline>
+            <outline title="disinformation" text="disinformation" xmlUrl="http://feeds.feedburner.com/disinfo/oMPh" htmlUrl="http://disinfo.com"></outline>
+            <outline title="Gris Anik" text="Gris Anik" xmlUrl="http://www.grisanik.com/feed.xml" htmlUrl="http://www.grisanik.com"></outline>
+            <outline title="KnowledgeNuts" text="KnowledgeNuts" xmlUrl="http://knowledgenuts.com/feed/" htmlUrl="http://knowledgenuts.com"></outline>
+        </outline>
+        <outline text="Ink">
+            <outline title="FPN | Ink Comparisons" text="FPN | Ink Comparisons" xmlUrl="https://www.fountainpennetwork.com/forum/forum/86-ink-comparisons.xml/" htmlUrl="https://www.fountainpennetwork.com/forum/forum/86-ink-comparisons/"></outline>
+            <outline title="FPN | Ink Reviews" text="FPN | Ink Reviews" xmlUrl="https://www.fountainpennetwork.com/forum/forum/35-ink-reviews.xml/" htmlUrl="https://www.fountainpennetwork.com/forum/forum/35-ink-reviews/"></outline>
+            <outline title="FPN | Inky Thoughts" text="FPN | Inky Thoughts" xmlUrl="https://www.fountainpennetwork.com/forum/forum/5-inky-thoughts.xml/" htmlUrl="https://www.fountainpennetwork.com/forum/forum/5-inky-thoughts/"></outline>
+            <outline title="Mountain of Ink" text="Mountain of Ink" xmlUrl="https://mountainofink.com/?format=rss" htmlUrl="https://mountainofink.com/"></outline>
+        </outline>
+        <outline text="International News">
+            <outline title="Al Jazeera" text="Al Jazeera" xmlUrl="https://www.aljazeera.com/xml/rss/all.xml" htmlUrl="http://www.aljazeera.com/default.html"></outline>
+            <outline title="BBC" text="BBC" xmlUrl="http://feeds.bbci.co.uk/news/rss.xml" htmlUrl="http://www.bbc.co.uk/news/#sa-ns_mchannel=rss&amp;ns_source=PublicRSS20-sa"></outline>
+            <outline title="NYT | Associated Press" text="NYT | Associated Press" xmlUrl="https://www.nytimes.com/svc/collections/v1/publish/https://www.nytimes.com/section/aponline/news/rss.xml" htmlUrl="https://www.nytimes.com/section/aponline/news"></outline>
+            <outline title="NYT | World" text="NYT | World" xmlUrl="https://rss.nytimes.com/services/xml/rss/nyt/World.xml" htmlUrl="https://www.nytimes.com/section/world"></outline>
+            <outline title="R | News" text="R | News" xmlUrl="https://www.reddit.com/r/news/.rss" htmlUrl="https://www.reddit.com/r/news/"></outline>
+            <outline title="The Economist" text="The Economist" xmlUrl="https://www.economist.com/international/rss.xml" htmlUrl="https://www.economist.com/international/"></outline>
+            <outline title="The Guardian" text="The Guardian" xmlUrl="https://www.theguardian.com/international/rss" htmlUrl="https://www.theguardian.com/international"></outline>
+        </outline>
+        <outline text="JWST">
+            <outline title="R | James Webb Space Telescope" text="R | James Webb Space Telescope" xmlUrl="https://www.reddit.com/r/jameswebb/.rss" htmlUrl="https://www.reddit.com/r/jameswebb/"></outline>
+            <outline title="R | jameswebbdiscoveries" text="R | jameswebbdiscoveries" xmlUrl="https://www.reddit.com/r/jameswebbdiscoveries/.rss" htmlUrl="https://www.reddit.com/r/jameswebbdiscoveries/"></outline>
+            <outline title="R | JWSTMasterrace" text="R | JWSTMasterrace" xmlUrl="https://www.reddit.com/r/JWSTMasterrace/.rss" htmlUrl="https://www.reddit.com/r/JWSTMasterrace/"></outline>
+            <outline title="R | Webb Telescope" text="R | Webb Telescope" xmlUrl="https://www.reddit.com/r/webbtelescope/.rss" htmlUrl="https://www.reddit.com/r/webbtelescope/"></outline>
+        </outline>
+        <outline text="Journaling">
+            <outline title="R | Antinet" text="R | Antinet" xmlUrl="https://www.reddit.com/r/antinet/.rss" htmlUrl="https://www.reddit.com/r/antinet/"></outline>
+            <outline title="R | Journaling" text="R | Journaling" xmlUrl="https://www.reddit.com/r/Journaling/.rss" htmlUrl="https://www.reddit.com/r/Journaling/"></outline>
+            <outline title="R | Note Taking" text="R | Note Taking" xmlUrl="https://www.reddit.com/r/NoteTaking/.rss" htmlUrl="https://www.reddit.com/r/NoteTaking/"></outline>
+            <outline title="R | PKMS" text="R | PKMS" xmlUrl="https://www.reddit.com/r/PKMS/.rss" htmlUrl="https://www.reddit.com/r/PKMS/"></outline>
+            <outline title="R | Zettelkasten" text="R | Zettelkasten" xmlUrl="https://www.reddit.com/r/Zettelkasten/.rss" htmlUrl="https://www.reddit.com/r/Zettelkasten/"></outline>
+            <outline title="Zettelkasten Forum" text="Zettelkasten Forum" xmlUrl="https://forum.zettelkasten.de/discussions/feed.rss" htmlUrl="https://forum.zettelkasten.de/"></outline>
+            <outline title="Zettelkasten.de" text="Zettelkasten.de" xmlUrl="https://zettelkasten.de/feed.atom" htmlUrl="https://zettelkasten.de/"></outline>
+        </outline>
+        <outline text="Keyboard HW">
+            <outline title="R | Corne" text="R | Corne" xmlUrl="https://www.reddit.com/r/crkbd/.rss" htmlUrl="https://www.reddit.com/r/crkbd/"></outline>
+            <outline title="R | ErgoMechBoards" text="R | ErgoMechBoards" xmlUrl="https://www.reddit.com/r/ErgoMechKeyboards/.rss" htmlUrl="https://www.reddit.com/r/ErgoMechKeyboards/"></outline>
+            <outline title="R | MechanicalKeyboards" text="R | MechanicalKeyboards" xmlUrl="https://www.reddit.com/r/MechanicalKeyboards/.rss" htmlUrl="https://www.reddit.com/r/MechanicalKeyboards/"></outline>
+            <outline title="R | Ortholinear Keyboards" text="R | Ortholinear Keyboards" xmlUrl="https://www.reddit.com/r/olkb/.rss" htmlUrl="http://www.reddit.com/r/olkb/"></outline>
+        </outline>
+        <outline text="Keyboard Layouts">
+            <outline title="Colemak" text="Colemak" xmlUrl="https://forum.colemak.com/extern.php?action=feed&amp;type=atom" htmlUrl="http://forum.colemak.com/index.php"></outline>
+            <outline title="Colemak | User" text="Colemak | User" xmlUrl="https://forum.colemak.com/extern.php?action=feed&amp;fid=10&amp;type=atom" htmlUrl="http://forum.colemak.com/index.php"></outline>
+            <outline title="R | BEAKL" text="R | BEAKL" xmlUrl="https://www.reddit.com/r/BEAKL/.rss" htmlUrl="https://www.reddit.com/r/BEAKL/"></outline>
+            <outline title="R | Colemak" text="R | Colemak" xmlUrl="https://www.reddit.com/r/Colemak/.rss" htmlUrl="https://www.reddit.com/r/Colemak/"></outline>
+            <outline title="R | Dvorak" text="R | Dvorak" xmlUrl="https://www.reddit.com/r/dvorak/.rss" htmlUrl="https://www.reddit.com/r/dvorak/"></outline>
+            <outline title="R | Keyboard Layouts" text="R | Keyboard Layouts" xmlUrl="https://www.reddit.com/r/KeyboardLayouts/.rss" htmlUrl="https://www.reddit.com/r/KeyboardLayouts/"></outline>
+            <outline title="R | Norman" text="R | Norman" xmlUrl="https://www.reddit.com/r/Norman/.rss" htmlUrl="https://www.reddit.com/r/Norman/"></outline>
+            <outline title="R | Workman" text="R | Workman" xmlUrl="https://www.reddit.com/r/WorkmanLayout/.rss" htmlUrl="https://www.reddit.com/r/WorkmanLayout/"></outline>
+        </outline>
+        <outline text="Kindle">
+            <outline title="R | Kindle" text="R | Kindle" xmlUrl="https://www.reddit.com/r/kindle/.rss" htmlUrl="https://www.reddit.com/r/kindle/"></outline>
+        </outline>
+        <outline text="Kobo">
+            <outline title="M | Kobo Reader" text="M - Kobo Reader" xmlUrl="https://www.mobileread.com/feeds/223_rss20.xml" htmlUrl="https://www.mobileread.com/forums/"></outline>
+            <outline title="R | Calibre" text="R | Calibre" xmlUrl="https://www.reddit.com/r/Calibre/.rss" htmlUrl="https://www.reddit.com/r/Calibre/"></outline>
+            <outline title="R | Kobo" text="R | Kobo" xmlUrl="https://www.reddit.com/r/kobo/.rss" htmlUrl="https://www.reddit.com/r/kobo/"></outline>
+        </outline>
+        <outline text="Kustom">
+            <outline title="Automagic Forum" text="Automagic Forum" xmlUrl="https://automagic4android.com/forum/app.php/feed?sid=3168842d645548d1418e62534f37af98" htmlUrl="https://automagic4android.com/forum/index.php"></outline>
+            <outline title="R | Android Themes" text="R | Android Themes" xmlUrl="https://www.reddit.com/r/androidthemes/.rss" htmlUrl="https://www.reddit.com/r/androidthemes/"></outline>
+            <outline title="R | AutomateUser" text="R | AutomateUser" xmlUrl="https://www.reddit.com/r/AutomateUser/.rss" htmlUrl="https://www.reddit.com/r/AutomateUser/"></outline>
+            <outline title="R | Kustom KLWP / KWGT / KLCK" text="R | Kustom KLWP / KWGT / KLCK" xmlUrl="https://www.reddit.com/r/kustom/.rss" htmlUrl="https://www.reddit.com/r/kustom/"></outline>
+            <outline title="R | KWGT Kustom Widget Maker" text="R | KWGT Kustom Widget Maker" xmlUrl="https://www.reddit.com/r/KWGT/.rss" htmlUrl="https://www.reddit.com/r/KWGT/"></outline>
+            <outline title="R | Lightning Launcher" text="R | Lightning Launcher" xmlUrl="https://www.reddit.com/r/LightningLauncher/.rss" htmlUrl="https://www.reddit.com/r/LightningLauncher/"></outline>
+            <outline title="R | Tasker" text="R | Tasker" xmlUrl="https://www.reddit.com/r/tasker/.rss" htmlUrl="https://www.reddit.com/r/tasker/"></outline>
+        </outline>
+        <outline text="Less Wrong">
+            <outline title="Freakonomics" text="Freakonomics" xmlUrl="https://freakonomics.com/feed/" htmlUrl="http://freakonomics.com"></outline>
+            <outline title="Less Wrong" text="Less Wrong" xmlUrl="https://www.lesswrong.com/feed.xml" htmlUrl="http://lesswrong.com/"></outline>
+            <outline title="R | Critical Thinking" text="R | Critical Thinking" xmlUrl="https://www.reddit.com/r/CriticalThinking/.rss" htmlUrl="http://www.reddit.com/r/criticalthinking/"></outline>
+            <outline title="R | Critical Thinking 101" text="R | Critical Thinking 101" xmlUrl="https://www.reddit.com/r/CriticalThinking101/.rss" htmlUrl="https://www.reddit.com/r/CriticalThinking101/"></outline>
+            <outline title="R | Less Wrong" text="R | Less Wrong" xmlUrl="https://www.reddit.com/r/lesswrong/.rss" htmlUrl="https://www.reddit.com/r/lesswrong/"></outline>
+        </outline>
+        <outline text="Literature">
+            <outline title="R | AskLiteraryStudies" text="R | AskLiteraryStudies" xmlUrl="https://www.reddit.com/r/AskLiteraryStudies/.rss" htmlUrl="https://www.reddit.com/r/AskLiteraryStudies/"></outline>
+            <outline title="R | Rational Fiction" text="R | Rational Fiction" xmlUrl="https://www.reddit.com/r/rational/.rss" htmlUrl="https://www.reddit.com/r/rational/"></outline>
+            <outline title="R | TrueLit" text="R | TrueLit" xmlUrl="https://www.reddit.com/r/TrueLit/.rss" htmlUrl="https://www.reddit.com/r/TrueLit/"></outline>
+        </outline>
+        <outline text="Medicine">
+            <outline title="R | Health" text="R | Health" xmlUrl="https://www.reddit.com/r/Health/.rss" htmlUrl="https://www.reddit.com/r/Health/"></outline>
+            <outline title="R | medicine" text="R | medicine" xmlUrl="https://www.reddit.com/r/medicine/.rss" htmlUrl="https://www.reddit.com/r/medicine/"></outline>
+            <outline title="STAT" text="STAT" xmlUrl="https://www.statnews.com/feed/" htmlUrl="https://www.statnews.com"></outline>
+        </outline>
+        <outline text="Modal Editors">
+            <outline title="R | Helix" text="R | Helix" xmlUrl="https://www.reddit.com/r/HelixEditor/.rss" htmlUrl="https://www.reddit.com/r/HelixEditor/"></outline>
+            <outline title="R | kakoune" text="R | kakoune" xmlUrl="https://www.reddit.com/r/kakoune/.rss" htmlUrl="https://www.reddit.com/r/kakoune/"></outline>
+            <outline title="SO | kakoune" text="SO | kakoune" xmlUrl="https://stackoverflow.com/feeds/tag/kakoune" htmlUrl="https://stackoverflow.com/questions/tagged/?tagnames=kakoune&amp;sort=active"></outline>
+        </outline>
+        <outline text="Neuroscience">
+            <outline title="PsyPost" text="PsyPost" xmlUrl="https://www.psypost.org/feed" htmlUrl="https://www.psypost.org"></outline>
+            <outline title="R | Neuroscience" text="R | Neuroscience" xmlUrl="https://www.reddit.com/r/neuroscience/.rss" htmlUrl="https://www.reddit.com/r/neuroscience/"></outline>
+            <outline title="R | Psychology" text="R | Psychology" xmlUrl="https://www.reddit.com/r/psychology/.rss" htmlUrl="https://www.reddit.com/r/psychology/"></outline>
+        </outline>
+        <outline text="Ottawa">
+            <outline title="CTV | Ottawa" text="CTV | Ottawa" xmlUrl="https://ottawa.ctvnews.ca/rss/ctv-news-ottawa-1.1245493" htmlUrl="http://ottawa.ctvnews.ca/rss/ctv-news-ottawa-1.1245493"></outline>
+            <outline title="R | Ontario" text="R | Ontario" xmlUrl="https://www.reddit.com/r/ontario/.rss" htmlUrl="https://www.reddit.com/r/ontario/"></outline>
+            <outline title="R | Ottawa" text="R | Ottawa" xmlUrl="https://www.reddit.com/r/ottawa/.rss" htmlUrl="http://www.reddit.com/r/ottawa/"></outline>
+        </outline>
+        <outline text="Outdoors">
+            <outline title="Brian&#39;s Backpacking" text="Brian&#39;s Backpacking" xmlUrl="https://www.briangreen.net/bbb?format=RSS" htmlUrl="https://www.briangreen.net/"></outline>
+            <outline title="R | Camping" text="R | Camping" xmlUrl="https://www.reddit.com/r/camping/.rss" htmlUrl="https://www.reddit.com/r/camping/"></outline>
+            <outline title="R | Camping and Hiking" text="R | Camping and Hiking" xmlUrl="https://www.reddit.com/r/CampingandHiking/.rss" htmlUrl="https://www.reddit.com/r/CampingandHiking/"></outline>
+            <outline title="R | CampingGear" text="R | CampingGear" xmlUrl="https://www.reddit.com/r/CampingGear/.rss" htmlUrl="https://www.reddit.com/r/CampingGear/"></outline>
+            <outline title="R | Hiking" text="R | Hiking" xmlUrl="https://www.reddit.com/r/hiking/.rss" htmlUrl="https://www.reddit.com/r/hiking/"></outline>
+            <outline title="R | Hiking With Dogs" text="R | Hiking With Dogs" xmlUrl="https://www.reddit.com/r/hikingwithdogs/.rss" htmlUrl="https://www.reddit.com/r/hikingwithdogs/"></outline>
+        </outline>
+        <outline text="Penmanship">
+            <outline title="FPN | Broad Pen Calligraphy" text="FPN | Broad Pen Calligraphy" xmlUrl="https://www.fountainpennetwork.com/forum/forum/151-broad-or-edged-pen-calligraphy.xml/" htmlUrl="https://www.fountainpennetwork.com/forum/forum/151-broad-or-edged-pen-calligraphy/"></outline>
+            <outline title="FPN | Calligraphy" text="FPN | Calligraphy" xmlUrl="https://www.fountainpennetwork.com/forum/forum/12-calligraphy-discussions.xml/" htmlUrl="https://www.fountainpennetwork.com/forum/forum/12-calligraphy-discussions/"></outline>
+            <outline title="FPN | Handwriting" text="FPN | Handwriting" xmlUrl="https://www.fountainpennetwork.com/forum/forum/148-handwriting-handwriting-improvement.xml/" htmlUrl="https://www.fountainpennetwork.com/forum/forum/148-handwriting-handwriting-improvement/"></outline>
+            <outline title="FPN | Of Nibs &amp; Tines" text="FPN | Of Nibs &amp; Tines" xmlUrl="https://www.fountainpennetwork.com/forum/forum/135-of-nibs-tines.xml/" htmlUrl="https://www.fountainpennetwork.com/forum/forum/135-of-nibs-tines/"></outline>
+            <outline title="FPN | Paper and Pen Paraphernalia" text="FPN | Paper and Pen Paraphernalia" xmlUrl="https://www.fountainpennetwork.com/forum/forum/36-paper-and-pen-paraphernalia.xml/" htmlUrl="https://www.fountainpennetwork.com/forum/forum/36-paper-and-pen-paraphernalia/"></outline>
+            <outline title="R | Calligraphy" text="R | Calligraphy" xmlUrl="https://www.reddit.com/r/Calligraphy/.rss" htmlUrl="https://www.reddit.com/r/Calligraphy/"></outline>
+            <outline title="R | Handwriting" text="R | Handwriting" xmlUrl="https://www.reddit.com/r/Handwriting/.rss" htmlUrl="https://www.reddit.com/r/Handwriting/"></outline>
+            <outline title="R | Penmanship Porn" text="R | Penmanship Porn" xmlUrl="https://www.reddit.com/r/PenmanshipPorn/.rss" htmlUrl="https://www.reddit.com/r/PenmanshipPorn/"></outline>
+        </outline>
+        <outline text="Philosophy">
+            <outline title="Mind Hacks" text="Mind Hacks" xmlUrl="https://mindhacks.com/feed/" htmlUrl="http://mindhacks.com"></outline>
+            <outline title="Philosophy Encyclopedia" text="Philosophy Encyclopedia" xmlUrl="https://plato.stanford.edu/rss/sep.xml" htmlUrl="http://plato.stanford.edu/"></outline>
+            <outline title="R | Ask Philosophy" text="R | Ask Philosophy" xmlUrl="https://www.reddit.com/r/askphilosophy/.rss" htmlUrl="https://www.reddit.com/r/askphilosophy/"></outline>
+            <outline title="R | Philosophy" text="R | Philosophy" xmlUrl="https://www.reddit.com/r/philosophy/.rss" htmlUrl="https://www.reddit.com/r/philosophy/"></outline>
+        </outline>
+        <outline text="Phone">
+            <outline title="R | LG G8X" text="R | LG G8X" xmlUrl="https://www.reddit.com/r/LGG8X/.rss" htmlUrl="https://www.reddit.com/r/LGG8X/"></outline>
+            <outline title="R | NovaLauncher" text="R | NovaLauncher" xmlUrl="https://www.reddit.com/r/NovaLauncher/.rss" htmlUrl="https://www.reddit.com/r/NovaLauncher/"></outline>
+            <outline title="R | OsmAnd" text="R | OsmAnd" xmlUrl="https://www.reddit.com/r/OsmAnd/.rss" htmlUrl="https://www.reddit.com/r/OsmAnd/"></outline>
+            <outline title="R | Relay" text="R | Relay" xmlUrl="https://www.reddit.com/r/RelayForReddit/.rss" htmlUrl="https://www.reddit.com/r/RelayForReddit/"></outline>
+        </outline>
+        <outline text="Physics">
+            <outline title="NS | Physics" text="NS | Physics" xmlUrl="https://www.newscientist.com/subject/physics/feed/" htmlUrl="https://www.newscientist.com/subject/physics/feed/"></outline>
+            <outline title="R | Ask Physics" text="R | Ask Physics" xmlUrl="https://www.reddit.com/r/AskPhysics/.rss" htmlUrl="https://www.reddit.com/r/AskPhysics/"></outline>
+            <outline title="R | Physics" text="R | Physics" xmlUrl="https://www.reddit.com/r/Physics/.rss" htmlUrl="https://www.reddit.com/r/Physics/"></outline>
+            <outline title="The Nature of Reality" text="The Nature of Reality" xmlUrl="https://www.pbs.org/wgbh/nova/blogs/physics/feed/" htmlUrl="http://www.pbs.org/wgbh/nova/blogs/physics"></outline>
+        </outline>
+        <outline text="Plant Medicine">
+            <outline title="R | Ayahuasca" text="R | Ayahuasca" xmlUrl="https://www.reddit.com/r/Ayahuasca/.rss" htmlUrl="https://www.reddit.com/r/Ayahuasca/"></outline>
+            <outline title="R | MagicMushrooms" text="R | MagicMushrooms" xmlUrl="https://www.reddit.com/r/MagicMushrooms/.rss" htmlUrl="https://www.reddit.com/r/MagicMushrooms/"></outline>
+            <outline title="R | Psilocybe Mushrooms" text="R | Psilocybe Mushrooms" xmlUrl="https://www.reddit.com/r/PsilocybinMushrooms/.rss" htmlUrl="https://www.reddit.com/r/PsilocybinMushrooms/"></outline>
+            <outline title="R | Psilocybin" text="R | Psilocybin" xmlUrl="https://www.reddit.com/r/psilocybin/.rss" htmlUrl="https://www.reddit.com/r/psilocybin/"></outline>
+            <outline title="R | sporetraders" text="R | sporetraders" xmlUrl="https://www.reddit.com/r/sporetraders/.rss" htmlUrl="https://www.reddit.com/r/sporetraders/"></outline>
+            <outline title="R | The Mycology Bazaar" text="R | The Mycology Bazaar" xmlUrl="https://www.reddit.com/r/MycoBazaar/.rss" htmlUrl="https://www.reddit.com/r/MycoBazaar/"></outline>
+            <outline title="R | unclebens" text="R | unclebens" xmlUrl="https://www.reddit.com/r/unclebens/.rss" htmlUrl="https://www.reddit.com/r/unclebens/"></outline>
+        </outline>
+        <outline text="Plover">
+            <outline title="Plover Blog" text="Plover Blog" xmlUrl="http://plover.stenoknight.com/feeds/posts/default" htmlUrl="http://plover.stenoknight.com/"></outline>
+        </outline>
+        <outline text="Poetry">
+            <outline title="Heart Poems" text="Heart Poems" xmlUrl="https://janicefalls.wordpress.com/feed/" htmlUrl="https://janicefalls.wordpress.com"></outline>
+            <outline title="Tweet Speak Poetry" text="Tweet Speak Poetry" xmlUrl="http://www.tweetspeakpoetry.com/feed/" htmlUrl="http://www.tweetspeakpoetry.com"></outline>
+        </outline>
+        <outline text="Politics">
+            <outline title="BillMoyers" text="BillMoyers" xmlUrl="https://billmoyers.com/feed/" htmlUrl="http://billmoyers.com"></outline>
+            <outline title="counterpunch" text="counterpunch" xmlUrl="http://www.counterpunch.org/feed/" htmlUrl="http://www.counterpunch.org"></outline>
+            <outline title="Deeplinks" text="Deeplinks" xmlUrl="https://www.eff.org/rss/updates.xml" htmlUrl="https://www.eff.org/rss/updates.xml"></outline>
+            <outline title="ProPublica" text="ProPublica" xmlUrl="https://www.propublica.org/feeds/propublica/main" htmlUrl="https://www.propublica.org/feeds/54Ghome"></outline>
+            <outline title="The Conversation" text="The Conversation" xmlUrl="https://theconversation.com/us/home-page/articles.atom" htmlUrl="https://theconversation.com"></outline>
+        </outline>
+        <outline text="Quantum Physics">
+            <outline title="diy Physics" text="diy Physics" xmlUrl="http://www.diyphysics.com/feed/" htmlUrl="http://www.diyphysics.com"></outline>
+            <outline title="Quanta Magazine" text="Quanta Magazine" xmlUrl="https://api.quantamagazine.org/feed/" htmlUrl="https://www.quantamagazine.org"></outline>
+            <outline title="Quantum Frontiers" text="Quantum Frontiers" xmlUrl="https://quantumfrontiers.com/feed/" htmlUrl="https://quantumfrontiers.com"></outline>
+            <outline title="R | Quantum Mechanics" text="R | Quantum Mechanics" xmlUrl="https://www.reddit.com/r/quantum/.rss" htmlUrl="https://www.reddit.com/r/quantum/"></outline>
+            <outline title="R | Quantum Physics" text="R | Quantum Physics" xmlUrl="https://www.reddit.com/r/QuantumPhysics/.rss" htmlUrl="https://www.reddit.com/r/QuantumPhysics/"></outline>
+        </outline>
+        <outline text="Raspberry Pi">
+            <outline title="Pi" text="Pi" xmlUrl="https://www.raspberrypi.org/feed/" htmlUrl="https://www.raspberrypi.org"></outline>
+            <outline title="Pi | Forums" text="Pi | Forums" xmlUrl="https://forums.raspberrypi.com/app.php/feed" htmlUrl="http://www.raspberrypi.org/forums/index.php"></outline>
+        </outline>
+        <outline text="ReMarkable">
+            <outline title="R | reMarkable" text="R | reMarkable" xmlUrl="https://www.reddit.com/r/RemarkableTablet/.rss" htmlUrl="https://www.reddit.com/r/RemarkableTablet/"></outline>
+        </outline>
+        <outline text="Reddit">
+            <outline title="R | Ask Reddit" text="R | Ask Reddit" xmlUrl="https://www.reddit.com/r/AskReddit/.rss" htmlUrl="http://www.reddit.com/r/AskReddit/"></outline>
+            <outline title="R | ELI5" text="R | ELI5" xmlUrl="https://www.reddit.com/r/explainlikeimfive/.rss" htmlUrl="http://www.reddit.com/r/explainlikeimfive/"></outline>
+            <outline title="R | High Strangeness" text="R | High Strangeness" xmlUrl="https://www.reddit.com/r/HighStrangeness/.rss" htmlUrl="https://www.reddit.com/r/HighStrangeness/"></outline>
+            <outline title="R | Humanity, Fuck Yeah!" text="R | Humanity, Fuck Yeah!" xmlUrl="https://www.reddit.com/r/HFY/.rss" htmlUrl="https://www.reddit.com/r/HFY/"></outline>
+            <outline title="R | I Am A" text="R | I Am A" xmlUrl="https://www.reddit.com/r/IAmA/.rss" htmlUrl="https://www.reddit.com/r/IAmA/"></outline>
+            <outline title="R | TOMT" text="R | TOMT" xmlUrl="https://www.reddit.com/r/tipofmytongue/.rss" htmlUrl="https://www.reddit.com/r/tipofmytongue/"></outline>
+        </outline>
+        <outline text="Ricing">
+            <outline title="Monochromatic" text="Monochromatic" xmlUrl="http://blog.z3bra.org/rss/feed.xml" htmlUrl="http://blog.z3bra.org"></outline>
+            <outline title="R | AwesomeWM" text="R | AwesomeWM" xmlUrl="https://www.reddit.com/r/awesomewm/.rss" htmlUrl="https://www.reddit.com/r/awesomewm/"></outline>
+            <outline title="R | herbstluftwm" text="R | herbstluftwm" xmlUrl="https://www.reddit.com/r/herbstluftwm/.rss" htmlUrl="https://www.reddit.com/r/herbstluftwm/"></outline>
+            <outline title="R | unixart" text="R | unixart" xmlUrl="https://www.reddit.com/r/unixart.rss" htmlUrl="https://www.reddit.com/r/unixart/"></outline>
+            <outline title="R | unixporn" text="R | unixporn" xmlUrl="https://www.reddit.com/r/unixporn/.rss" htmlUrl="http://www.reddit.com/r/unixporn/"></outline>
+        </outline>
+        <outline text="Running">
+            <outline title="Breaking Muscle" text="Breaking Muscle" xmlUrl="https://breakingmuscle.com/feed/" htmlUrl="https://breakingmuscle.com/feed/rss"></outline>
+            <outline title="DC Rainmaker" text="DC Rainmaker" xmlUrl="https://www.dcrainmaker.com/feed" htmlUrl="https://www.dcrainmaker.com"></outline>
+            <outline title="R | Barefoot &amp; Minimalist running" text="R | Barefoot &amp; Minimalist running" xmlUrl="https://www.reddit.com/r/BarefootRunning/.rss" htmlUrl="https://www.reddit.com/r/BarefootRunning/"></outline>
+            <outline title="R | Coros Wearables" text="R | Coros Wearables" xmlUrl="https://www.reddit.com/r/Coros/.rss" htmlUrl="https://www.reddit.com/r/Coros/"></outline>
+            <outline title="R | HIIT" text="R | HIIT" xmlUrl="https://www.reddit.com/r/HIIT/.rss" htmlUrl="https://www.reddit.com/r/HIIT/"></outline>
+            <outline title="R | Running" text="R | Running" xmlUrl="https://www.reddit.com/r/running/.rss" htmlUrl="https://www.reddit.com/r/running/"></outline>
+            <outline title="Trail Runner Mag" text="Trail Runner Mag" xmlUrl="https://flipboard.com/@simplefeed/trail-runner-mag-nnr1k4aoz.rss" htmlUrl="https://flipboard.com/@simplefeed/trail-runner-mag-nnr1k4aoz"></outline>
+        </outline>
+        <outline text="Sci-Fi">
+            <outline title="io9" text="io9" xmlUrl="https://gizmodo.com/rss" htmlUrl="http://io9.com"></outline>
+            <outline title="R | Science Fiction" text="R | Science Fiction" xmlUrl="https://www.reddit.com/r/ScienceFiction/.rss" htmlUrl="https://www.reddit.com/r/ScienceFiction/"></outline>
+            <outline title="R | scifi" text="R | scifi" xmlUrl="https://www.reddit.com/r/scifi/.rss" htmlUrl="https://www.reddit.com/r/scifi/"></outline>
+            <outline title="The Wertzone" text="The Wertzone" xmlUrl="https://thewertzone.blogspot.com/feeds/posts/default" htmlUrl="https://thewertzone.blogspot.com/"></outline>
+        </outline>
+        <outline text="Science">
+            <outline title="LiveScience" text="LiveScience" xmlUrl="https://www.livescience.com/feeds/all" htmlUrl="http://www.livescience.com/"></outline>
+            <outline title="Massive Science" text="Massive Science" xmlUrl="https://massivesci.com/feed.xml" htmlUrl="https://massivesci.com/"></outline>
+            <outline title="NYT | Science" text="NYT | Science" xmlUrl="https://rss.nytimes.com/services/xml/rss/nyt/Science.xml" htmlUrl="https://www.nytimes.com/section/science"></outline>
+            <outline title="R | Ask Science" text="R | Ask Science" xmlUrl="https://www.reddit.com/r/askscience/.rss" htmlUrl="https://www.reddit.com/r/askscience/"></outline>
+            <outline title="R | Discuss Science" text="R | Discuss Science" xmlUrl="https://www.reddit.com/r/AskScienceDiscussion/.rss" htmlUrl="https://www.reddit.com/r/AskScienceDiscussion/"></outline>
+            <outline title="R | Science" text="R | Science" xmlUrl="https://www.reddit.com/r/science/.rss" htmlUrl="https://www.reddit.com/r/science/"></outline>
+            <outline title="ScienceDaily" text="ScienceDaily" xmlUrl="https://www.sciencedaily.com/newsfeed.xml" htmlUrl="http://www.sciencedaily.com/news/"></outline>
+        </outline>
+        <outline text="Scripting">
+            <outline title="R | bash" text="R | bash" xmlUrl="https://www.reddit.com/r/bash/.rss" htmlUrl="https://www.reddit.com/r/bash/"></outline>
+            <outline title="R | Command Line" text="R | Command Line" xmlUrl="https://www.reddit.com/r/commandline/.rss" htmlUrl="https://www.reddit.com/r/commandline/"></outline>
+            <outline title="R | fishshell" text="R | fishshell" xmlUrl="https://www.reddit.com/r/fishshell/.rss" htmlUrl="https://www.reddit.com/r/fishshell/"></outline>
+        </outline>
+        <outline text="Self-hosting">
+            <outline title="R | Docker" text="R | Docker" xmlUrl="https://www.reddit.com/r/docker/.rss" htmlUrl="https://www.reddit.com/r/docker/"></outline>
+            <outline title="R | Self-Hosted" text="R | Self-Hosted" xmlUrl="https://www.reddit.com/r/selfhosted/.rss" htmlUrl="https://www.reddit.com/r/selfhosted/"></outline>
+        </outline>
+        <outline text="Shadow Library">
+            <outline title="R | DataHoarder" text="R | DataHoarder" xmlUrl="https://www.reddit.com/r/DataHoarder/.rss" htmlUrl="https://www.reddit.com/r/DataHoarder/"></outline>
+            <outline title="R | Library Genesis" text="R | Library Genesis" xmlUrl="https://www.reddit.com/r/libgen/.rss" htmlUrl="https://www.reddit.com/r/libgen/"></outline>
+            <outline title="R | zlibrary" text="R | zlibrary" xmlUrl="https://www.reddit.com/r/zlibrary/.rss" htmlUrl="https://www.reddit.com/r/zlibrary/"></outline>
+        </outline>
+        <outline text="Shamanism">
+            <outline title="Power Path" text="Power Path" xmlUrl="http://thepowerpath.com/feed/" htmlUrl="http://thepowerpath.com"></outline>
+            <outline title="R | Shamanism" text="R | Shamanism" xmlUrl="https://www.reddit.com/r/Shamanism/.rss" htmlUrl="https://www.reddit.com/r/Shamanism/"></outline>
+            <outline title="Shamanism" text="Shamanism" xmlUrl="https://wordpress.com/tag/shamanism/feed/" htmlUrl="http://en.wordpress.com/tag/shamanism/"></outline>
+        </outline>
+        <outline text="Slingshots">
+            <outline title="R | Slingshots" text="R | Slingshots" xmlUrl="https://www.reddit.com/r/slingshots/.rss" htmlUrl="https://www.reddit.com/r/slingshots/"></outline>
+            <outline title="rebelslingshotforum" text="rebelslingshotforum" xmlUrl="https://www.tapatalk.com/groups/rebelslingshotforum/app.php/feed?sid=1cb6a7192932edc85bcdc5f2bf2300e6" htmlUrl="https://www.tapatalk.com/groups/rebelslingshotforum/index.php"></outline>
+            <outline title="Slingshot Channel" text="Slingshot Channel" xmlUrl="https://www.theslingshotforum.com/forums/-/index.rss" htmlUrl="https://www.theslingshotforum.com/"></outline>
+            <outline title="Slingshot Community" text="Slingshot Community" xmlUrl="https://www.slingshotcommunity.com/forums/-/index.rss" htmlUrl="https://www.slingshotcommunity.com/"></outline>
+        </outline>
+        <outline text="Speculative Fiction">
+            <outline title="Ancillary Review of Books" text="Ancillary Review of Books" xmlUrl="https://ancillaryreviewofbooks.org/feed/" htmlUrl="https://ancillaryreviewofbooks.org"></outline>
+            <outline title="Locus Online" text="Locus Online" xmlUrl="https://locusmag.com/feed/" htmlUrl="https://locusmag.com"></outline>
+            <outline title="R | Speculative Fiction" text="R | Speculative Fiction" xmlUrl="https://www.reddit.com/r/printSF/.rss" htmlUrl="https://www.reddit.com/r/printSF/"></outline>
+            <outline title="The Speculative Shelf" text="The Speculative Shelf" xmlUrl="https://spikegelato.com/feed/" htmlUrl="https://spikegelato.com"></outline>
+        </outline>
+        <outline text="Sports">
+            <outline title="Silver Seven" text="Silver Seven" xmlUrl="https://www.silversevensens.com/rss/current" htmlUrl="http://www.silversevensens.com/rss/"></outline>
+            <outline title="SenShot" text="SenShot" xmlUrl="https://senshot.com/feed/" htmlUrl="http://senshot.com"></outline>
+            <outline title="Silver Seven" text="Silver Seven" xmlUrl="https://www.silversevensens.com/rss/" htmlUrl="https://silver-seven.ghost.io/"></outline>
+        </outline>
+        <outline text="Subaru">
+            <outline title="R | Subaru" text="R | Subaru" xmlUrl="https://www.reddit.com/r/subaru/.rss" htmlUrl="https://www.reddit.com/r/subaru/"></outline>
+        </outline>
+        <outline text="Supernote">
+            <outline title="My Deep Guide" text="My Deep Guide" xmlUrl="https://www.mydeepguide.com/blog-feed.xml" htmlUrl="https://www.mydeepguide.com/articles"></outline>
+            <outline title="R | Puppy Vs Kitten" text="R | Puppy Vs Kitten" xmlUrl="https://www.reddit.com/r/PuppyVsKitten/.rss" htmlUrl="https://www.reddit.com/r/PuppyVsKitten/"></outline>
+            <outline title="R | Supernote" text="R | Supernote" xmlUrl="https://www.reddit.com/r/Supernote/.rss" htmlUrl="https://www.reddit.com/r/Supernote/"></outline>
+            <outline title="R | Supernote_beta" text="R | Supernote_beta" xmlUrl="https://www.reddit.com/r/Supernote_beta/.rss" htmlUrl="https://www.reddit.com/r/Supernote_beta/"></outline>
+        </outline>
+        <outline text="Tarot">
+            <outline title="benebell wen" text="benebell wen" xmlUrl="https://benebellwen.com/feed/" htmlUrl="https://benebellwen.com"></outline>
+            <outline title="R | The Tarot" text="R | The Tarot" xmlUrl="https://www.reddit.com/r/tarot/.rss" htmlUrl="https://www.reddit.com/r/tarot/"></outline>
+        </outline>
+        <outline text="Telescopes">
+            <outline title="R | Binoculars." text="R | Binoculars." xmlUrl="https://www.reddit.com/r/Binoculars/.rss" htmlUrl="https://www.reddit.com/r/Binoculars/"></outline>
+            <outline title="R | telescopes" text="R | telescopes" xmlUrl="https://www.reddit.com/r/telescopes/.rss" htmlUrl="https://www.reddit.com/r/telescopes/"></outline>
+        </outline>
+        <outline text="Television">
+            <outline title="INNER TOOB" text="INNER TOOB" xmlUrl="http://toobworld.blogspot.com/feeds/posts/default" htmlUrl="http://toobworld.blogspot.com/feeds/posts/"></outline>
+            <outline title="It&#39;s About TV" text="It&#39;s About TV" xmlUrl="https://www.itsabouttv.com/feeds/posts/default" htmlUrl="http://www.itsabouttv.com/feeds/posts/"></outline>
+            <outline title="NYT | Television" text="NYT | Television" xmlUrl="https://rss.nytimes.com/services/xml/rss/nyt/Television.xml" htmlUrl="https://www.nytimes.com/section/arts/television"></outline>
+            <outline title="R | Television" text="R | Television" xmlUrl="https://np.reddit.com/r/television/.rss" htmlUrl="https://np.reddit.com/r/television/"></outline>
+            <outline title="TMINE" text="TMINE" xmlUrl="http://feeds2.feedburner.com/TheMediumIsNotEnough" htmlUrl="http://www.the-medium-is-not-enough.com/"></outline>
+        </outline>
+        <outline text="Tobacco">
+            <outline title="R | Pipe Tobacco" text="R | Pipe Tobacco" xmlUrl="https://www.reddit.com/r/PipeTobacco/.rss" htmlUrl="http://www.reddit.com/r/PipeTobacco/"></outline>
+            <outline title="R | Smoking Pipes" text="R | Smoking Pipes" xmlUrl="https://www.reddit.com/r/smokingpipes/.rss" htmlUrl="https://www.reddit.com/r/smokingpipes/"></outline>
+        </outline>
+        <outline text="Typography">
+            <outline title="Hypefortype Blog" text="Hypefortype Blog" xmlUrl="https://www.hypefortype.com/blog/feed/" htmlUrl="https://www.hypefortype.com/blog"></outline>
+            <outline title="FreeTypography" text="FreeTypography" xmlUrl="https://freetypography.com/feed/" htmlUrl="https://freetypography.com"></outline>
+            <outline title="I Love Typography" text="I Love Typography" xmlUrl="https://ilovetypography.com/feed/" htmlUrl="https://ilovetypography.com"></outline>
+            <outline title="R | Typography" text="R | Typography" xmlUrl="https://www.reddit.com/r/typography/.rss" htmlUrl="https://www.reddit.com/r/typography/"></outline>
+        </outline>
+        <outline text="USA">
+            <outline title="Common Dreams" text="Common Dreams" xmlUrl="https://www.commondreams.org/feeds/feed.rss" htmlUrl="https://www.commondreams.org/rss.xml"></outline>
+            <outline title="Democracy Now!" text="Democracy Now!" xmlUrl="https://www.democracynow.org/democracynow.rss" htmlUrl="http://www.democracynow.org/"></outline>
+            <outline title="Mother Jones" text="Mother Jones" xmlUrl="http://feeds.feedburner.com/motherjones/feed" htmlUrl="https://www.motherjones.com"></outline>
+            <outline title="patribotics" text="patribotics" xmlUrl="https://patribotics.blog/feed/" htmlUrl="https://patribotics.blog"></outline>
+            <outline title="R | NeutralPolitics" text="R | NeutralPolitics" xmlUrl="https://www.reddit.com/r/NeutralPolitics/.rss" htmlUrl="https://www.reddit.com/r/NeutralPolitics/"></outline>
+            <outline title="R | Politics" text="R | Politics" xmlUrl="https://www.reddit.com/r/politics/.rss" htmlUrl="https://www.reddit.com/r/politics/"></outline>
+            <outline title="Raw Story" text="Raw Story" xmlUrl="https://www.rawstory.com/feeds/feed.rss" htmlUrl="https://www.rawstory.com"></outline>
+        </outline>
+        <outline text="Ultralight">
+            <outline title="Backpacking Light" text="Backpacking Light" xmlUrl="https://backpackinglight.com/feed/" htmlUrl="https://backpackinglight.com"></outline>
+            <outline title="R | fastpacking" text="R | fastpacking" xmlUrl="https://www.reddit.com/r/fastpacking/.rss" htmlUrl="https://www.reddit.com/r/fastpacking/"></outline>
+            <outline title="R | Make Your Own Gear" text="R | Make Your Own Gear" xmlUrl="https://www.reddit.com/r/myog/.rss" htmlUrl="https://www.reddit.com/r/myog/"></outline>
+            <outline title="R | Ultralight" text="R | Ultralight" xmlUrl="https://www.reddit.com/r/Ultralight/.rss" htmlUrl="https://www.reddit.com/r/Ultralight/"></outline>
+            <outline title="R | Ultralight Backpacking" text="R | Ultralight Backpacking" xmlUrl="https://www.reddit.com/r/UltralightBackpacking/.rss" htmlUrl="https://www.reddit.com/r/UltralightBackpacking/"></outline>
+            <outline title="R | UltralightCanada" text="R | UltralightCanada" xmlUrl="https://www.reddit.com/r/UltralightCanada/.rss" htmlUrl="https://www.reddit.com/r/UltralightCanada/"></outline>
+            <outline title="Section Hikers" text="Section Hikers" xmlUrl="https://sectionhiker.com/feed/" htmlUrl="https://sectionhiker.com"></outline>
+            <outline title="Ultralight Insights" text="Ultralight Insights" xmlUrl="https://ultralightinsights.blogspot.com/feeds/posts/default" htmlUrl="https://ultralightinsights.blogspot.com/"></outline>
+        </outline>
+        <outline text="Vim">
+            <outline title="R | vim" text="R | vim" xmlUrl="https://www.reddit.com/r/vim/.rss" htmlUrl="http://www.reddit.com/r/vim/"></outline>
+            <outline title="R | Vim Plugins" text="R | Vim Plugins" xmlUrl="https://www.reddit.com/r/vimplugins/.rss" htmlUrl="https://www.reddit.com/r/vimplugins/"></outline>
+            <outline title="R | Vim porn" text="R | Vim porn" xmlUrl="https://www.reddit.com/r/vimporn/.rss" htmlUrl="https://www.reddit.com/r/vimporn/"></outline>
+        </outline>
+        <outline text="Weird Literature">
+            <outline title="R | Horror Literature" text="R | Horror Literature" xmlUrl="https://www.reddit.com/r/horrorlit/.rss" htmlUrl="https://www.reddit.com/r/horrorlit/"></outline>
+            <outline title="R | WeirdLit" text="R | WeirdLit" xmlUrl="https://www.reddit.com/r/WeirdLit/.rss" htmlUrl="https://www.reddit.com/r/WeirdLit/"></outline>
+        </outline>
+    </body>
+</opml>
