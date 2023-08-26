@@ -10,7 +10,7 @@
   dunst
   fish
   fonts/.fonts/Iosevka*
-  fonts/.fonts/Libre*
+  fonts/.fonts/Libre\\ Barcode
   georgi/qmk_firmware/keyboards/gboards/georgi
   herbstluftwm
   kindle
