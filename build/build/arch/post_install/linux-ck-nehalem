@@ -1,0 +1,14 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... linux-ck
+
+original /etc/default/grub
+sudo sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT/s/"quiet"/"quiet elevator=bfq"/' /etc/default/grub
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+ditto "if no entry in grub.."
+ditto run "grub-mkconfig -o /boot/grub/grub.cfg"
+
+# vim: set ft=sh: #

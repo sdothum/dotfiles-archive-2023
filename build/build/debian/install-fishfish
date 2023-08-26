@@ -1,0 +1,22 @@
+#!/bin/bash
+# beta fish build
+
+echo "... building fish shell ..."
+
+[ -d /data/depot/system/fish ] || mkdir -pv /data/depot/system/fish
+#sudo apt-get -y install doxygen
+sudo apt-get -y install libncurses5-dev
+sudo apt-get -y install libxt-dev
+
+cd /data/depot/system/fish
+[ -d fish-shell ] && sudo rm -rf fish-shell
+git clone https://github.com/fish-shell/fish-shell.git
+sudo chown -R $USER:$USER fish-shell
+
+cd fish-shell
+sudo autoconf
+sudo ./configure
+make
+sudo make install
+
+grep -q '/usr/local/bin/fish' /etc/shells || sudo sed -i '$a/usr/local/bin/fish' /etc/shells

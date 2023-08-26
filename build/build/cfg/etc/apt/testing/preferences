@@ -1,0 +1,16 @@
+Package: *
+Pin: release a=testing
+Pin-Priority: 1000
+
+Package: *
+Pin: release n=waldorf
+Pin-Priority: 990
+
+Package: *
+Pin: release a=stable
+Pin-Priority: 989
+
+Package: *
+Pin: release a=unstable
+Pin-Priority: 500
+

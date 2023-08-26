@@ -1,0 +1,53 @@
+#!/usr/bin/env fish
+# install preferred window manager environment
+
+script-check
+set --export aptmode Y
+set bin $HOME/sync/dist/sid
+
+# base development tools, prerequisites for build scripts and functions
+# install+ qt4-qmake
+install+ autoconf
+install+ build-essential
+install+ cmake
+install+ curl
+install+ devscripts
+install+ docbook-to-man
+install+ git
+install+ help2man
+install+ intltool
+install+ lua5.2
+install+ pkg-config
+install+ python-pip
+install+ quilt
+install+ rake
+install+ ruby1.9.1-full
+install rubygems
+
+# x11 core and trackball button configuration
+install+ fonts-liberation
+install+ terminator
+install+ vim-gtk
+install xorg
+
+eval $bin/install-infinality
+
+original /usr/share/X11/xorg.conf.d/10-evdev.conf
+dist-config /usr/share/X11/xorg.conf.d/10-evdev.conf
+
+# only tiling manager pour moi :-)
+install+ conky
+install+ trayer
+install xmonad
+
+eval $bin/install-dzen2
+
+sudo update-alternatives --set x-window-manager /usr/bin/xmonad
+sudo cp -v $HOME/.config/terminator/config.xmonad $HOME/.config/terminator/config
+echo xmonad > $HOME/.windowmanager
+
+# new install flag (see netinstall-4apps)
+touch $HOME/.netinstall
+echo ".. (start)x and proceed to netinstall-4apps"
+
+# vim: set ft=fish: #

@@ -1,0 +1,22 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................... networkmanager
+
+hosts=$HOME/build/cfg/etc/hosts
+
+# get network hosts table
+cfg_install -link /etc/hosts
+
+# add host ip address
+ip=$(hostname --ip-address)
+hostname=$(hostname)
+ifnsed $hosts " $hostname *" "/ $hostname */s/^[^ ]*/$ip/" "/localhost.*ttrss/a$ip $hostname"
+
+sudo wifi-menu
+
+! server && ditto 'check /etc/hosts (luna) if wlan0 errors on boot'
+
+# vim: set ft=sh: #

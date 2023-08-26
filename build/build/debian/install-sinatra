@@ -1,0 +1,63 @@
+#!/usr/bin/env fish
+# install sinatra/passenger/nginx web framework
+
+headline+ "building testing and profiling gems"
+
+#install graphviz
+#install-gem chronic
+#install-gem churn
+#install-gem flay
+#install-gem fheadline+
+#install-gem gettext
+#install-gem simplecov
+#install-gem reek
+#install-gem ripper_ruby_parser
+#install-gem roodi
+#install-gem ruby2ruby
+#install-gem ruby_parser
+#install-gem saikuro
+#install-gem sexp_processor
+#install-gem shoes
+#install-gem simple-tracer
+install-gem term-ansicolor
+
+headline+ "building web frameworks gems"
+
+install+ libcurl4-openssl-dev
+install+ libssl-dev
+install+ libxapian-ruby1.9.1
+install libxslt1-dev
+
+#install-gem albino
+#install-gem builder
+#install-gem curl
+#install-gem fastthread
+#install-gem nokogiri
+#install-gem padrino
+#install-gem rack
+#install-gem rack-perftools_profiler
+#install-gem redcarpet
+#install-gem shotgun
+#install-gem tilt
+install-gem kramdown
+install-gem mail
+install-gem sanitize
+install-gem sinatra
+install-gem slim
+install-gem thin
+install-gem xapian-fu
+
+headline+ "building phusion passenger"
+
+install-gem passenger --version 3.0.19
+
+sudo passenger-install-nginx-module
+original /opt/nginx/conf/nginx.conf
+dist-config /opt/nginx/conf/nginx.conf
+dist-config /etc/init.d/nginx
+sudo chown root:root /etc/init.d/nginx
+sudo chmod 755 /etc/init.d/nginx
+
+sudo update-rc.d nginx defaults
+
+# vim: set ft=fish: #

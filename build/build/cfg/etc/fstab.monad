@@ -1,0 +1,33 @@
+#
+# /etc/fstab: static file system information
+#
+# <file system>	<dir>	<type>	<options>	<dump>	<pass>
+# /dev/sda2 UUID=ae5be98e-222f-4418-9678-ab54146481fd
+LABEL=Archlinux     	/         	btrfs     	rw,nodev,noatime,space_cache,autodefrag,subvolid=257,subvol=/__current/ROOT,subvol=__current/ROOT	0 0
+
+# /dev/sda2 UUID=ae5be98e-222f-4418-9678-ab54146481fd
+LABEL=Archlinux     	/home     	btrfs     	rw,nodev,noatime,space_cache,autodefrag,subvolid=258,subvol=/__current/home,subvol=__current/home	0 0
+
+# /dev/sda2 UUID=ae5be98e-222f-4418-9678-ab54146481fd
+LABEL=Archlinux     	/opt      	btrfs     	rw,nodev,noatime,space_cache,autodefrag,subvolid=259,subvol=/__current/opt,subvol=__current/opt	0 0
+
+# /dev/sda2 UUID=ae5be98e-222f-4418-9678-ab54146481fd
+LABEL=Archlinux     	/srv      	btrfs     	rw,nodev,noatime,space_cache,autodefrag,subvolid=260,subvol=/__current/srv,subvol=__current/srv	0 0
+
+# /dev/sda2 UUID=ae5be98e-222f-4418-9678-ab54146481fd
+LABEL=Archlinux     	/var      	btrfs     	rw,nodev,noexec,noatime,space_cache,autodefrag,subvolid=261,subvol=/__current/var,subvol=__current/var	0 0
+
+# /dev/sda2 UUID=ae5be98e-222f-4418-9678-ab54146481fd
+
+# /dev/sda2 UUID=ae5be98e-222f-4418-9678-ab54146481fd
+LABEL=Archlinux     	/.snapshots	btrfs     	rw,nodev,noexec,noatime,space_cache,autodefrag,subvolid=262,subvol=/__snapshot/.snapshots,subvol=__snapshot/.snapshots	0 0
+
+# /dev/sda1 UUID=ae3711ab-2eed-4870-97db-3dbf0b7a0e81
+LABEL=Swap          	none      	swap      	defaults  	0 0
+
+LABEL=Archlinux     	/run/btrfs-root        	btrfs     	rw,nodev,nosuid,noexec,noatime,ssd,discard,space_cache,autodefrag	0 0
+
+/run/btrfs-root/__current/ROOT/var/lib	    	/var/lib		none		bind		0 0
+
+luna:/Maildir                     /home/shum/Maildir      nfs4    rw,noatime,rsize=32768,wsize=32768,nolock,_netdev  0 0
+luna:/net                         /net                    nfs4    rw,noatime,rsize=32768,wsize=32768,nolock,_netdev  0 0

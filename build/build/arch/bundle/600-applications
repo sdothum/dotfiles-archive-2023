@@ -1,0 +1,115 @@
+# application packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= astronomy
+= ═════════
+# celestia      [server]
+# google-earth  [server]
+# kdeedu-kstars [server]
+# gpredict-git  [server]
+# nightshade    [server]
+# xephem        [server]
+  siril         [server]
+d stellarium
+  wego
+# wego-git
+
+
+= dictionary
+= ══════════
+# aiksaurus
+# artha
+  aspell
+  aspell-en
+  dictd
+# dict-gcide
+# dict-foldoc
+# dict-wikt-en-all
+d dict-wn
+d m dict-moby-thesaurus
+  hunspell
+  hunspell-en_AU
+  hunspell-en_CA
+  hunspell-en_GB
+  hunspell-en_US
+
+
+= ebook
+= ═════
+  calibre       [server]
+# kindlegen
+  qt5-webkit    [server]
+
+
+= font-patcher
+= ════════════
+  fontforge     [server]
+  nodejs        [server]
+  npm           [server]
+  otfcc         [server]
+  ttfautohint   [server]
+
+
+= font manager
+= ════════════
+# d font-manager
+" required by fontmatrix
+  qtwebkit-bin
+d fontmatrix
+# fontmatrix-git
+
+
+= game
+= ════
+  lsb-release   [server]
+  steam         [server]
+
+
+= keyboard
+= ════════
+d plover
+# d + qwertickle
+
+
+= productivity
+= ════════════
+# abiword
+  python2-sip-pyqt4
+d amphetype-svn
+  calc
+# calcurse
+# galculator
+# gnumeric
+# gsimplecal
+# kdeedu-ktouch [server]
+# klavaro
+  remind
+# sc-im
+# simpletimer-git
+  speedcrunch
+# todotxt
+# wps-office    [server]
+# wyrd
+# xpad
+
+
+= viewer
+= ══════
+# acroread      [server]
+# coolreader
+  epdfview      [server]
+# evince
+d fbreader
+  feh
+# foxitreader
+# mcomix
+# mupdf
+  zathura
+  zathura-ps
+  zathura-pdf-mupdf
+
+
+# vim: set ft=conf: #

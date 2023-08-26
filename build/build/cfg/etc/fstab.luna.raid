@@ -1,0 +1,13 @@
+
+# mkfs.btrfs -f -L Backup -m raid10 -d raid10 /dev/disk/by-id/ata-WDC_WD30EFRX-68AX9N0_WD-WMC1T2857792 /dev/disk/by-id/ata-WDC_WD30EFRX-68N32N0_WD-WCC7K4DADSCU /dev/disk/by-id/ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N3RS5LAZ /dev/disk/by-id/ata-WDC_WD30EFRX-68EUZN0_WD-WMC4N0820795
+LABEL=Share            /net     btrfs      rw,nodev,noatime,autodefrag,space_cache    0 0
+
+# mkfs.btrfs -f -L Share -m raid0 -d raid0 /dev/disk/by-id/ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N4ZZY6FV /dev/disk/by-id/ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N2KR3EV9
+LABEL=Backup          /backup   btrfs      rw,nodev,noatime,autodefrag,space_cache    0 0
+
+# bcachefs format -L Share --replicas=2 /dev/disk/by-id/ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N4ZZY6FV /dev/disk/by-id/ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N2KR3EV9
+# LABEL=Share         /backup   bcachefs   rw,nodev,noatime    0 0
+
+/home/shum/Maildir    /srv/nfs4/Maildir    none    bind 0 0
+
+/net                  /srv/nfs4/net        none    bind 0 0

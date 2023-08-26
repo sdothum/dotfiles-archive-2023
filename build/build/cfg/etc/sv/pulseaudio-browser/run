@@ -1,0 +1,5 @@
+#!/bin/sh
+export USERNAME=shum
+exec 2>&1
+# browser doesn't autostart pulseaudio
+exec chpst -u "$USERNAME" /usr/bin/pulseaudio --start --log-target=syslog

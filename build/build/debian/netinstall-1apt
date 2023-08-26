@@ -1,0 +1,78 @@
+#!/bin/bash
+# install from root shell mandatory
+
+if [ $USER != root ]; then
+  echo ".. please run this script as root user: sudo su"
+  exit
+fi
+home=/home/shum
+apt=$home/sync/dist/etc/apt
+bin=$home/sync/dist/sid
+liquorix=3.11-6
+grub=0
+
+function original() {
+  [ ! -f $@.dist ] && cp -v $@ $@.dist
+}
+
+release=$1
+# debian distribution level on the edge!
+[ -z $release ] && release=sid
+
+cd /etc/apt
+original /etc/apt/apt.conf
+original /etc/apt/preferences
+original /etc/apt/sources.list
+if [ $(echo $release | egrep 'backports|media|stable|testing|unstable|sid'). != . ]; then
+    cp -v $apt/$release/apt.conf .
+    [ -f $apt/$release/preferences ] && cp -v $apt/$release/preferences .
+    cp -v $apt/$release/sources.list .
+    cp -v $apt/$release/sources.list.d/* sources.list.d/
+    cat apt.conf
+    [ -f preferences ] && cat preferences
+    cat sources.list
+    rm -f $home/.tint2conf.remove 2>/dev/null
+else
+    echo ".. $0 backports|media|stable|testing|unstable|sid"
+    exit
+fi
+
+apt-get update
+
+# jumping target releases can be problematic for aptitude's dependency resolution
+apt-get upgrade && apt-get dist-upgrade
+
+if [ $(hostname) = luna ]; then
+  echo ":: install non-free drivers"
+  apt-get -y install firmware-linux-nonfree
+  apt-get -y install firmware-realtek
+  # else
+  #   echo ":: install laptop tools"
+  #   apt-get -y install laptop-mode-tools
+fi
+
+echo ":: install zfs compatible kernel"
+# apt-get install --yes --force-yes '^liquorix-([^-]+-)?keyring.?'
+# apt-get install linux-headers-${liquorix}.dmz.1-liquorix-amd64
+# apt-get install linux-image-${liquorix}.dmz.1-liquorix-amd64
+apt-get -y install linux-headers-amd64
+apt-get -y install linux-image-amd64
+sed -i 's/\(GRUB_DEFAULT\)=0/\1="1>'$grub'"/' /etc/default/grub
+update-grub
+
+# install fish
+# [ -f /usr/local/bin/fish ] && echo ".. found /usr/local/bin/fish. install-fishfish to rebuild" || $bin/install-fishfish
+# [ -f /usr/local/bin/fish ] && chsh --shell /usr/local/bin/fish $USER || chsh --shell /usr/bin/env fish $USER
+# original /etc/shells
+apt-get -y install fish
+
+chsh --shell /usr/bin/fish ${home#/home/}
+mkdir -p /root/.config/fish 2>/dev/null
+ln -sfv $home/sync/user/.config/fish/config.fish /root/.config/fish/
+ln -sfv $home/sync/user/.config/fish/functions /root/.config/fish/
+ln -sfv $home/sync/user/.config/fish/user.fish /root/.config/fish/
+mkdir /root/tmp 2>/dev/null
+
+echo ".. reboot to enable colemak keyboard"
+[ $(hostname) = luna ] && echo ".. reboot to select appropriate kernel and complete zfs install"
+echo ".. proceed to netinstall-2boot"

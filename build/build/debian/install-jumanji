@@ -1,0 +1,18 @@
+#!/usr/bin/env fish
+# install jumanji browser
+
+headline+ "building jumanji"
+
+install libwebkitgtk-3.0-dev
+
+cd /data/depot/www/jumanji/girara
+sudo make clean
+make
+sudo make GIRARA_GTK_VERSION=3 install
+
+cd /data/depot/www/jumanji/jumanji
+sudo make clean
+make
+sudo make install
+
+# vim: set ft=fish: #

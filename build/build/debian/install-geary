@@ -1,0 +1,37 @@
+#!/usr/bin/env fish
+# build threading gtk mail client
+
+headline+ "building geary"
+
+install+ cmake
+install+ intltool
+install+ libcanberra-dev
+install+ libgee-dev
+install+ libgirepository1.0-dev
+install+ libglib2.0-dev
+install+ libgmime-2.6-dev
+install+ libgnome-keyring-dev
+install+ libgtk-3-dev
+install+ libindicate-dev
+install+ libnotify-dev
+install+ libsqlite3-dev
+install+ libunique-3.0-dev
+install libwebkitgtk-3.0-dev
+
+cd /data/depot/mail/geary
+tar xfv libsecret-0.14.tar
+
+cd libsecret-0.14
+./configure --prefix=/usr --disable-static
+make
+sudo make install
+
+cd /data/depot/mail/geary
+git clone git://yorba.org/geary
+
+cd geary
+./configure
+make
+sudo make install
+
+# vim: set ft=fish: #

@@ -1,0 +1,41 @@
+#!/bin/bash
+# /etc/init.d/seafile
+# Start/Stop/Restart seafile and seahub
+
+# ulimit -n 30000
+release=seafile-server-2.0.2
+seafile=/srv/http/seafile/$release
+# fastcgi=-fastcgi
+gcopt=$2
+
+case "$1" in
+  start)
+    cd $seafile
+    ./seafile.sh start
+    ./seahub.sh start$fastcgi
+    ;;
+  stop)
+    cd $seafile
+    ./seafile.sh stop
+    ./seahub.sh stop
+    ;;
+  restart)
+    cd $seafile
+    ./seafile.sh stop
+    ./seahub.sh stop
+    ./seafile.sh start
+    ./seahub.sh start$fastcgi
+    ;;
+  gc)
+    cd $seafile
+    ./seafile.sh stop
+    ./seahub.sh stop
+    export LD_LIBRARY_PATH=./lib:${LD_LIBRARY_PATH}
+    ./bin/seafserv-gc -c ../../ccnet -d ../../seafile-data $gcopt
+    ;;
+  *)
+    echo "Usage: seafile {start|stop|restart|gc [--verify|--dry-run|--ignore-errors]}" >&2
+    exit 1
+    ;;
+esac
+cd -

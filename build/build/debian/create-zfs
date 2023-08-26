@@ -1,0 +1,57 @@
+#!/bin/bash
+# create a fresh zfs pool
+
+if [ -d /data -o -d /pool ]; then
+    echo ".. /data pool possibly already exists, otherwise rmdir /data"
+    exit
+fi
+
+zpool create -o ashift=12 tank \
+mirror \
+scsi-SATA_ST1000DM005_HD1S246J9EC314043 \
+scsi-SATA_SAMSUNG_HD103SJS246JDWZ105419 \
+mirror \
+scsi-SATA_SAMSUNG_HD103UJS13PJDWS612178 \
+scsi-SATA_SAMSUNG_HD103SJS246JDWZ105420 \
+mirror \
+scsi-SATA_SAMSUNG_HD103SJS246J1KSA14245 \
+scsi-SATA_ST1000DM005_HD1S246J90C332795 \
+mirror \
+scsi-SATA_ST1000DM005_HD1S246J9FC320076 \
+scsi-SATA_SAMSUNG_HD103UJS13PJDWS612179 \
+-m /data
+
+zfs set compression=on tank
+zfs set dedup=off tank
+zfs get compressratio tank
+zpool status
+zdb -C
+
+mkdir -pv /data/backup/Dropbox 2>/dev/null
+mkdir -pv /data/backup/vps 2>/dev/null
+mkdir -pv /data/depot/ 2>/dev/null
+mkdir -pv /data/distros/archlinux 2>/dev/null
+mkdir -pv /data/distros/crunchbang 2>/dev/null
+mkdir -pv /data/downloads/nzbs/completed 2>/dev/null
+mkdir -pv /data/downloads/nzbs/queue 2>/dev/null
+mkdir -pv /data/downloads/nzbs/tmp 2>/dev/null
+mkdir -pv /data/downloads/torrents 2>/dev/null
+mkdir -pv /data/media/ebooks/Calibre 2>/dev/null
+mkdir -pv /data/media/music 2>/dev/null
+mkdir -pv /data/media/images/fuji\ x100 2>/dev/null
+mkdir -pv /data/media/images/Lightroom 2>/dev/null
+mkdir -pv /data/media/images/sigma\ dp1 2>/dev/null
+mkdir -pv /data/media/video/anime 2>/dev/null
+mkdir -pv /data/media/video/anime\ serial 2>/dev/null
+mkdir -pv /data/media/video/movies 2>/dev/null
+mkdir -pv /data/media/video/tv\ shows 2>/dev/null
+chown -R shum:shum /data
+
+zpool create -o ashift=12 pond \
+scsi-SATA_WD_My_BookWU2Q10098319 \
+scsi-SATA_WDC_WD10EARX-00_WD-WCC0T0755003 \
+-m /copy
+
+zfs set compression=on pond
+zfs set dedup=off pond
+

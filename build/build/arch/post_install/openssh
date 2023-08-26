@@ -1,0 +1,24 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... openssh
+
+original /etc/ssh/sshd_config
+sudo sed -i 's/^#X11Forwarding no/X11Forwarding yes/' /etc/ssh/sshd_config
+# for client side utf-8 receipt (see ~/.ssh/config)
+ifnsed /etc/ssh/sshd_config 'AcceptEnv LANG LC_' '$aAcceptEnv LANG LC_*'
+service enable sshd
+
+ditto "Generate public/private rsa key pair:
+ssh-keygen -t rsa -b 2048
+--
+remote login:
+cat ~/.ssh/id_rsa.pub | ssh \$USER@destination 'cat >> .ssh/authorized_keys'
+--
+github:
+xclip -sel clip < ~/.ssh/id_rsa.pub
+login github > settings > SSH and GPG keys > new SSH key > ... > add SSH key"
+
+# vim: set ft=sh: #

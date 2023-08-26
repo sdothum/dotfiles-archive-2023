@@ -1,0 +1,97 @@
+# unnecessary core packages (with this install)
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install, to list packages see pi
+
+
+= filesystem
+= ══════════
+- gvfs
+- jfsutils
+- lvm2
+- mbuffer
+- mdadm
+- reiserfsprogs
+- xfsprogs
+
+
+= file
+= ════
+- mediainfo
+
+
+= shell tool
+= ══════════
+- pv
+
+
+= hardware
+= ════════
+- dmidecode
+
+
+= sound
+= ═════
+- pulseaudio-equalizer
+
+
+= connectivity
+= ════════════
+- cmst
+
+
+= network
+= ═══════
+- gssproxy
+- dnsutils
+
+
+= disk utility
+= ════════════
+- etcher
+
+
+= julia
+= ═════
+- julia-docs
+
+
+= software tool
+= ═════════════
+- gdb
+
+
+= document formatting
+= ═══════════════════
+- csslint
+- csstidy
+- enscript
+
+
+= editor
+= ══════
+- neovim
+
+
+= font
+= ════
+- noto-fonts
+- ttf-symbola
+
+
+= chat/twitter
+= ════════════
+- bitlbee
+
+
+= web aggregator
+= ══════════════
+- php-gd
+
+
+= dictionary
+= ══════════
+- aiksaurus
+
+
+# vim: set ft=conf: #

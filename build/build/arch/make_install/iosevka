@@ -1,0 +1,150 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... iosevka
+
+usage() {
+  echo "usage: $(basename $0) iosevka [amphetype | code | proof | default] [double | single | futura | hooky | mono | patch | leading <height> | family <name>]*"
+  exit 1
+}
+
+REPO=/net/depot/Iosevka
+FONT=$HOME/.fonts/iosevka
+futura="'v-i-line', 'v-j-line', 'v-l-line', 'v-q-straight', 'v-t-cross'"
+hooky="'v-i-hooky', 'v-l-hooky'"
+leading=1250
+shape="'sans'"
+storey=double
+nerdfonts='--fontawesome --fontawesomeextension --material --octicons'
+
+shift  # basename is make_install, $1 == iosevka
+
+hook() {
+  storey=single
+  style=$hooky
+  leading=1250  # default
+  # descender=0
+  descender=65  # default
+  cap=735       # default
+}
+
+line() {
+  storey=single
+  style=$futura
+  leading=1250  # default
+  # descender=0
+  descender=65  # default
+  cap=830       # lengthen ascenders (also stretches caps, numbers and quotes)
+}
+
+while [ $1 ] ;do
+  case $1 in
+  amphetype) hook; storey=double; family=${family}-amphetype; leading=1875 ;;  # 1.5 spacing
+  code     ) line; design="'ligset-haskell'" ;;                                # default family
+  default  ) family=${family}-default; upright=$shape; italic="'italic'"; oblique="'italic'"; default=true ;;
+  double   ) storey=double; family=${family}-double ;;                         # "a"
+  family   ) family=${family}-$2;  shift ;;                                    # font family
+  futura   ) line ;;                                                           # futura as can be!
+  hooky    ) hook ;;                                                           # top hook
+  leading  ) leading=$2; shift ;;                                              # line spacing
+  mono     ) mono=--mono; family=${family}-mono ;;                             # single width glyphs
+  patch    ) patch=true ;;                                                     # nerdfonts
+  proof    ) line; family=${family}-proof; leading=1875 ;;                     # 1.5 spacing
+  single   ) storey=single; family=${family}-single ;;                         # default "a"
+  *        ) usage ;;
+  esac
+  shift
+done
+
+ifyes "build Iosevka$family" || usage
+FONT=$FONT$family
+REGULAR=$FONT/ttf/iosevka$family-regular.ttf
+
+pkgcheck() { pm_query $1 >/dev/null || missing="$missing$1 "; }
+
+pkgcheck fontforge
+pkgcheck nodejs
+pkgcheck npm
+pkgcheck otfcc
+pkgcheck ttfautohint
+[ "$missing" ] && { ifno "install $missing" && exit 1; for i in $missing ;do pm S $i ;done }
+
+# balance leading/descender spacing
+if [ $leading -gt 1250 ] ;then
+  descender=$(( ($leading - 1250) / 4 ))
+  leading=$(( $leading - $descender ))
+fi
+
+if [ ! $default ] ;then
+  alpha="$style, 'v-f-straight', 'v-g-singlestorey', 'v-m-longleg', 'v-y-straight'"
+  math="'v-zero-slashed', 'v-one-hooky', 'v-tilde-low', 'v-asterisk-high', 'v-caret-high', 'v-brace-curly'"
+  symbol="'v-paragraph-low', 'v-at-long', 'v-eszet-sulzbacher'"
+  upright="$shape, $alpha, 'v-a-${storey}storey', $math, $symbol"
+  design=${design:-$upright}
+  italic="$shape, $alpha, 'v-a-singlestorey', $math, $symbol"
+  oblique=$italic
+fi
+
+# build hooky [i l] single-storey [a g] character set
+cd /net/depot
+if [ -d Iosevka ] ;then
+  cd Iosevka
+  rm -rf build dist
+  original parameters.toml  # after manual git install
+  cp parameters.toml.original parameters.toml
+  ifno 'sync iosevka repo' || { git pull origin master; cd ../nerd-fonts; git pull origin master; cd -; }
+else
+  git clone --depth 1 https://github.com/be5invis/Iosevka.git
+  git clone --depth 1 https://github.com/ryanoasis/nerd-fonts.git
+  cd Iosevka
+  original parameters.toml
+fi
+
+echo "[buildPlans.iosevka$family]            
+family  = 'Iosevka$family'
+design  = [$design]
+upright = ['upright-only', $upright]
+italic  = ['italic-only', $italic]
+oblique = ['oblique-only', $oblique]
+
+[buildPlans.iosevka$family.weights.regular]
+shape = 400                            
+menu  = 400                            
+css   = 400                            
+
+[buildPlans.iosevka$family.weights.bold]
+shape = 700
+menu  = 700                            
+css   = 700
+
+[buildPlans.iosevka$family.slants]
+upright = 'normal'
+italic  = 'italic'
+oblique = 'oblique'" >$REPO/private-build-plans.toml
+
+# ensure node.js is uptodate
+npm install
+
+[ $default ] || sed -i -r "/^cap =/s/= ([0-9]*)/= $cap/; /^leading =/s/= ([0-9]*)/= $leading/; /^descenderPad =/s/= ([0-9]*)/= $descender/" $REPO/parameters.toml
+
+# npm run build -- ttf:iosevka$family  # pre Verda commits
+npm run build -- ttf::iosevka$family   # post Verda commits
+
+rm -rf $FONT
+cp -rv dist/iosevka$family $FONT
+
+# patch font
+# note: nerd-fonts v2.x currently breaks ligatures
+if [ $patch ] && [ -e /net/depot/nerd-fonts/font-patcher ] ;then
+  rm -f /tmp/Iosevka*ttf
+  /net/depot/nerd-fonts/font-patcher --adjust-line-height --mono --powerline -out /tmp $REGULAR
+  mv -v /tmp/Iosevka*ttf $REGULAR
+  /net/depot/nerd-fonts/font-patcher $mono $nerdfonts -out /tmp $REGULAR
+  mv -v /tmp/Iosevka*ttf $REGULAR
+fi
+
+fc-cache -fv
+
+# vim: set ft=sh: #

@@ -1,0 +1,11 @@
+0 1 1 * * /home/shum/bin/functions/sysadmin/scrub boot 2>/tmp/scrub.log
+0 1 2 * * /home/shum/bin/functions/sysadmin/scrub net 2>/tmp/scrub.log
+0 1 3 * * /home/shum/bin/functions/sysadmin/scrub backup 2>/tmp/scrub.log
+0 1 4-31 * * [ -s /tmp/scrub ] && /home/shum/bin/functions/sysadmin/scrub $(cat /tmp/scrub) 2>/tmp/scrub.log
+0 1 7,14,21,28 * * [ -e /tmp/rsync:home:off ] || /home/shum/bin/functions/sysadmin/rsync home shum >/tmp/rsync:home.log 2>&1
+0 2 7,14,21,28 * * [ -e /tmp/rsync:backup:off ] || /home/shum/bin/functions/sysadmin/rsync BACKUP >/tmp/rsync:backup.log 2>&1
+0 0 * * * /usr/sbin/logrotate -s /home/shum/tmp/logrotate.status /home/shum/.config/logrotate/logrotate.conf
+* * * * * /home/shum/bin/functions/mail/mailqueue >>/tmp/mailqueue.log 2>&1
+* * * * * /home/shum/bin/functions/mail/mailsync >>/tmp/mailsync.log 2>&1
+* * * * * /home/shum/bin/functions/config/vlux >>/tmp/vlux.log 2>&1
+0 * * * * /home/shum/bin/functions/office/reminder alarms

@@ -1,0 +1,16 @@
+# Template file for 'perl-HTML-Strip'
+pkgname=perl-HTML-Strip
+version=2.10
+revision=1
+archs=noarch
+wrksrc="${pkgname/perl-/}-${version}"
+build_style=perl-module
+hostmakedepends="perl"
+makedepends="${hostmakedepends}"
+depends="${makedepends}"
+short_desc="HTML::Strip - for stripping HTML markup from text"
+maintainer="Steven Hum <sdothum@gmail.com>"
+license="Artistic-1.0-Perl, GPL-1.0-or-later"
+homepage="https://metacpan.org/release/HTML-Strip"
+distfiles="${CPAN_SITE}/HTML/HTML-Strip-$version.tar.gz"
+checksum=2af30a61f1ecc0bea983043c8078e48380ccb0319388a74483e09aa782f1ccfa

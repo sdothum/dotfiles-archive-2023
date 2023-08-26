@@ -1,0 +1,17 @@
+#!/usr/bin/env fish
+# build gtk engine for ffuu theme
+
+headline+ "building equinox gtk engine (for ffuu theme)"
+
+install libgtk2.0-dev
+
+cd /data/depot/gtk/equinox
+[ -d equinox-1.50 ]; and sudo rm -rf equinox-150
+tar xvzf 121881-equinox-1.50.tar.gz
+
+cd equinox-1.50
+./configure --prefix=/usr --enable-animation
+make
+sudo make install
+
+# vim: set ft=fish: #

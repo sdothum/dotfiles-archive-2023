@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Name=Zathura
+NameKeywords=PDF;Viewer
+Exec=zathura %u
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+Icon=zathura
+Categories=GNOME;GTK;Viewer;
+MimeType=application/pdf;
+StartupNotify=true
+Actions=NewWindow;NewPrivateWindow;
+StartupWMClass=Zathura

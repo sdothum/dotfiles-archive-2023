@@ -1,0 +1,13 @@
+#!/usr/bin/env fish
+# install notational velocity clone
+
+headline+ "building notational velocity"
+
+install+ python-markdown
+install python-tk
+sudo pip install nvpy
+
+cd /data/depot/editors/nvpy
+xdg-desktop-menu install vxlabs-nvpy.desktop
+
+# vim: set ft=fish: #

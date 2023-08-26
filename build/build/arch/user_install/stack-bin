@@ -1,0 +1,17 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ stack
+
+config=$HOME/.stack/config.yaml
+regex=':/s/#*(.*:).*/\1'
+
+original $config
+sed -i -re "/author-name$regex Steven Hum/" \
+    -e "/author-email$regex sdothum@gmail.com/" \
+    -e "/copyright$regex sdothum - 2016 (c) wtfpl/" \
+    -e "/github-username$regex sdothum/" $config
+
+# vim: set ft=sh: #

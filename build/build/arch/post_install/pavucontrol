@@ -1,0 +1,14 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................... pulseaudio
+
+# enable microphone sink
+hw=$(arecord -l | grep '^card .* device' | sed -r 's/.*([0-9]):.*([0-9]):.*/\1,\2/')
+sudo sed -i -r "/load-module module-alsa-source device=hw:/s/^#*(load-module module-alsa-source device=hw):.*/\1:$hw" /etc/pulse/default.pa
+pulseaudio -k
+pulseaudio -D
+
+# vim: set ft=sh: #

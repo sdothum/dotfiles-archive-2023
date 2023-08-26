@@ -1,0 +1,14 @@
+#!/bin/bash -e
+
+email=/etc/smartmontools/run.d/email
+(cat <<EOF
+To: $4
+From: root@$(hostname)
+Subject: $3
+ 
+$(cat $1)
+EOF
+) >$email
+
+su -c "/usr/local/bin/msmtp-enqueue.sh --account=gmail -t <$email" shum
+#rm -f $email

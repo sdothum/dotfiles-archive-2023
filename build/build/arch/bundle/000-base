@@ -1,0 +1,81 @@
+# base packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+# install aur package managers FIRST !!
+= aur package manager
+= ═══════════════════
+! sudo pacman -S --noconfirm git
+! sudo pacman -S --noconfirm go
+p yay
+# " systemd dependency (not installable for obarun)
+# ! yay -S --noconfirm auracle-git
+# ! yay -S --noconfirm pacaur
+
+
+= console font
+= ════════════
+  dos2unix
+# terminus-font-ll2-td1
+
+
+= cpu power management
+= ════════════════════
+# cpupower               [laptop]
+
+
+= entropy
+= ═══════
+  haveged
+
+
+= file system
+= ═══════════
+# bcachefs-tools         [server]
+# linux-bcachefs         [server]
+# linux-bcachefs-docs    [server]
+# linux-bcachefs-headers [server]
+  btrbk
+  dosfstools
+  exfat-utils
+# fuse-common
+# fuse-exfat
+# gvfs
+# hfsprogs
+# ntfs-3g
+# ntfs-3g-fuse
+# mbuffer
+# zfs-linux              [server]
+# zfs-linux-headers      [server]
+# d znapzend             [server]
+
+
+= file transfer
+= ═════════════
+  curl
+  git
+  wget
+
+
+= linux-ck kernel
+= ═══════════════
+# linux-ck-atom          [cpu atom]
+# linux-ck-headers       [cpu atom]
+# linux-ck-haswell       [cpu i7]
+# linux-ck-headers       [cpu i7]
+# "intel microcode must be installed after ck kernel"
+
+
+= sound
+= ═════
+  alsa-utils
+
+
+= virtualbox guest mode
+= ═════════════════════
+# virtualbox-guest-utils [ -n $(dmidecode --type 1 | grep VirtualBox) ]
+
+
+# vim: set ft=conf: #

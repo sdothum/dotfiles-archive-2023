@@ -1,0 +1,19 @@
+# Package: libgtk-3-0
+# Pin: release a=testing
+# Pin-Priority: 1001
+
+Package: *
+Pin: release a=unstable
+Pin-Priority: 990
+
+Package: *
+Pin: release a=testing
+Pin-Priority: 950
+
+Package: *
+Pin: release n=waldorf
+Pin-Priority: 500
+
+Package: *
+Pin: release a=stable
+Pin-Priority: 499

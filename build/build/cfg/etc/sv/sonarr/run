@@ -1,0 +1,6 @@
+#!/bin/sh
+export SONARR=/srv/http/sonarr
+export USERNAME=sonarr
+exec 2>&1
+exec chpst -u "$USERNAME:$USERNAME" mono /usr/lib/sonarr/NzbDrone/NzbDrone.exe -s localhost:8989 -no-browser -data=$SONARR >/dev/null
+

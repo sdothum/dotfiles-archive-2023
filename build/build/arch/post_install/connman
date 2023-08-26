@@ -1,0 +1,29 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... connman
+
+scan="connmanctl> agent on > enable wifi > scan wifi > services"
+
+sudo mkdir /etc/connman
+[ -f /etc/connman/main.conf ] || echo '[General]
+PreferredTechnologies=ethernet,wifi' | sudo tee /etc/connman/main.conf
+
+service disable dhcpcd
+service disable netctl
+service enable connman
+
+server && ditto "$scan
+connmanctl> config [ethernet] --ipv4 manual <ip address> <netmask:255.255.255.0> <gateway>" || ditto "$scan
+connmanctl> connect [wireless]
+connmanctl> config [wireless] --ipv4 manual <ip address> <netmask:255.255.255.0> <gateway> --autoconnect True"
+connmanctl  # note: wireless must be connected before configuring service
+
+original /lib/systemd/system/connman.service  # disable connman dnsproxy port 53 usage (conflicts with dnsmasq)
+sudo sed -i '/^\(ExecStart=\/usr\/bin\/connmand -n\)$/s/$/ --nodnsproxy/' /lib/systemd/system/connman.service
+
+echo 'nameserver 10.1.0.10' | sudo tee /etc/resolv.conf  # temporary dns, see dnsmasq
+
+# vim: set ft=sh: #

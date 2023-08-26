@@ -1,0 +1,15 @@
+#!/usr/bin/env fish
+# install pulse audio tray applet
+
+headline+ "building pnmixer"
+
+cd /data/depot/media/pnmixer
+[ -d pnmixer ]; and sudo rm -rf pnmixer
+git clone https://github.com/nicklan/pnmixer.git
+
+cd pnmixer
+sudo ./autogen.sh
+make
+sudo make install
+
+# vim: set ft=fish: #

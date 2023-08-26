@@ -1,0 +1,56 @@
+#!/usr/bin/env fish
+# build and insert zfs kernel module
+
+headline+ "install zfs kernel modules"
+
+if [ -f /sbin/zpool ]
+  if [ (sudo zpool list | wc -l) -gt 1 ]
+      sudo zpool list
+      if-no "Export the pools before updating zfs"; and exit
+      for i in (sudo zpool list | a ONLINE | cut -d' ' -f1)
+          sudo zpool export $i
+      end
+      sudo zpool list
+      if-yes "Build and install zfs modules"; or exit
+  end
+end
+mkdir -p $HOME/depot/zfs 2>/dev/null
+
+install+ alien
+install+ build-essential
+install+ fakeroot
+install+ gawk
+install+ libblkid-dev
+install+ libselinux-dev
+install+ linux-headers-(uname -r)
+install+ lsscsi
+install+ parted
+install+ uuid-dev
+install zlib1g-dev
+
+cd $HOME/depot/zfs
+find . -name '*deb' -exec sudo rm -fv \{\} \;
+if [ ! -f spl-0.6.2.tar.gz ]
+    wget http://archive.zfsonlinux.org/downloads/zfsonlinux/spl/spl-0.6.2.tar.gz
+    wget http://archive.zfsonlinux.org/downloads/zfsonlinux/zfs/zfs-0.6.2.tar.gz
+end
+
+cd $HOME/depot/zfs
+tar xf spl-0.6.2.tar.gz
+cd spl-0.6.2
+sudo ./configure
+sudo make deb
+sudo dpkg -i *_amd64.deb
+
+cd $HOME/depot/zfs
+tar xf zfs-0.6.2.tar.gz
+cd zfs-0.6.2
+sudo ./configure
+sudo make deb
+sudo dpkg -i *_amd64.deb
+
+#original /etc/modprobe.d/zfs.conf
+#dist-config /etc/modprobe.d/zfs.conf
+#sudo update-rc.d zfs defaults
+
+# vim: set ft=fish: #

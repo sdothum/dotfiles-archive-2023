@@ -1,0 +1,38 @@
+#!/usr/bin/env fish
+# install usenet nzb downloader
+
+headline+ "building nzbget"
+
+install+ libgnutls-dev
+install+ libncurses5-dev
+install libsigc++-2.0-dev
+
+cd /data/depot/nzb/nzbget
+[ -d libpar2-0.2 ]; or begin
+  tar xvzf libpar2-0.2.tar.gz
+  cd libpar2-0.2
+  cp -v ../nzbget-10.2/libpar2-0.2*.patch .
+  patch < libpar2-0.2-bugfixes.patch
+  patch < libpar2-0.2-cancel.patch
+  cd ..
+end
+
+cd /data/depot/nzb/nzbget
+cd libpar2-0.2
+make clean
+./configure
+make
+sudo make install
+
+cd /data/depot/nzb/nzbget
+[ -d nzbget-10.2 ]; or tar xvzf nzbget-10.2.tar.gz
+
+cd nzbget-10.2
+make clean
+./configure
+make
+sudo make install
+
+ln -sfv $HOME/sync/user/.config/nzbget/nzbget.conf $HOME/.nzbget.conf
+
+# vim: set ft=fish: #
