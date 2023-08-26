@@ -9,10 +9,10 @@
 sig=${sig:--TERM}
 
 # if yes && ..
-underline $@
+underline ${YELLOW}$@
 
 while : ;do
-  printf 'continue? [Yes]/no/abort : '
+  printf "${TEAL}continue? ${GREEN}[Yes]${NOCOLOR}/no/abort : "
   # using bash's extended read functionality (over dash) for single character input
   IFS= read -rn1 CONTINUE
   echo

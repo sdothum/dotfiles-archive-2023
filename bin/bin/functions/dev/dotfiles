@@ -9,10 +9,15 @@
 # .......................................................................... Git
 
 usage() {
-  echo "usage: $(basename $0) [<stowdir>] add [-f] <package>[/<filespec>]* | comment [<comment>] | edit | ignore | init | list | log | undo | rm <dir> | sync"
+  echo "usage: $(basename $0) [<stowdir>] add [-f] <package>[/<filespec>]* | comment [<comment>] | folders  |\
+ | ignore | init | list | log | undo | rm <dir> | sync"
   ditto rules "$DOTFILES"
   exit 1
 }
+
+# list of folders under stow root
+DOTFILES=$(dirname $0)/.dotfiles:folders
+FILES=$(cat $DOTFILES)
 
 [ -d "$1" ] && { STOW="$1"; shift; }  # see config.fish
 [ -e $HOME/.git/stow ] && ln -sf $HOME/.git/stow $HOME/stow/.git
@@ -21,9 +26,6 @@ usage() {
 # git rm --cached <filespec>
 # git rm --cached -r <dir>
 
-# list of folders under stow root
-DOTFILES=$(dirname $0)/.dotfiles:folders
-FILES=$(cat $DOTFILES)
 cd $STOW
 git reset >/dev/null  # undo any previous aborted dotfiles
 # syncthing housekeeping
@@ -96,7 +98,7 @@ sync() {
 unset pending
 case $1 in
   help   ) usage ;;
-  ''     ) for i in $FILES ;do add $i ;done; ditto rules "$DOTFILES" ;;
+  ''     ) for i in $FILES ;do add $i ;done ;;
   add    ) shift; [ "$1" = '-f' ] && { force=-f; shift; }
            add $@ ;;
   
@@ -104,9 +106,8 @@ case $1 in
   comment) shift; DESC=$@
            [ "$DESC" ] && git commit --amend --no-edit --message="$DESC" || git commit --amend ;;
   
-  edit     |\
-  ignore ) vim -g .gitignore ;;
-  
+  folders) vim -g $DOTFILES .gitignore ;;
+  ignore ) vim -g .gitignore $DOTFILES ;;
   init   ) init ;;
   list   ) git log --pretty=format:"%h - %an, %ar : %s" ;;
   log    ) git log | less ;;

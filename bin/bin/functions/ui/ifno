@@ -7,13 +7,12 @@
 # ..................................................................... Negative
 
 sig=${sig:--TERM}
-attn=${STRIKETHROUGH}${YELLOW}  # grab attention
 
 # if no || ..
-underline $attn$@
+underline ${YELLOW}$@
 
 while : ;do
-  printf 'continue? [No]/yes/abort : '
+  printf "${TEAL}continue? ${RED}[No]${NOCOLOR}/yes/abort : "
   # using bash's extended read functionality (over dash) for single character input
   IFS= read -rn1 CONTINUE
   echo
