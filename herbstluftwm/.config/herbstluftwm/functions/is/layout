@@ -1,0 +1,13 @@
+# sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="is/layout $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... Layout
+
+# Usage: is layout <layout>
+
+[ $(query layout) = $1 ]
+
+# vim: set ft=sh: #

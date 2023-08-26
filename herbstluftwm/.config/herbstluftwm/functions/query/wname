@@ -1,0 +1,32 @@
+# sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="query/wname $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................ Window class name
+
+# Note: Use of conky refresh to trap quitting apps w/o herbstluftwm's mod-w
+
+# windows not closed with mod-w may leave focus in an empty frame and no focused instance
+name=$(herbstclient attr clients.focus.title 2>/dev/null)
+if [ "$name" ] ;then
+  if [ $(echo $name | wc -w) -eq 1 ] ;then
+    echo $name
+  else
+    herbstclient attr clients.focus.class 2>/dev/null
+  fi
+else
+  [ -e $FULLSCREEN ] && draw refresh
+  # take advantage of conky polling to dynamically focus apps that bypass mod-w (see keybinds)
+  # respect manual herbstluftwm script locks and dmenu (rofi) focus
+  [ -e $LOCK ] || pstat rofi && exit
+  if [ -e $DYNAMIC ] && is nonempty $(query tag) ;then
+    # focus window only if focus <app> not in progress! see focus
+    [ -e $FOCUS ] || focus window
+  else
+    herbstclient emit_hook focus_changed
+  fi
+fi
+
+# vim: set ft=sh: #

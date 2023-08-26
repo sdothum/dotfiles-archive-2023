@@ -1,0 +1,23 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="pin $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................... Pin operations
+
+# Usage: pin <msg>, see functions/pin
+
+TAG=$(herbstclient attr monitors.focus.tag)
+
+msg=$1
+[ $msg ] && shift || usage $0
+if [ -e $(dirname $0)/functions/pin/$msg ] ;then
+  . $(dirname $0)/functions/pin/$msg $@
+else
+  usage $0
+fi
+herbstclient emit_hook focus_changed
+
+# vim: set ft=sh: #

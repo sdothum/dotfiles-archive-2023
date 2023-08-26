@@ -1,0 +1,23 @@
+# sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="is/display $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Test display width
+
+# Usage: is display [+= | + | = | -= | -]<width>
+#        returns boolean based on whether less, equal or greater than check
+
+case $1 in
+  '+min') exec is display +$MIN_DISPLAY ;;
+  '-min') exec is display -$MIN_DISPLAY ;;
+  +=*   ) [ $(query display width) -ge ${1#??} ] ;;
+  +*    ) [ $(query display width) -gt ${1#?} ]  ;;
+  =*    ) [ $(query display width) -eq ${1#?} ]  ;;
+  -=*   ) [ $(query display width) -le ${1#??} ] ;;
+  -*    ) [ $(query display width) -lt ${1#?} ]  ;;
+  *     ) false ;;
+esac
+
+# vim: set ft=sh: #

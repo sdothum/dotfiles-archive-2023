@@ -1,0 +1,13 @@
+# sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="query/tname $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... Tag name
+
+# Usage: query tname [[']0-9]
+
+echo $TAG_NAMES | sed 's/ /\n/g' | sed "${1#\'}q ;d"
+
+# vim: set ft=sh: #

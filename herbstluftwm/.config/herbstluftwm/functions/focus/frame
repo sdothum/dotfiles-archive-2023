@@ -1,0 +1,88 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="focus/frame $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................ Find empty subframe to open (spawn) window in
+
+# Usage: focus frame [empty], see draw fsplit
+
+[ -e $DYNAMIC ] || exit
+FSPLIT=$HLWM:fsplit  # working table of weighted frame split clients
+
+# prevent premature focus window request from conky polling, see query wname
+# focus window can shift focus out of an empty frame selected by focus frame above
+touch $FOCUS
+cpu arm && delay=2 || delay=1
+(sleep $delay && rm -f $FOCUS) &
+
+# fill empty grid locations once
+# fill=true
+unset fill
+
+lock
+# do not overlay a window over a fullscreen window, revert to normal view first!
+# this prevents a fullscreen window from resizing to a differing monitor geometry
+restore windowed
+frames=$(query fcount $TAG)
+
+# cycle back to original frame unless empty frame found
+herbstclient cycle_frame 1
+for i in $(seq 1 $frames) ;do
+  herbstclient cycle_frame 1
+  # right fill the desktop to to avoid visual frame gaps
+  if herbstclient compare tags.by-name.$TAG.curframe_wcount = 0 ;then
+    herbstclient focus_edge right >/dev/null 2>&1
+    break
+  fi
+done
+
+for i in $(seq 1 $frames) ;do
+  herbstclient cycle_frame 1
+  herbstclient compare tags.by-name.$TAG.curframe_wcount = 0 && break
+  if [ $i -ge $frames ] ;then
+    if [ $fill ] ;then
+      # all frames occupied, look for an empty grid region then
+      herbstclient cycle_frame -1
+      for i in $(seq 1 $frames) ;do
+        herbstclient cycle_frame 1
+        is layout grid && [ $(expr $(herbstclient attr tags.focus.curframe_wcount) % 2) -gt 0 ] && break
+        if [ $i -ge $frames ] ;then
+          herbstclient cycle_frame 1
+          unset fill
+          break
+        fi
+      done
+    fi
+  fi
+done
+
+# parameter: parent_frame.$1 trap: $2
+parentframe() { herbstclient attr clients.$i.parent_frame.$1 2>/dev/null || echo $2; }  # trap terminated client
+
+# find biggest frame to split (uses parent_frame in 0.9.5)
+if [ -z $1 ] && [ -s $DYNAMIC ] && [ ! -e $MONOCLE ] ;then
+  >$FSPLIT
+  for i in $(herbstclient list_clients); do 
+    set -- $(parentframe content_geometry | sed 's/[-+].*//; s/x/ /')
+    if [ $# -eq 2 ] ;then                             # trap terminated client
+      [ $1 -gt $2 ] && xy=X || xy=Y                   # split along long edge
+      # frame splitting weighting scheme
+      count=$(( $(parentframe client_count 1) / 2 ))  # don't let busy frame avoid splitting
+      [ $count -lt 1 ] && count=1
+      echo $(( $1 * $2 / $count )) $i $xy >>$FSPLIT   # apply multi-window weighting (max layout assumed)
+    fi
+    shift $#
+  done
+  
+  if [ -s $FSPLIT ] ;then
+    set -- $(sort -n $FSPLIT | tail -1)  # largest (weighted) frame
+    herbstclient compare tags.focus.curframe_wcount gt 0 && { herbstclient jumpto $2; draw fsplit $3 0.5; }
+    shift $#
+  fi
+fi
+
+unlock
+
+# vim: set ft=sh: #

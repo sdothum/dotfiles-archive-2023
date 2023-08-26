@@ -1,0 +1,47 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="restore/hidden $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................ Unhide hidden windows
+
+ALL='[ all  ]'
+LAST='[ last ]'
+
+title=" to $(query tname $TAG)"
+
+count=$(query ttag $TAG)
+if [ $count -gt 0 ] ;then
+  # list of hidden windows
+  for i in $(query winids) ;do
+    if herbstclient compare $i.tag = "'$TAG" ;then
+      window="$(query wtitle $i)$DLM$i"
+      [ "$hidden" ] && hidden="$hidden\n$window" || hidden="$window"
+    fi
+  done
+
+  if [ $count -gt 1 ] ;then
+    window=$(echo $hidden | sort | cut -d$DLM -f1 | column -s\^ -t | sed "1i$ALL\n$LAST" |
+        rmenu "Raise Window$title" -no-custom) || exit
+  else
+    window=$(echo $hidden | cut -d$DLM -f1 | column -s\^ -t | rmenu "Raise Window$title" -no-custom)
+  fi
+
+  if [ "$window" ] ;then
+    case $window in
+      "$ALL" ) exec restore windows ;;
+      "$LAST") exec restore window ;;
+  
+      # escape special characters in window title e.g. url page titles, and restore ^$SEP, see query wtitle
+      *      ) winid=$(echo $hidden |
+                     grep "$(echo $window | sed -r "s/([[])/\\\1/g; s/([]])/\\\1/g; s/ *($SEP)/^\1/; s/([*])/\\\1/g")" |
+                     cut -d$DLM -f2 | cut -d. -f2)
+               lock use $TAG
+               focus frame
+               unlock bring $winid
+    esac
+  fi
+fi
+
+# vim: set ft=sh: #

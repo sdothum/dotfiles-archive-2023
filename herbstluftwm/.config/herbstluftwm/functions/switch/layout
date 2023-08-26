@@ -1,0 +1,34 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="switch/layout $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Smart cycle layout
+
+# Usage: switch layout [max]
+
+# restore layout if in fullscreen, as cycle layout is just one keystroke away
+restore tiled
+if is fullscreen ;then
+  toggle fullscreen
+else
+  if [ $1 ] && herbstclient compare tags.focus.curframe_wcount gt 1 ;then
+    # maximize window to frame
+    frame=$(herbstclient attr clients.focus.parent_frame.content_geometry | cut -d+ -f1)
+    set -- $(herbstclient attr clients.focus.content_geometry | cut -d+ -f1 | tr 'x' ' ')
+    if [ -e $SSPINE ] ;then
+      window="$(( $1 + $(cat $SPINE) ))x$2"
+    else
+      window="$(( $1 + $(cat $WINDOW_GAP)*2 ))x$(( $2 + $(cat $WINDOW_GAP)*2 ))"
+    fi
+    [ "$frame" = "$window" ] || toggle layout max
+  elif herbstclient compare tags.focus.curframe_wcount = 2 ;then
+    # skip grid if only 2 windows in subframe (layout is effectively same as horizontal)
+    herbstclient cycle_layout 1 vertical horizontal
+  else
+    herbstclient cycle_layout 1 vertical grid horizontal
+  fi
+fi
+
+# vim: set ft=sh: #

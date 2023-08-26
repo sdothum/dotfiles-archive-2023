@@ -1,0 +1,39 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="restore $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Restore operations
+
+# Usage: restore <msg>, see functions/focus
+
+# dmenu functions
+. $(which dmenu)
+
+TAG=$(herbstclient attr monitors.focus.tag)
+
+hook=0.001  # emit_hook processing window
+
+# wait for hook completion (necessary for non-interactive window manipulation sequences)
+emit_hook() {
+  process=$(echo $@ | tr '_' ' ')
+  herbstclient emit_hook $@
+  # trap hook..
+  if [ -e $DYNAMIC ] ;then
+    until pstat "$process" ;do sleep $hook ;done
+    # ..then wait for completion
+    while pstat "$process" ;do sleep $hook ;done
+  fi
+}
+
+msg=$1
+[ $msg ] && shift || usage $0
+if [ -e ${0%/restore}/functions/restore/$msg ] ;then
+  . ${0%/restore}/functions/restore/$msg $@
+else
+  usage $0
+fi
+
+# vim: set ft=sh: #

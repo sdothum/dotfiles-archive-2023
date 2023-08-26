@@ -1,0 +1,18 @@
+# sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="query/instance $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................... Instance winid
+usage() {
+  echo "usage: $(basename $0) instance <instance>"
+  exit 1
+}
+
+[ $1 ] || usage
+
+for i in $(query winids) ;do herbstclient compare clients.$i.instance = $1 && { echo $i; winid=true; } ;done
+[ $winid ] || echo ''
+
+# vim: set ft=sh: #

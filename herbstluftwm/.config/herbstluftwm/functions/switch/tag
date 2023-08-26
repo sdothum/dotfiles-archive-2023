@@ -1,0 +1,39 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="switch/tag $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................ Switch to tag
+
+# Usage: switch tag [<tag>]
+
+tag() { 
+  is nonempty "'$tag" && notify low 1 "[$tag]" "$(query tname $tag)" || notify 1 "\\$tag" "$(query tname $tag)"
+  [ -e $SPANEL ] || weather
+}
+
+# swap monitors (special case) to utilize fullscreen / monocle persistence handling
+[ "$(query tag)" = "$1" ] && { tag=$1; tag; exit; }
+if is multihead ;then
+  if [ "$(query tag unfocused)" = "$1" ] ;then
+    is primary && switch monitor 0 || switch monitor 1
+    exit
+  fi
+fi
+
+# check layout (fullscreen or monocle)
+lock
+[ $1 ] && herbstclient use $1 || herbstclient use_previous
+
+tag=$(herbstclient attr monitors.focus.tag)
+is primary && restore fullscreen $tag primary || restore fullscreen $tag secondary
+restore monocle $tag
+
+focus window
+unlock
+
+# popup tag name when no windows showing (trap minimized windows!)
+[ ! -e $SPANEL ] || ! is nonempty $tag && tag
+
+# vim: set ft=sh: #
