@@ -1,0 +1,55 @@
+# text/html; lynx -width=80 "%s" ; nametemplate="%s.html"
+# text/html; lynx -width=80 -dump "%s" ; nametemplate="%s.html" ; copiousoutput
+# text/html; lynx -accept_all_cookies -width=80 -dump -force-html "%s" ; needsterminal ; copiousoutput
+# text/html; elinks "%s" ; nametemplate="%s.html"
+# text/html; elinks -dump "%s" ; nametemplate="%s.html" ; copiousoutput
+# text/html; w3m "%s"; nametemplate="%s.html"
+text/html;  w3m -dump -o document_charset=%{charset} '%s'; nametemplate=%s.html; copiousoutput
+# text/html; links -width 80 -dump "%s" ; nametemplate="%s.html" ; copiousoutput
+#application/pdf; acroread "%s"
+application/pdf; zathura "%s"
+application/epub; foliate "%s"
+#application/pdf; evince "%s"
+# application/msword; antiword "%s" ; copiousoutput
+application/msword; catdoc "%s" ; copiousoutput
+#application/msword; antiwordxp.rb "%s" | less ; nametemplate=%s.doc ; copiousoutput
+#application/vnd.openxmlformats-officedocument.wordprocessingml.document; antiwordxp.rb "%s" | less ; application/msword ; docx2txt.pl "%s" - ; copiousoutput
+application/vnd.openxmlformats-officedocument.wordprocessingml.document; docx2txt.pl "%s" - ; copiousoutput
+image/jpeg; feh "%s"
+image/gif; feh "%s"
+image/GIF; feh "%s"
+image/JPG; feh "%s"
+image/jpg; feh "%s"
+image/png; feh "%s"
+application/x-crossover-c4p; /home/shum/.cxoffice/desktopdata/cxoffice-1/cxassoc/Scripts/cxoffice-1:application_x-crossover-c4p::install '%s'; \
+    description="CrossOver (Install)"; \
+    test=test -n "$DISPLAY"
+application/x-crossover-tie; /home/shum/.cxoffice/desktopdata/cxoffice-1/cxassoc/Scripts/cxoffice-1:application_x-crossover-tie::install '%s'; \
+    description="CrossOver (Install)"; \
+    test=test -n "$DISPLAY"
+x-content/win32-software; /home/shum/.cxoffice/desktopdata/cxoffice-0/cxassoc/Scripts/cxoffice-0:application_x-crossover-exe::install '%s'; \
+    description="CrossOver (Install)"; \
+    test=test -n "$DISPLAY"
+application/x-crossover-exe; /home/shum/.cxoffice/desktopdata/cxoffice-0/cxassoc/Scripts/cxoffice-0:application_x-crossover-exe::install '%s'; \
+    description="CrossOver (Install)"; \
+    test=test -n "$DISPLAY"
+application/x-ms-shortcut; /home/shum/.cxoffice/desktopdata/cxoffice-0/cxassoc/Scripts/cxoffice-0:application_x-crossover-lnk::run '%s'; \
+    description="CrossOver (Run)"; \
+    test=test -n "$DISPLAY"
+application/x-crossover-lnk; /home/shum/.cxoffice/desktopdata/cxoffice-0/cxassoc/Scripts/cxoffice-0:application_x-crossover-lnk::run '%s'; \
+    description="CrossOver (Run)"; \
+    test=test -n "$DISPLAY"
+application/x-win-lnk; /home/shum/.cxoffice/desktopdata/cxoffice-0/cxassoc/Scripts/cxoffice-0:application_x-crossover-lnk::run '%s'; \
+    description="CrossOver (Run)"; \
+    test=test -n "$DISPLAY"
+application/x-crossover-msi; /home/shum/.cxoffice/desktopdata/cxoffice-0/cxassoc/Scripts/cxoffice-0:application_x-crossover-msi::install '%s'; \
+    description="CrossOver (Install)"; \
+    test=test -n "$DISPLAY"
+application/x-crossover-cxarchive; /home/shum/.cxoffice/desktopdata/cxoffice-0/cxassoc/Scripts/cxoffice-0:application_x-crossover-cxarchive::restore '%s'; \
+    description="CrossOver (Restore)"; \
+    test=test -n "$DISPLAY"
+video/quicktime; mpv "%s"
+video/mp4; mpv "%s"
+audio/x-m4a; gnome-mpv "%s"
+
+# vim: set ft=mime: #
