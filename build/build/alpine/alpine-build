@@ -185,10 +185,10 @@ stage_3() {
   doas apk add speedtest-cli
 
   # monitor
-  # doas apk add iftop
-  # doas apk add mtr
+  doas apk add iftop
+  doas apk add mtr
   doas apk add net-tools
-  # doas apk add nethogs
+  doas apk add nethogs
   doas apk add traceroute
 
   info .................................................... remote file transfer
