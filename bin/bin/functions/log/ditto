@@ -21,13 +21,13 @@ argv="$@"
 [ $leader ] || leader=.  # initial leader
 
 ATTCOLOR=${TURQUOISE}
-MSGCOLOR=${cyan}
+MSGCOLOR=${green}
 
 while [ "$1" ] ;do
   case $1 in
-    ERR*) ATTCOLOR=${RED}; MSGCOLOR=${pink}   ;;
+    ERR*) ATTCOLOR=${RED}; MSGCOLOR=${brown}   ;;
     WAR*) ATTCOLOR=${BROWN} MSGCOLOR=${orange} ;;
-    INF*) ATTCOLOR=${WHITE} MSGCOLOR=${green} ;;
+    INF*) ATTCOLOR=${WHITE} MSGCOLOR=${cyan} ;;
     @   ) [ "$2" ] || usage; desc=$2; message=' ';     shift ;;
     @*  ) [ "$2" ] && usage; desc=${1#@}; message=' '        ;;
     -t  ) timestamp="$(date "+%-H %M'%S\" ")"                ;;

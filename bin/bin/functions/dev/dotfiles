@@ -72,7 +72,7 @@ pending() {
 # add !**<path> to .gitignore for any <path> force warnings
 add() {
   file="$STOW/$1"
-  if [ $(ls -Ar $file | wc -l) -gt 0 ] ;then
+  if [ $(ls -Alr $file | wc -l) -gt 0 ] ;then
     pending=$(git add -v $force "$file" )
   else
     ditto WARNING notfound "$file"

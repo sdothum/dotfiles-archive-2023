@@ -12,8 +12,8 @@ fonts/.fonts/Iosevka*
 georgi/qmk_firmware/keyboards/gboards/georgi
 helix
 herbstluftwm
-kb-layout-evaluation/layout-evaluation
-kb-layout-evaluation.panda_plot/layout-evaluation
+kb-layout-evaluation/layout_evaluation
+kb-layout-evaluation.panda_plot/layout_evaluation
 kindle/FONT_RAMP
 kindle/fonts:*
 kobo/calibre:config
@@ -24,12 +24,12 @@ kobo/Nickel*
 kustom
 mime
 miniflux
-nnn/plugins/._*
-nnn/plugins/_*
+nnn/.config/plugins/._*
+nnn/.config/plugins/_*
 openrc
 picom
 planck/qmk_firmware/keyboards/planck
-quikey/.**/quikey/*.json
+quikey/.local/share/quikey/*.json
 README.md
 rofi
 splitography/qmk_firmware/keyboards/splitography

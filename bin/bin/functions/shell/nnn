@@ -1,0 +1,59 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................. nnn wrapper
+
+# Usage: nnn TMUX | [path]
+
+NNN=/usr/local/bin/nnn    # nnn compiled with icons, see make_install nnn
+TDIR=/net/downloads/http  # default tmux directory
+
+[ -e $NNN ] || NNN=/usr/bin/nnn
+# PREVIEW=-Pp             # un/comment to toggle preview-tui on launch
+
+# key:value pairs
+bookmarks="$(eval echo $(cat $(dirname $0)/.nnn:bookmarks))"  # hide server structure
+plugs="d:jump-dotfiles
+e:eject
+f:foliate
+i:imgview
+j:jump
+J:jump-refresh
+m:mount
+p:preview-tui
+r:rox
+u:umount
+"
+
+# expand key:value pairs into ";" delimited list
+# NOTE: cannot be done within export statement -- will cause fish source error, see config.fish
+list() { echo $@ | sed 's/ /;/g'; }
+
+bookmarks="$(list $bookmarks)"
+plugs="$(list $plugs)"
+
+# nnn config
+# export NNN_FIFO=/tmp/nnn:fifo  # NNN_OPTS 'a' option
+exists trash-cli && export NNN_TRASH=1 || export NNN_TRASH=0
+export NNN_OPENER=$HOME/.config/nnn/plugins/nuke  # use of $XDG_CONFIG_HOME causes env dump console login(?)
+# export NNN_OPENER=xdg-open
+export NNN_PLUG="$plugs"
+export NNN_BMS="$bookmarks"
+#      NNN_FCOLORS 'c1e2272e006033f7c6d6abc4'                  # change dir/exe colors
+export NNN_FCOLORS='c1e2de28006033f7c627abc4'
+export LS_COLORS='di=01;38;5;221:ex=00;38;5;40:ln=00;38;5;51'  # match nnn colors!
+exists cpg && export NNN_OPTS=aefHoQrux || export NNN_OPTS=aefHoQux
+
+# sloppy mtp automount
+mtp mount && NDIR=$(mtp)
+[ "$1" != TMUX ] && trap 'mtp umount' EXIT  # must manually eject if mounted during toggle tmux session, see herbstluftwm appbinds
+
+case $1 in
+  TMUX) tmux_session 'nnn' $NNN $PREVIEW $TDIR 2>/tmp/nnn.log ;;
+  *   ) $NNN "${NDIR:-$@}" $PREVIEW            2>/tmp/nnn.log ;;
+esac
+
+# vim: set ft=sh: #
