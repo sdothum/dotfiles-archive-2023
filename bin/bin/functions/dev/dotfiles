@@ -76,7 +76,6 @@ add() {
     pending=$(git add -v $force "$file" )
   else
     ditto notfound "$file"
-    read reply
   fi
   [ "$pending" ] && pending
 }
