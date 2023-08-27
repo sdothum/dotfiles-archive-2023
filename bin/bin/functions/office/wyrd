@@ -1,0 +1,14 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .......................................................... Getting things done
+
+cp $HOME/.reminders /tmp/
+
+# if wyrd crashes (common tiling wm problem), restart
+while : ;do pstat wyrd || { sleep 1 && /usr/bin/wyrd 2>>/tmp/wyrd.log; } ;done
+
+# vim: set ft=sh: #
