@@ -1,0 +1,121 @@
+
+# Zsh Prompt
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# a simple two line theme that displays relevant, contextual information
+# template from Sorin Ionescu <sorin.ionescu@gmail.com>
+
+# Load dependencies.
+pmodload 'helper'
+
+[[ -e $HOME/.zprezto/.prompt ]] && multiline=true
+
+function prompt_shum_pwd {
+  local pwd="${PWD/#$HOME/~}"
+
+  if [[ "$pwd" == (#m)[/~] ]] ;then
+    _prompt_shum_pwd="$MATCH"
+    unset MATCH
+  elif [[ $multiline ]] ;then
+    _prompt_shum_pwd=$pwd
+  else
+    _prompt_shum_pwd="${${${(@j:/:M)${(@s:/:)pwd}##.#?}:h}%/}/${pwd:t}"
+  fi
+
+  # hidden ssh env (see function su)
+  if [[ -f /tmp/.ssh_client ]] ;then
+    SSH_CLIENT="$(< /tmp/.ssh_client)"
+    sudo rm -f /tmp/.ssh_client
+  fi
+  [[ -n "$SSH_CLIENT" ]] && _prompt_shum_hostname="$(hostname) "
+}
+
+function prompt_shum_precmd {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+
+  # Format PWD.
+  prompt_shum_pwd
+
+  # Get Git repository information.
+  if (( $+functions[git-info] )) ;then
+    git-info
+  fi
+}
+
+function prompt_shum_setup {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+  prompt_opts=(cr percent subst)
+
+  if tty | grep -q tty ;then
+    # console prompt hacks for the anal..
+    bold='%B'
+    yellow='yellow'
+    orange='003'
+    red='red'
+    P='─'
+  else
+    yellow='220'
+    orange='202'
+    red='196'
+    P='╼'
+  fi
+  E='_'
+  if [[ $multiline ]] ;then
+    # formatting tweaks to match single line behaviour..
+    L='└'
+    A='─'
+  else
+    L=' '
+    I='   '
+    P=''
+  fi
+
+  # Load required functions.
+  autoload -Uz add-zsh-hook
+
+  # Add hook for calling git-info before each command.
+  add-zsh-hook precmd prompt_shum_precmd
+
+  # Set editor-info parameters.
+  zstyle ':prezto:module:editor:info:completing' format '%B%F{$red}...%f%b'
+  zstyle ':prezto:module:editor:info:keymap:primary' format "%B%F{$orange}%(?::%b%F{$red})${L}─────${P}%f%b"
+  zstyle ':prezto:module:editor:info:keymap:primary:overwrite' format "%B%F{$orange}%(?::%b%F{$red})${L}─────${P}%f%b %F{yellow}♺%f"
+  zstyle ':prezto:module:editor:info:keymap:alternate' format "%B%F{$orange}%(?::%b%F{$red})${L}──${E}──${A}%f%b"
+
+  # Set git-info parameters.
+  zstyle ':prezto:module:git:info' verbose 'yes'
+  zstyle ':prezto:module:git:info:action' format ':%%B%F{yellow}%s%f%%b'
+  zstyle ':prezto:module:git:info:added' format ' %%B%F{green}✚%f%%b'
+  zstyle ':prezto:module:git:info:ahead' format ' %%B%F{yellow}⬆%f%%b'
+  zstyle ':prezto:module:git:info:behind' format ' %%B%F{yellow}⬇%f%%b'
+  zstyle ':prezto:module:git:info:branch' format ':%F{green}%f'
+  zstyle ':prezto:module:git:info:commit' format ':%F{green}%.7c%f'
+  zstyle ':prezto:module:git:info:deleted' format ' %%B%F{$red}✖%f%%b'
+  zstyle ':prezto:module:git:info:modified' format ' %%B%F{cyan}✱%f%%b'
+  zstyle ':prezto:module:git:info:position' format ':%F{$red}%p%f'
+  zstyle ':prezto:module:git:info:renamed' format ' %%B%F{magenta}➜%f%%b'
+  zstyle ':prezto:module:git:info:stashed' format ' %%B%F{$orange}✭%f%%b'
+  zstyle ':prezto:module:git:info:unmerged' format ' %%B%F{yellow}═%f%%b'
+  zstyle ':prezto:module:git:info:untracked' format ' %%B%F{white}◼%f%%b'
+  zstyle ':prezto:module:git:info:keys' format \
+    'prompt' ' %F{cyan}git%f$(coalesce "%b" "%p" "%c")%s' \
+    'rprompt' '%A%B%S%a%d%m%r%U%u'
+
+  # Define prompts.
+  if [[ $multiline ]] ;then
+    PROMPT='%B%F{$orange}%(?::%b%F{$red})┌%f%b %(1?;%{%F{$red}%}✘%f ;)%(!;%{%B%F{yellow}%}${_blink_}⚡${_noblink_}%f%b ;)%(1j;%{%F{cyan}%}%j⚙%f ;)%B%F{yellow}${_prompt_shum_hostname}%F{yellow}${_prompt_shum_pwd}%f%b${git_info:+${(e)git_info[prompt]}}
+${editor_info[keymap]}  '
+    RPROMPT='${editor_info[overwrite]}${VIM:+" %B%F{green}V%f%b"}${git_info[rprompt]}  %F{green}%(?::%F{$red})%D{%-I:%M %S}'
+  else
+    # PROMPT='${I}%(?::%b%F{$red})%f%b%(1?;%{%F{$red}%} ✘%f;)%(!;%{%B%F{yellow}%}${_blink_} ⚡${_noblink_}%f%b;)%(1j;%{%F{cyan}%} %j ⚙%f;)${editor_info[keymap]}  '
+    PROMPT='%(1j;%{%F{cyan}%}⚙%f; )%(!;%{%B%F{yellow}%}${_blink_}⚡${_noblink_}%f%b; )%(?::%b%F{$red})%f%b%(1?;%{%F{$red}%}✘%f; )${editor_info[keymap]}  '
+    RPROMPT='${editor_info[overwrite]}${VIM:+" %B%F{green}V%f%b"}${git_info[rprompt]} ${git_info:+${(e)git_info[prompt]}}$bold%F{$yellow}${_prompt_shum_hostname}%F{$yellow}${_prompt_shum_pwd}%f%b  %F{green}%(?::%F{$red})%D{%-I:%M %S}'
+  fi
+  SPROMPT='zsh: correct %F{$red}%R%f to %F{green}%r%f [nyae]? '
+}
+
+prompt_shum_setup "$@"
+
+# vim: set ft=zsh: #
