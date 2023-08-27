@@ -28,7 +28,7 @@ nnn/.config/nnn/plugins/._*
 nnn/.config/nnn/plugins/_*
 picom
 planck/qmk_firmware/keyboards/planck
-quikey/.local/share/quikey/phrases.json
+quikey/.local/share/quikey/*.json
 README.md
 rofi
 splitography/qmk_firmware/keyboards/splitography
