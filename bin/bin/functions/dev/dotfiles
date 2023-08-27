@@ -20,6 +20,7 @@ usage() {
 # list of folders under stow root
 DOTFILES=$(dirname $0)/.dotfiles:folders
 MESSAGES=/tmp/dotfiles:messages
+UPTODATE="nothing to commit, working tree clean"
 
 [ -d "$1" ] && { STOW="$1"; shift; }  # see config.fish
 [ -e $HOME/.git/stow ] && ln -sf $HOME/.git/stow $HOME/stow/.git
@@ -108,7 +109,7 @@ messages() { [ -e $MESSAGES ] && echo $MESSAGES; }
 unset pending
 case $1 in
   help   ) usage ;;
-  ''     ) dotfiles dry-run; grep -q "nothing to commit, working tree clean" $MESSAGES || { ifyes "update repo" && repo; } ;;
+  ''     ) dotfiles dry-run; grep -q "$UPTODATE" $MESSAGES || { ifyes "update repo" && repo; } ;;
   bulk   ) NOPROMPT=true; DESC="${2:-bulk commit}"; repo ;;
 
   add    ) shift; [ "$1" = '-f' ] && { force=-f; shift; }
