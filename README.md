@@ -10,7 +10,7 @@ some.
 
 **--depth 1** ensures you do not download the unnecessary patch history
 which can become extremely large over time. (This repo is re-initialized
-from time to time to reset the patch history).
+from time to time to reduce its size).
 
 The root folder name within dotfiles is the application the dotfiles
 belong to. Below that is the actual home folder path (or subfolders) to the dotfile.
