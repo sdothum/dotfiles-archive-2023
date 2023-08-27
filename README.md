@@ -5,8 +5,7 @@ These are the dotfiles referenced in
 some.
 
 **!! NOTE !!**
-Do to the rather large patch file size of this repo, it is now frozen. "dotfiles" is now continued in the "[stow](https://github.com/sdothum/stow)" repo.
-
+Do to the rather large patch file history/size of this repo, it is now frozen and renamed "dotfiles-archive-2023". The new "dotfiles" repo now continues this repo with a much reduced patch file history :)
 
 ## installation
 
