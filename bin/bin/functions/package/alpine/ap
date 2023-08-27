@@ -1,0 +1,51 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Package management
+
+usage() { 
+  echo "usage: $(basename $0) 'search [/^]<package> -> contents, /*match*, ^match*"
+  echo "          [aA]'dd | [dD]'el | [lL]'ist (installed) | [-]m'anpage | i'nfo <package>*"
+  echo "          [.|..]'dependencies <package>"
+  echo "          f'ix | t'esing | u'update | [U]U'pgrade | -h'elp"
+  exit 1
+}
+
+vsn ()     { apk list -I | grep -E -i "^$1-([0-9]+\.*)+-r[0-9]" | cut -d' ' -f1; }
+testing () { [ $(hostname) != 'thedarnedestthing.com' ] && { apk_edge -t $(ag 'apk_edge -t' $HOME/build/alpine | sed 's/.* -t //; s/ #.*//'); flatpak update; } }
+
+LINUX=$(vsn linux-lts)
+
+packages() {
+  packages=$(apk upgrade -s | grep 'Upgrading' | cut -d' ' -f3-)
+  [ "$packages" ] && echo -n "\n${packages}\n" || false
+}
+
+case $1 in
+  '') usage ;;
+  -h) usage ;;
+  . ) apk dot $2 | grep "^ *\"$2" | sed -r 's/^.*( -> )"/\1/; s/-[0-9].*$//' | sort -u ;;
+  ..) apk dot $2 | grep '^ *"'    | sed -r 's/^.*( -> )"/\1/; s/-[0-9].*$//' | sort -u ;;
+  a ) shift; doas apk add $@ ;;
+  A ) shift; doas apk add $1 $1-doc ;;
+  d ) shift; doas apk del $@ ;;
+  D ) shift; doas apk del $1 $1-doc ;;
+  f ) doas apk fix ;;
+  i ) shift; apk info $@ ;;
+  l ) apk list -I | grep -i $2 | sort ;;
+  L ) apk list -I | grep -i "^$2" | sort ;;
+  -m) shift; for i in $@; do doas apk del $i-doc ;done ;;
+  m ) shift; for i in $@; do doas apk add $i-doc ;done ;;
+  t ) testing ;;
+  u ) doas apk update ;;
+  U ) doas apk update; packages && ifyes 'upgrade packages' && { doas apk upgrade; [ $LINUX != $(vsn linux-lts) ] && reboot; } ;;
+  UU) doas apk update; doas apk upgrade --available; testing; sync; reboot ;;  # alpine lts release upgrade
+  /*) apk search ${1#?} | grep "${1#?}"  | sort | columns | print ;;
+  ^*) apk search ${1#?} | grep "^${1#?}" | sort | columns | print ;;
+  * ) apk search $1                      | sort | columns | print ;;
+esac
+
+# vim: set ft=sh: #
