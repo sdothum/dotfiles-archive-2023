@@ -1,0 +1,13 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# nnn Plugin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................... umount removable device
+
+ls $HOME/mtp/* 2>/dev/null || exit
+mtp umount
+
+# vim: set ft=sh: #
+

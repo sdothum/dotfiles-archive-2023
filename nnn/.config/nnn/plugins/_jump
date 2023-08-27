@@ -1,0 +1,40 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# nnn Plugin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... fzf Jump
+
+# env control variables
+# REFRESH=-, see _jump-refresh
+
+# fcache performance over fzcd
+
+IFS="$(printf '\n\r')"
+CTX=+
+. $(dirname $0)/.nnn-plugin-helper
+
+
+# fcache replacement for fzcd
+. $(dirname $0)/._jump:caches
+sel=$(fcache $REFRESH $(cache "$2") | fZf)  # see j
+
+if [ -n "$sel" ]; then
+  if [ "$sel" = "." ] || { ! [ -d "$sel" ] && ! [ -f "$sel" ]; }; then
+    exit 0
+  fi
+
+  # Check if the selected path returned by fzf command is absolute
+  case $sel in
+  /*) nnn_cd "$sel" "$CTX" ;;
+  * ) sel="${sel#./}"  # Remove "./" prefix if it exists
+      if [ "$PWD" = "/" ]; then
+        nnn_cd "/$sel" "$CTX"
+      else
+        nnn_cd "$PWD/$sel" "$CTX"
+      fi ;;
+  esac
+fi
+
+# vim: set ft=sh: #

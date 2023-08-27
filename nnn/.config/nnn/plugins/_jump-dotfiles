@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# nnn Plugin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................ Jump dotfiles
+
+DOTFILES=/net/depot/dotfiles
+
+# fcache depot
+SRC=${2##*/stow}
+[ -e $DOTFILES/$SRC ] && two=$DOTFILES/$SRC || two=$DOTFILES
+env SUBTREE=pwd $(dirname $0)/_jump "$1" "$two" "$3"  # see ._jump:caches
+
+# vim: set ft=sh: #

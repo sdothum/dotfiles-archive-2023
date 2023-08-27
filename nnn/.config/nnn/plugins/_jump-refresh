@@ -1,0 +1,12 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# nnn Plugin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................. Jump refresh
+
+# force cache rebuild
+env REFRESH=- $(dirname $0)/jump "$1" "$2" "$3"
+
+# vim: set ft=sh: #

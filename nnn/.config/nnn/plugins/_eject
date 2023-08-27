@@ -1,0 +1,19 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# nnn Plugin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................... eject removable device
+
+pkill -f preview-tui  # remove any device busy state
+
+# mtp mount point is fixed (vs dynamic udiskie mount point), see mtp
+if [ "$2/$1" = "$(mtp)" ] ;then
+  mtp mounted && mtp umount
+else
+  device=$(mount | grep " on $2/$1 " | cut -d' ' -f1)
+  [ $device ] && doas eject $device || notify critical "$1" 'not ejected'
+fi
+
+# vim: set ft=sh: #
