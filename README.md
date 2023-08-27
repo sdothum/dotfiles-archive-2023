@@ -9,7 +9,8 @@ some.
 <pre>git clone --depth 1 https://github.com/sdothum/dotfiles.git</pre>
 
 **--depth 1** ensures you do not download the unnecessary patch history
-which is extremely large. 
+which can become extremely large over time. (This repo is re-initialized
+from time to time to reset the patch history).
 
 The root folder name within dotfiles is the application the dotfiles
 belong to. Below that is the actual home folder path (or subfolders) to the dotfile.
