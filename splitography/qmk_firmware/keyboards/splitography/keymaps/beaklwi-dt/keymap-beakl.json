@@ -1,0 +1,330 @@
+{
+  "keys": [
+    "NUM1", "NUM2", "NUM3", "NUM4", "NUM5", "NUM6",        "NUM7", "NUM8", "NUM9", "NUM10", "NUM11", "NUM12",
+    "TOP1", "TOP2", "TOP3", "TOP4", "TOP5", "TOP6",        "TOP7", "TOP8", "TOP9", "TOP10", "TOP11", "TOP12",
+    "BOT1", "BOT2", "BOT3", "BOT4", "BOT5", "BOT6",        "BOT7", "BOT8", "BOT9", "BOT10", "BOT11", "BOT12",
+                                    "THU1", "THU2",        "THU3", "THU4"
+  ],
+  "parameters": {
+    "layout_function_name": "LAYOUT_splitography",
+    "chord_timeout": 100,
+    "dance_timeout": 100,
+    "leader_timeout": 750,
+    "tap_timeout": 50,
+    "command_max_length": 5,
+    "leader_max_length": 5,
+    "dynamic_macro_max_length": 20,
+    "string_max_length": 16,
+    "long_press_multiplier": 3,
+    "default_pseudolayer": "BEAKL"
+  },
+  "layers": [
+    {
+      "type": "auto"
+    },
+    {
+      "type": "manual",
+      "keycodes": [
+        "STN_N1" , "STN_N2", "STN_N3", "STN_N4","STN_N5",  "STN_N6",        "STN_N7" , "STN_N8", "STN_N9", "STN_NA", "STN_NB", "STN_NC",
+        "STN_FN" , "STN_S1", "STN_TL", "STN_PL","STN_HL", "STN_ST1",        "STN_ST3", "STN_FR", "STN_PR", "STN_LR", "STN_TR", "STN_DR",
+        "STN_PWR", "STN_S2", "STN_KL", "STN_WL","STN_RL", "STN_ST2",        "STN_ST4", "STN_RR", "STN_BR", "STN_GR", "STN_SR", "STN_ZR",
+                                                 "STN_A",   "STN_O",        "STN_E"  , "STN_U"
+      ]
+    }
+  ],
+  "chord_sets": [
+    {
+      "name": "rows",
+      "chords": [
+        ["TOP1"],                 ["TOP2"],         ["TOP3"],         ["TOP4"],         ["TOP5"],         ["TOP6"],        ["TOP7"],                 ["TOP8"],         ["TOP9"],          ["TOP10"],          ["TOP11"],          ["TOP12"],
+        ["TOP1", "BOT1"], ["TOP2", "BOT2"], ["TOP3", "BOT3"], ["TOP4", "BOT4"], ["TOP5", "BOT5"], ["TOP6", "BOT6"],        ["TOP7", "BOT7"], ["TOP8", "BOT8"], ["TOP9", "BOT9"], ["TOP10", "BOT10"], ["TOP11", "BOT11"], ["TOP12", "BOT12"],
+        ["BOT1"],                 ["BOT2"],         ["BOT3"],         ["BOT4"],         ["BOT5"],         ["BOT6"],        ["BOT7"],                 ["BOT8"],         ["BOT9"],          ["BOT10"],          ["BOT11"],          ["BOT12"],
+                                                                                        ["THU1"],         ["THU2"],        ["THU3"],                 ["THU4"]
+      ]
+    }
+  ],
+  "pseudolayers": [
+    {
+      "name": "ALWAYS_ON",
+      "chords": [
+        {
+          "type": "visual",
+          "set": "rows",
+          "chord": [
+            "X", " ", " ", " ", " ", " ",        " ", " ", " ", " ", " ", "X",
+            "X", " ", " ", " ", " ", " ",        " ", " ", " ", " ", " ", "X",
+                                " ", " ",        " ", " "
+          ],
+          "keycode": "CLEAR_KB"
+        },
+        {
+          "type": "visual",
+          "set": "rows",
+          "chord": [
+            " ", " ", " ", " ", " ", "X",        "X", " ", " ", " ", " ", " ",
+            " ", " ", " ", " ", " ", "X",        "X", " ", " ", " ", " ", " ",
+                                " ", " ",        " ", " "
+          ],
+          "keycode": "CMD"
+        }
+      ]
+    },
+    {
+      "name": "BEAKL",
+      "chords": [
+        {
+          "type": "chord_set",
+          "set": "rows",
+          "keycodes": [
+            ":"          ,           "Y",           "O",           "U", "-",         "DF(FNC)",        "DF(SYMBOL)", "G",           "D",           "N",            "M",           "X",
+            "KK(Q, LGUI)", "KK(H, LCTL)", "KK(E, LALT)", "KK(A, LSFT)", "W",           "TO(1)",        "DF(NAV)"   , "C", "KK(T, RSFT)", "KK(R, RALT)",  "KK(S, RCTL)", "KK(Z, RGUI)",
+            "J"          ,           ",",           ".",           "K", "'", "M(hexpad, 0, 3)",        "DF(NUM)"   , "B",           "P",           "L",            "F",           "V",
+                                                                        " ",               " ",        " ",          " "
+          ]
+        },
+        {
+          "type": "visual_array",
+          "keys": ["TOP1", "TOP2", "BOT2", "BOT3", "BOT4", "TOP5", "BOT5", "TOP9", "BOT9"],
+          "dictionary": [
+            ["X", " ", " ", " ", " ", " ", " ", "X", "X",           ";"],
+            ["X", "X", " ", " ", " ", " ", " ", " ", " ", "STR(' :: ')"],
+            [" ", " ", "X", " ", " ", " ", " ", "X", "X",           "?"],
+            [" ", " ", " ", "X", " ", " ", " ", "X", "X",           "!"],
+            [" ", " ", " ", " ", " ", "X", " ", "X", "X",           "_"],
+            [" ", " ", " ", " ", " ", " ", "X", "X", "X",          "\""]
+          ]
+        },
+        {
+          "type": "visual_array",
+          "keys": ["TOP1", "BOT2", "BOT3", "TOP4", "BOT4", "TOP9", "BOT9", "THU3", "THU4"],
+          "dictionary": [
+            ["X", " ", " ", " ", " ", " ", " ", "X", "X", "M(cap, KC_COLN, KC_ENTER)"],
+            ["X", " ", " ", " ", " ", "X", "X", "X", "X", "M(cap, KC_SCLN, KC_ENTER)"],
+            [" ", "X", " ", " ", " ", " ", " ", "X", "X", "M(cap, KC_COMM, KC_ENTER)"],
+            [" ", "X", " ", " ", " ", "X", "X", "X", "X", "M(cap, KC_QUES, KC_ENTER)"],
+            [" ", " ", "X", " ", " ", " ", " ", "X", "X",  "M(cap, KC_DOT, KC_ENTER)"],
+            [" ", " ", "X", " ", " ", "X", "X", "X", "X", "M(cap, KC_EXLM, KC_ENTER)"],
+            [" ", " ", " ", "X", "X", " ", " ", "X", "X",   "M(cap, KC_NO, KC_ENTER)"],
+            ["X", " ", " ", " ", " ", " ", " ", "X", " ",   "M(cap, KC_COLN, KC_SPC)"],
+            ["X", " ", " ", " ", " ", "X", "X", "X", " ",   "M(cap, KC_SCLN, KC_SPC)"],
+            [" ", "X", " ", " ", " ", " ", " ", "X", " ",   "M(cap, KC_COMM, KC_SPC)"],
+            [" ", "X", " ", " ", " ", "X", "X", "X", " ",   "M(cap, KC_QUES, KC_SPC)"],
+            [" ", " ", "X", " ", " ", " ", " ", "X", " ",    "M(cap, KC_DOT, KC_SPC)"],
+            [" ", " ", "X", " ", " ", "X", "X", "X", " ",   "M(cap, KC_EXLM, KC_SPC)"],
+            [" ", " ", " ", "X", "X", " ", " ", "X", " ",     "M(cap, KC_NO, KC_SPC)"]
+          ]
+        },
+        {
+          "type": "visual_array",
+          "keys": ["TOP4", "BOT4", "THU1", "THU2", "THU3", "THU4"],
+          "dictionary": [
+            ["X", "X", "X", " ", " ", " ", "ENTER"],
+            ["X", "X", " ", "X", " ", " ",   "SPC"],
+            [" ", " ", " ", " ", "X", "X", "ENTER"],
+            ["X", "X", " ", " ", " ", "X",  "BSPC"]
+          ]
+        },
+        {
+          "type": "visual_array",
+          "keys": ["THU1", "THU2", "THU3", "THU4"],
+          "dictionary": [
+            ["X", " ", " ", " ",     "KL(ESC, NUM)"],
+            ["X", "X", " ", " ",     "KL(TAB, FNC)"],
+            [" ", "X", " ", " ",     "KL(I, REGEX)"],
+            [" ", " ", "X", " ",     "KL(SPC, SYM)"],
+            [" ", " ", " ", "X",    "KL(BSPC, NAV)"]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "CAPS",
+      "chords": [
+        {
+          "type": "chord_set",
+          "set": "rows",
+          "keycodes": [
+            ":"                , "MK(KC_LSFT, KC_Y)", "MK(KC_LSFT, KC_O)", "MK(KC_LSFT, KC_U)",                 "-", " ",        " ", "MK(KC_LSFT, KC_G)", "MK(KC_LSFT, KC_D)", "MK(KC_LSFT, KC_N)",  "MK(KC_LSFT, KC_M)", "MK(KC_LSFT, KC_X)",
+            "MK(KC_LSFT, KC_Q)", "MK(KC_LSFT, KC_H)", "MK(KC_LSFT, KC_E)", "MK(KC_LSFT, KC_A)", "MK(KC_LSFT, KC_W)", " ",        " ", "MK(KC_LSFT, KC_C)", "MK(KC_LSFT, KC_T)", "MK(KC_LSFT, KC_R)",  "MK(KC_LSFT, KC_S)", "MK(KC_LSFT, KC_Z)",
+            "MK(KC_LSFT, KC_J)",                 ",",                 ".", "MK(KC_LSFT, KC_K)",                 "'", " ",        " ", "MK(KC_LSFT, KC_B)", "MK(KC_LSFT, KC_P)", "MK(KC_LSFT, KC_L)",  "MK(KC_LSFT, KC_F)", "MK(KC_LSFT, KC_V)",
+                                                                                                "MK(KC_LSFT, KC_I)", " ",        " ",                 " "
+          ]
+        }
+      ]
+    },
+    {
+      "name": "REGEX",
+      "chords": [
+        {
+          "type": "chord_set",
+          "set": "rows",
+          "keycodes": [
+            " ", " ", " ", " ", " ", " ",        " " ,   "*",    "[",   "^",    "]", " ",
+            " ", " ", " ", " ", " ", " ",        " " ,   "?", "LPRN",   "$", "RPRN", " ",
+            " ", " ", " ", " ", " ", " ",        " " ,   "|",    "{",   "#",    "}", " ",
+                                " ", " ",        "\\", "DEL"
+          ]
+        },
+        {
+          "type": "visual_array",
+          "keys": ["TOP8", "TOP9"],
+          "dictionary": [
+            ["X", "X", "STR(.*)"]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SYM",
+      "chords": [
+        {
+          "type": "chord_set",
+          "set": "rows",
+          "keycodes": [
+            " ", ".", "*", "&",  "+", " ",        " ", " ", "HOME",   "UP",   "END", "PGUP",
+            " ", "`", "~", "/",  "|", " ",        " ", " ",    " ",    " ",     " ",    " ",
+            " ", "<", ">", "%",  "@", " ",        " ", " ", "LEFT", "DOWN", "RIGHT", "PGDN",
+                                "\\", "=",        " ",    " "
+          ]
+        },
+        {
+          "type": "visual_array",
+          "keys": ["BOT2", "BOT3", "TOP4", "BOT4", "TOP5", "BOT5"],
+          "dictionary": [
+            ["X", "X", " ", " ", " ", " ", "STR(' <- ')"],
+            [" ", " ", " ", "X", " ", "X", "STR(' -> ')"],
+            [" ", " ", "X", " ", "X", " ",  "STR(' ~/')"]
+          ]
+        },
+        {
+          "type": "visual_array",
+          "keys": ["THU1", "THU2"],
+          "dictionary": [
+            ["X", "X", "STR(!=)"]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SYMBOL",
+      "chords": [
+        {
+          "type": "chord_set",
+          "set": "rows",
+          "keycodes": [
+            " ", ".", "*", "&",  "+", " ",        "M(hexpad, 0, 0)",   "*",    "[",   "^",    "]", " ",
+            " ", "`", "~", "/",  "|", " ",        " "              ,   "?", "LPRN",   "$", "RPRN", " ",
+            " ", "<", ">", "%",  "@", " ",        " "              ,   "|",    "{",   "#",    "}", " ",
+                                "\\", "=",        "SPC"            , "DEL"
+          ]
+        },
+        {
+          "type": "visual_array",
+          "keys": ["BOT2", "BOT3", "TOP4", "BOT4", "TOP5", "BOT5"],
+          "dictionary": [
+            ["X", "X", " ", " ", " ", " ", "STR(' <- ')"],
+            [" ", " ", " ", "X", " ", "X", "STR(' -> ')"],
+            [" ", " ", "X", " ", "X", " ",  "STR(' ~/')"]
+          ]
+        },
+        {
+          "type": "visual_array",
+          "keys": ["THU1", "THU2"],
+          "dictionary": [
+            ["X", "X", "STR(!=)"]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "NUM",
+      "chords": [
+        {
+          "type": "chord_set",
+          "set": "rows",
+          "keycodes": [
+            " "   ,               "A",               "B",               "C", " ", " ",        "M(hexpad, 0, 1)",  "/" , "4", "5", "9", "*",
+            "LGUI",     "KK(D, LCTL)",     "KK(E, LALT)",     "KK(F, LSFT)", " ", " ",        "M(hexpad, 0, 3)",  "." , "1", "2", "3", "-",
+            " "   , "M(hexpad, 2, 1)", "M(hexpad, 2, 2)", "M(hexpad, 1, 0)", " ", " ",        "M(hexpad, 0, 2)",  "," , "8", "6", "7", "+",
+                                                               "M(hexpad, 0, 0)", " ",        "0"              , "\\" 
+          ]
+        },
+        {
+          "type": "visual_array",
+          "keys": ["TOP8", "BOT8", "TOP9", "BOT9"],
+          "dictionary": [
+            ["X", " ", "X", " ", ":"],
+            [" ", "X", " ", "X", ";"]
+          ]
+        },
+        {
+          "type": "visual_array",
+          "keys": ["BOT4", "THU3", "THU4"],
+          "dictionary": [
+            ["X", "X", " ", "STR(0x)"],
+            [" ", "X", "X",       "="]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FNC",
+      "chords": [
+        {
+          "type": "chord_set",
+          "set": "rows",
+          "keycodes": [
+            " "   ,    " ",    " ",    " ", " ", "M(hexpad, 0, 0)",        " ", " ", "F4", "F5", "F9", "F12",
+            "LGUI", "LCTL", "LALT", "LSFT", " ", " "              ,        " ", " ", "F1", "F2", "F3", "F11",
+            " "   ,    " ",    " ",    " ", " ", " "              ,        " ", " ", "F8", "F6", "F7", "F10",
+                                   "M(hexpad, 0, 0)",          " ",        " ", " "
+          ]
+        }
+      ]
+    },
+    {
+      "name": "NAV",
+      "chords": [
+        {
+          "type": "chord_set",
+          "set": "rows",
+          "keycodes": [
+            " "                ,                 " ", "MK(KC_LCTL, KC_LSFT, KC_C)", "MK(KC_LCTL, KC_LSFT, KC_V)", " ", " ",        " ", " ", "HOME",   "UP",   "END", "PGUP",
+            " "                ,              "BTN3",                       "BTN2",                       "BTN1", " ", " ",        " ", " ",    " ",    " ",     " ",    " ",
+            "MK(KC_LCTL, KC_Z)", "MK(KC_LCTL, KC_X)",          "MK(KC_LCTL, KC_C)",          "MK(KC_LCTL, KC_V)", " ", " ",        " ", " ", "LEFT", "DOWN", "RIGHT", "PGDN",
+                                                                                                                  " ", " ",        " ", " "
+          ]
+        },
+        {
+          "type": "visual_array",
+          "keys": ["TOP4", "BOT4", "TOP5", "BOT5"],
+          "dictionary": [
+            ["X", " ", "X", " ", "STR(SECRET)"],
+            [" ", "X", " ", "X", "STR(PUBLIC)"]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MOUSE",
+      "chords": [
+        {
+          "type": "chord_set",
+          "set": "rows",
+          "keycodes": [
+            " "   ,    " ",    " ",    " ", " ", "RESET",        " ", " ", "KC_WH_L", "MS_U", "KC_WH_R", "WH_U",
+            "LGUI", "LCTL", "LALT", "LSFT", " ",     " ",        " ", " ",       " ",    " ",       " ",    " ",
+            " "   , "BTN3", "BTN2", "BTN1", " ",     " ",        " ", " ",    "MS_L", "MS_D",    "MS_R", "WH_D",
+                                            " ",     " ",        " ", " "
+          ]
+        }
+      ]
+    }
+  ],
+  "leader_sequences": [],
+  "extra_code": "void cap(const struct Chord* self) {\n  switch (*self->state) {\n  case ACTIVATED:\n    tap_key(self->value1);\n    tap_key(self->value2);\n    break;\n  case DEACTIVATED:\n    current_pseudolayer = CAPS;\n    *self->state = IN_ONE_SHOT;\n    break;\n  case FINISHED:\n  case PRESS_FROM_ACTIVE:\n    current_pseudolayer = CAPS;\n    a_key_went_through = false;\n    break;\n  case RESTART:\n    if (a_key_went_through) {\n      current_pseudolayer = self->pseudolayer;\n    } else {\n      *self->state = IN_ONE_SHOT;\n    }\n  }\n}\n\nstatic uint16_t postfix = KC_G;\nstatic uint8_t postcap = 0;\nstatic uint16_t pairs[][3] = { {KC_NO, KC_LBRC, KC_RBRC}, {KC_LSFT, KC_9, KC_0}, {KC_LSFT, KC_LCBR, KC_RCBR} };\nstatic uint8_t bracket = 0;\n\nvoid output(int16_t modifier, int16_t keycode) {\n  key_in(modifier);\n  tap_key(keycode);\n  key_out(modifier);\n}\n\nvoid hexpad(const struct Chord* self) {\n  switch (*self->state) {\n  case ACTIVATED:\n    switch (self->value1) {\n    case 0:\n      switch (self->value2) {\n      case 1:\n        postfix = postfix == KC_G ? KC_SPC : KC_G;\n        break;\n      case 2:\n        bracket = (bracket == 0) ? 1 : ((bracket == 1) ? 2 : 0);\n        break;\n      case 0:\n        current_pseudolayer = BEAKL;\n        if (!postcap) {\n          break;\n        }\n      case 3:\n        tap_key(KC_CAPS);\n        postcap = !postcap;\n      }\n      break;\n    case 1:\n      output(postcap ? KC_NO : KC_LSFT, postfix);\n      break;\n    case 2:\n      output(pairs[bracket][0], pairs[bracket][self->value2]);\n    }\n  }\n}\n\nstatic uint8_t harmonic = 0;\n\n#define interval(k) if (record->event.pressed) { harmonic |= k; if (harmonic == 3) { layer_move(0); return false; } } else { harmonic &= ~k; } break\n\nbool process_steno_user(uint16_t keycode, keyrecord_t *record) { \n  switch (keycode) {\n  case STN_FN:\n    interval(1);\n  case STN_PWR:\n    interval(2);\n  }\n  return true;\n}\n\nvoid matrix_init_user() {\n  steno_set_mode(STENO_MODE_GEMINI);\n}\n",
+  "extra_dependencies": [
+    "keymap_steno.h"
+  ]
+}
+
