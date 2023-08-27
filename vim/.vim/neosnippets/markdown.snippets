@@ -1,0 +1,13 @@
+snippet url
+options head
+	[${1:text}](http://${2:url})
+
+snippet img
+options head
+	![${1:text}](/images/${2:file}.jpg)
+
+snippet     date
+options     word
+	`system("date '+## %A, %d %B %Y' | tr '[:upper:]' '[:lower:]'")`
+
+# vim: set ft=snippet: #
