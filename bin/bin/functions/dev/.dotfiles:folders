@@ -24,8 +24,8 @@ kobo/Nickel*
 kustom
 mime
 miniflux
-nnn/.config/plugins/._*
-nnn/.config/plugins/_*
+nnn/.config/nnn/plugins/._*
+nnn/.config/nnn/plugins/_*
 openrc
 picom
 planck/qmk_firmware/keyboards/planck
