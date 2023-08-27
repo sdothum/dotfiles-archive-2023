@@ -16,16 +16,16 @@ TDIR=/net/downloads/http  # default tmux directory
 
 # key:value pairs
 bookmarks="$(eval echo $(cat $(dirname $0)/.nnn:bookmarks))"  # hide server structure
-plugs="d:jump-dotfiles
-e:eject
-f:foliate
+plugs="d:_jump-dotfiles
+e:_eject
+f:_foliate
 i:imgview
-j:jump
-J:jump-refresh
-m:mount
+j:_jump
+J:_jump-refresh
+m:_mount
 p:preview-tui
-r:rox
-u:umount
+r:_rox
+u:_umount
 "
 
 # expand key:value pairs into ";" delimited list
