@@ -101,17 +101,18 @@ sync() {
 # [ -z "$changes" ] && [ -z $1 ] && exit
 # [ "$changes" ] && echo "$changes"
 
-repo()     { while read file <&3 ;do add "$file" ;done 3< $DOTFILES; }
+repo()     { while read file <&3 ;do add "$file" ;done 3< $DOTFILES; }  # input file descriptor to handle filename spaces
 messages() { [ -e $MESSAGES ] && echo $MESSAGES; }
 
 # $@ substitution within complex expressions is more predictably handled by var substitution
 unset pending
 case $1 in
   help   ) usage ;;
-  ''     ) dotfiles dry-run; ifyes "update repo" && repo ;;  # input file descriptor to handle filename spaces
+  ''     ) dotfiles dry-run; grep -q "nothing to commit, working tree clean" $MESSAGES || { ifyes "update repo" && repo; } ;;
   bulk   ) NOPROMPT=true; DESC="${2:-bulk commit}"; repo ;;
+
   add    ) shift; [ "$1" = '-f' ] && { force=-f; shift; }
-           while [ "$1" ] ;do add "$1"; shift ;done ;;       # handle filename spaces
+           while [ "$1" ] ;do add "$1"; shift ;done ;;  # handle filename spaces
   
   amend    |\
   comment) shift; DESC=$@
