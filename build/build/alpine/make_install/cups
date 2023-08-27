@@ -1,0 +1,28 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... cups
+
+doas apk add cups cups-filters cups-libs ghostscript
+doas apk add -U --upgrade --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing gutenprint gutenprint-cups gutenprint-lang gutenprint-libs
+
+doas addgroup $USER lp
+doas addgroup $USER lpadmin
+
+doas rc-update add cupsd boot
+
+if [ $(hostname) = lumen ] ;then
+  cupsctl --share-printers
+  lpadmin -p $PRINTER -o printer-is-shared=true
+  lpadmin -p $PRINTER -E -v ipp://$(hostname)/printers/$PRINTER -m everywhere
+  driverless ipp://$(hostname)/printers/$PRINTER | tee /etc/cups/ppd/printer.ppd
+fi
+
+ditto http://localhost:631 'configure cups-pdf and network shared printers'
+
+# the usual documents directory
+mkdir -pv $HOME/documents
+
+# vim: set ft=sh: #

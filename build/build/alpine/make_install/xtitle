@@ -1,0 +1,18 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... xtitle
+
+cd /net/depot
+[ -d xtitle ] && { cd xtitle; git pull; cd ..; } || git clone --depth 1 https://github.com/baskerville/xtitle.git
+
+doas apk add libxcb-dev xcb-util-dev xcb-util-wm-dev
+
+cd xtitle
+make clean
+make
+doas make install
+
+# vim: set ft=sh: #

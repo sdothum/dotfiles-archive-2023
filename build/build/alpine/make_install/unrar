@@ -1,0 +1,15 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ unrar
+
+cd /net/depot
+[ -d unrar ] && { cd unrar; git pull; } || { git clone --depth 1 https://github.com/pmachapman/unrar.git; cd unrar; }
+
+make clean
+make
+doas make install
+
+# vim: set ft=sh: #

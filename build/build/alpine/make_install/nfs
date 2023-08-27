@@ -1,0 +1,49 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .......................................................................... nfs
+
+doas apk add nfs-utils
+
+client() {
+  echo "$SERVER:/net /net nfs4 rw,noatime,rsize=32768,wsize=32768,nolock,soft 0 0" | doas tee -a /etc/fstab
+  doas mkdir /net
+  doas rc-update add nfsmount
+  doas rc-service nfsmount start
+}
+
+server() {
+  doas apk add btrfs-progs
+
+  echo btrfs | doas tee -a /etc/modules
+  modprobe btrfs  # only effective with single drive fs
+  stow openrc/btrfs
+  doas chmod +x /etc/init.d/btrfs-scan
+  doas rc-update add btrfs-scan boot
+
+  echo "
+# mkfs.btrfs -f -L Backup -m raid10 -d raid10 /dev/disk/by-id/ata-WDC_WD30EFRX-68AX9N0_WD-WMC1T2857792 /dev/disk/by-id/ata-WDC_WD30EFRX-68N32N0_WD-WCC7K4DADSCU /dev/disk/by-id/ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N3RS5LAZ /dev/disk/by-id/ata-WDC_WD30EFRX-68EUZN0_WD-WMC4N0820795
+LABEL=Share /net btrfs rw,nodev,noatime,autodefrag,space_cache 0 0
+
+# mkfs.btrfs -f -L Share -m raid0 -d raid0 /dev/disk/by-id/ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N4ZZY6FV /dev/disk/by-id/ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N2KR3EV9
+LABEL=Backup /backup btrfs rw,nodev,noatime,autodefrag,space_cache 0 0
+
+# /home/shum/Maildir /srv/nfs4/Maildir none bind 0 0
+/net /srv/nfs4/net none bind 0 0" | doas tee -a /etc/fstab
+
+  echo "
+/srv/nfs4/ *(rw,fsid=root,sync,no_wdelay,no_subtree_check)
+
+/srv/nfs4/net *(rw,sync,no_wdelay,no_subtree_check,nohide)" | doas tee -a /etc/exports
+
+  doas mkdir /net /backup
+  doas mkdir -p /srv/nfs4
+  doas rc-update add nfs
+  # doas rc-service nfs start  # need to boot to invoke device scan
+}
+
+[ $SERVER = luna ] && client || server
+
+# vim: set ft=sh: #

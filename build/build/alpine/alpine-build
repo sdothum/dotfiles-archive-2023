@@ -1,0 +1,648 @@
+#!/bin/ash
+# sdothum - 2016 (c) wtfpl
+
+usage() { echo "usage: [ALPINE=<hostname> [SERVER=<hostname>]] $(basename $0) 0 | 1 [vps] | 2 [edge] | 3 [vps | vpstest] | 33 | 4 | 5"; exit 1; }
+
+# after setup-alpine
+# ══════════════════════════════════════════════════════════════════════════════
+
+[ $1 ] || usage
+while [ $1 ] ;do
+  case $1 in
+  [0-5]  ) stage=$1     ;;
+  33     ) stage=$1     ;;
+  edge   ) EDGE=true    ;;
+  vpstest) VPSTEST=true ;;
+  vps    ) VPS=true     ;;
+  *      ) usage        ;;
+  esac
+  shift
+done
+[ $stage ] || usage
+
+BUSYBOX=false                   # (false) gnu library (true) busybox symlinks
+MANPAGES=false                  # (false) no manpages (true) install all manpages
+
+if [ $VPS ] ;then
+  ALPINE=thedarnedestthing.com  # building alpine host
+else
+  ALPINE=${ALPINE:-motu}        # building alpine host
+  SERVER=${SERVER:-luna}
+fi
+
+HILIGHT=$(/usr/bin/printf "\e[1m\e[38;5;226m")
+NOCOLOR=$(/usr/bin/printf "\e[0;0m")
+
+info() { echo "${HILIGHT}$@${NOCOLOR}"; }
+vga()  { lspci | grep VGA | grep -q "$1"; }
+
+migrate() {
+  EXCLUDE="--exclude='lost+found' --exclude='sync-conflict' --exclude='.deprecated' --exclude='.git' --exclude='.hg' --exclude='arch' --exclude='debian' --exclude='nixos' --exclude='obarun' --exclude='void'"
+  case $1 in
+  pull) source="${SERVER}:"; mkdir -p $HOME/stow/ ;;
+  push) target="${ALPINE}:" ;;
+  *   ) info "migrate push | pull <package>*"; exit 1 ;;
+  esac
+  shift
+  list=$(echo " $@" | sed "s|  *| ${source}$HOME/stow/|g")
+  info "rsync of ... $@ ... in progress"
+  rsync --info=progress2 -a $EXCLUDE $list ${target}$HOME/stow
+}
+
+stage_0() {
+  info ........................................................ first user login
+  # not really a script step on the new host.. (script not present!)
+  info "logging into alpine host as $USER.."
+  info "run> cd"
+  info "run> mkdir .ssh stow"
+  info "run> doas apk add rsync"
+  info "from remote host.."
+  info "run> [ALPINE=<hostname>] ./$(basename $0) 1 [vps]"
+}
+
+stage_1() {
+  info ........................................................ from remote user
+  cd $HOME/.ssh
+  # sed -i "/$ALPINE/d" known_hosts
+  ssh-keygen -R $ALPINE
+  info "after ssh session login check.."
+  info "run> exit (alpine host)"
+  sshid $ALPINE  # my ssh-copy-id script
+
+  cd - >/dev/null
+  scp $(basename $0) $USER@$ALPINE:$HOME/
+  [ $SERVER ] && scp /etc/hosts $USER@$ALPINE:$HOME/
+
+  info ................................................ migrate base environment
+  migrate push ag bash bin build colordiff fish logrotate mime nnn ssh
+
+  info "from alpine host.."
+  info "run> [ALPINE=<hostname>] ./$(basename $0) 2 [edge]"
+  exec ssh $ALPINE    # to complete alpine install below
+}
+
+stage_2() {
+  info ............................................................... set repos
+  # superuser things first..
+  doas sed -i '/wheel/s/persist/nopass/' /etc/doas.d/doas.conf
+  # glibc script compatibilities
+  doas ln -sv /usr/bin/doas /usr/bin/sudo  # dotfile compatibility
+  doas ln -sv /bin/su       /usr/bin/su    # enable doas su (to avoid su wrapper path)
+  doas ln -sv /sbin/reboot  /bin/reboot    # dotfile compatibility
+
+  # add community repo
+  [ $EDGE ] && doas sed -i 's/^http:/#http:/; /\/edge\//s/^#//; /testing/s/^/#/'                           /etc/apk/repositories ||
+               doas sed -i 's/^http:/#http:/; /main/s/^#//; /community/s/^#//; /\/edge\//s/^http:/#http:/' /etc/apk/repositories
+  doas apk update
+  doas apk upgrade
+  apk list -I >apk-base-install.list
+
+  info ............................................................... autologin
+  if [ $SERVER ] ;then
+    doas mv -v $HOME/hosts /etc/hosts
+
+    ssh-keygen -t rsa -b 2048
+    info "enter password for remote server"
+    ssh-copy-id $USER@$SERVER
+
+    # bypass first time rsync connection prompt
+    ssh-keygen -R $SERVER
+    ssh-keyscan -H $SERVER >>$HOME/.ssh/known_hosts
+  fi
+
+  doas apk add mingetty
+  doas sed -i "/tty1/s,/getty.*,/mingetty --autologin $USER --noclear tty1," /etc/inittab
+  echo 'Truth or die!' | doas tee /etc/motd
+  doas addgroup $USER tty
+
+  info ............................................................ system tools
+  # doas apk add haveged  # merged into kernal >= v5.4
+  # doas apk add intel-ucode
+  # doas apk add iucode-tool
+  doas apk add procps
+  doas apk add util-linux-misc
+
+  info ............................................................... man pages
+  $MANPAGES && doas apk add docs || {  # "doas apk del docs" to remove all man pages
+  doas apk add man-pages
+  doas apk add mandoc mandoc-apropos
+  doas apk add less
+  }
+
+  info .................................................................. shells
+  $BUSYBOX || doas apk add util-linux pciutils usbutils coreutils binutils findutils grep iproute2  # to replace busybox
+  doas apk add bash dash fish
+  doas ln -sv /bin/bash /usr/bin/bash
+  doas apk add coreutils findutils grep  # for date -d, find -regex* and grep -E options
+  doas apk add pcre-tools                # for mgrep
+  doas apk add rlwrap
+
+  info ................................................ configure user path tree
+  doas addgroup $USER users
+
+  doas apk add stow
+  cd $HOME/stow
+  find bin -name '.cargo' -type l -exec rm -v {} \;  # remove circular links (fails stow bin)
+  stow -S bin
+  stow -S build
+  rm -rf $HOME/.config/fish
+  stow -S fish
+  echo "which fish >/dev/null 2>&1 && fish && exit" >$HOME/.profile
+  # configure path to user bin tree
+  doas cp -v $HOME/bin/path.sh /etc/profile.d
+
+  info "rebooting.."
+  info "from remote host.."
+  info "run> ssh $ALPINE"
+  info "run> [ALPINE=<hostname>] ./$(basename $0) 3 [vps | vpstest] >>alpine-build.log &; tail -f alpine-build.log"
+  exec doas reboot
+}
+
+stage_3() {
+  doas apk update
+  doas apk upgrade
+
+  info ................................................................. daemons
+  doas apk add cronie cronie-doc
+  doas rc-service crond stop
+  doas rc-update del crond
+  doas rc-update add cronie
+  doas apk add logrotate
+  stow logrotate
+  doas apk add openntpd
+
+  info ........................................................ system utilities
+  doas apk add btop
+  # doas apk add glances
+  # doas apk add smartmontools
+  # doas apk add htop
+  # doas apk add iotop
+  # doas apk add socklog
+
+  info ................................................................. network
+  # doas apk add dnsmasq
+  doas apk add inetutils-telnet
+  doas apk add speedtest-cli
+
+  # monitor
+  doas apk add iftop
+  doas apk add mtr
+  doas apk add net-tools
+  doas apk add nethogs
+  doas apk add traceroute
+
+  info .................................................... remote file transfer
+  doas apk add curl
+  doas apk add git
+  # doas apk add patchutils
+  doas apk add wget
+
+  info .......................................................... file utilities
+  doas apk add ack
+  doas apk add dos2unix
+  doas apk add fzf
+  doas apk add gawk       # full featured awk required by aerc
+  doas apk add mlocate
+  doas apk add ncdu
+  # make_install nnn      # missing posix functions
+  doas apk add nnn
+  make_install advcpmv    # nnn graphical cp/mv
+  stow nnn
+  doas apk add pcmanfm
+  doas apk add ripgrep    # for vim-fzf
+  doas apk add sed        # for regex extensions (vs busybox)
+  doas apk add the_silver_searcher
+  stow ag
+  doas apk add tree
+  doas apk add ugrep
+
+  # compression
+  doas apk add 7zip
+  doas apk add zip
+  # doas apk add par2cmdline
+  make_install unrar      # for nzbget
+
+  info ....................................................... c/c++ development
+  doas apk add autoconf automake cmake make
+  doas apk add bison flex libtool ragel
+  doas apk add diffutils              # for diff extensions (vs busybox)
+  doas apk add gcc
+  doas apk add g++
+  doas apk add libc-dev
+  doas apk add linux-headers
+  doas apk add strace
+
+  info .................................................................... rust
+  doas apk add rust
+  doas apk add cargo                  # rust installer
+  mkdir -p $HOME/.cargo/bin
+  ln -sv $HOME/.cargo/bin $HOME/bin/.cargo
+  rm -f $HOME/.cargo/bin/bin          # remove cyclic directory to itself(?)
+  # grep -q 'path=.*/\.cargo/bin' $home/.profile || sed -i "1i[ -e \$HOME/.cargo/bin ] && export PATH=\"\$HOME/.cargo/bin:\$PATH\"" $HOME/.profile
+  addpath $HOME/.cargo/bin
+
+  info .................................................... ruby version control
+  # doas apk add ruby ruby-dev        # 3.x breaks xapian, frum install 2.x
+  mkdir $HOME/tmp
+  export TMPDIR=$HOME/tmp             # avoid insufficient vps tmpfs space
+
+  cargo install frum
+  echo "which frum >/dev/null 2>&1 && frum init | source" >$HOME/.config/fish/conf.d/frum.fish
+
+  info ............................................... install sinatra framework
+  info "exit ssh session to update .cargo and frum paths"
+  info "run> ssh $ALPINE"
+  info "run> make_install ruby"
+  info "run> make_install sinatra"
+  info "test> http://$ALPINE"
+}
+
+stage_33() {
+  doas apk update
+  doas apk upgrade
+
+  info .................................................... migrate connectivity
+  migrate pull adblock btrfs dnsmasq lsyncd
+
+  info ............................................................ file systems
+  doas apk add dosfstools
+  # doas apk add exfatprogs
+  # doas apk add fuse
+  doas apk add fuse3           # for rclone
+  # doas apk add fuse-exfat
+  # doas apk add simple-mtpfs  # (connot copy to device)
+  make_install jmtpfs          # for supernote
+
+  make_install nfs
+
+  doas apk add lsyncd
+  doas mkdir -p /var/log/lsyncd
+  doas touch /etc/lsyncd.exclude /var/log/lsyncd/log /var/log/lsyncd/status
+  [ $ALPINE = luna ] && stow lsyncd
+
+  info ..................................................................... dns
+  if [ $SERVER = luna ] ;then
+    echo "nameserver 10.1.0.10" | doas tee /etc/resolv.conf
+  else
+    doas apk add dnsmasq
+    stow adblock dnsmasq
+    echo "nameserver 127.0.0.1" | doas tee /etc/resolv.conf
+    doas rc-update add dnsmasq
+    rc-service dnsmasq start
+  fi  
+
+  info ...................................................... package management
+  doas apk add flatpak
+  # xdg-user-dirs-update
+
+  # python tools
+  doas apk add python3 python3-dev
+  doas apk add py3-pip py3-pip-doc
+  doas apk add py3-setuptools
+  # doas apk add py3-wheel
+
+  info ............................................................. programming
+  doas apk add colordiff
+  doas apk add perl
+  # doas apk add perl-app-cpanminus
+  # doas apk add perl-curses
+
+  # other programming languages
+  doas apk add go
+  addpath $HOME/go/bin
+  doas apk add lua lua-dev
+  make_install julia
+  make_install premake
+
+  info ................................................................ printing
+  make_install cups
+
+  info ................................................ migrate xorg environment
+  migrate pull fonts tmux udiskie X11 Xmodmap xorg
+  # detect hardware
+  doas apk add pciutils
+
+  info ......................................................... shell utilities
+  doas apk add date       # for formatting extensions (vs busybox)
+  doas apk add expect
+  doas apk add figlet
+  doas apk add fortune
+  doas apk add ncurses
+  doas apk add neofetch
+  make_install shell-functools
+  doas apk add tmux
+  stow tmux
+
+  info .................................................................... xorg
+  doas apk add xf86-input-evdev
+  doas apk add xf86-input-libinput
+  doas apk add xf86-input-synaptics
+  # doas apk add xf86-input-wacom
+  vga NVIDIA && doas apk add mesa-dri-gallium mesa-va-gallium xf86-video-nouveau ||
+                doas apk add libva-intel-driver mesa-dri-gallium xf86-video-intel
+  doas adduser $USER input
+  doas adduser $USER video
+
+  doas setup-xorg-base
+  doas apk add xinit
+  stow X11/$ALPINE
+  [ $(hostname) = $SERVER ] && stow xorg/desktop || stow xorg/laptop
+
+  # fonts
+  doas apk add cairo
+  doas apk add font-adobe-100dpi
+  # doas apk add font-dejavu
+  # doas apk add font-roboto
+  doas apk add fontconfig
+  doas apk add freetype
+  doas apk add libxft
+  doas apk add terminus-font
+  stow fonts
+
+  # theme/engine
+  # doas apk add gtk-murrine-engine
+  # doas apk add meson
+  # doas apk add papirus-icon-theme
+
+  # dbus
+  doas apk add dbus dbus-x11
+  dbus-uuidgen | doas tee /var/lib/dbus/machine-id
+  doas rc-update add dbus
+  # doas rc-service dbus start  # only needed for immediate testing of xorg
+
+  info .......................................................... xorg utilities
+  # doas apk add arandr
+  # doas apk add libva-utils
+  # doas apk add setxkbmap
+  doas apk add unclutter-xfixes
+  doas ln -s /usr/bin/unclutter-xfixes /usr/bin/unclutter
+  # doas apk add vdpauinfo
+  # doas apk add xbacklight
+  doas apk add xdg-user-dirs
+  xdg-user-dirs-update  # for flatpak apps common folders
+  doas apk add xdotool
+  doas apk add xev
+  doas apk add xinput
+  # doas apk add xmessage
+  doas apk add xmodmap
+  doas apk add xrandr
+  doas apk add xrdb
+  doas apk add xset
+  doas apk add xsetroot
+  doas apk add xwallpaper
+  apk testing setroot  # for color bg
+
+  info ............................................. migrate desktop environment
+  migrate pull conky dunst herbstluftwm images picom rofi session
+
+  info ................................................................. desktop
+  doas apk add herbstluftwm
+  stow herbstluftwm images session/$ALPINE
+  echo herbstluftwm >$HOME/.windowmanager
+
+  # very basic apps
+  doas apk add alacritty
+  doas apk add conky
+  stow conky/$ALPINE
+  doas apk add xterm
+
+  info ........................................................... desktop theme
+  # make_install flatseal
+  doas apk add gtk-murrine-engine
+  apk testing arc-dark
+  apk testing lxappearance
+  doas apk add paper-icon-theme
+  make_install phinger-cursors
+
+  info .............................................................. desktop ui
+  doas apk add autocutsel
+  doas apk add dmenu
+  doas apk add gpaste
+  doas apk add picom
+  stow picom
+  doas apk add rofi
+  stow rofi
+
+  # notifications
+  doas apk add libnotify
+  doas apk add dunst
+  stow dunst/$ALPINE
+  # doas apk add screenkey
+
+  info ....................................................... desktop utilities
+  cargo install pastel
+  # doas apk add tumbler
+  doas apk add xautolock
+  doas apk add xprop
+  # doas apk add xsel
+  # doas apk add xvkbd
+  doas apk add xwininfo
+
+  # panel utilities
+  doas apk add lm-sensors
+  doas apk add sysstat
+  make_install lemonbar-xft  # edit makefile to /tmp/lemonbar.1 if error(?)
+  make_install sutils
+  # make_install xtitle
+  apk testing xtitle
+
+  info ................................................................... audio
+  # doas apk add alsa-plugins
+  doas apk add alsa-lib alsa-ucm-conf alsa-utils alsaconf
+  doas addgroup root audio
+  doas addgroup $USER audio
+  # alsamixer  # sound check
+  doas rc-update add alsa
+  # doas rc-service alsa start
+
+  doas apk add pipewire wireplumber
+  doas apk add pavucontrol pavucontrol-qt
+  # doas apk add pulseaudio-equalizer
+
+  info .......................................................... plugin devices
+  doas apk add polkit
+  # doas apk add udevil
+  doas apk add udiskie
+
+  stow udiskie
+  doas addgroup $USER plugdev
+  doas rc-update add polkit
+  doas rc-service polkit start
+
+  info ............................................. migrate user environment
+  migrate pull aerc imap isync mail mime notmuch remind qutebrowser sandbox stardict vim
+
+  info .................................................................. editor
+  doas apk add gvim
+  stow vim
+
+  doas apk add lowdown
+  doas apk add ctags
+  # doas apk add texlive
+
+  info .................................................................... mail
+  doas apk add isync isync-doc  # mbsync
+
+  MAILDIR=$HOME/Mail
+  # create account folder to force stow "file" links (vs dir link which would place emails in stow repo)
+  mkdir -p $MAILDIR/sdothum/SENT/cur $MAILDIR/sdothum/SENT/new $MAILDIR/sdothum/SENT/tmp  # create aerc SENT folder
+  stow isync mail
+  
+  make_install imap
+  make_install imapfilter
+  stow imap
+
+  info ............................................................. mail client
+  doas apk add aerc aerc-doc
+  stow aerc
+  # doas apk add dante dante-doc
+
+  # mime
+  doas apk add w3m
+  doas apk add w3m-image
+  stow mime
+
+  # tagging
+  doas apk add notmuch notmuch-doc
+  doas apk add notmuch-libs
+  stow notmuch
+  notmuch new
+  
+  info "initialize mail folders post install with.."
+  info "run> mailsync 1"
+
+  info ............................................................ productivity
+  # doas apk add abiword
+  doas apk add gnumeric
+  doas apk add tk
+  doas apk add tcl-lib
+  doas apk add remind
+  stow remind
+
+  # dictionary
+  doas apk add sdcv sdcv-doc
+  stow stardict
+  make_install dict   # not gnu dict
+  make_install quikey
+
+  info .................................................................... data
+  doas apk add onedrive
+  doas apk add rclone rclone-doc
+
+  # doas apk add sqlite
+  # doas apk add sqlitebrowser
+
+  # make_install syncthing  # causes 502 bad gateway
+
+  info ................................................................ browsers
+  doas apk add chromium
+  doas ln -s /usr/bin/chromium-browser /usr/bin/chromium
+  doas apk add firefox
+  # doas apk add lynx
+  doas apk add luakit
+  doas sed -i 's/monospace/mu/g' /etc/xdg/luakit/theme.lua  # statusbar
+  doas apk add qutebrowser
+  stow qutebrowser
+  apk testing surf
+  doas apk add youtube-dl
+  make_install google-chrome
+
+  # codec
+  # doas apk add gst-libav
+  doas apk add gst-plugins-base gst-plugins-good gst-plugins-ugly
+  doas apk add gstreamer
+  # doas apk add gst-vaapi
+  # doas apk add libmediainfo
+
+  info ................................................................. viewers
+  doas apk add bat
+  doas apk add catimg
+  doas apk add nsxiv nxxiv-doc
+  doas apk add feh
+
+  make_install calibre
+  make_install epubcheck
+  make_install kobopatch
+  doas apk add foliate
+  doas apk add zathura zathura-ps zathura-pdf-mupdf
+
+  info ................................................................. chatgpt
+  cargo install aichat  # conversation and roles
+  make_install chatgpt  # conversation oriented
+
+  info "from alpine host.."
+  info "run> [ALPINE=<hostname>] ./$(basename $0) 4  # do not redirect stdout"
+}
+
+stage_4() {
+  doas apk update
+  doas apk upgrade
+  info ................................................................ security
+  doas apk add gnome-keyring
+  doas apk add pass pinentry
+  info "console input for key phrase.."
+  gpg2 --full-gen-key
+  doas apk add pinentry-qt  # must not precede gpg key gen (will break console user prompt)
+  # manually import .password-store from server
+  doas apk add py3-keyring
+  doas apk add xclip  # pass --clip option
+
+  info ...................................................... login to x session
+  info "rebooting.."
+  info "from alpine host, start x session.."
+  info "run> x"
+  info "run> [ALPINE=<hostname>] ./$(basename $0) 5  # do not redirect stdout"
+  exec doas reboot
+}
+
+stage_5() {
+  doas apk update
+  doas apk upgrade
+
+  info ................................................................... tools
+  # android
+  doas apk add android-tools
+  # doas apk add file-roller
+  doas apk add scrcpy
+
+  # mpu programmer
+  make_install qmk
+
+  info ................................................................... fonts
+  doas apk add fontforge fontforge-gui py3-fontforge
+  make_install fontmatrix
+  doas apk add nodejs npm
+  doas apk add py3-fonttools
+  make_install otfcc
+  make_install ttfautohint
+
+  info .................................................................. images
+  make_install gimp
+
+  info ................................................................... media
+  doas apk add imagemagick
+  doas apk add kodi
+  doas apk add maim
+  doas apk add mpv
+  doas apk add qbittorrent
+  make_install sonarr
+
+  info ................................................................... async
+  info "run> async on  # to speed up boot to login"
+}
+
+# install package group
+stage_$stage
+
+# desktop / vps build options
+if [ $stage = 3 ] ;then
+  [ $VPS ] && exit
+  if [ $VPSTEST ] ;then
+    info "to resume full desktop build after framework build and testing.."
+    info "run> [ALPINE=<hostname>] ./$(basename $0) $stage$stage >>alpine-build.log &; tail -f alpine-build.log"
+  else
+    stage_$stage$stage
+  fi
+fi
+
+# vim: set ft=sh: #

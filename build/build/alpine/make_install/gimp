@@ -1,0 +1,22 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... gimp
+
+# for drm video streaming
+ditto install 'answer Y to prompts..'
+flatpak install --user flathub org.gimp.GIMP
+ditto install 'choose latest 2-4x version..'
+flatpak install org.gimp.GIMP.Plugin.Resynthesizer
+
+# link binary
+mkdir -p $HOME/.local/bin
+echo "#!/bin/sh
+flatpak run --user org.gimp.GIMP \$@" >$HOME/.local/bin/gimp
+chmod 755 $HOME/.local/bin/gimp
+
+# vim: set ft=sh: #
+
+

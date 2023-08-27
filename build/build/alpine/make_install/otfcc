@@ -1,0 +1,19 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ otfcc
+
+cd /net/depot
+[ -d otfcc ] && { cd otfcc; git pull; cd ..; } || git clone --depth 1 https://github.com/caryll/otfcc
+
+cd otfcc
+premake5 gmake
+cd build/gmake
+make config=release_x64
+
+doas cp -v bin/release-x64/otfcc* /usr/bin
+
+# vim: set ft=sh: #
+

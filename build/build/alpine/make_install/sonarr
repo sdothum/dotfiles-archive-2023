@@ -1,0 +1,21 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... sonarr
+
+cd /net/depot
+[ -d alpine-scripts ] && { cd alpine-scripts ; git pull; cd ..; } || git clone --depth 1 https://github.com/x-keita/alpine-scripts.git
+
+cd alpine-scripts
+chmod 755 *.sh
+
+doas adduser -g sonarr -H -D sonarr
+doas addgroup sonarr sonarr
+exec doas ./install-sonarr.sh
+
+doas chown -R sonarr:video /net/media/videos/series
+doas chmod -R 775 /net/media/videos/series
+
+# vim: set ft=sh: #

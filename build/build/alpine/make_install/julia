@@ -1,0 +1,19 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ julia
+
+VSN=1.9/julia-1.9.0-musl-x86_64.tar.gz
+
+wget -P /tmp https://julialang-s3.julialang.org/bin/musl/x64/$VSN
+cd $HOME
+tar zxvf /tmp/${VSN#*/}
+
+rm -f $HOME/julia
+ln -s julia-* julia
+addpath $HOME/julia/bin
+
+# vim: set ft=sh: #
+

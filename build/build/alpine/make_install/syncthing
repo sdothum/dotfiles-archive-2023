@@ -1,0 +1,25 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................... syncthing
+
+doas apk add syncthing
+
+# change 'syncthing' owner to $USER
+echo SYNCTHING_USER=$USER | doas tee /etc/conf.d/syncthing
+doas syncthing generate --home=$HOME --gui-user=$USER --no-default-folder
+
+doas mkdir -p /var/lib/syncthing
+doas mkdir -p /var/log/syncthing
+doas chown -R $USER:$USER /var/lib/syncthing
+doas chown -R $USER:$USER /var/log/syncthing
+
+doas rc-update add syncthing
+doas rc-service syncthing start
+
+
+# vim: set ft=sh: #
+
+

@@ -1,0 +1,15 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... chatgpt
+
+go install github.com/j178/chatgpt/cmd@latest
+mv -i $HOME/go/bin/cmd $HOME/go/bin/chatgpt
+
+ditto apikey "https://platform.openai.com/account/api-keys"
+ditto export "OPENAI_API_KEY=..."
+
+# vim: set ft=sh: #
+

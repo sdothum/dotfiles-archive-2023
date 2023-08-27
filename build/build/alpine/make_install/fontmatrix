@@ -1,0 +1,22 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................... fontmatrix
+
+# get repo package
+wget -P /tmp https://dl.flathub.org/repo/appstream/com.github.fontmatrix.Fontmatrix.flatpakref 
+
+ditto install 'answer Y to prompts..'
+flatpak install --user /tmp/com.github.fontmatrix.Fontmatrix.flatpakref 2>/dev/null  # suppress URI errors
+
+# link binary
+mkdir -p $HOME/.local/bin
+echo "#!/bin/sh
+flatpak run --user com.github.fontmatrix.Fontmatrix
+" >$HOME/.local/bin/fontmatrix
+chmod 755 $HOME/.local/bin/fontmatrix
+ln -s $HOME/.var/app/com.github.fontmatrix.Fontmatrix/.Fontmatrix
+
+# vim: set ft=sh: #

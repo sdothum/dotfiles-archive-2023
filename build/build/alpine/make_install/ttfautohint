@@ -1,0 +1,24 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................. ttfautohint
+
+VSN=1.8.4
+
+wget -P /tmp https://download.savannah.gnu.org/releases/freetype/ttfautohint-$VSN.tar.gz
+
+doas apk add harfbuzz harfbuzz-dev qt5-qtbase-dev
+
+tar xvf /tmp/ttfautohint-$VSN.tar.gz
+cd /tmp/ttfautohint-$VSN
+
+# patch missing #define(?)
+sed -i '1i\#define _Bool signed char' lib/llrb.h
+
+./configure
+doas make
+doas make install
+
+# vim: set ft=sh: #

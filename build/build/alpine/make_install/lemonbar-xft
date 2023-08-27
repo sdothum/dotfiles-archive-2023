@@ -1,0 +1,18 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... lemonbar
+
+cd /net/depot
+[ -d lemonbar-xft ] && { cd lemonbar-xft; git pull; cd ..; } || git clone --depth 1 https://github.com/drscream/lemonbar-xft.git
+
+doas apk add libx11-dev libxcb-dev libxft-dev
+
+cd lemonbar-xft
+make clean
+make
+doas make install
+
+# vim: set ft=sh: #

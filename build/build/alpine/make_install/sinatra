@@ -1,0 +1,75 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................ web framework
+
+export TMPDIR=$HOME/tmp                        # avoid insufficient vps tmpfs space
+[ $(hostname) = $SERVER ] && { ditto env "SERVER=... $(basename $0) sinatra"; exit 1; }
+
+# housekeeping.. restore openssl 3.x headers
+doas apk update
+doas apk upgrade
+doas apk del openssl1.1-compat-dev             # required by make_install ruby 2.x
+doas apk add openssl-dev
+doas apk add curl-dev pcre-dev
+
+# preloads to avoid versioning exceptions
+doas gem install rack -v 2.2.6.2               # 3.x update causes passenger exception
+doas gem install tilt -v 2.0.11                # 2.1.x update causes slix exception
+
+# sinatra web framework
+doas gem install kramdown
+doas gem install mail
+doas gem install puma                          # goodbye passenger!
+doas gem install rake
+doas gem install sanitize
+doas gem install sinatra
+doas gem install slim
+doas gem install term-ansicolor
+# doas gem install thin                        # passenger dependency
+doas gem install xapian-fu
+doas ln -sv $(which rdoc) /usr/local/bin/rdoc  # for xapian-ruby build (check)
+doas gem install xapian-ruby                   # xapian does not work with ruby 3.x
+
+# final version corrections..
+doas ln -sv /usrlib/libreadline.so.8 /usr/lib/libreadline.so.7  # puma @ rb_file_s_stat errno
+if [ $(gem list rack | grep -q '^rack ' | wc -l) -gt 1 ] ;then
+  ditto rake "downgrade gem rack-3.x to 2.x"
+  doas gem uninstall rack
+fi
+
+# web site
+migrate nginx openrc thedarnedestthing vimwiki
+stow thedarnedestthing vimwiki
+
+doas mkdir -p /srv/http
+doas ln -sv $HOME/thedarnedestthing.com /srv/http
+doas chown -R $USER:$USER /srv/http/thedarnedestthing.com
+
+mkdir -p /srv/http/thedarnedestthing.com/logs
+APPDIR=/srv/http/thedarnedestthing.com/application
+mkdir -p $APPDIR/log
+mkdir -p $APPDIR/tmp/pids  # see puma.rb
+mkdir -p $APPDIR/public
+mkdir -p $APPDIR/thedarnedestthing.db
+ln -sv $HOME/vimwiki $APPDIR/public/
+
+# web server
+doas apk add nginx nginx-openrc
+
+doas rm /etc/nginx/http.d/puma.*
+doas rm /etc/init.d/puma
+# [ -e /etc/conf.d/syncthing ] && syncthing="syncthing."  # syncthing doesn't play well with reverse proxy setup
+# doas ln -sv $APPDIR/http.d/puma.${syncthing}conf /etc/nginx/http.d/
+# doas ln -sv $APPDIR/init.d/puma /etc/init.d/
+stow nginx/puma
+stow openrc/puma
+
+doas rc-update add nginx
+doas rc-update add puma
+doas rc-service puma start
+doas rc-service nginx start
+
+# vim: set ft=conf: #

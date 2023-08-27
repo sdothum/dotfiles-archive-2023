@@ -1,0 +1,19 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................... epubcheck
+
+URL=v5.0.0/epubcheck-5.0.0.zip
+VSN=${URL#*/}
+
+doas apk add openjdk17-jre
+
+wget -P /tmp https://github.com/w3c/epubcheck/releases/download/$URL
+unzip -d $HOME/.local/share /tmp/$VSN
+
+ln -s $HOME/.local/share/${VSN%.zip}/epubcheck.jar $HOME/.local/bin/
+
+
+# vim: set ft=sh: #

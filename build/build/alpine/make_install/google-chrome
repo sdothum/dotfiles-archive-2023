@@ -1,0 +1,20 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................ google chrome
+
+# for drm video streaming
+ditto install 'answer Y to prompts..'
+flatpak install --user flathub com.google.Chrome
+
+# link binary
+mkdir -p $HOME/.local/bin
+echo "#!/bin/sh
+dbus-run-session flatpak run --user com.google.Chrome \$@" >$HOME/.local/bin/google-chrome
+chmod 755 $HOME/.local/bin/google-chrome
+
+# vim: set ft=sh: #
+
+

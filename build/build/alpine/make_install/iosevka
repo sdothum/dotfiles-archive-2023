@@ -1,0 +1,242 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... iosevka
+
+usage() { 
+  echo "usage: $(basename $0) iosevka [kindle | kobo | ebook | web] [nocopy] [family <name>]
+                            [book+regular | latin+greek | cyrillic | fluent]
+                            [quasi-extension | space <parm>]
+                            [mu | test | altmono | coding | grotesk | open ]
+                            [ D-serifless | G-[hookless[+]|toothless|default] | [t]I-[serifless|descending] | J-descending | j-serifed | m-rounded | Q-[bar|horizontal|open|straight|default] | Q-[bar|crossing|detached|hook|straight|custom] | a-[single|earless|rounded] | b-rounded | d-[tailed|toothless] | f-extended | p-[eared|serifed] | q-hook | at-tall | 0-split | paren-flat ]
+                            [ascender <parm> | cap <parm> | leading <parm> | sb <parm>]
+                            [-- <options>*]"
+  exit 1
+}
+
+# e.g. with optional glyph variants..
+#        make_install iosevka kobo                                               # default kobo fonts
+#        make_install iosevka kobo a-single f-extended I-serifless family aFont  # custom e-ink font
+#        make_install iosevka                                                    # default desktop fonts
+#        make_install iosevka Q-bar                                              # default desktop fonts
+#        make_install iosevka grotesk                                            # grotesk style desktop fonts
+#        make_install iosevka elementary                                         # elementary style desktop fonts
+#        make_install iosevka kobo latin+greek space 1.5000 Q-bar                # my custom e-reader fonts
+#        make_install iosevka -- I-serifless family forCoding                    # single custom font, see font/iosevka
+#        make_install iosevka -- dyslexic kobo english I-serifless f-extended cap extended family Grotesk  # single custom ebook font with extended cap height
+#
+# current font preferences..
+#        make_install iosevka altmono I-descending Q-straight (use Q-bar for maximum readability)
+#        make_install iosevka kobo mu
+#        make_install iosevka web m-rounded
+#        make_install iosevka m-rounded
+
+[ $clean ] && rm -r /net/depot/Iosevka/.build
+
+MAKE_INSTALL=/tmp/iosevka:make_install
+# SRCDIR=$HOME/bin/functions/font
+GLYPH=b-rounded
+language=fluent  # default e-reader glyph set
+dyslexic=true    # default e-reader dyslexic font families
+emdash=2
+emkindle=1.2384  # lengthened emdash, width == 2.15*space where emdash == 1.7361*space
+emkobo=1.2384
+ecopy=true       # copy typeface to device folder
+
+touch $MAKE_INSTALL
+trap "rm -f $MAKE_INSTALL; pkill -f iosevka" EXIT INT
+shift
+
+glyph()   { unset b d p; eval $1=$2; GLYPH=$2; }
+altmono() { altmono='a-toothless f-extended G-hookless+'; }
+
+cmdopts() {
+  while [ $1 ] ;do
+    case $1 in
+    # shapes
+    kindle                                   ) ereader=$1 ;;
+    kobo                                     ) ereader=$1 ;;
+    quasi-ext*                               ) quasi=$1 ;;
+    quasi-pro*                               ) quasi=$1 ;;
+
+    # language
+    latin+greek                              ) language=$1 ;;
+    cyrillic                                 ) language=$1 ;;
+    fluent                                   ) language=$1 ;;
+
+    # glyphs
+    D-serifless                              ) D=$1 ;;
+    G-hookless                               ) G=$1 ;;
+    G-toothless                              ) G=$1 ;;
+    I-descending                             ) I=$1 ;;
+    I-serifless                              ) I=$1 ;;                  # source code variant
+    J-descending                             ) J=$1 ;;
+    Q-bar                                    ) Q=$1 ;;
+    Q-crossing                               ) Q=$1 ;;
+    Q-detached                               ) Q=$1 ;;
+    Q-hook                                   ) Q=$1 ;;
+    Q-horizontal                             ) Q=$1 ;;
+    Q-open                                   ) Q=$1 ;;
+    Q-straight                               ) Q=$1 ;;
+
+    a-earless                                ) a=$1 ;;
+    a-rounded                                ) a=$1 ;;
+    a-single                                 ) a=$1 ;;
+    b-rounded                                ) glyph b $1 ;;            # unolexic
+    d-tailed                                 ) glyph d $1 ;;            # ebook variant
+    d-toothless                              ) glyph d $1 ;;            # with p-eared
+    f-extended                               ) f=$1 ;;                  # unolexic (homage to universal grotesk)
+    j-serifed                                ) j=$1 ;;
+    m-rounded                                ) m=$1 ;;
+    p-eared                                  ) glyph p $1 ;;
+    p-serifed                                ) glyph p $1 ;;
+    q-hook                                   ) q=$1 ;;                  # ebook variant
+
+    0-split                                  ) zero=$1 ;;
+    at-tall                                  ) at=$1 ;;                 # source code variant
+    paren-flat                               ) paren=$1 ;;              # source code variant
+
+    # typefaces
+    coding                                   ) coding=true ;;
+    grotesk                                  ) style=$1 ;;
+    mu                                       ) mu=true ;;
+    test                                     ) test=true ;;
+    web                                      ) web=true ;;
+    ypsilon                                  ) ypsilon=true ;;
+
+    # styles
+    altmono                                  ) altmono ;;   # alternate "monospace" coding font
+    book+regular                             ) adjust=$1 ;;
+    ebook                                    ) ebook=true ;;
+    family                                   ) [ $ereader ] && [ $2 ] && { family=$2; shift; } || usage ;;
+    open                                     ) open=$1; f=f-extended ;;
+    source-only                              ) source_only=true ;;
+    space                                    ) [ $2 ] && { space="$1 $2"; shift; } || usage ;;
+    
+    # geometry
+    ascender                                 ) [ $2 ] && { ascender="$1 $2"; shift; } || usage ;;
+    cap                                      ) [ $2 ] && { [ $2 = 'off' ] && unset cap || cap="$1 $2"; shift; } || usage ;;
+    leading                                  ) [ $2 ] && { leading="$1 $2"; shift; } || usage ;;
+    sb                                       ) [ $2 ] && { sb="$1 $2"; shift; } || usage ;;
+
+    nocopy                                   ) unset ecopy ;;
+    --                                       ) shift; . $HOME/bin/functions/font/iosevka $@; exit ;;
+    *                                        ) usage ;;
+    esac
+    shift
+  done
+}
+
+killall -q firefox  # release browser memory
+killall -q chromium
+
+cmdopts $@  # set commandline options
+
+# build font suite
+ifno 'build iosevka font suite' && exit
+
+update() {
+  fonts='*-book *-bookitalic *-bold *-bolditalic'
+  cd $HOME/.fonts/$2
+
+  for i in $fonts ;do
+    # supplementary glyphs (as uncovered from ebooks)
+    fforge map $i 2e22 300c  # add corner bracket punctuation
+    fforge map $i 2e25 300d
+    # e-reader font folders
+    if [ $ecopy ] ;then
+      file=$i.ttf
+      FOLDER=$STOW/$ereader/fonts/$1
+      mkdir -p $FOLDER
+      cp -v $file $FOLDER/
+    fi
+  done
+}
+
+options() { echo $adjust $ascender $cap $quasi $leading $sb $style $D $G $I $J $Q $a $b $d $f $j $m $p $q $zero $at $paren $@; }  # list
+
+# family [options]*
+e_ink() {
+  name=$1
+  shift
+  iosevka dyslexic $ereader $language q-hook $(options $@) emdash $emdash $space family $name
+  update $GLYPH $name
+}
+
+# e_ink idyslexic   ${cap:-cap extended}                                     Q-detached ${space:-space 2}
+# e_ink dyslexic    ${cap:-cap extended}                         I-serifless Q-detached ${space:-space 2}
+# e_ink igrotesk    ${cap:-cap extended} f-extended                          Q-bar      ${space:-space 1.3333}
+# e_ink grotesk     ${cap:-cap extended} f-extended              I-serifless Q-bar      ${space:-space 1.3333}
+# e_ink ielementary ${cap:-cap extended} a-single   G-toothless              Q-straight ${space:-space 1.3333}
+# e_ink elementary  ${cap:-cap extended} a-single   G-toothless  I-serifless Q-straight ${space:-space 1.3333}
+# e_ink eloquence   ${cap:-cap extended} a-single   J-descending I-serifless Q-straight ${space:-space 1.3333} open
+#
+# e_ink Iota        ${cap:-cap extended} a-single f-extended j-serifed G-hookless+ I-descending Q-straight open ${space:-space 1.3333}
+# e_ink Ypsilon     ${cap:-cap extended} a-single f-extended j-serifed G-hookless+ Y-descending Q-straight open ${space:-space 1.3333}
+
+dfont() { iosevka extended j-serifed q-hook Q-bar $(options $@) at-tall $cap; }
+# wfont() { iosevka english  j-serifed G-hookless+ Q-bar $(options $@) asterisk-high; }  # override dyslexic "asterisk-low"
+wfont() { iosevka english j-serifed G-hookless+ Q-straight $(options $@) asterisk-high emdash $emdash; }
+efont() { iosevka $language $(options $@); }
+
+if [ "$mu" ] ;then
+  cmdopts quasi-ext ${space:-space M}
+  [ $ereader = kobo ] && emdash=$emkobo || emdash=$emkindle  # == M + space width
+  e_ink articulate  ${cap:-cap extended}                                  G-toothed               J-serifless Q-crossing
+  e_ink typograffic ${cap:-cap extended}             f-extended           G-rounded   I-serifless J-flat      Q-straight
+  e_ink groot       ${cap:-cap extended} a-toothless j-serifed           G-hookless+  I-serifless J-flat      Q-straight      4-open
+  e_ink mu          ${cap:-cap extended} a-toothless f-extended j-serifed G-hookless+ I-descending            Q-straight      4-open
+  e_ink mudra       ${cap:-cap extended} a-toothless f-extended j-serifed G-hookless+ Y-descending            Q-straight open 4-open+
+  e_ink umami       ${cap:-cap extended} a-single    f-extended j-serifed G-hookless+ Y-descending            Q-straight open 4-open+
+
+elif [ "$test" ] ;then
+  unset ecopy; cmdopts quasi-ext space 1.15 m-rounded
+  [ $ereader = kobo ] && emdash=$emkobo || emdash=$emkindle  # == M + space width
+  e_ink mudra       ${cap:-cap extended} a-toothless f-extended j-serifed G-hookless+ Y-descending            Q-straight open 4-open+
+  e_ink groot       ${cap:-cap extended} a-toothless j-serifed           G-hookless+  I-serifless J-flat      Q-straight      4-open
+
+elif [ $family ] ;then                    # custom e-ink font (non-published)
+  e_ink $family
+
+elif [ $ereader ] && [ $dyslexic ] ;then  # e-ink fonts (dyslexic default)
+  e_ink iMonolexic
+  e_ink Monolexic I-serifless
+  e_ink iUnolexic f-extended Q-bar
+  e_ink Unolexic  f-extended Q-bar      I-serifless
+  e_ink iGeolexic a-single   Q-straight
+  e_ink Geolexic  a-single   Q-straight I-serifless
+
+elif [ $ebook ] ;then                     # e-reader fonts
+  efont ebook
+  efont ebook                       I-serifless
+  efont ebook    quasi-proportional
+  efont ebook    quasi-proportional I-serifless
+  efont dyslexic quasi-proportional
+  efont dyslexic quasi-proportional I-serifless
+
+elif [ $web ] ;then                       # www fonts
+  unset cap; emdash=$emkobo
+  wfont heading  quasi-extension                                   space M    webfont      # wMonolegible
+  # wfont dyslexic quasi-extension  f-extended        cap extended space M    webfont Y-descending
+  wfont dyslexic quasi-extension    f-extended        cap extended space M    webfont      # wMonolexic
+  wfont dyslexic quasi-extension    f-extended J-flat cap extended space M    webfont family wCaps
+  wfont dyslexic quasi-proportional                                space 1.15 webfont      # wQuasilexic
+  dfont ${cap:-cap extended}        G-toothed  I-serifed                              family wIosevka
+
+elif [ $coding ] ;then                    # classic coding font
+  cmdopts cap extended
+  dfont $leading I-serifed G-toothed a-toothless f-extended family monodyslexic
+
+else                                      # desktop fonts
+  cmdopts cap extended altmono
+  dfont $leading $altmono  I-descending
+  dfont proof    $altmono  I-descending Q-straight
+  dfont menu     $altmono  I-descending Q-straight
+  # dfont dyslexic $altmono             Q-straight      J-flat   space 2   family qclocktwo leading 1.40
+  dfont dyslexic $altmono               Q-straight      J-flat   space 2.2 family qclocktwo    # conky qclocktwo font
+  dfont dyslexic $altmono  I-descending quasi-extension extended space M   family monograffic  # panel/dunst/browser font
+fi
+
+# vim: set ft=sh: #
