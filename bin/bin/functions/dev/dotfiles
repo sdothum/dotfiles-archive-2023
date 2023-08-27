@@ -19,6 +19,7 @@ usage() {
 
 # list of folders under stow root
 DOTFILES=$(dirname $0)/.dotfiles:folders
+MESSAGES=/tmp/dotfiles:messages
 
 [ -d "$1" ] && { STOW="$1"; shift; }  # see config.fish
 [ -e $HOME/.git/stow ] && ln -sf $HOME/.git/stow $HOME/stow/.git
@@ -100,7 +101,8 @@ sync() {
 # [ -z "$changes" ] && [ -z $1 ] && exit
 # [ "$changes" ] && echo "$changes"
 
-repo() { while read file <&3 ;do add "$file" ;done 3< $DOTFILES; }
+repo()     { while read file <&3 ;do add "$file" ;done 3< $DOTFILES; }
+messages() { [ -e $MESSAGES ] && echo $MESSAGES; }
 
 # $@ substitution within complex expressions is more predictably handled by var substitution
 unset pending
@@ -116,11 +118,11 @@ case $1 in
            [ "$DESC" ] && git commit --amend --no-edit --message="$DESC" || git commit --amend ;;
   
   error*   |\
-  warn*  ) git commit -m "warning messages" >/tmp/dotfiles:messages
+  warn*  ) git commit -m "warning messages" >$MESSAGES
            vim -g /tmp/dotfiles:messages ;;
 
-  folder*) vim -g $DOTFILES .gitignore ;;
-  ignore ) vim -g .gitignore $DOTFILES ;;
+  folder*) vim -g $DOTFILES .gitignore $(messages) ;;
+  ignore ) vim -g .gitignore $DOTFILES $(messages) ;;
   init   ) init ;;
   list   ) git log --pretty=format:"%h - %an, %ar : %s" ;;
   log    ) git log | less ;;
