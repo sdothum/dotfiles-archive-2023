@@ -1,0 +1,4 @@
+#! /bin/sh
+# sxhkdrc embedded function calls
+echo "/bin/sh $1 \". '$XDG_CONFIG_HOME'/sxhkd/functions; $2\"" >> /tmp/bspwm.log
+/bin/sh $1 ". '$XDG_CONFIG_HOME'/sxhkd/functions; $2"
