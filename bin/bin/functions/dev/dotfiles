@@ -75,7 +75,7 @@ add() {
   if [ $(ls -Ar $file | wc -l) -gt 0 ] ;then
     pending=$(git add -v $force "$file" )
   else
-    ditto notfound "$file"
+    ditto ERROR notfound "$file"
   fi
   [ "$pending" ] && pending
 }
