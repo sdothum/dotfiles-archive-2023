@@ -10,9 +10,9 @@
 
 usage() {
   echo "usage: $(basename $0) [<stowdir>] add [-f] <package>[/<filespec>]* | rm <filespec>
-                comment [<comment>] | redo | undo
+                amend|comment [<comment>] | redo|undo
                 init | bulk <comment> | sync
-                folders | ignore | errors | warning | list | log"
+                dry-run | folders|ignore | list | log"
   ditto rules "$DOTFILES"
   exit 1
 }
@@ -108,18 +108,17 @@ messages() { [ -e $MESSAGES ] && echo $MESSAGES; }
 unset pending
 case $1 in
   help   ) usage ;;
-  ''     ) repo ;;  # input file descriptor to handle filename spaces
+  ''     ) dotfiles dry-run; ifyes "update repo" && repo ;;  # input file descriptor to handle filename spaces
   bulk   ) NOPROMPT=true; DESC="${2:-bulk commit}"; repo ;;
   add    ) shift; [ "$1" = '-f' ] && { force=-f; shift; }
-           while [ "$1" ] ;do add "$1"; shift ;done ;;                # handle filename spaces
+           while [ "$1" ] ;do add "$1"; shift ;done ;;       # handle filename spaces
   
   amend    |\
   comment) shift; DESC=$@
            [ "$DESC" ] && git commit --amend --no-edit --message="$DESC" || git commit --amend ;;
   
-  error*   |\
-  warn*  ) git commit -m "warning messages" >$MESSAGES
-           vim -g /tmp/dotfiles:messages ;;
+  dry*   ) git commit --dry-run >$MESSAGES
+           cat $MESSAGES | print ;;
 
   folder*) vim -g $DOTFILES .gitignore $(messages) ;;
   ignore ) vim -g .gitignore $DOTFILES $(messages) ;;
