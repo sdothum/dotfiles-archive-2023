@@ -1,0 +1,29 @@
+# sdothum - 2016 (c) wtfpl
+
+# nnn Plugin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... fcache directories
+
+# see jump
+
+cache() {
+  [ $SUBTREE ] && { echo $1; exit; }  # see jump-subtree
+  case $1 in
+  $HOME/stow/vimwiki*         ) echo $HOME/stow/vimwiki          ;;
+  $HOME/stow*                 ) echo $HOME/stow                  ;;
+  $HOME/thedarnedestthing.com*) echo $HOME/thedarnedestthing.com ;;
+  $HOME*                      ) echo $HOME                       ;;
+  /net/depot*                 ) echo /net/depot                  ;;
+  /net/media/music*           ) echo /net/media/music            ;;
+  /net/media/ebooks*          ) echo /net/media/ebooks           ;;
+  /net/media/videos/anime*    ) echo /net/media/videos/anime     ;;
+  /net/media/videos/animation*) echo /net/media/videos/animation ;;
+  /net/media/videos/movies*   ) echo /net/media/videos/movies    ;;
+  /net/media/videos/series*   ) echo /net/media/videos/series    ;;
+  /net/media/videos*          ) echo /net/media/videos           ;;
+  *                           ) echo $1                          ;;
+  esac
+}
+
+# vim: set ft=sh: #
