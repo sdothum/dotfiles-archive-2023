@@ -4,6 +4,10 @@ These are the dotfiles referenced in
 [the darnedest thing](http://thedarnedestthing.com/colophon), and then
 some.
 
+**!! NOTE !!**
+Do to the rather large patch file size of this repo, it is now frozen. "dotfiles" is now continued in the "[stow](https://github.com/sdothum/stow)" repo.
+
+
 ## installation
 
 <pre>git clone --depth 1 https://github.com/sdothum/dotfiles.git</pre>
